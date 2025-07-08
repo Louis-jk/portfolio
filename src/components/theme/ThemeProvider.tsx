@@ -37,20 +37,42 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     // 테마 변경 시 HTML 클래스와 로컬 스토리지 업데이트
     const root = document.documentElement;
+    const body = document.body;
+
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
+
+    // body 배경색과 텍스트 색상 직접 제어
+    if (theme === 'dark') {
+      body.style.backgroundColor = '#0a0a0a';
+      body.style.color = '#ededed';
+    } else {
+      body.style.backgroundColor = '#fefefe';
+      body.style.color = '#171717';
+    }
 
     // 디버깅용 로그
     console.log('Theme changed to:', theme);
     console.log('HTML classes:', root.classList.toString());
   }, [theme, mounted]);
 
-  // 초기 렌더링 시 HTML 클래스 즉시 설정
+  // 초기 렌더링 시 HTML 클래스와 body 스타일 즉시 설정
   useEffect(() => {
     const root = document.documentElement;
+    const body = document.body;
+
     if (!root.classList.contains('light') && !root.classList.contains('dark')) {
       root.classList.add(theme);
+    }
+
+    // 초기 body 스타일 설정
+    if (theme === 'dark') {
+      body.style.backgroundColor = '#0a0a0a';
+      body.style.color = '#ededed';
+    } else {
+      body.style.backgroundColor = '#fefefe';
+      body.style.color = '#171717';
     }
   }, [theme]);
 

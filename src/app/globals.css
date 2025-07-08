@@ -1,12 +1,13 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
+@import 'tw-animate-css';
 
 /* Tailwind CSS v4 다크모드 설정 */
 @theme {
   --color-scheme: light dark;
 }
+
+/* 다크모드 변형 정의 */
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);

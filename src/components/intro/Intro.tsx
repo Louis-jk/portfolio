@@ -118,9 +118,7 @@ function Intro() {
 
           {messages.length > 0 && isGreetingVisible && (
             <motion.div
-              className={`absolute -top-10 z-10 ${
-                theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'
-              } px-4 py-2 rounded-2xl text-sm whitespace-nowrap shadow-lg`}
+              className='absolute -top-10 z-100 px-4 py-2 rounded-2xl text-sm whitespace-nowrap shadow-lg'
               style={{
                 ...getBubblePosition(),
                 minWidth: '120px',
@@ -128,6 +126,8 @@ function Intro() {
                 left: '50%',
                 top: 0,
                 transform: 'translateX(-50%) translateY(-50%)',
+                backgroundColor: theme === 'dark' ? '#ffffff' : '#000000',
+                color: theme === 'dark' ? '#000000' : '#ffffff',
               }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -141,9 +141,10 @@ function Intro() {
                 {showGreeting ? messages[0] : messages[messageIndex]}
               </p>
               <div
-                className={`absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent ${
-                  theme === 'dark' ? 'border-t-white' : 'border-t-black'
-                }`}
+                className='absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent'
+                style={{
+                  borderTopColor: theme === 'dark' ? '#ffffff' : '#000000',
+                }}
               ></div>
             </motion.div>
           )}
