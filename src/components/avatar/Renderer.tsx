@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import Avatar from './Avatar';
 import { Environment, OrbitControls } from '@react-three/drei';
 
-function Renderer() {
+function Renderer({ isFacingUser = false }: { isFacingUser?: boolean }) {
   return (
     <div className='h-[17.5rem] '>
       <Canvas
@@ -13,7 +13,7 @@ function Renderer() {
       >
         <ambientLight intensity={1} />
         <Environment preset='sunset' />
-        <Avatar />
+        <Avatar isFacingUser={isFacingUser} />
         <OrbitControls
           minDistance={2}
           maxDistance={4}

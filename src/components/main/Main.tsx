@@ -1,24 +1,31 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Intro from '@/components/intro/Intro';
 import Timeline from '@/components/timeline/Timeline';
+import ThemeToggle from '@/components/theme/ThemeToggle';
+import { motion } from 'framer-motion';
 
 function Main() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
-
   return (
-    <main
-      className={`max-w-screen-sm w-full flex flex-col mx-auto transition-all duration-700
-    ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-    >
-      <Intro />
-      <Timeline />
-    </main>
+    <>
+      <ThemeToggle />
+      <main className='max-w-screen-sm w-full flex flex-col mx-auto'>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <Intro />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}
+        >
+          <Timeline />
+        </motion.div>
+      </main>
+    </>
   );
 }
 

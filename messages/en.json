@@ -1,0 +1,19 @@
+{
+  "HomePage": {
+    "intro": {
+      "hello": {
+        "morning": "Good morning! 🌞",
+        "afternoon": "Good afternoon! 🌞",
+        "evening": "Good evening! 🌆",
+        "night": "Good night! 🌙"
+      },
+      "random_greetings": [
+        "Nice to meet you! 🎉",
+        "Good to see you! 😄",
+        "What’s up? 😎",
+        "Hope you’re doing well! 🙌",
+        "Thanks for visiting! 🖐️"
+      ]
+    }
+  }
+}
