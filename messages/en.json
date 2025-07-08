@@ -7,13 +7,14 @@
         "evening": "Good evening! 🌆",
         "night": "Good night! 🌙"
       },
-      "random_greetings": [
+      "random_greetings_en": [
         "Nice to meet you! 🎉",
-        "Good to see you! 😄",
-        "What’s up? 😎",
-        "Hope you’re doing well! 🙌",
-        "Thanks for visiting! 🖐️"
-      ]
+        "Thanks for stopping by! 🙏",
+        "Welcome to my portfolio! 👋",
+        "I'm glad you're here! 😄",
+        "Hope you have a great day! ☀️"
+      ],
+      "about_me": "I’m a frontend developer who builds responsive, fast web apps. \nI love clean code and intuitive UX."
     }
   }
 }

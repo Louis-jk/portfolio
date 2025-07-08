@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useTheme } from '../theme/ThemeProvider';
 
 const links = [
   {
@@ -28,6 +31,8 @@ const links = [
 ];
 
 function Links() {
+  const { theme } = useTheme();
+
   return (
     <div className='flex flex-row items-center justify-center gap-4 text-gray-800'>
       {links.map((link) => (
@@ -38,7 +43,9 @@ function Links() {
           key={link.name}
         >
           <Image
-            className='dark:invert hover:scale-110 transition-all duration-300'
+            className={`${
+              theme === 'dark' ? 'invert' : ''
+            } hover:scale-110 transition-all duration-300`}
             src={link.src}
             alt={link.alt}
             width={20}

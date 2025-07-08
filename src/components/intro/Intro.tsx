@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Renderer from '../avatar/Renderer';
 import Links from '../links/Links';
 import { useTranslations } from 'next-intl';
+import { useTheme } from '@/components/theme/ThemeProvider';
 
 function Intro() {
   const t = useTranslations();
@@ -13,6 +14,7 @@ function Intro() {
   const [showGreeting, setShowGreeting] = useState(false);
   const [isGreetingVisible, setIsGreetingVisible] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
+  const { theme } = useTheme();
 
   // 메시지 세팅
   useEffect(() => {
@@ -65,6 +67,42 @@ function Intro() {
     }
   };
 
+  // 현재 메시지 가져오기
+  const currentMessage = showGreeting ? messages[0] : messages[messageIndex];
+
+  // 메시지 길이에 따른 말풍선 위치 계산
+  const getBubblePosition = () => {
+    if (!currentMessage)
+      return { left: '50%', transform: 'translateX(-50%) translateY(-80%)' };
+
+    const messageLength = currentMessage.length;
+
+    // 짧은 메시지 (10자 이하)
+    if (messageLength <= 10) {
+      return {
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-80%)',
+        maxWidth: '150px',
+      };
+    }
+    // 중간 메시지 (11-20자)
+    else if (messageLength <= 20) {
+      return {
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-100%)',
+        maxWidth: '200px',
+      };
+    }
+    // 긴 메시지 (21자 이상)
+    else {
+      return {
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-120%)',
+        maxWidth: '280px',
+      };
+    }
+  };
+
   return (
     <section className='flex flex-col items-center justify-center'>
       <div className='flex flex-col items-center gap-5 py-10'>
@@ -80,7 +118,17 @@ function Intro() {
 
           {messages.length > 0 && isGreetingVisible && (
             <motion.div
-              className='absolute top-5 right-0 transform -translate-x-1/2 -translate-y-full z-10 bg-white text-black px-4 py-2 rounded-2xl text-sm whitespace-nowrap shadow-lg border border-gray-200'
+              className={`absolute -top-10 z-10 ${
+                theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white'
+              } px-4 py-2 rounded-2xl text-sm whitespace-nowrap shadow-lg`}
+              style={{
+                ...getBubblePosition(),
+                minWidth: '120px',
+                right: 'auto',
+                left: '50%',
+                top: 0,
+                transform: 'translateX(-50%) translateY(-50%)',
+              }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
@@ -92,7 +140,11 @@ function Intro() {
               <p className='text-center font-bold'>
                 {showGreeting ? messages[0] : messages[messageIndex]}
               </p>
-              <div className='absolute top-full left-1/6 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-white'></div>
+              <div
+                className={`absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent ${
+                  theme === 'dark' ? 'border-t-white' : 'border-t-black'
+                }`}
+              ></div>
             </motion.div>
           )}
         </motion.div>
@@ -108,11 +160,10 @@ function Intro() {
 
         <Links />
 
-        <div className='flex flex-col items-center gap-2'>
-          <h3 className='text-xl font-bold'>About Me</h3>
-          <p className='text-lg text-center'>
-            I’m a frontend developer who builds responsive, fast web apps.
-            <br />I love clean code and intuitive UX.
+        <div className='flex flex-col items-center mt-10'>
+          <h3 className='text-3xl font-bold mb-5'>About Me</h3>
+          <p className='text-lg text-center whitespace-pre-line'>
+            {t('HomePage.intro.about_me')}
           </p>
         </div>
       </div>

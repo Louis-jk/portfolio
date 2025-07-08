@@ -6,8 +6,10 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { type TimelineItem, timelineData } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
+import { useTheme } from '../theme/ThemeProvider';
 
 export default function Timeline() {
+  const { theme } = useTheme();
   const [hoveredItem, setHoveredItem] = useState<TimelineItem | null>(null);
   const [showThumbnail, setShowThumbnail] = useState(false);
   const [target, setTarget] = useState<{ x: number; y: number }>({
@@ -65,24 +67,28 @@ export default function Timeline() {
 
   return (
     <div className='relative mx-auto w-full max-w-md py-10'>
-      <h2 className='text-3xl font-bold text-white mb-10 text-center'>
-        Work Experience
-      </h2>
-      <div className='border-l-2 border-gray-700 pl-6'>
+      <h2 className='text-3xl font-bold mb-5 text-center'>Work Experience</h2>
+      <div
+        className={`border-l-1 pl-7 ${
+          theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+        }`}
+      >
         {timelineData.map((item, index) => (
           <div
             key={index}
             onMouseEnter={(e) => handleMouseEnter(e, item)}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            className='cursor-pointer'
           >
             <TimelineItem item={item} index={index} />
           </div>
         ))}
       </div>
+
       <div className='mt-12 text-center'>
         <Link href='/work'>
-          <button className='px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-sm transition cursor-pointer'>
+          <button className='px-6 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white rounded-full text-sm transition cursor-pointer'>
             View Full Timeline
           </button>
         </Link>
@@ -111,15 +117,13 @@ function TimelineItem({ item, index }: { item: TimelineItem; index: number }) {
         initial={{ opacity: 0, x: -30 }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.6, delay: index * 0.2 }}
-        className='mb-12 cursor-pointer'
+        className='mb-5 cursor-pointer'
       >
         <div className='relative'>
-          <div className='absolute -left-9 top-1 w-4 h-4 bg-indigo-500 rounded-full border-4 border-black' />
-          <h3 className='text-lg font-semibold text-white'>{item.date}</h3>
-          <h4 className='text-xl font-bold text-indigo-400 mt-1'>
-            {item.title}
-          </h4>
-          <ul className='list-disc ml-5 mt-2 text-sm text-gray-300 space-y-1'>
+          <div className='absolute -left-9 top-1 w-4 h-4 rounded-full border-4 bg-white' />
+          <h3 className='text-lg font-semibold'>{item.date}</h3>
+          <h4 className='text-xl font-bold mt-1'>{item.title}</h4>
+          <ul className='list-disc ml-5 mt-2 text-sm space-y-1'>
             {item.description.map((line: string, i: number) => (
               <li key={i}>{line}</li>
             ))}
