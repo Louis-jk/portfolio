@@ -115,7 +115,7 @@ export default function Timeline({
                   <div className='flex-1 min-w-0'>
                     <div className='flex items-center gap-2 justify-between'>
                       <h3
-                        className={`font-medium text-base max-w-4/6 truncate transition-colors duration-200 ${
+                        className={`font-bold text-base max-w-4/6 truncate transition-colors duration-200 ${
                           selectedItem?.id === item.id
                             ? 'text-purple-600 dark:text-purple-400'
                             : 'text-gray-900 dark:text-gray-100'

@@ -49,8 +49,8 @@
         ]
       }
     },
-    "kabuand": {
-      "title": "Frontend development support for new B2C business initiatives (Remote)",
+    "confidential_japanese_startup": {
+      "title": "新規B2C事業のフロントエンド開発支援 (フルーリモート)",
       "company": "Confidential Japanese Startup",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -60,7 +60,7 @@
         "IELTS preparation & job search in AU/NZ market"
       ],
       "details": {
-        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "fullDescription": "日本のB2Bサービスプラットフォームにて、フロントエンドエンジニアとしてリモート勤務しました。6つの業種に対応する申請ページを開発し、共通UIコンポーネントを構築、レスポンシブデザインを実装しました。入力バリデーションとエラーハンドリングを備えたマルチステップフォームの設計、リリース前後のバグ管理とUX改善に取り組みました。また、Datadogを活用した継続的なモニタリングと課題解決により、サービスの安定性向上に貢献しました。",
         "technologies": [
           "Next.js",
           "Firebase",
@@ -80,8 +80,8 @@
         ]
       }
     },
-    "turingum03": {
-      "title": "Support services for Web3 product campaign site and system development (Remote)",
+    "turingum_web03_03": {
+      "title": "Web3プロダクトのキャンペーンサイト、およびシステム開発支援業務 (フルーリモート)",
       "company": "Turingum K.K",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -91,7 +91,7 @@
         "IELTS preparation & job search in AU/NZ market"
       ],
       "details": {
-        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "fullDescription": "Web3ゲームプラットフォームのBASEエリアにおける内部ページの開発および保守に貢献しました。新機能の実装、既存ページのデザインおよび機能の更新適用、さまざまなフロントエンドの問題やバグ修正を行い、サービスの安定性とユーザー体験の向上に努めました。",
         "technologies": [
           "Next.js",
           "Firebase",
@@ -111,8 +111,8 @@
         ]
       }
     },
-    "turingum02": {
-      "title": "Development support for a Web3 product campaign site (Remote)",
+    "turingum_web03_02": {
+      "title": "Web3プロダクトのキャンペーンサイト開発支援業務 (フルーリモート)",
       "company": "Turingum K.K",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -122,7 +122,7 @@
         "IELTS preparation & job search in AU/NZ market"
       ],
       "details": {
-        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "fullDescription": "Web3キャンペーンサイトのフロントエンド開発、多言語対応、コードリファクタリングを担当しました。動的でアニメーションが多いサイトでしたが、Next.jsとGSAPの連携方法を研究し、スムーズかつ効率的な実装を実現しました。その後、初期の「ミステリーチケット」機能を引き継ぎ、BASEセクションのフロントエンド開発支援や機密の新規タスクにも対応しました。",
         "technologies": [
           "Next.js",
           "Firebase",
@@ -142,8 +142,8 @@
         ]
       }
     },
-    "turingum01": {
-      "title": "Developed a campaign site for a Web3.0 project (Remote)",
+    "turingum_web03_01": {
+      "title": "Web3.0プロジェクトのキャンペーンサイト実装 (フルーリモート)",
       "company": "Turingum K.K",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -153,7 +153,7 @@
         "IELTS preparation & job search in AU/NZ market"
       ],
       "details": {
-        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
         "technologies": [
           "Next.js",
           "Firebase",

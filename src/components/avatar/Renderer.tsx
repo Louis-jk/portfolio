@@ -4,7 +4,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { useTheme } from 'next-themes';
 
 function Model({
   url,
@@ -55,7 +54,7 @@ function Model({
     <primitive
       object={gltf.scene}
       ref={ref}
-      position={[0, -2.6, 0]}
+      position={[0, -2.65, 0]}
       rotation={[0, Math.PI / 2, 0]}
       scale={1.65}
     />
@@ -64,7 +63,6 @@ function Model({
 
 export default function Renderer() {
   const [isClient, setIsClient] = useState(false);
-  const { resolvedTheme } = useTheme();
 
   const [rotationStage, setRotationStage] = useState<
     'idle' | 'toFront' | 'toDiagonal'
@@ -97,19 +95,18 @@ export default function Renderer() {
 
   return (
     <div className='h-[17.5rem] w-[17.5rem]'>
-      <Canvas camera={{ position: [0, 0, 3], fov: 20 }}>
-        <ambientLight intensity={0.2} />
+      <Canvas camera={{ position: [0, 0, 3], fov: 17 }}>
+        <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
           <Model
-            url='/models/asian_upper_new03.glb'
+            url='/models/new_profile.glb'
             rotationStage={rotationStage}
             setRotationStage={setRotationStage}
             userInteracted={userInteracted}
             lastInteractionTime={lastInteractionTime}
           />
           <Environment
-            key={resolvedTheme}
-            preset={resolvedTheme === 'dark' ? 'forest' : 'sunset'}
+            preset='warehouse'
             background={false}
             frames={1}
             near={1}

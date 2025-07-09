@@ -9,6 +9,9 @@ const config: Config = {
   ],
   darkMode: 'class',
   theme: {
+    fontFamily: {
+      sans: ['var(--font-en)', 'var(--font-jp)', 'var(--font-kr)'],
+    },
     extend: {
       colors: {
         border: 'hsl(var(--border))',

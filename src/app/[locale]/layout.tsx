@@ -18,7 +18,7 @@ export default async function LocaleLayout({
   }
 
   return (
-    <NextIntlClientProvider>
+    <NextIntlClientProvider locale={locale}>
       <ThemeProvider>
         <Header />
         {children}

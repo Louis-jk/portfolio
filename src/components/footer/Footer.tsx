@@ -14,7 +14,7 @@ function Footer() {
 
   return (
     <footer
-      className='text-center text-sm py-8 space-y-3 mt-20'
+      className='text-center text-sm py-8 space-y-3 mt-5'
       style={{
         borderTop: `1px solid ${
           mounted && theme === 'dark' ? '#222222' : '#e5e7eb'
@@ -22,10 +22,6 @@ function Footer() {
       }}
     >
       <div>Thank you for visiting my portfolio 💻</div>
-      <div>
-        Feel free to reach out — I&apos;m always open to new ideas and
-        collaborations!
-      </div>
       <Links />
       <div className='mt-2'>© 2025 Joonho Kim. All rights reserved.</div>
     </footer>
