@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { type TimelineItem } from '@/types/timeline.type';
-import { useTheme } from '../theme/ThemeProvider';
+import { useTheme } from 'next-themes';
 import { X } from 'lucide-react';
 
 interface TimelineDrawerProps {
@@ -16,7 +16,7 @@ export default function TimelineDrawer({
   isOpen,
   onClose,
 }: TimelineDrawerProps) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <AnimatePresence>
@@ -37,7 +37,7 @@ export default function TimelineDrawer({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className='fixed right-0 top-0 h-full w-full max-w-sm bg-white dark:bg-gray-900 z-50 lg:hidden'
+            className='fixed right-0 top-0 h-full w-full max-w-sm z-50 lg:hidden'
           >
             {/* Header */}
             <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700'>
@@ -89,7 +89,7 @@ export default function TimelineDrawer({
                         <span
                           key={index}
                           className={`px-3 py-1 rounded-full text-sm font-medium ${
-                            theme === 'dark'
+                            resolvedTheme === 'dark'
                               ? 'bg-gray-700 text-gray-200'
                               : 'bg-gray-200 text-gray-800'
                           }`}

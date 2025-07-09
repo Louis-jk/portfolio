@@ -1,5 +1,5 @@
 {
-  "HomePage": {
+  "homePage": {
     "intro": {
       "hello": {
         "morning": "おはようございます！🌞",
@@ -7,14 +7,171 @@
         "evening": "こんばんは！🌆",
         "night": "おやすみなさい！🌙"
       },
-      "random_greetings_ja": [
+      "randomGreetings": [
         "はじめまして！🎉",
         "ご訪問ありがとうございます！🙏",
         "ポートフォリオをご覧いただき、ありがとうございます！👀",
         "見に来てくださって嬉しいです！😄",
         "良い一日をお過ごしください！☀️"
       ],
-      "about_me": "私は、レスポンシブで高速なWebアプリを作成するフロントエンドエンジニアです。 \nクリーンなコードと直感的なUXを大好きです。"
+      "about_me": "フロントエンドエンジニアとして、Web・モバイル・デスクトップを横断するレスポンシブでパフォーマンスに優れたUIの構築を得意としています。Web3 DAppsや業務系プラットフォームの開発経験があり、保守性の高いコードを書くことや、ユーザーにとって快適な体験を提供することに情熱を持っています。チームワークを大切にし、デザイナーとしての視点も活かしながら、UI/UXを意識した実装や細部まで配慮した開発を心がけています。"
+    }
+  },
+  "timeline": {
+    "personal": {
+      "title": "Personal Projects & Study",
+      "company": "",
+      "region": "Home, Korea",
+      "role": "Frontend Engineer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "kabuand": {
+      "title": "Frontend development support for new B2C business initiatives (Remote)",
+      "company": "Confidential Japanese Startup",
+      "region": "Tokyo, Japan",
+      "role": "Freelance Frontend Engineer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "turingum03": {
+      "title": "Support services for Web3 product campaign site and system development (Remote)",
+      "company": "Turingum K.K",
+      "region": "Tokyo, Japan",
+      "role": "Freelance Frontend Engineer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "turingum02": {
+      "title": "Development support for a Web3 product campaign site (Remote)",
+      "company": "Turingum K.K",
+      "region": "Tokyo, Japan",
+      "role": "Freelance Frontend Engineer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "turingum01": {
+      "title": "Developed a campaign site for a Web3.0 project (Remote)",
+      "company": "Turingum K.K",
+      "region": "Tokyo, Japan",
+      "role": "Freelance Frontend Engineer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
     }
   }
 }

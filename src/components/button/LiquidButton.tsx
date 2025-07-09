@@ -1,6 +1,6 @@
 import { motion, MotionValue, useAnimationFrame } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { useTheme } from '../theme/ThemeProvider';
+import { useTheme } from 'next-themes';
 
 // 복잡한 굴곡을 위한 path 생성 함수
 function generateSplashPath(t: number): string {
@@ -8,7 +8,6 @@ function generateSplashPath(t: number): string {
   const centerY = 50;
   const baseRadius = 40;
 
-  // 더 많은 점들로 부드럽게
   const points = [];
   const numPoints = 32;
 
@@ -25,7 +24,6 @@ function generateSplashPath(t: number): string {
     points.push(`${x},${y}`);
   }
 
-  // 부드러운 곡선으로 path 문자열 생성
   let path = `M ${points[0]}`;
   for (let i = 0; i < points.length; i++) {
     const current = points[i];
@@ -36,7 +34,6 @@ function generateSplashPath(t: number): string {
     const [nx, ny] = next.split(',').map(Number);
     const [px, py] = prev.split(',').map(Number);
 
-    // 더 부드러운 제어점 계산
     const controlX = cx + (nx - px) * 0.15;
     const controlY = cy + (ny - py) * 0.15;
 
@@ -60,18 +57,11 @@ export default function LiquidButton({
   onClick,
   children,
 }: LiquidButtonProps) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const t = useRef(0);
   const [path, setPath] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
-  // 디버깅용 로그
-  useEffect(() => {
-    console.log('LiquidButton theme:', theme);
-    console.log('HTML classes:', document.documentElement.classList.toString());
-  }, [theme]);
-
-  // 빠른 등장 효과
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -104,13 +94,15 @@ export default function LiquidButton({
         top: 0,
         x,
         y,
-        pointerEvents: 'auto',
+        pointerEvents: 'none', // ← 이 부분이 핵심입니다!
         zIndex: 100,
         clipPath: `path("${path}")`,
       }}
       onClick={onClick}
       className={`w-24 h-24 rounded-full shadow-lg flex items-center justify-center text-xl font-bold select-none ${
-        theme === 'dark' ? 'bg-white text-black' : 'bg-gray-900 text-white'
+        resolvedTheme === 'dark'
+          ? 'bg-white text-black'
+          : 'bg-[#101010] text-white'
       }`}
     >
       <p className='italic'>{children ?? 'Click!'}</p>

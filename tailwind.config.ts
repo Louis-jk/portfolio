@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import tailwindScrollbar from 'tailwind-scrollbar';
 
 const config: Config = {
   content: [
@@ -6,6 +7,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -42,6 +44,16 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        scrollbar: {
+          DEFAULT: 'hsl(var(--scrollbar))',
+          thumb: {
+            DEFAULT: 'hsl(var(--scrollbar-thumb))',
+            hover: 'hsl(var(--scrollbar-thumb-hover))',
+          },
+          track: {
+            DEFAULT: 'hsl(var(--scrollbar-track))',
+          },
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -50,7 +62,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindScrollbar],
 };
 
 export default config;

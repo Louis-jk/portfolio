@@ -1,28 +1,136 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
-import Avatar from './Avatar';
-import { Environment, OrbitControls } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import * as THREE from 'three';
+import { useTheme } from 'next-themes';
 
-function Renderer({ isFacingUser = false }: { isFacingUser?: boolean }) {
+function Model({
+  url,
+  rotationStage,
+  setRotationStage,
+  userInteracted,
+  lastInteractionTime,
+}: {
+  url: string;
+  rotationStage: string;
+  setRotationStage: (v: 'idle' | 'toFront' | 'toDiagonal') => void;
+  userInteracted: boolean;
+  lastInteractionTime: number;
+}) {
+  const gltf = useGLTF(url);
+  const ref = useRef<THREE.Group>(null);
+
+  useFrame(() => {
+    if (!ref.current) return;
+
+    const now = Date.now();
+    let targetY = ref.current.rotation.y;
+
+    // 자동 회전 조건
+    if (
+      rotationStage === 'idle' &&
+      userInteracted &&
+      now - lastInteractionTime > 5000
+    ) {
+      setRotationStage('toDiagonal');
+    }
+
+    if (rotationStage === 'toFront') {
+      targetY = 0;
+    } else if (rotationStage === 'toDiagonal') {
+      targetY = Math.PI / 4;
+    }
+
+    const currentY = ref.current.rotation.y;
+    ref.current.rotation.y = THREE.MathUtils.lerp(currentY, targetY, 0.05);
+
+    if (Math.abs(currentY - targetY) < 0.01) {
+      ref.current.rotation.y = targetY;
+    }
+  });
+
   return (
-    <div className='h-[17.5rem] '>
-      <Canvas
-        camera={{ position: [0.5, 0.5, 3], fov: 30 }}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <ambientLight intensity={1} />
-        <Environment preset='sunset' />
-        <Avatar isFacingUser={isFacingUser} />
+    <primitive
+      object={gltf.scene}
+      ref={ref}
+      position={[0, -2.6, 0]}
+      rotation={[0, Math.PI / 2, 0]}
+      scale={1.65}
+    />
+  );
+}
+
+export default function Renderer() {
+  const [isClient, setIsClient] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  const [rotationStage, setRotationStage] = useState<
+    'idle' | 'toFront' | 'toDiagonal'
+  >('idle');
+
+  const [userInteracted, setUserInteracted] = useState(false);
+  const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
+
+  // 초기 애니메이션 실행
+  useEffect(() => {
+    const toFrontTimer = setTimeout(() => {
+      setRotationStage('toFront');
+    }, 1000);
+
+    const toDiagonalTimer = setTimeout(() => {
+      setRotationStage('toDiagonal');
+    }, 4800);
+
+    return () => {
+      clearTimeout(toFrontTimer);
+      clearTimeout(toDiagonalTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
+  return (
+    <div className='h-[17.5rem] w-[17.5rem]'>
+      <Canvas camera={{ position: [0, 0, 3], fov: 20 }}>
+        <ambientLight intensity={0.2} />
+        <Suspense fallback={null}>
+          <Model
+            url='/models/asian_upper_new03.glb'
+            rotationStage={rotationStage}
+            setRotationStage={setRotationStage}
+            userInteracted={userInteracted}
+            lastInteractionTime={lastInteractionTime}
+          />
+          <Environment
+            key={resolvedTheme}
+            preset={resolvedTheme === 'dark' ? 'forest' : 'sunset'}
+            background={false}
+            frames={1}
+            near={1}
+            far={1000}
+            resolution={256}
+          />
+        </Suspense>
         <OrbitControls
-          minDistance={2}
-          maxDistance={4}
           maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 3}
+          minPolarAngle={Math.PI / 2}
+          enableRotate={true}
+          enableZoom={false}
+          onStart={() => {
+            setUserInteracted(true);
+            setRotationStage('idle'); // 여기 핵심! 사용자 조작 시 idle로 복구
+          }}
+          onEnd={() => {
+            setLastInteractionTime(Date.now());
+          }}
         />
       </Canvas>
     </div>
   );
 }
-
-export default Renderer;

@@ -2,9 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { type TimelineItem } from '@/types/timeline.type';
-import { useTheme } from '../theme/ThemeProvider';
+import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { FaBuilding, FaPerson } from 'react-icons/fa6';
 
 interface TimelineDetailProps {
   item: TimelineItem | null;
@@ -15,7 +17,8 @@ export default function TimelineDetail({
   item,
   isVisible,
 }: TimelineDetailProps) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const t = useTranslations('timeline');
 
   if (!item || !item.details) {
     return (
@@ -57,10 +60,29 @@ export default function TimelineDetail({
       <div className='space-y-6'>
         {/* Header */}
         <div>
-          <h3 className='text-2xl font-bold mb-2'>{item.title}</h3>
-          <p className='text-sm text-gray-600 dark:text-gray-400'>
-            {item.date}
-          </p>
+          <h3 className='text-2xl font-bold mb-2'>{t(item.title)}</h3>
+
+          <div className='flex items-center gap-2 justify-between'>
+            <div className='flex items-center gap-2'>
+              <p className='text-sm text-gray-600 dark:text-gray-400 flex items-center'>
+                {item.company && (
+                  <>
+                    <FaBuilding className='inline-block w-3 h-3 mr-1' />
+                    {t(item.company)}&nbsp;&nbsp;&nbsp;
+                  </>
+                )}
+                {item.role && (
+                  <>
+                    <FaPerson className='inline-block w-3 h-3 mr-1' />
+                    {t(item.role)}
+                  </>
+                )}
+              </p>
+            </div>
+            <p className='text-sm text-gray-600 dark:text-gray-400'>
+              {item.date}
+            </p>
+          </div>
         </div>
 
         {/* Image */}
@@ -81,7 +103,7 @@ export default function TimelineDetail({
         <div>
           <h4 className='text-lg font-semibold mb-3'>Overview</h4>
           <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
-            {item.details.fullDescription}
+            {t(item.details.fullDescription)}
           </p>
         </div>
 
@@ -94,7 +116,7 @@ export default function TimelineDetail({
                 key={index}
                 className={cn(
                   'px-3 py-1 rounded-full text-sm font-medium',
-                  theme === 'dark'
+                  resolvedTheme === 'dark'
                     ? 'bg-gray-700 text-gray-200'
                     : 'bg-gray-200 text-gray-800'
                 )}
@@ -113,7 +135,7 @@ export default function TimelineDetail({
               <li key={index} className='flex items-start'>
                 <span className='text-red-500 mr-2 mt-1'>•</span>
                 <span className='text-gray-700 dark:text-gray-300'>
-                  {challenge}
+                  {t(challenge)}
                 </span>
               </li>
             ))}
@@ -128,7 +150,7 @@ export default function TimelineDetail({
               <li key={index} className='flex items-start'>
                 <span className='text-green-500 mr-2 mt-1'>✓</span>
                 <span className='text-gray-700 dark:text-gray-300'>
-                  {achievement}
+                  {t(achievement)}
                 </span>
               </li>
             ))}

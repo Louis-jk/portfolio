@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useTheme } from '../theme/ThemeProvider';
+import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 const links = [
   {
@@ -31,29 +33,46 @@ const links = [
 ];
 
 function Links() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <div className='flex flex-row items-center justify-center gap-4 text-gray-800'>
-      {links.map((link) => (
-        <a
+    <motion.div
+      className='flex flex-row items-center justify-center gap-4 text-gray-800'
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+    >
+      {links.map((link, index) => (
+        <motion.a
           href={link.href}
           target='_blank'
           rel='noopener noreferrer'
           key={link.name}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.6,
+            delay: 0.5 + index * 0.1,
+            ease: 'easeOut',
+          }}
         >
           <Image
-            className={`${
-              theme === 'dark' ? 'invert' : ''
-            } hover:scale-110 transition-all duration-300`}
+            className={`hover:scale-110 transition-all duration-300 ${
+              mounted && resolvedTheme === 'dark' ? 'invert' : ''
+            }`}
             src={link.src}
             alt={link.alt}
             width={20}
             height={20}
           />
-        </a>
+        </motion.a>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
