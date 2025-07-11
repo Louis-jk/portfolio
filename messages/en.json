@@ -20,8 +20,9 @@
   "timeline": {
     "personal": {
       "title": "Personal Projects & Study",
+      "date": "jan 2025 - present",
       "company": "",
-      "region": "Home, Korea",
+      "region": "Yangsan, Korea",
       "role": "Frontend Engineer",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",
@@ -51,6 +52,7 @@
     },
     "confidential_japanese_startup": {
       "title": "Frontend development support for new B2C business initiatives (Remote)",
+      "date": "sep 2024 - dec 2024",
       "company": "Confidential Japanese Startup",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -82,6 +84,7 @@
     },
     "turingum_web03_03": {
       "title": "Support services for Web3 product campaign site and system development (Remote)",
+      "date": "jan 2024 - aug 2024",
       "company": "Turingum K.K",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -113,6 +116,7 @@
     },
     "turingum_web03_02": {
       "title": "Development support for a Web3 product campaign site (Remote)",
+      "date": "oct 2023 - jan 2024",
       "company": "Turingum K.K",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -144,6 +148,7 @@
     },
     "turingum_web03_01": {
       "title": "Developed a campaign site for a Web3.0 project (Remote)",
+      "date": "aug 2023 - sep 2023",
       "company": "Turingum K.K",
       "region": "Tokyo, Japan",
       "role": "Freelance Frontend Engineer",
@@ -154,6 +159,134 @@
       ],
       "details": {
         "fullDescription": "As a freelance frontend developer, I contributed to the development of a Web3 campaign site for a major Japanese gaming company, working with a Japanese blockchain startup. I was responsible for frontend architecture and implementation using Next.js, with a focus on multilingual support, refactoring, and responsive design. While the team included a designer, I also supported UI refinement by creating assets and identifying usability issues. I developed a Merkle tree CLI tool, which was later adopted internally, and the frontend structure I built has been used as a reference for internal onboarding and training.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "confidential_korean_startup": {
+      "title": "Mobile application maintenance and development (Remote)",
+      "date": "dec 2022 - jul 2023",
+      "company": "Confidential Korean Startup",
+      "region": "Seoul, Korea",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_11": {
+      "title": "POS system application development (Desktop) and owner mobile application development",
+      "date": "jul 2022 - oct 2022",
+      "company": "Dmonster",
+      "region": "Busan, Korea",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_10": {
+      "title": "Developed a desktop application for listeners of simultaneous interpretation",
+      "date": "jun 2022 - jul 2022",
+      "company": "Dmonster",
+      "region": "Busan, Korea",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_09": {
+      "title": "Developed a desktop application for listeners of simultaneous interpretation",
+      "date": "jun 2022 - jul 2022",
+      "company": "Dmonster",
+      "region": "Busan, Korea",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
         "technologies": [
           "Next.js",
           "Firebase",

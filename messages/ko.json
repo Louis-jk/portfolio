@@ -19,10 +19,11 @@
   },
   "timeline": {
     "personal": {
-      "title": "Personal Projects & Study",
+      "title": "개인 프로젝트 및 자기주도 학습",
+      "date": "2025.01 – 현재",
       "company": "",
-      "region": "Home, Korea",
-      "role": "Frontend Engineer",
+      "region": "한국 양산",
+      "role": "프론트엔드 개발자",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",
         "3D Portfolio with React Three Fiber",
@@ -50,10 +51,11 @@
       }
     },
     "confidential_japanese_startup": {
-      "title": "Frontend development support for new B2C business initiatives (Remote)",
+      "title": "신규 B2C 서비스 프론트엔드 개발 지원 (원격근무)",
+      "date": "2024.09 – 2024.12",
       "company": "Confidential Japanese Startup",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
+      "region": "일본 도쿄",
+      "role": "프리랜서 프론트엔드 개발자",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",
         "3D Portfolio with React Three Fiber",
@@ -81,10 +83,11 @@
       }
     },
     "turingum_web03_03": {
-      "title": "Support services for Web3 product campaign site and system development (Remote)",
+      "title": "Web3 프로덕트의 캠페인 사이트 및 시스템 개발 지원 업무 (원격근무)",
+      "date": "2024.01 – 2024.08",
       "company": "Turingum K.K",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
+      "region": "일본 도쿄",
+      "role": "프리랜서 프론트엔드 개발자",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",
         "3D Portfolio with React Three Fiber",
@@ -112,10 +115,11 @@
       }
     },
     "turingum_web03_02": {
-      "title": "Development support for a Web3 product campaign site (Remote)",
+      "title": "Web3 프로덕트의 캠페인 사이트 개발 지원 업무 (원격근무)",
+      "date": "2023.10 – 2024.01",
       "company": "Turingum K.K",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
+      "region": "일본 도쿄",
+      "role": "프리랜서 프론트엔드 개발자",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",
         "3D Portfolio with React Three Fiber",
@@ -143,10 +147,11 @@
       }
     },
     "turingum_web03_01": {
-      "title": "Developed a campaign site for a Web3.0 project (Remote)",
+      "title": "Web3.0 프로젝트의 캠페인 사이트 구현 (원격근무)",
+      "date": "2023.08 – 2023.09",
       "company": "Turingum K.K",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
+      "region": "일본 도쿄",
+      "role": "프리랜서 프론트엔드 개발자",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",
         "3D Portfolio with React Three Fiber",
@@ -154,6 +159,134 @@
       ],
       "details": {
         "fullDescription": "일본 블록체인 스타트업과 협업하여, 일본 대형 게임사의 Web3 캠페인 사이트 개발에 프론트엔드 프리랜서로 참여했습니다. Next.js 기반의 프론트엔드 아키텍처를 설계 및 구현하고, 다국어 지원, 코드 리팩토링, 반응형 UI 개발을 맡았습니다. 디자이너와 협업하는 구조였지만, 에셋 제작과 UI 문제 식별을 통해 디자인 측면도 함께 지원했습니다. 개발한 Merkle Tree CLI는 내부 도구로 활용되었고, 구성한 프론트엔드 구조는 내부 교육 자료에도 참고되었습니다.",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "confidential_korean_startup": {
+      "title": "テニスコート及びレッスン予約モバイルアプリケーション維持保守及び新規開発 (フルーリモート)",
+      "date": "2022.12 – 2023.07",
+      "company": "Confidential Korean Startup",
+      "region": "한국 서울",
+      "role": "프리랜서 프론트엔드 개발자",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_11": {
+      "title": "テニスコート及びレッスン予約モバイルアプリケーション維持保守及び新規開発 (フルーリモート)",
+      "date": "2022.12 – 2023.07",
+      "company": "Confidential Korean Startup",
+      "region": "한국 부산",
+      "role": "프리랜서 프론트엔드 개발자",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_10": {
+      "title": "テニスコート及びレッスン予約モバイルアプリケーション維持保守及び新規開発 (フルーリモート)",
+      "date": "2022.12 – 2023.07",
+      "company": "Confidential Korean Startup",
+      "region": "한국 부산",
+      "role": "프리랜서 프론트엔드 개발자",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+        "technologies": [
+          "Next.js",
+          "Firebase",
+          "React Three Fiber",
+          "TypeScript",
+          "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_09": {
+      "title": "Developed a desktop application for listeners of simultaneous interpretation",
+      "date": "jun 2022 - jul 2022",
+      "company": "Dmonster",
+      "region": "한국 부산",
+      "role": "프리랜서 프론트엔드 개발자",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
         "technologies": [
           "Next.js",
           "Firebase",

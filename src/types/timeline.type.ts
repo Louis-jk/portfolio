@@ -6,7 +6,23 @@ export type TimelineItem = {
   region: string;
   role: string;
   description: string[];
-  link: string;
+  isNDA: boolean;
+  isCommercial: boolean;
+  personalLinks?: {
+    title: string;
+    github: string;
+  }[];
+  commercialPlatforms: {
+    web: boolean;
+    mobile: boolean;
+    desktop: boolean;
+  };
+  commercialLinks: {
+    web: string;
+    ios: string;
+    android: string;
+    desktop: string;
+  };
   thumbnail: string;
   details?: {
     fullDescription: string;

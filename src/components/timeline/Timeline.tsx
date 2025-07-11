@@ -132,7 +132,7 @@ export default function Timeline({
                         {t(item.role)}
                       </p>
                       <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
-                        {item.date}
+                        {t(item.date)}
                       </p>
                     </div>
                     <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>

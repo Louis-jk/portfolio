@@ -6,7 +6,10 @@ import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { FaBuilding, FaPerson } from 'react-icons/fa6';
+import { FaBuilding } from 'react-icons/fa6';
+import { FaExternalLinkAlt, FaGooglePlay, FaDesktop } from 'react-icons/fa';
+import { IoLogoAppleAppstore } from 'react-icons/io5';
+import { TbBrowserShare } from 'react-icons/tb';
 
 interface TimelineDetailProps {
   item: TimelineItem | null;
@@ -19,6 +22,31 @@ export default function TimelineDetail({
 }: TimelineDetailProps) {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('timeline');
+
+  const webLink =
+    item &&
+    !item.isNDA &&
+    item.isCommercial &&
+    item.commercialPlatforms.web &&
+    item.commercialLinks.web;
+  const iosLink =
+    item &&
+    !item.isNDA &&
+    item.isCommercial &&
+    item.commercialPlatforms.mobile &&
+    item.commercialLinks.ios;
+  const androidLink =
+    item &&
+    !item.isNDA &&
+    item.isCommercial &&
+    item.commercialPlatforms.mobile &&
+    item.commercialLinks.android;
+  const desktopLink =
+    item &&
+    !item.isNDA &&
+    item.isCommercial &&
+    item.commercialPlatforms.desktop &&
+    item.commercialLinks.desktop;
 
   if (!item || !item.details) {
     return (
@@ -62,7 +90,7 @@ export default function TimelineDetail({
         <div>
           <h3 className='text-2xl font-bold mb-2'>{t(item.title)}</h3>
 
-          <div className='flex flex-col gap-1 mb-7'>
+          <div className='flex flex-col gap-1'>
             <div className='flex items-center gap-2 justify-between w-full'>
               {item.company && (
                 <p className='text-sm text-gray-600 dark:text-gray-400 flex items-center'>
@@ -87,7 +115,7 @@ export default function TimelineDetail({
                 </p>
               )}
               <p className='text-sm text-gray-600 dark:text-gray-400'>
-                {item.date}
+                {t(item.date)}
               </p>
             </div>
           </div>
@@ -96,11 +124,11 @@ export default function TimelineDetail({
 
       {/* Image */}
       {item.details.image && (
-        <div className='relative h-[30vh] rounded-lg overflow-hidden mb-10'>
+        <div className='relative rounded-sm overflow-hidden'>
           <Image
             src={item.details.image}
             alt={item.title}
-            className='w-full h-full object-contain'
+            className='w-full h-full object-contain select-none pointer-events-none'
             width={1000}
             height={1000}
             objectFit='contain'
@@ -110,6 +138,70 @@ export default function TimelineDetail({
 
       {/* Full Description */}
       <div>
+        {!item.isNDA && item.isCommercial && (
+          <div className='mb-5 flex'>
+            {webLink && (
+              <a
+                href={item.commercialLinks.web}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='mr-5'
+              >
+                <div className='flex items-center gap-1'>
+                  <TbBrowserShare className='w-3 h-3 text-purple-500' />
+                  <span className='text-sm underline text-purple-500'>
+                    Website
+                  </span>
+                </div>
+              </a>
+            )}
+            {iosLink && (
+              <a
+                href={item.commercialLinks.ios}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='mr-5'
+              >
+                <div className='flex items-center gap-1'>
+                  <IoLogoAppleAppstore className='w-3 h-3 text-purple-500' />
+                  <span className='text-sm underline text-purple-500'>
+                    App Store
+                  </span>
+                </div>
+              </a>
+            )}
+            {androidLink && (
+              <a
+                href={item.commercialLinks.android}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='mr-5'
+              >
+                <div className='flex items-center gap-1'>
+                  <FaGooglePlay className='w-3 h-3 text-purple-500' />
+                  <span className='text-sm underline text-purple-500'>
+                    Google Play
+                  </span>
+                </div>
+              </a>
+            )}
+            {desktopLink && (
+              <a
+                href={item.commercialLinks.desktop}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <div className='flex items-center gap-1'>
+                  <FaDesktop className='w-3 h-3 text-purple-500' />
+                  <span className='text-sm underline text-purple-500'>
+                    Desktop
+                  </span>
+                </div>
+              </a>
+            )}
+          </div>
+        )}
+
         <h4 className='text-lg font-semibold mb-3'>Overview</h4>
         <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
           {t(item.details.fullDescription)}
