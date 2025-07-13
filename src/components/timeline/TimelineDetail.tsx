@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { FaBuilding } from 'react-icons/fa6';
-import { FaExternalLinkAlt, FaGooglePlay, FaDesktop } from 'react-icons/fa';
+import { FaGooglePlay, FaDesktop } from 'react-icons/fa';
 import { IoLogoAppleAppstore } from 'react-icons/io5';
 import { TbBrowserShare } from 'react-icons/tb';
 
@@ -83,7 +83,7 @@ export default function TimelineDetail({
       initial={{ opacity: 0, x: 20 }}
       animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
       transition={{ duration: 0.5 }}
-      className='h-full overflow-y-auto flex flex-col gap-7'
+      className='flex flex-col gap-7'
     >
       <div>
         {/* Header */}

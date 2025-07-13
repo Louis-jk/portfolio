@@ -4,15 +4,17 @@ import Intro from '@/components/intro/Intro';
 import Timeline from '@/components/timeline/Timeline';
 import TimelineDetail from '@/components/timeline/TimelineDetail';
 import { motion } from 'framer-motion';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { type TimelineItem } from '@/types/timeline.type';
 import { timelineData } from '@/data/timeline.data';
+import Lenis from 'lenis';
 
 function MainContent() {
   const [selectedItem, setSelectedItem] = useState<TimelineItem | null>(null);
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const timelineDetailScrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const itemId = searchParams.get('item');
@@ -35,6 +37,25 @@ function MainContent() {
       setSelectedItem(null);
     }
   }, [pathname, searchParams]);
+
+  useEffect(() => {
+    if (!timelineDetailScrollRef.current) return;
+
+    const lenis = new Lenis({
+      wrapper: timelineDetailScrollRef.current,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
 
   const handleItemClick = (item: TimelineItem) => {
     setSelectedItem(item);
@@ -79,6 +100,7 @@ function MainContent() {
 
             {/* Timeline Detail with scroll */}
             <motion.div
+              ref={timelineDetailScrollRef}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}

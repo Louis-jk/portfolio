@@ -1,12 +1,13 @@
 'use client';
 
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { TimelineItem } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Lenis from 'lenis'; // Lenis 패키지 import 경로 맞게 조정하세요
 
 interface TimelineProps {
   items: TimelineItem[];
@@ -20,6 +21,9 @@ export default function Timeline({
   onItemClick,
 }: TimelineProps) {
   const t = useTranslations('timeline');
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
+  const lenisRef = useRef<Lenis | null>(null);
 
   const [hoveredItem, setHoveredItem] = useState<TimelineItem | null>(null);
   const [showThumbnail, setShowThumbnail] = useState(false);
@@ -31,6 +35,59 @@ export default function Timeline({
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 200, damping: 25 });
   const springY = useSpring(mouseY, { stiffness: 200, damping: 25 });
+
+  const selectedIndex = items.findIndex((item) => item.id === selectedItem?.id);
+
+  // Lenis 초기화
+  useEffect(() => {
+    if (!scrollRef.current) return;
+
+    const wrapper = scrollRef.current;
+    const content = wrapper.firstElementChild as HTMLElement;
+    if (!content) return;
+
+    lenisRef.current = new Lenis({
+      wrapper,
+      content,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenisRef.current?.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  // 키보드 방향키 처리
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!items.length || selectedIndex === -1) return;
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = Math.max(selectedIndex - 1, 0);
+        onItemClick(items[prevIndex]);
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = Math.min(selectedIndex + 1, items.length - 1);
+        onItemClick(items[nextIndex]);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [items, selectedIndex, onItemClick]);
 
   useEffect(() => {
     if (!showThumbnail) return;
@@ -45,7 +102,6 @@ export default function Timeline({
       mouseX.set(target.x, false);
       mouseY.set(target.y, false);
 
-      // 최초에만 토글
       if (!showThumbnail) {
         const timer = setTimeout(() => {
           setShowThumbnail(true);
@@ -57,8 +113,40 @@ export default function Timeline({
     }
   }, [target.x, target.y, hoveredItem, showThumbnail, mouseX, mouseY]);
 
+  // 선택된 아이템 위치로 Lenis 스크롤 이동
+  useEffect(() => {
+    if (!selectedItem) return;
+
+    const scrollContainer = scrollRef.current;
+    const itemEl = itemRefs.current.get(selectedItem.id);
+    const lenis = lenisRef.current;
+
+    if (!scrollContainer || !itemEl || !lenis) return;
+
+    const headerOffset = 80;
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const itemRect = itemEl.getBoundingClientRect();
+
+    if (itemRect.top < containerRect.top + headerOffset) {
+      // 🔼 위쪽에 가려진 경우 → scrollTo로 부드럽게 이동
+      const offset = itemEl.offsetTop - headerOffset - 100;
+      setTimeout(() => {
+        lenis.scrollTo(offset);
+      }, 20);
+    } else if (itemRect.bottom > containerRect.bottom) {
+      // 🔽 아래쪽에 가려진 경우 → scrollTo로 부드럽게 이동
+      const offset =
+        itemEl.offsetTop -
+        scrollContainer.clientHeight +
+        itemEl.offsetHeight +
+        10;
+      setTimeout(() => {
+        lenis.scrollTo(offset);
+      }, 20);
+    }
+  }, [selectedItem]);
+
   const handleMouseEnter = (e: React.MouseEvent, item: TimelineItem) => {
-    // 이미 선택된 아이템이면 Click 버튼을 표시하지 않음
     if (selectedItem?.id === item.id) {
       return;
     }
@@ -86,10 +174,16 @@ export default function Timeline({
       <h2 className='text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6'>
         Works & Experiences
       </h2>
-      <div className='flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'>
+      <div
+        ref={scrollRef}
+        className='flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+      >
         {items.map((item, index) => (
           <div key={item.id}>
             <motion.div
+              ref={(el) => {
+                itemRefs.current.set(item.id, el);
+              }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
