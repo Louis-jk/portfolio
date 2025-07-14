@@ -181,7 +181,7 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/turingum/mystery_ticket.gif',
+    thumbnail: '/images/work/turingum/mystery_ticket_3part.gif',
     details: {
       fullDescription: 'turingum_web03_02.details.fullDescription',
       technologies: [
@@ -203,7 +203,7 @@ export const timelineData: TimelineItem[] = [
         'turingum_web03_02.details.achievements.1',
         'turingum_web03_02.details.achievements.2',
       ],
-      image: '/images/work/turingum/mystery_ticket.gif',
+      image: '/images/work/turingum/mystery_ticket_3part.gif',
     },
   },
   {
