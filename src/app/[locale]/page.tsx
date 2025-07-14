@@ -14,9 +14,9 @@ export default function HomePage() {
 
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <div className='h-screen flex flex-col overflow-hidden'>
+      <div className='h-screen flex flex-col lg:overflow-hidden'>
         {/* 메인 콘텐츠 (헤더 포함) */}
-        <div className='flex-1 overflow-hidden'>
+        <div className='flex-1 lg:overflow-hidden'>
           <Main />
         </div>
 

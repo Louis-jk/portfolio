@@ -90,7 +90,7 @@ export default function TimelineDetail({
       initial={{ opacity: 0, x: 20 }}
       animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
       transition={{ duration: 0.5 }}
-      className='flex flex-col gap-7'
+      className='flex flex-col gap-7 pb-4'
     >
       <div>
         {/* Header */}
@@ -294,6 +294,9 @@ export default function TimelineDetail({
           ))}
         </ul>
       </div>
+
+      {/* 하단 여백 */}
+      <div className='h-24'></div>
     </motion.div>
   );
 }

@@ -7,7 +7,7 @@ import { TimelineItem } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Lenis from 'lenis'; // Lenis 패키지 import 경로 맞게 조정하세요
+import Lenis from 'lenis';
 
 interface TimelineProps {
   items: TimelineItem[];
@@ -31,6 +31,9 @@ export default function Timeline({
     x: 0,
     y: 0,
   });
+  const [visibleItems, setVisibleItems] = useState(5); // 모바일에서 처음 5개만 보이기
+  const [isMobile, setIsMobile] = useState(false);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 200, damping: 25 });
@@ -38,17 +41,47 @@ export default function Timeline({
 
   const selectedIndex = items.findIndex((item) => item.id === selectedItem?.id);
 
+  // 모바일 체크
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // 스크롤 감지하여 아이템 점진적 표시 (모바일에서만)
+  useEffect(() => {
+    if (!isMobile || !scrollRef.current) return;
+
+    const handleScroll = () => {
+      const scrollElement = scrollRef.current;
+      if (!scrollElement) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = scrollElement;
+      const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+
+      // 스크롤이 80% 이상일 때 더 많은 아이템 표시
+      if (scrollPercentage > 0.8 && visibleItems < items.length) {
+        setVisibleItems((prev) => Math.min(prev + 3, items.length));
+      }
+    };
+
+    const scrollElement = scrollRef.current;
+    scrollElement.addEventListener('scroll', handleScroll);
+    return () => scrollElement.removeEventListener('scroll', handleScroll);
+  }, [isMobile, visibleItems, items.length]);
+
   // Lenis 초기화
   useEffect(() => {
-    if (!scrollRef.current) return;
+    if (!scrollRef.current || isMobile) return;
 
     const wrapper = scrollRef.current;
-    const content = wrapper.firstElementChild as HTMLElement;
-    if (!content) return;
 
     lenisRef.current = new Lenis({
       wrapper,
-      content,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
@@ -65,7 +98,7 @@ export default function Timeline({
       lenisRef.current?.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, [isMobile]);
 
   // 키보드 방향키 처리
   useEffect(() => {
@@ -115,7 +148,7 @@ export default function Timeline({
 
   // 선택된 아이템 위치로 Lenis 스크롤 이동
   useEffect(() => {
-    if (!selectedItem) return;
+    if (!selectedItem || isMobile) return;
 
     const scrollContainer = scrollRef.current;
     const itemEl = itemRefs.current.get(selectedItem.id);
@@ -129,7 +162,7 @@ export default function Timeline({
 
     if (itemRect.top < containerRect.top + headerOffset) {
       // 🔼 위쪽에 가려진 경우 → scrollTo로 부드럽게 이동
-      const offset = itemEl.offsetTop - headerOffset - 100;
+      const offset = itemEl.offsetTop - headerOffset - 20;
       setTimeout(() => {
         lenis.scrollTo(offset);
       }, 20);
@@ -139,12 +172,12 @@ export default function Timeline({
         itemEl.offsetTop -
         scrollContainer.clientHeight +
         itemEl.offsetHeight +
-        10;
+        80; // 더 많은 여백 추가
       setTimeout(() => {
         lenis.scrollTo(offset);
       }, 20);
     }
-  }, [selectedItem]);
+  }, [selectedItem, isMobile]);
 
   const handleMouseEnter = (e: React.MouseEvent, item: TimelineItem) => {
     if (selectedItem?.id === item.id) {
@@ -169,16 +202,23 @@ export default function Timeline({
     setTarget({ x: 0, y: 0 });
   };
 
+  // 모바일에서는 visibleItems만큼만 렌더링
+  const itemsToRender = isMobile ? items.slice(0, visibleItems) : items;
+
   return (
-    <div className='h-full flex flex-col'>
+    <div className='flex flex-col'>
       <h2 className='text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6'>
         Works & Experiences
       </h2>
       <div
         ref={scrollRef}
-        className='flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+        className={`${
+          isMobile
+            ? 'pr-0'
+            : 'pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+        }`}
       >
-        {items.map((item, index) => (
+        {itemsToRender.map((item, index) => (
           <div key={item.id}>
             <motion.div
               ref={(el) => {
@@ -187,25 +227,35 @@ export default function Timeline({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative p-4 cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg ${
+              className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg  ${
                 selectedItem?.id === item.id
                   ? 'bg-gray-100 dark:bg-gray-800/70'
                   : ''
-              }`}
+              } ${isMobile ? 'p-3 mb-2' : 'p-4'}`}
               onClick={() => onItemClick(item)}
-              onMouseEnter={(e) => handleMouseEnter(e, item)}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={
+                !isMobile ? (e) => handleMouseEnter(e, item) : undefined
+              }
+              onMouseMove={!isMobile ? handleMouseMove : undefined}
+              onMouseLeave={!isMobile ? handleMouseLeave : undefined}
             >
-              <div className='max-h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600'>
+              <div
+                className={`${
+                  isMobile
+                    ? 'pr-0 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600'
+                    : ''
+                }`}
+              >
                 <div className='flex items-start gap-3'>
-                  <div className='flex-shrink-0 mt-1'>
-                    {selectedItem?.id === item.id ? (
-                      <Check className='w-4 h-4 text-purple-500 dark:text-purple-400' />
-                    ) : (
-                      <div className='w-4 h-4' />
-                    )}
-                  </div>
+                  {!isMobile && (
+                    <div className='flex-shrink-0 mt-1'>
+                      {selectedItem?.id === item.id ? (
+                        <Check className='w-4 h-4 text-purple-500 dark:text-purple-400' />
+                      ) : (
+                        <div className='w-4 h-4' />
+                      )}
+                    </div>
+                  )}
                   <div className='flex-1 min-w-0'>
                     <div className='flex items-center gap-2 justify-between'>
                       <h3
@@ -238,15 +288,37 @@ export default function Timeline({
                 </div>
               </div>
             </motion.div>
-            {index < items.length - 1 && (
+            {index < itemsToRender.length - 1 && (
               <div className='h-px border-t border-dashed border-gray-200 dark:border-gray-700 mx-4' />
             )}
           </div>
         ))}
+
+        {/* 모바일에서 더 보기 버튼 */}
+        {isMobile && visibleItems < items.length && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='p-4 text-center'
+          >
+            <button
+              onClick={() =>
+                setVisibleItems((prev) => Math.min(prev + 5, items.length))
+              }
+              className='px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors'
+            >
+              더 보기 ({visibleItems}/{items.length})
+            </button>
+          </motion.div>
+        )}
+
+        {/* 하단 여백 */}
+        <div className='h-24'></div>
       </div>
 
       {showThumbnail &&
         hoveredItem &&
+        !isMobile &&
         createPortal(
           <LiquidButton x={springX} y={springY}>
             Click!

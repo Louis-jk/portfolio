@@ -3,6 +3,7 @@
 import Intro from '@/components/intro/Intro';
 import Timeline from '@/components/timeline/Timeline';
 import TimelineDetail from '@/components/timeline/TimelineDetail';
+import TimelineDrawer from '@/components/timeline/TimelineDrawer';
 import { motion } from 'framer-motion';
 import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
@@ -12,6 +13,7 @@ import Lenis from 'lenis';
 
 function MainContent() {
   const [selectedItem, setSelectedItem] = useState<TimelineItem | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const timelineDetailScrollRef = useRef<HTMLDivElement | null>(null);
@@ -20,7 +22,13 @@ function MainContent() {
     const itemId = searchParams.get('item');
     if (itemId) {
       const item = timelineData.find((item) => item.id === itemId);
-      if (item) setSelectedItem(item);
+      if (item) {
+        setSelectedItem(item);
+        // 모바일에서는 drawer 열기
+        if (window.innerWidth < 1024) {
+          setIsDrawerOpen(true);
+        }
+      }
     }
   }, [searchParams]);
 
@@ -35,6 +43,7 @@ function MainContent() {
       pathname === '/ja'
     ) {
       setSelectedItem(null);
+      setIsDrawerOpen(false);
     }
   }, [pathname, searchParams]);
 
@@ -62,18 +71,32 @@ function MainContent() {
     const url = new URL(window.location.href);
     url.searchParams.set('item', item.id);
     window.history.replaceState({}, '', url.toString());
+
+    // 모바일에서는 drawer 열기
+    if (window.innerWidth < 1024) {
+      setIsDrawerOpen(true);
+    }
+  };
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
+    setSelectedItem(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('item');
+    window.history.replaceState({}, '', url.toString());
   };
 
   return (
-    <div className='h-full overflow-hidden'>
-      <main className='h-full w-full flex flex-col pt-16'>
+    <div className='h-full lg:overflow-hidden'>
+      <main className='h-full w-full flex flex-col pt-16 lg:overflow-hidden'>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          className='w-full px-6 lg:px-10 h-full'
+          className='w-full px-6 lg:px-10 h-full lg:overflow-hidden'
         >
-          <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 h-full'>
+          {/* Desktop Layout */}
+          <div className='hidden lg:grid lg:grid-cols-12 gap-6 lg:gap-8 h-full'>
             {/* Intro */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -89,7 +112,7 @@ function MainContent() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-              className='lg:col-span-4 overflow-y-auto max-h-[calc(100vh-8rem)] pr-2'
+              className='lg:col-span-4 pr-2'
             >
               <Timeline
                 items={timelineData}
@@ -98,25 +121,58 @@ function MainContent() {
               />
             </motion.div>
 
-            {/* Timeline Detail with scroll */}
+            {/* Timeline Detail with scroll - Desktop only */}
             <motion.div
               ref={timelineDetailScrollRef}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
-              className='hidden lg:block lg:col-span-5 overflow-y-auto max-h-[calc(100vh-8rem)] pr-2'
+              className='lg:col-span-5 overflow-y-auto max-h-[calc(100vh-6rem)] pr-2'
             >
-              <div className='rounded-xl p-6 min-h-[600px]'>
+              <div className='rounded-xl p-6 pb-8 min-h-[600px]'>
                 <TimelineDetail
-                  key={selectedItem?.id || 'empty'} // selectedItem이 변경될 때마다 컴포넌트를 새로 렌더링
+                  key={selectedItem?.id || 'empty'}
                   item={selectedItem}
                   isVisible={!!selectedItem}
                 />
               </div>
             </motion.div>
           </div>
+
+          {/* Mobile Layout */}
+          <div className='lg:hidden space-y-8'>
+            {/* Intro */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+            >
+              <Intro />
+            </motion.div>
+
+            {/* Timeline */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+              className='-mx-6 px-6'
+            >
+              <Timeline
+                items={timelineData}
+                selectedItem={selectedItem}
+                onItemClick={handleItemClick}
+              />
+            </motion.div>
+          </div>
         </motion.div>
       </main>
+
+      {/* Mobile/Tablet Drawer */}
+      <TimelineDrawer
+        item={selectedItem}
+        isOpen={isDrawerOpen}
+        onClose={handleDrawerClose}
+      />
     </div>
   );
 }
