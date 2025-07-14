@@ -128,9 +128,9 @@ export default function TimelineDetail({
           <Image
             src={item.details.image}
             alt={item.title}
-            className='w-full h-full object-contain select-none pointer-events-none'
-            width={1000}
-            height={1000}
+            className='w-full h-auto object-contain select-none pointer-events-none'
+            width={1200}
+            height={579}
             objectFit='contain'
           />
         </div>
