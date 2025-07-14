@@ -31,14 +31,14 @@ export default function TimelineDrawer({
 
           {/* Drawer */}
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            initial={{ y: '100%' }}
+            animate={{ y: 55 }}
+            exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className='fixed right-0 top-0 h-full w-full max-w-sm z-50 lg:hidden bg-white dark:bg-gray-900'
+            className='fixed right-0 top-0 h-full w-full z-50 lg:hidden'
           >
             {/* Header */}
-            <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900'>
+            <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black'>
               <h3 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
                 Work Details
               </h3>
@@ -51,7 +51,7 @@ export default function TimelineDrawer({
             </div>
 
             {/* Content */}
-            <div className='h-[calc(100vh-4rem)] overflow-y-auto bg-white dark:bg-gray-900'>
+            <div className='h-[calc(100vh-4rem)] overflow-y-auto bg-white dark:bg-black'>
               <div className='p-4 pb-8'>
                 <TimelineDetail item={item} isVisible={!!item} />
               </div>
