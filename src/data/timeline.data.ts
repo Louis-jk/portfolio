@@ -32,7 +32,7 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/study.png',
+    thumbnail: 'https://storage.googleapis.com/jk-static-assets/personal.png',
     details: {
       fullDescription: 'personal.details.fullDescription',
       technologies: [
@@ -53,7 +53,7 @@ export const timelineData: TimelineItem[] = [
         'personal.details.achievements.1',
         'personal.details.achievements.2',
       ],
-      image: '/images/work/study.png',
+      image: 'https://storage.googleapis.com/jk-static-assets/personal.png',
     },
   },
   {
@@ -81,7 +81,8 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/b2c.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/confidential_nda.png',
     details: {
       fullDescription: 'confidential_japanese_startup.details.fullDescription',
       technologies: [
@@ -102,7 +103,8 @@ export const timelineData: TimelineItem[] = [
         'confidential_japanese_startup.details.achievements.1',
         'confidential_japanese_startup.details.achievements.2',
       ],
-      image: '/images/work/b2c.png',
+      image:
+        'https://storage.googleapis.com/jk-static-assets/confidential_nda.png',
     },
   },
   {
@@ -130,7 +132,8 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/web3.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/web3_base_zip.gif',
     details: {
       fullDescription: 'turingum_web03_03.details.fullDescription',
       technologies: [
@@ -153,7 +156,8 @@ export const timelineData: TimelineItem[] = [
         'turingum_web03_03.details.achievements.1',
         'turingum_web03_03.details.achievements.2',
       ],
-      image: '/images/work/web3.png',
+      image:
+        'https://storage.googleapis.com/jk-static-assets/web3_base_zip.gif',
     },
   },
   {
@@ -181,7 +185,8 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/turingum/mystery_ticket.gif',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/web3_mystery_ticket_zip.gif',
     details: {
       fullDescription: 'turingum_web03_02.details.fullDescription',
       technologies: [
@@ -203,7 +208,8 @@ export const timelineData: TimelineItem[] = [
         'turingum_web03_02.details.achievements.1',
         'turingum_web03_02.details.achievements.2',
       ],
-      image: '/images/work/turingum/mystery_ticket.gif',
+      image:
+        'https://storage.googleapis.com/jk-static-assets/web3_mystery_ticket_zip.gif',
     },
   },
   {
@@ -231,7 +237,8 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/turingum/wizardry.gif',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/web3_wizardry_campaign_zip.gif',
     details: {
       fullDescription: 'turingum_web03_01.details.fullDescription',
       technologies: [
@@ -254,7 +261,8 @@ export const timelineData: TimelineItem[] = [
         'turingum_web03_01.details.achievements.1',
         'turingum_web03_01.details.achievements.2',
       ],
-      image: '/images/work/turingum/wizardry.gif',
+      image:
+        'https://storage.googleapis.com/jk-static-assets/web3_wizardry_campaign_zip.gif',
     },
   },
   {
@@ -282,7 +290,8 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: '',
     },
-    thumbnail: '/images/work/ko_startup_thumb.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/ko_startup_thumb.png',
     details: {
       fullDescription: 'confidential_korean_startup.details.fullDescription',
       technologies: [
@@ -311,7 +320,8 @@ export const timelineData: TimelineItem[] = [
         'confidential_korean_startup.details.achievements.1',
         'confidential_korean_startup.details.achievements.2',
       ],
-      image: '/images/work/ko_startup_thumb.png',
+      image:
+        'https://storage.googleapis.com/jk-static-assets/ko_startup_thumb.png',
     },
   },
   {
@@ -340,7 +350,8 @@ export const timelineData: TimelineItem[] = [
         'https://play.google.com/store/apps/details?id=com.dmonster.dongnaebookowner&pli=1',
       desktop: 'https://dongnaebook.app/',
     },
-    thumbnail: '/images/work/dmonster/dongnaebook.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/dongnaebook.png',
     details: {
       fullDescription: 'dmonster_11.details.fullDescription',
       technologies: [
@@ -364,7 +375,7 @@ export const timelineData: TimelineItem[] = [
         'dmonster_11.details.achievements.1',
         'dmonster_11.details.achievements.2',
       ],
-      image: '/images/work/dmonster/dongnaebook.png',
+      image: 'https://storage.googleapis.com/jk-static-assets/dongnaebook.png',
     },
   },
   {
@@ -392,7 +403,8 @@ export const timelineData: TimelineItem[] = [
       android: '',
       desktop: 'https://changeall2019.mycafe24.com/service/pc/',
     },
-    thumbnail: '/images/work/dmonster/moli_desktop.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/moli_desktop.png',
     details: {
       fullDescription: 'dmonster_10.details.fullDescription',
       technologies: [
@@ -417,7 +429,7 @@ export const timelineData: TimelineItem[] = [
         'dmonster_10.details.achievements.1',
         'dmonster_10.details.achievements.2',
       ],
-      image: '/images/work/dmonster/moli_desktop.png',
+      image: 'https://storage.googleapis.com/jk-static-assets/moli_desktop.png',
     },
   },
   {
@@ -445,7 +457,7 @@ export const timelineData: TimelineItem[] = [
       android: 'https://play.google.com/store/apps/details?id=com.mozaiq',
       desktop: '',
     },
-    thumbnail: '/images/work/dmonster/mozaiq.png',
+    thumbnail: 'https://storage.googleapis.com/jk-static-assets/mozaiq.png',
     details: {
       fullDescription: 'dmonster_09.details.fullDescription',
       technologies: [
@@ -470,7 +482,7 @@ export const timelineData: TimelineItem[] = [
         'dmonster_09.details.achievements.1',
         'dmonster_09.details.achievements.2',
       ],
-      image: '/images/work/dmonster/mozaiq.png',
+      image: 'https://storage.googleapis.com/jk-static-assets/mozaiq.png',
     },
   },
 ];
