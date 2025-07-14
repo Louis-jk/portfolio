@@ -108,6 +108,7 @@ function MainContent() {
             >
               <div className='rounded-xl p-6 min-h-[600px]'>
                 <TimelineDetail
+                  key={selectedItem?.id || 'empty'} // selectedItem이 변경될 때마다 컴포넌트를 새로 렌더링
                   item={selectedItem}
                   isVisible={!!selectedItem}
                 />
