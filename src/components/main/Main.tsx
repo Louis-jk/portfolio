@@ -17,6 +17,7 @@ function MainContent() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const timelineDetailScrollRef = useRef<HTMLDivElement | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const itemId = searchParams.get('item');
@@ -47,10 +48,11 @@ function MainContent() {
     }
   }, [pathname, searchParams]);
 
+  // Lenis 초기화
   useEffect(() => {
     if (!timelineDetailScrollRef.current) return;
 
-    const lenis = new Lenis({
+    lenisRef.current = new Lenis({
       wrapper: timelineDetailScrollRef.current,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -58,13 +60,23 @@ function MainContent() {
     });
 
     function raf(time: number) {
-      lenis.raf(time);
+      lenisRef.current?.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
+    return () => {
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
+    };
   }, []);
+
+  // selectedItem 변경 시 Lenis로 스크롤 위치 초기화
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, [selectedItem]);
 
   const handleItemClick = (item: TimelineItem) => {
     setSelectedItem(item);
@@ -124,6 +136,7 @@ function MainContent() {
             {/* Timeline Detail with scroll - Desktop only */}
             <motion.div
               ref={timelineDetailScrollRef}
+              data-timeline-detail-container
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
