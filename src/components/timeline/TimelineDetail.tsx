@@ -166,7 +166,6 @@ export default function TimelineDetail({
             )}
             width={1200}
             height={579}
-            objectFit='contain'
             onLoad={() => setImageLoaded(true)}
             priority={true} // 우선순위 로딩
           />
