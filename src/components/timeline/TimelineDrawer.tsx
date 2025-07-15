@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { type TimelineItem } from '@/types/timeline.type';
-import { X } from 'lucide-react';
+import { IoClose } from 'react-icons/io5';
 import TimelineDetail from './TimelineDetail';
 import { useEffect } from 'react';
 
@@ -65,14 +65,17 @@ export default function TimelineDrawer({
           >
             {/* Header */}
             <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black'>
-              <h3 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+              <h3 className='text-lg font-bold text-gray-900 dark:text-gray-100'>
                 Work Details
               </h3>
               <button
                 onClick={onClose}
                 className='p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
               >
-                <X size={20} className='text-gray-600 dark:text-gray-400' />
+                <IoClose
+                  size={22}
+                  className='text-gray-600 dark:text-gray-300'
+                />
               </button>
             </div>
 
