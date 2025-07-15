@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { type TimelineItem } from '@/types/timeline.type';
 import { X } from 'lucide-react';
 import TimelineDetail from './TimelineDetail';
+import { useEffect } from 'react';
 
 interface TimelineDrawerProps {
   item: TimelineItem | null;
@@ -16,6 +17,31 @@ export default function TimelineDrawer({
   isOpen,
   onClose,
 }: TimelineDrawerProps) {
+  // Drawer가 열렸을 때 배경 스크롤 방지
+  useEffect(() => {
+    if (isOpen) {
+      // 현재 스크롤 위치 저장
+      const scrollY = window.scrollY;
+
+      // body에 overflow: hidden 적용
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+
+      return () => {
+        // Drawer가 닫힐 때 스크롤 복원
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+
+        // 저장된 스크롤 위치로 복원
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
