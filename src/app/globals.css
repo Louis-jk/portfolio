@@ -172,3 +172,18 @@ html {
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* 스크롤 바운스 제거 */
+html,
+body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* iOS Safari 바운스 제거 */
+@supports (-webkit-touch-callout: none) {
+  html,
+  body {
+    -webkit-overflow-scrolling: auto;
+  }
+}

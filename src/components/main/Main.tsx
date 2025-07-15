@@ -93,7 +93,7 @@ function MainContent() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          className='w-full px-6 lg:px-10 h-full lg:overflow-hidden'
+          className='w-full px-6 lg:px-10 h-full'
         >
           {/* Desktop Layout (1280px+) */}
           <div className='hidden xl:grid xl:grid-cols-12 gap-6 lg:gap-8 h-full'>
@@ -156,21 +156,13 @@ function MainContent() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-                className='flex flex-col'
+                className='flex flex-col h-full'
               >
-                {/* 제목 - 스크롤 컨테이너 밖 */}
-                <h2 className='text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6'>
-                  Works & Experiences
-                </h2>
-
-                {/* 스크롤 컨테이너 - 타임라인 항목만 */}
-                <div className='h-[calc(100vh-12rem)] overflow-y-auto'>
-                  <Timeline
-                    items={timelineData}
-                    selectedItem={selectedItem}
-                    onItemClick={handleItemClick}
-                  />
-                </div>
+                <Timeline
+                  items={timelineData}
+                  selectedItem={selectedItem}
+                  onItemClick={handleItemClick}
+                />
               </motion.div>
             </div>
           </div>
@@ -191,7 +183,7 @@ function MainContent() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-              className='-mx-6 px-6'
+              className='relative'
             >
               <Timeline
                 items={timelineData}

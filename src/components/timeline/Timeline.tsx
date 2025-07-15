@@ -44,6 +44,15 @@ export default function Timeline({
 
   const selectedIndex = items.findIndex((item) => item.id === selectedItem?.id);
 
+  // 마지막 항목 감지를 위한 ref
+  const lastItemRef = useRef<HTMLDivElement | null>(null);
+
+  // Intersection Observer 제거 (스크롤 이벤트로 대체)
+  // useEffect(() => {
+  //   if (window.innerWidth >= 1024) return;
+  //   ... 기존 Intersection Observer 코드 제거
+  // }, [items.length, hasReachedEnd]);
+
   // 태블릿 디바이스 감지
   useEffect(() => {
     const checkTabletDevice = () => {
@@ -92,17 +101,8 @@ export default function Timeline({
     const isMobileOrPortraitTablet = window.innerWidth < 1024; // 1024px 미만 (모바일 + 세로형 태블릿)
 
     if (!isMobileOrPortraitTablet) {
-      console.log(
-        'Mobile/Portrait tablet scroll listener not set up - width:',
-        window.innerWidth
-      );
       return;
     }
-
-    console.log(
-      'Setting up mobile/portrait tablet window scroll listener, width:',
-      window.innerWidth
-    );
 
     const handleWindowScroll = () => {
       const scrollTop = window.scrollY;
@@ -110,31 +110,19 @@ export default function Timeline({
       const clientHeight = window.innerHeight;
       const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
 
-      console.log('Mobile/Portrait tablet window scroll:', {
-        scrollTop,
-        scrollHeight,
-        clientHeight,
-        scrollPercentage,
-        visibleItems,
-        totalItems: items.length,
-      });
-
       // 스크롤이 70% 이상일 때 더 많은 아이템 표시 (모바일과 세로형 태블릿에서만)
       if (scrollPercentage > 0.7 && visibleItems < items.length) {
-        console.log('Loading more items...');
         setVisibleItems((prev) => Math.min(prev + 3, items.length));
       }
     };
 
     window.addEventListener('scroll', handleWindowScroll);
-    console.log('Mobile/Portrait tablet scroll event listener added');
 
     // 초기 로드 시에도 한 번 실행
     handleWindowScroll();
 
     return () => {
       window.removeEventListener('scroll', handleWindowScroll);
-      console.log('Mobile/Portrait tablet scroll event listener removed');
     };
   }, [items.length]); // visibleItems 제거하여 무한 루프 방지
 
@@ -148,8 +136,6 @@ export default function Timeline({
     )
       return;
 
-    console.log('Setting up tablet container scroll listener');
-
     const handleScroll = () => {
       const scrollElement = scrollRef.current;
       if (!scrollElement) return;
@@ -157,18 +143,8 @@ export default function Timeline({
       const { scrollTop, scrollHeight, clientHeight } = scrollElement;
       const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
 
-      console.log('Tablet container scroll:', {
-        scrollTop,
-        scrollHeight,
-        clientHeight,
-        scrollPercentage,
-        visibleItems,
-        totalItems: items.length,
-      });
-
       // 스크롤이 70% 이상일 때 더 많은 아이템 표시 (가로형 태블릿에서만)
       if (scrollPercentage > 0.7 && visibleItems < items.length) {
-        console.log('Loading more items...');
         setVisibleItems((prev) => Math.min(prev + 3, items.length));
       }
     };
@@ -351,32 +327,34 @@ export default function Timeline({
 
   return (
     <div className='flex flex-col'>
-      {/* 제목은 스크롤 컨테이너 밖에 배치 (1024px 미만에서만) */}
-      {window.innerWidth < 1024 && (
-        <h2
-          className={`text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
-            window.innerWidth < 1024
-              ? 'sticky top-[55px] z-10 bg-white dark:bg-[#0a0a0a] py-4'
-              : ''
-          }`}
-        >
-          Works & Experiences
-        </h2>
-      )}
+      {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 적용 */}
+      <h2
+        className={`text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
+          window.innerWidth < 1024
+            ? 'sticky top-[55px] z-50 bg-white dark:bg-[#0a0a0a] py-4 shadow-sm'
+            : ''
+        }`}
+      >
+        Works & Experiences
+      </h2>
 
       {/* 스크롤 컨테이너 - 타임라인 항목만 포함 */}
       <div
         ref={scrollRef}
+        data-timeline-container
         className={`${
           window.innerWidth < 1024
             ? 'pr-0' // 모바일과 세로형 태블릿에서는 스크롤 제거
-            : isTablet && isTabletDevice
-            ? 'pr-0 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+            : isTablet
+            ? 'pr-0 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
             : 'pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
         }`}
       >
         {itemsToRender.map((item, index) => (
-          <div key={item.id}>
+          <div
+            key={item.id}
+            ref={index === itemsToRender.length - 1 ? lastItemRef : null}
+          >
             <motion.div
               ref={(el) => {
                 itemRefs.current.set(item.id, el);
@@ -492,7 +470,7 @@ export default function Timeline({
           )}
 
         {/* 하단 여백 */}
-        <div className='h-24'></div>
+        <div className={`${isTablet ? 'h-32' : 'h-24'}`}></div>
       </div>
 
       {showThumbnail &&
