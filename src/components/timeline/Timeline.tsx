@@ -33,6 +33,7 @@ export default function Timeline({
   });
   const [visibleItems, setVisibleItems] = useState(5); // 모바일에서 처음 5개만 보이기
   const [isMobile, setIsMobile] = useState(false);
+  const [isKeyboardSelection, setIsKeyboardSelection] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -107,12 +108,14 @@ export default function Timeline({
 
       if (e.key === 'ArrowUp') {
         e.preventDefault();
+        setIsKeyboardSelection(true);
         const prevIndex = Math.max(selectedIndex - 1, 0);
         onItemClick(items[prevIndex]);
       }
 
       if (e.key === 'ArrowDown') {
         e.preventDefault();
+        setIsKeyboardSelection(true);
         const nextIndex = Math.min(selectedIndex + 1, items.length - 1);
         onItemClick(items[nextIndex]);
       }
@@ -156,28 +159,61 @@ export default function Timeline({
 
     if (!scrollContainer || !itemEl || !lenis) return;
 
-    const headerOffset = 80;
     const containerRect = scrollContainer.getBoundingClientRect();
     const itemRect = itemEl.getBoundingClientRect();
 
-    if (itemRect.top < containerRect.top + headerOffset) {
-      // 🔼 위쪽에 가려진 경우 → scrollTo로 부드럽게 이동
-      const offset = itemEl.offsetTop - headerOffset - 20;
-      setTimeout(() => {
-        lenis.scrollTo(offset);
-      }, 20);
-    } else if (itemRect.bottom > containerRect.bottom) {
-      // 🔽 아래쪽에 가려진 경우 → scrollTo로 부드럽게 이동
-      const offset =
-        itemEl.offsetTop -
-        scrollContainer.clientHeight +
-        itemEl.offsetHeight +
-        80; // 더 많은 여백 추가
+    // 아이템이 완전히 보이는지 확인 (약간의 여백 허용)
+    const margin = 5;
+    const isFullyVisible =
+      itemRect.top >= containerRect.top - margin &&
+      itemRect.bottom <= containerRect.bottom + margin;
+
+    // 아이템이 부분적으로만 보이는 경우에만 스크롤
+    if (!isFullyVisible) {
+      let offset: number;
+
+      if (itemRect.top < containerRect.top - margin) {
+        // 🔼 위쪽에 가려진 경우 → 아이템을 상단에 위치시킴
+        offset = Math.max(0, itemEl.offsetTop);
+      } else if (itemRect.bottom > containerRect.bottom + margin) {
+        // 🔽 아래쪽에 가려진 경우 → 아이템을 하단에 위치시킴
+        offset =
+          itemEl.offsetTop - scrollContainer.clientHeight + itemEl.offsetHeight;
+      } else {
+        // 아이템이 완전히 보이므로 스크롤하지 않음
+        return;
+      }
+
       setTimeout(() => {
         lenis.scrollTo(offset);
       }, 20);
     }
   }, [selectedItem, isMobile]);
+
+  // 키보드 선택 시 자연스러운 스크롤
+  useEffect(() => {
+    if (!isKeyboardSelection || !selectedItem || isMobile) return;
+
+    const scrollContainer = scrollRef.current;
+    const itemEl = itemRefs.current.get(selectedItem.id);
+    const lenis = lenisRef.current;
+
+    if (!scrollContainer || !itemEl || !lenis) return;
+
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const itemRect = itemEl.getBoundingClientRect();
+    const containerHeight = containerRect.height;
+    const itemHeight = itemRect.height;
+    const itemTop = itemEl.offsetTop;
+
+    // 키보드 선택 시 아이템을 중앙에 위치시킴
+    const targetOffset = itemTop - (containerHeight - itemHeight) / 2;
+
+    setTimeout(() => {
+      lenis.scrollTo(targetOffset);
+      setIsKeyboardSelection(false); // 키보드 선택 플래그 리셋
+    }, 20);
+  }, [selectedItem, isKeyboardSelection, isMobile]);
 
   const handleMouseEnter = (e: React.MouseEvent, item: TimelineItem) => {
     if (selectedItem?.id === item.id) {
