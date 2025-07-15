@@ -33,7 +33,9 @@ export default function Timeline({
   });
   const [visibleItems, setVisibleItems] = useState(5); // 모바일에서 처음 5개만 보이기
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [isKeyboardSelection, setIsKeyboardSelection] = useState(false);
+  const [isTabletDevice, setIsTabletDevice] = useState(false); // 실제 태블릿 디바이스 감지
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -42,20 +44,111 @@ export default function Timeline({
 
   const selectedIndex = items.findIndex((item) => item.id === selectedItem?.id);
 
-  // 모바일 체크
+  // 태블릿 디바이스 감지
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkTabletDevice = () => {
+      const isTabletByUA = /iPad|Android|Tablet/i.test(navigator.userAgent);
+      const isTabletByTouch =
+        'ontouchstart' in window && window.innerWidth >= 768;
+      const isTabletByPointer = window.matchMedia('(pointer: coarse)').matches;
+
+      setIsTabletDevice(isTabletByUA || (isTabletByTouch && isTabletByPointer));
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkTabletDevice();
+    window.addEventListener('resize', checkTabletDevice);
+    return () => window.removeEventListener('resize', checkTabletDevice);
   }, []);
 
-  // 스크롤 감지하여 아이템 점진적 표시 (모바일에서만)
+  // 디바이스 체크
   useEffect(() => {
-    if (!isMobile || !scrollRef.current) return;
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      const wasTablet = isTablet;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 1024 && width < 1280); // 1024px-1279px에서만 태블릿 (가로형)
+
+      // 태블릿 상태가 변경되면 스크롤 위치 초기화
+      if (wasTablet !== (width >= 1024 && width < 1280)) {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = 0;
+        }
+        setVisibleItems(5); // 초기 아이템 수로 리셋
+      }
+
+      // 1024px 이상에서는 모든 아이템 표시
+      if (width >= 1024) {
+        setVisibleItems(items.length);
+      }
+    };
+
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, [isTablet, items.length]);
+
+  // 스크롤 감지하여 아이템 점진적 표시 (모바일과 세로형 태블릿에서만 전체 페이지 스크롤)
+  useEffect(() => {
+    const isMobileOrPortraitTablet = window.innerWidth < 1024; // 1024px 미만 (모바일 + 세로형 태블릿)
+
+    if (!isMobileOrPortraitTablet) {
+      console.log(
+        'Mobile/Portrait tablet scroll listener not set up - width:',
+        window.innerWidth
+      );
+      return;
+    }
+
+    console.log(
+      'Setting up mobile/portrait tablet window scroll listener, width:',
+      window.innerWidth
+    );
+
+    const handleWindowScroll = () => {
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = window.innerHeight;
+      const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+
+      console.log('Mobile/Portrait tablet window scroll:', {
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+        scrollPercentage,
+        visibleItems,
+        totalItems: items.length,
+      });
+
+      // 스크롤이 70% 이상일 때 더 많은 아이템 표시 (모바일과 세로형 태블릿에서만)
+      if (scrollPercentage > 0.7 && visibleItems < items.length) {
+        console.log('Loading more items...');
+        setVisibleItems((prev) => Math.min(prev + 3, items.length));
+      }
+    };
+
+    window.addEventListener('scroll', handleWindowScroll);
+    console.log('Mobile/Portrait tablet scroll event listener added');
+
+    // 초기 로드 시에도 한 번 실행
+    handleWindowScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleWindowScroll);
+      console.log('Mobile/Portrait tablet scroll event listener removed');
+    };
+  }, [items.length]); // visibleItems 제거하여 무한 루프 방지
+
+  // 스크롤 감지하여 아이템 점진적 표시 (가로형 태블릿에서만 인피니트 스크롤)
+  useEffect(() => {
+    if (
+      !isTablet ||
+      !scrollRef.current ||
+      window.innerWidth >= 1280 ||
+      !isTabletDevice
+    )
+      return;
+
+    console.log('Setting up tablet container scroll listener');
 
     const handleScroll = () => {
       const scrollElement = scrollRef.current;
@@ -64,20 +157,34 @@ export default function Timeline({
       const { scrollTop, scrollHeight, clientHeight } = scrollElement;
       const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
 
-      // 스크롤이 80% 이상일 때 더 많은 아이템 표시
-      if (scrollPercentage > 0.8 && visibleItems < items.length) {
+      console.log('Tablet container scroll:', {
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+        scrollPercentage,
+        visibleItems,
+        totalItems: items.length,
+      });
+
+      // 스크롤이 70% 이상일 때 더 많은 아이템 표시 (가로형 태블릿에서만)
+      if (scrollPercentage > 0.7 && visibleItems < items.length) {
+        console.log('Loading more items...');
         setVisibleItems((prev) => Math.min(prev + 3, items.length));
       }
     };
 
     const scrollElement = scrollRef.current;
     scrollElement.addEventListener('scroll', handleScroll);
+
+    // 초기 로드 시에도 한 번 실행
+    handleScroll();
+
     return () => scrollElement.removeEventListener('scroll', handleScroll);
-  }, [isMobile, visibleItems, items.length]);
+  }, [isTablet, items.length]);
 
   // Lenis 초기화
   useEffect(() => {
-    if (!scrollRef.current || isMobile) return;
+    if (!scrollRef.current || isMobile || isTablet) return;
 
     const wrapper = scrollRef.current;
 
@@ -151,7 +258,7 @@ export default function Timeline({
 
   // 선택된 아이템 위치로 Lenis 스크롤 이동
   useEffect(() => {
-    if (!selectedItem || isMobile) return;
+    if (!selectedItem || isMobile || isTablet) return;
 
     const scrollContainer = scrollRef.current;
     const itemEl = itemRefs.current.get(selectedItem.id);
@@ -192,7 +299,7 @@ export default function Timeline({
 
   // 키보드 선택 시 자연스러운 스크롤
   useEffect(() => {
-    if (!isKeyboardSelection || !selectedItem || isMobile) return;
+    if (!isKeyboardSelection || !selectedItem || isMobile || isTablet) return;
 
     const scrollContainer = scrollRef.current;
     const itemEl = itemRefs.current.get(selectedItem.id);
@@ -238,19 +345,33 @@ export default function Timeline({
     setTarget({ x: 0, y: 0 });
   };
 
-  // 모바일에서는 visibleItems만큼만 렌더링
-  const itemsToRender = isMobile ? items.slice(0, visibleItems) : items;
+  // 모바일과 세로형 태블릿에서는 visibleItems만큼만 렌더링
+  const itemsToRender =
+    window.innerWidth < 1024 ? items.slice(0, visibleItems) : items;
 
   return (
     <div className='flex flex-col'>
-      <h2 className='text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6'>
-        Works & Experiences
-      </h2>
+      {/* 제목은 스크롤 컨테이너 밖에 배치 (1024px 미만에서만) */}
+      {window.innerWidth < 1024 && (
+        <h2
+          className={`text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
+            window.innerWidth < 1024
+              ? 'sticky top-[55px] z-10 bg-white dark:bg-[#0a0a0a] py-4'
+              : ''
+          }`}
+        >
+          Works & Experiences
+        </h2>
+      )}
+
+      {/* 스크롤 컨테이너 - 타임라인 항목만 포함 */}
       <div
         ref={scrollRef}
         className={`${
-          isMobile
-            ? 'pr-0'
+          window.innerWidth < 1024
+            ? 'pr-0' // 모바일과 세로형 태블릿에서는 스크롤 제거
+            : isTablet && isTabletDevice
+            ? 'pr-0 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
             : 'pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
         }`}
       >
@@ -267,13 +388,19 @@ export default function Timeline({
                 selectedItem?.id === item.id
                   ? 'bg-gray-100 dark:bg-gray-800/70'
                   : ''
-              } ${isMobile ? 'p-3 mb-2' : 'p-4'}`}
+              } ${isMobile ? 'p-3 mb-2' : isTablet ? 'p-3 mb-2' : 'p-4'}`}
               onClick={() => onItemClick(item)}
               onMouseEnter={
-                !isMobile ? (e) => handleMouseEnter(e, item) : undefined
+                !isMobile && !isTabletDevice
+                  ? (e) => handleMouseEnter(e, item)
+                  : undefined
               }
-              onMouseMove={!isMobile ? handleMouseMove : undefined}
-              onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+              onMouseMove={
+                !isMobile && !isTabletDevice ? handleMouseMove : undefined
+              }
+              onMouseLeave={
+                !isMobile && !isTabletDevice ? handleMouseLeave : undefined
+              }
             >
               <div
                 className={`${
@@ -283,7 +410,7 @@ export default function Timeline({
                 }`}
               >
                 <div className='flex items-start gap-3'>
-                  {!isMobile && (
+                  {!isMobile && !isTabletDevice && (
                     <div className='flex-shrink-0 mt-1'>
                       {selectedItem?.id === item.id ? (
                         <Check className='w-4 h-4 text-purple-500 dark:text-purple-400' />
@@ -330,23 +457,39 @@ export default function Timeline({
           </div>
         ))}
 
-        {/* 모바일에서 더 보기 버튼 */}
-        {isMobile && visibleItems < items.length && (
+        {/* 모바일과 세로형 태블릿에서 로딩 인디케이터 */}
+        {window.innerWidth < 1024 && visibleItems < items.length && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className='p-4 text-center'
           >
-            <button
-              onClick={() =>
-                setVisibleItems((prev) => Math.min(prev + 5, items.length))
-              }
-              className='px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors'
-            >
-              더 보기 ({visibleItems}/{items.length})
-            </button>
+            <div className='flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400'>
+              <div className='w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'></div>
+              <span className='text-sm'>
+                더 많은 항목을 불러오는 중... ({visibleItems}/{items.length})
+              </span>
+            </div>
           </motion.div>
         )}
+
+        {/* 가로형 태블릿에서 로딩 인디케이터 */}
+        {isTablet &&
+          window.innerWidth < 1280 &&
+          visibleItems < items.length && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className='p-4 text-center'
+            >
+              <div className='flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400'>
+                <div className='w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'></div>
+                <span className='text-sm'>
+                  더 많은 항목을 불러오는 중... ({visibleItems}/{items.length})
+                </span>
+              </div>
+            </motion.div>
+          )}
 
         {/* 하단 여백 */}
         <div className='h-24'></div>
@@ -355,6 +498,7 @@ export default function Timeline({
       {showThumbnail &&
         hoveredItem &&
         !isMobile &&
+        !isTabletDevice && // 태블릿 디바이스에서는 표시하지 않음
         createPortal(
           <LiquidButton x={springX} y={springY}>
             Click!

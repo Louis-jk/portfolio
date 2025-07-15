@@ -24,8 +24,8 @@ function MainContent() {
       const item = timelineData.find((item) => item.id === itemId);
       if (item) {
         setSelectedItem(item);
-        // 모바일에서는 drawer 열기
-        if (window.innerWidth < 1024) {
+        // 모바일과 태블릿에서는 drawer 열기
+        if (window.innerWidth < 1280) {
           setIsDrawerOpen(true);
         }
       }
@@ -72,8 +72,8 @@ function MainContent() {
     url.searchParams.set('item', item.id);
     window.history.replaceState({}, '', url.toString());
 
-    // 모바일에서는 drawer 열기
-    if (window.innerWidth < 1024) {
+    // 모바일과 태블릿에서는 drawer 열기
+    if (window.innerWidth < 1280) {
       setIsDrawerOpen(true);
     }
   };
@@ -95,14 +95,14 @@ function MainContent() {
           transition={{ duration: 1, ease: 'easeOut' }}
           className='w-full px-6 lg:px-10 h-full lg:overflow-hidden'
         >
-          {/* Desktop Layout */}
-          <div className='hidden lg:grid lg:grid-cols-12 gap-6 lg:gap-8 h-full'>
+          {/* Desktop Layout (1280px+) */}
+          <div className='hidden xl:grid xl:grid-cols-12 gap-6 lg:gap-8 h-full'>
             {/* Intro */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-              className='lg:col-span-3'
+              className='xl:col-span-3'
             >
               <Intro />
             </motion.div>
@@ -112,7 +112,7 @@ function MainContent() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-              className='lg:col-span-4 pr-2'
+              className='xl:col-span-4 pr-2'
             >
               <Timeline
                 items={timelineData}
@@ -127,7 +127,7 @@ function MainContent() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
-              className='lg:col-span-5 overflow-y-auto max-h-[calc(100vh-6rem)] pr-2'
+              className='xl:col-span-5 overflow-y-auto max-h-[calc(100vh-6rem)] pr-2'
             >
               <div className='rounded-xl p-6 pb-8 min-h-[600px]'>
                 <TimelineDetail
@@ -139,7 +139,43 @@ function MainContent() {
             </motion.div>
           </div>
 
-          {/* Mobile Layout */}
+          {/* Tablet Layout (1024px - 1279px) */}
+          <div className='hidden lg:block xl:hidden'>
+            <div className='grid grid-cols-2 gap-6 h-full'>
+              {/* Intro */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+              >
+                <Intro />
+              </motion.div>
+
+              {/* Timeline */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                className='flex flex-col'
+              >
+                {/* 제목 - 스크롤 컨테이너 밖 */}
+                <h2 className='text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6'>
+                  Works & Experiences
+                </h2>
+
+                {/* 스크롤 컨테이너 - 타임라인 항목만 */}
+                <div className='h-[calc(100vh-12rem)] overflow-y-auto'>
+                  <Timeline
+                    items={timelineData}
+                    selectedItem={selectedItem}
+                    onItemClick={handleItemClick}
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Mobile Layout (768px 미만) */}
           <div className='lg:hidden space-y-8'>
             {/* Intro */}
             <motion.div

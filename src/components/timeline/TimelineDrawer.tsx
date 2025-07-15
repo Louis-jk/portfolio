@@ -26,7 +26,7 @@ export default function TimelineDrawer({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className='fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden'
+            className='fixed inset-0 bg-black bg-opacity-50 z-40 xl:hidden'
           />
 
           {/* Drawer */}
@@ -35,7 +35,7 @@ export default function TimelineDrawer({
             animate={{ y: 55 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className='fixed right-0 top-0 h-full w-full z-50 lg:hidden'
+            className='fixed right-0 top-0 h-full w-full z-50 xl:hidden'
           >
             {/* Header */}
             <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black'>

@@ -95,7 +95,15 @@ export default function Renderer() {
 
   return (
     <div className='h-[17.5rem] w-[17.5rem]'>
-      <Canvas camera={{ position: [0, 0, 3], fov: 17 }}>
+      <Canvas
+        camera={{ position: [0, 0, 3], fov: 17 }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: 'high-performance',
+        }}
+        performance={{ min: 0.5 }}
+      >
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
           <Model
@@ -119,9 +127,14 @@ export default function Renderer() {
           minPolarAngle={Math.PI / 2}
           enableRotate={true}
           enableZoom={false}
+          enablePan={false}
+          enableDamping={true}
+          dampingFactor={0.05}
+          rotateSpeed={0.5}
+          target={[0, 0, 0]}
           onStart={() => {
             setUserInteracted(true);
-            setRotationStage('idle'); // 여기 핵심! 사용자 조작 시 idle로 복구
+            setRotationStage('idle');
           }}
           onEnd={() => {
             setLastInteractionTime(Date.now());
