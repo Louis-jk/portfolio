@@ -101,8 +101,8 @@ export default function LiquidButton({
       onClick={onClick}
       className={`w-24 h-24 rounded-full shadow-lg flex items-center justify-center text-xl font-bold select-none ${
         resolvedTheme === 'dark'
-          ? 'bg-white text-black'
-          : 'bg-[#101010] text-white'
+          ? 'bg-purple-500 text-white'
+          : ' bg-purple-700 text-white'
       }`}
     >
       <p className='italic'>{children ?? 'Click!'}</p>

@@ -105,7 +105,7 @@ function MainContent() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          className='w-full px-6 lg:px-10 h-full'
+          className='w-full lg:px-6 lg:px-10 h-full'
         >
           {/* Desktop Layout (1280px+) */}
           <div className='hidden xl:grid xl:grid-cols-12 gap-6 lg:gap-8 h-full'>

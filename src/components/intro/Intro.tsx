@@ -56,7 +56,7 @@ function Intro() {
       if (!nameRef.current) return;
 
       const nameRect = nameRef.current.getBoundingClientRect();
-      const headerHeight = 71; // 헤더 높이
+      const headerHeight = 65; // 헤더 높이
       const nameHeight = nameRect.height;
       const nameWidth = nameRect.width;
 
@@ -96,14 +96,8 @@ function Intro() {
           nameHeight,
         });
 
-        // 스크롤 진행도에 따른 애니메이션 - 더 천천히 진행
-        const scrollProgress = Math.max(
-          0,
-          Math.min(1, (headerHeight - nameRect.top) / (nameHeight * 2))
-        );
-
-        // h1이 완전히 위로 사라졌으면 헤더에 고정
-        if (nameRect.bottom < 0) {
+        // h1이 헤더 영역에 들어오면 바로 애니메이션 실행
+        if (nameRect.top <= headerHeight) {
           setHeaderNameStyle({
             position: 'fixed',
             left: '50%',
@@ -111,27 +105,10 @@ function Intro() {
             transform: 'translateX(-50%)',
             width: nameWidth,
             height: nameHeight,
-            fontSize: '1.5rem', // 고정된 크기
+            fontSize: '1.5rem', // 고정된 작은 크기
             filter: 'blur(0px)', // 선명하게
             opacity: 1, // 완전히 보이게
             transition: 'all 0.3s ease-out', // 부드러운 전환
-          });
-        } else {
-          // 헤더 이름 스타일 설정 - 항상 헤더 중앙에 고정
-          setHeaderNameStyle({
-            position: 'fixed',
-            left: '50%',
-            top: headerCenterTop,
-            transform: 'translateX(-50%)',
-            width: nameWidth,
-            height: nameHeight,
-            fontSize:
-              scrollProgress < 1
-                ? '3rem'
-                : `${3 - (scrollProgress - 1) * 1.5}rem`, // h1이 완전히 가려진 후에만 축소
-            filter: `blur(${Math.max(0, 2 - scrollProgress * 4)}px)`, // 블러에서 선명하게
-            opacity: scrollProgress < 0.3 ? 0 : Math.min(1, scrollProgress * 2), // 페이드 인
-            transition: 'all 0.1s ease-out', // 애니메이션 중에도 부드러운 전환
           });
         }
       } else {
@@ -193,7 +170,7 @@ function Intro() {
     <section className='flex flex-col items-center justify-center'>
       {/* 헤더 애니메이션 이름 */}
       {showHeaderName && (
-        <div className='fixed top-0 z-50 w-full h-[71px] overflow-hidden'>
+        <div className='fixed top-0 z-50 h-[71px] overflow-hidden'>
           <motion.p
             className='text-5xl font-bold absolute text-center'
             style={headerNameStyle}

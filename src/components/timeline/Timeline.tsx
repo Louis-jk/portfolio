@@ -47,12 +47,6 @@ export default function Timeline({
   // 마지막 항목 감지를 위한 ref
   const lastItemRef = useRef<HTMLDivElement | null>(null);
 
-  // Intersection Observer 제거 (스크롤 이벤트로 대체)
-  // useEffect(() => {
-  //   if (window.innerWidth >= 1024) return;
-  //   ... 기존 Intersection Observer 코드 제거
-  // }, [items.length, hasReachedEnd]);
-
   // 태블릿 디바이스 감지
   useEffect(() => {
     const checkTabletDevice = () => {
@@ -329,13 +323,15 @@ export default function Timeline({
     <div className='flex flex-col'>
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 적용 */}
       <h2
-        className={`text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
+        className={`text-3xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
           window.innerWidth < 1024
-            ? 'sticky top-[55px] z-50 bg-white dark:bg-[#0a0a0a] py-4 shadow-sm'
+            ? 'sticky top-[55px] z-50 bg-white dark:bg-[#0a0a0a] py-4'
             : ''
         }`}
       >
-        Works & Experiences
+        <span className='text-purple-700 dark:text-purple-500'>W</span>
+        orks & <span className='text-purple-700 dark:text-purple-500'>E</span>
+        xperiences
       </h2>
 
       {/* 스크롤 컨테이너 - 타임라인 항목만 포함 */}
@@ -362,11 +358,11 @@ export default function Timeline({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg  ${
+              className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg mb-2 p-4  ${
                 selectedItem?.id === item.id
                   ? 'bg-gray-100 dark:bg-gray-800/70'
                   : ''
-              } ${isMobile ? 'p-3 mb-2' : isTablet ? 'p-3 mb-2' : 'p-4'}`}
+              }`}
               onClick={() => onItemClick(item)}
               onMouseEnter={
                 !isMobile && !isTabletDevice
@@ -391,7 +387,7 @@ export default function Timeline({
                   {!isMobile && !isTabletDevice && (
                     <div className='flex-shrink-0 mt-1'>
                       {selectedItem?.id === item.id ? (
-                        <Check className='w-4 h-4 text-purple-500 dark:text-purple-400' />
+                        <Check className='w-4 h-4 text-purple-700 dark:text-purple-500' />
                       ) : (
                         <div className='w-4 h-4' />
                       )}
@@ -402,7 +398,7 @@ export default function Timeline({
                       <h3
                         className={`font-bold text-base max-w-4/6 truncate transition-colors duration-200 ${
                           selectedItem?.id === item.id
-                            ? 'text-purple-600 dark:text-purple-400'
+                            ? 'text-purple-700 dark:text-purple-500 font-bold'
                             : 'text-gray-900 dark:text-gray-100'
                         }`}
                       >

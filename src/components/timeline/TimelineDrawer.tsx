@@ -65,7 +65,7 @@ export default function TimelineDrawer({
           >
             {/* Header */}
             <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black'>
-              <h3 className='text-lg font-bold text-gray-900 dark:text-gray-100'>
+              <h3 className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
                 Work Details
               </h3>
               <button

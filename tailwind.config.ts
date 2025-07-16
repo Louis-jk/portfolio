@@ -11,6 +11,8 @@ const config: Config = {
   theme: {
     fontFamily: {
       sans: ['var(--font-en)', 'var(--font-jp)', 'var(--font-kr)'],
+      'hanalei-fill': ['var(--font-hanalei-fill)', 'cursive'],
+      hanalei: ['var(--font-hanalei-fill)', 'cursive'],
     },
     extend: {
       colors: {

@@ -4,6 +4,7 @@ import {
   Geist_Mono,
   Noto_Sans_JP,
   Noto_Sans_KR,
+  Hanalei_Fill,
 } from 'next/font/google';
 
 import { ThemeProvider } from 'next-themes';
@@ -12,21 +13,36 @@ import './globals.css';
 const geist = Geist({
   variable: '--font-en',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
   variable: '--font-mono',
   subsets: ['latin'],
+  display: 'swap',
+});
+
+const hanaleiFill = Hanalei_Fill({
+  variable: '--font-hanalei-fill',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400'],
 });
 
 const notoSansJP = Noto_Sans_JP({
   variable: '--font-jp',
   subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
 });
 
 const notoSansKR = Noto_Sans_KR({
   variable: '--font-kr',
   subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 export const metadata: Metadata = {
@@ -42,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${notoSansJP.variable} ${notoSansKR.variable} ${geist.variable} ${geistMono.variable} antialiased`}
+        className={`${notoSansJP.variable} ${notoSansKR.variable} ${geist.variable} ${geistMono.variable} ${hanaleiFill.variable} antialiased`}
       >
         <ThemeProvider
           attribute='class'

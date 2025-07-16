@@ -4,6 +4,7 @@ import Main from '@/components/main/Main';
 import Footer from '@/components/footer/Footer';
 import LoadingScreen from '@/components/loading/Loading';
 import { Suspense, useState } from 'react';
+import Header from '@/components/header/Header';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,6 +17,7 @@ export default function HomePage() {
     <Suspense fallback={<LoadingScreen />}>
       <div className='h-screen flex flex-col lg:overflow-hidden'>
         {/* 메인 콘텐츠 (헤더 포함) */}
+        <Header />
         <div className='flex-1 lg:overflow-hidden'>
           <Main />
         </div>
