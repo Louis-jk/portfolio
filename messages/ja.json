@@ -82,7 +82,7 @@
         ]
       }
     },
-    "turingum_web03_03": {
+    "turingum_web03_tokyo_beast_base": {
       "title": "Web3プロダクトのキャンペーンサイト、およびシステム開発支援業務 (フルーリモート)",
       "date": "2024.01 – 2024.08",
       "company": "Turingum K.K",
@@ -114,7 +114,7 @@
         ]
       }
     },
-    "turingum_web03_02": {
+    "turingum_web03_tokyo_beast_mystery_ticket": {
       "title": "Web3プロダクトのキャンペーンサイト開発支援業務 (フルーリモート)",
       "date": "2023.10 – 2024.01",
       "company": "Turingum K.K",
@@ -146,7 +146,7 @@
         ]
       }
     },
-    "turingum_web03_01": {
+    "turingum_web03_wizardry_campaign": {
       "title": "Web3.0プロジェクトのキャンペーンサイト実装 (フルーリモート)",
       "date": "2023.08 – 2024.09",
       "company": "Turingum K.K",
@@ -179,7 +179,7 @@
       }
     },
     "confidential_korean_startup": {
-      "title": "テニスコート及びレッスン予約モバイルアプリケーション維持保守及び新規開発 (フルーリモート)",
+      "title": "テニスレッスン予約アプリのフロントエンド保守・新機能開発 (フルーリモート)",
       "date": "2022.12 – 2023.07",
       "company": "Confidential Korean Startup",
       "region": "韓国・ソウル",
@@ -210,8 +210,8 @@
         ]
       }
     },
-    "dmonster_11": {
-      "title": "【出前アプリ】POSシステムアプリケーション開発(Desktop)及びオーナー用モバイルアプリケーション開発",
+    "dmonster_dongnaebook": {
+      "title": "【出前アプリ】POSシステム（デスクトップ）・店舗オーナー向けモバイルアプリ フロントエンド開発",
       "date": "2022.07 – 2022.10",
       "company": "Dmonster",
       "region": "韓国・釜山",
@@ -242,8 +242,8 @@
         ]
       }
     },
-    "dmonster_10": {
-      "title": "同時通訳リスナー用デスクトップアプリケーション開発",
+    "dmonster_moli": {
+      "title": "同時通訳リスナー向けデスクトップアプリ フロントエンド開発",
       "date": "2022.06 – 2022.07",
       "company": "Dmonster",
       "region": "韓国・釜山",
@@ -274,8 +274,8 @@
         ]
       }
     },
-    "dmonster_09": {
-      "title": "別荘(貸しコテージ)宿泊予約モバイルアプリケーションモバイル開発",
+    "dmonster_mozaiq": {
+      "title": "別荘(貸しコテージ)宿泊予約モバイルアプリケーション開発のサポート",
       "date": "2022.06 – 2022.06",
       "company": "Dmonster",
       "region": "韓国・釜山",
@@ -293,6 +293,300 @@
           "React Three Fiber",
           "TypeScript",
           "Tailwind CSS"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_vegastong": {
+      "title": "ラスベガス情報共有・コミュニケーションモバイルアプリ フロントエンド開発（開発一時停止）",
+      "date": "2022.06 - 2022.06",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_diningcode": {
+      "title": "韓国グルメ情報プラットフォーム リニューアルフロントエンド開発",
+      "date": "2021.11 - 2022.05",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_todaysorder": {
+      "title": "ユーザー・店舗向けモバイル出前アプリ＆POSシステムアプリ フロントエンド開発",
+      "date": "2021.07 - 2022.02",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_idraw": {
+      "title": "美術教育向けモバイルアプリ フロントエンド開発",
+      "date": "2021.06 - 2021.07",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_paper_workshop_partners": {
+      "title": "ネット印刷ポータル・印刷業者向けモバイルアプリ フロントエンド開発",
+      "date": "2021.02 - 2021.06",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_paper_workshop_customers": {
+      "title": "ネット印刷ポータル・ユーザー向けモバイルアプリ フロントエンド開発",
+      "date": "2021.02 - 2021.06",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_insadong": {
+      "title": "観光地歴史案内オーディオブックアプリ＆管理ページ フルスタック開発",
+      "date": "2020.12 - 2021.01",
+      "company": "Dmonster",
+      "region": "Busan, Korea",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
         ],
         "challenges": [
           "Balancing multiple projects simultaneously",

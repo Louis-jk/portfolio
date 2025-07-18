@@ -264,6 +264,113 @@ export default function TimelineDetail({
         </div>
       </div>
 
+      {/* Tools */}
+      {item.details.tools && Object.keys(item.details.tools).length > 0 && (
+        <div>
+          <h4 className='text-lg font-semibold mb-3'>Tools</h4>
+          {item.details.tools.communication.length > 0 && (
+            <div className='mb-5'>
+              <h5 className='text-sm font-medium mb-2'>Communication</h5>
+              <div className='flex flex-wrap gap-2'>
+                {item.details.tools.communication.map((tool, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-sm font-medium',
+                      resolvedTheme === 'dark'
+                        ? 'bg-gray-700 text-gray-200'
+                        : 'bg-gray-200 text-gray-800'
+                    )}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {item.details.tools.development.length > 0 && (
+            <div className='mb-5'>
+              <h5 className='text-sm font-medium mb-2'>Development</h5>
+              <div className='flex flex-wrap gap-2'>
+                {item.details.tools.development.map((tool, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-sm font-medium',
+                      resolvedTheme === 'dark'
+                        ? 'bg-gray-700 text-gray-200'
+                        : 'bg-gray-200 text-gray-800'
+                    )}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {item.details.tools.design.length > 0 && (
+            <div className='mb-5'>
+              <h5 className='text-sm font-medium mb-2'>Design</h5>
+              <div className='flex flex-wrap gap-2'>
+                {item.details.tools.design.map((tool, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-sm font-medium',
+                      resolvedTheme === 'dark'
+                        ? 'bg-gray-700 text-gray-200'
+                        : 'bg-gray-200 text-gray-800'
+                    )}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {item.details.tools.environment.length > 0 && (
+            <div className='mb-5'>
+              <h5 className='text-sm font-medium mb-2'>Environment</h5>
+              <div className='flex flex-wrap gap-2'>
+                {item.details.tools.environment.map((tool, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-sm font-medium',
+                      resolvedTheme === 'dark'
+                        ? 'bg-gray-700 text-gray-200'
+                        : 'bg-gray-200 text-gray-800'
+                    )}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {item.details.tools.other.length > 0 && (
+            <div className='mb-5'>
+              <h5 className='text-sm font-medium mb-2'>Other</h5>
+              <div className='flex flex-wrap gap-2'>
+                {item.details.tools.other.map((tool, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-sm font-medium',
+                      resolvedTheme === 'dark'
+                        ? 'bg-gray-700 text-gray-200'
+                        : 'bg-gray-200 text-gray-800'
+                    )}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Challenges */}
       <div>
         <h4 className='text-lg font-semibold mb-3'>Challenges</h4>

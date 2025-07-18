@@ -27,6 +27,13 @@ export type TimelineItem = {
   details?: {
     fullDescription: string;
     technologies: string[];
+    tools?: {
+      communication: string[];
+      development: string[];
+      design: string[];
+      environment: string[];
+      other: string[];
+    };
     challenges: string[];
     achievements: string[];
     image?: string;
