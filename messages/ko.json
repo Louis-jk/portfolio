@@ -14,12 +14,12 @@
         "포트폴리오에 오신 걸 환영합니다! 👋",
         "오늘도 좋은 하루 보내세요! ☀️"
       ],
-      "about_me": "프론트엔드 엔지니어로서, 웹·모바일·데스크톱 등 다양한 플랫폼에서 반응형이며 성능에 최적화된 UI를 구현하는 데 강점을 가지고 있습니다. Web3 DApp과 기업용 서비스 플랫폼 개발 경험이 있으며, 유지보수하기 좋은 코드를 작성하고 사용자에게 쾌적한 경험을 제공하는 데 열정을 가지고 있습니다. 팀워크를 중요하게 여기며, 디자이너로서의 경험을 바탕으로 사용자 관점의 UI/UX를 고려한 세심한 구현을 지향합니다."
+      "about_me": "프론트엔드 엔지니어로서, 웹·모바일·데스크탑 등 다양한 플랫폼에서 반응형이며 성능에 최적화된 UI를 구현하는 데 강점을 가지고 있습니다. Web3 DApp과 기업용 서비스 플랫폼 개발 경험이 있으며, 유지보수하기 좋은 코드를 작성하고 사용자에게 쾌적한 경험을 제공하는 데 열정을 가지고 있습니다. 팀워크를 중요하게 여기며, 디자이너로서의 경험을 바탕으로 사용자 관점의 UI/UX를 고려한 세심한 구현을 지향합니다."
     }
   },
   "timeline": {
     "personal": {
-      "title": "개인 프로젝트 및 자기주도 학습",
+      "title": "개인 프로젝트 및 개발 실력 향상",
       "date": "2025.01 – 현재",
       "company": "",
       "region": "한국 양산",
@@ -169,7 +169,7 @@
       }
     },
     "dmonster_dongnaebook": {
-      "title": "[배달 앱] POS 시스템(데스크톱) 및 점주용 모바일 앱 프론트엔드 개발",
+      "title": "[배달 앱] POS 시스템(데스크탑) 및 점주용 모바일 앱 프론트엔드 개발",
       "date": "2022.07 – 2022.10",
       "company": "Dmonster",
       "region": "한국 부산",
@@ -219,7 +219,7 @@
       }
     },
     "dmonster_mozaiq": {
-      "title": "렌탈 별장 및 코티지 숙소 예약 모바일 앱 개발 지원",
+      "title": "별장 예약 앱 모바일(웹뷰) 프론트엔드 개발 지원",
       "date": "2022.06 – 2022.06",
       "company": "Dmonster",
       "region": "한국 부산",
@@ -499,7 +499,91 @@
       "title": "관광지 역사 안내 오디오북 앱 및 관리자 페이지 풀스택 개발",
       "date": "2020.12 - 2021.01",
       "company": "Dmonster",
-      "region": "Busan, Korea",
+      "region": "한국 부산",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_gongjuro": {
+      "title": "관광 안내 모바일 애플리케이션 프론트엔드 개발",
+      "date": "2020.10 - 2021.01",
+      "company": "Dmonster",
+      "region": "한국 부산",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_factoryful": {
+      "title": "FactoryFul – 지도 연동 기능 수정 및 개선",
+      "date": "2020.09 - 2020.09",
+      "company": "Dmonster",
+      "region": "한국 부산",
       "role": "Freelance Frontend Developer",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",

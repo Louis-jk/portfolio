@@ -562,7 +562,91 @@
       "title": "観光地歴史案内オーディオブックアプリ＆管理ページ フルスタック開発",
       "date": "2020.12 - 2021.01",
       "company": "Dmonster",
-      "region": "Busan, Korea",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_gongjuro": {
+      "title": "観光案内モバイルアプリ フロントエンド開発",
+      "date": "2020.10 - 2021.01",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
+      "role": "Freelance Frontend Developer",
+      "description": [
+        "Frontend Job Matching Platform (Next.js + Firebase)",
+        "3D Portfolio with React Three Fiber",
+        "IELTS preparation & job search in AU/NZ market"
+      ],
+      "details": {
+        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+        "technologies": [
+          "Javascript",
+          "React Native",
+          "WebView",
+          "In-app Payments",
+          "Firebase",
+          "Redux",
+          "Kakao Auth",
+          "Naver Auth",
+          "Apple Auth",
+          "Facebook Auth",
+          "Github",
+          "VSCode",
+          "Figma",
+          "Xcode",
+          "Android Studio"
+        ],
+        "challenges": [
+          "Balancing multiple projects simultaneously",
+          "Preparing for international job market",
+          "Learning new technologies"
+        ],
+        "achievements": [
+          "Completed 3D portfolio with interactive elements",
+          "Built job matching platform",
+          "Improved IELTS score"
+        ]
+      }
+    },
+    "dmonster_factoryful": {
+      "title": "FactoryFul – 地図とリストの連携機能修正",
+      "date": "2020.09 - 2020.09",
+      "company": "Dmonster",
+      "region": "韓国・釜山",
       "role": "Freelance Frontend Developer",
       "description": [
         "Frontend Job Matching Platform (Next.js + Firebase)",

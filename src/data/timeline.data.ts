@@ -787,7 +787,8 @@ export const timelineData: TimelineItem[] = [
         'https://play.google.com/store/apps/details?id=com.com_idraw_dmonster',
       desktop: '',
     },
-    thumbnail: 'https://storage.googleapis.com/jk-static-assets/idraw_rn.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/idraw_rn_5row.png',
     details: {
       fullDescription: 'dmonster_diningcode.details.fullDescription',
       technologies: ['Javascript(ES6)', 'React Native', 'axios'],
@@ -808,7 +809,8 @@ export const timelineData: TimelineItem[] = [
         'dmonster_idraw.details.achievements.1',
         'dmonster_idraw.details.achievements.2',
       ],
-      image: 'https://storage.googleapis.com/jk-static-assets/idraw_rn.png',
+      image:
+        'https://storage.googleapis.com/jk-static-assets/idraw_rn_5row.png',
     },
   },
   {
@@ -904,7 +906,7 @@ export const timelineData: TimelineItem[] = [
       desktop: '',
     },
     thumbnail:
-      'https://storage.googleapis.com/jk-static-assets/paper_workshop_customers.png',
+      'https://storage.googleapis.com/jk-static-assets/paper_workshop_customers_rn.png',
     details: {
       fullDescription: 'dmonster_diningcode.details.fullDescription',
       technologies: [
@@ -940,7 +942,7 @@ export const timelineData: TimelineItem[] = [
         'dmonster_paper_workshop_customers.details.achievements.2',
       ],
       image:
-        'https://storage.googleapis.com/jk-static-assets/paper_workshop_customers.png',
+        'https://storage.googleapis.com/jk-static-assets/paper_workshop_customers_rn.png',
     },
   },
   {
@@ -969,7 +971,8 @@ export const timelineData: TimelineItem[] = [
         'https://play.google.com/store/apps/details?id=com.dmonster.insadong',
       desktop: '',
     },
-    thumbnail: 'https://storage.googleapis.com/jk-static-assets/insadong.png',
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/insadong_rn.png',
     details: {
       fullDescription: 'dmonster_diningcode.details.fullDescription',
       technologies: [
@@ -1000,7 +1003,136 @@ export const timelineData: TimelineItem[] = [
         'dmonster_insadong.details.achievements.1',
         'dmonster_insadong.details.achievements.2',
       ],
-      image: 'https://storage.googleapis.com/jk-static-assets/insadong.png',
+      image: 'https://storage.googleapis.com/jk-static-assets/insadong_rn.png',
+    },
+  },
+  {
+    id: 'dmonster_gongjuro',
+    date: 'dmonster_gongjuro.date',
+    title: 'dmonster_gongjuro.title',
+    company: 'dmonster_gongjuro.company',
+    region: 'dmonster_gongjuro.region',
+    role: 'dmonster_gongjuro.role',
+    description: [
+      'dmonster_gongjuro.description.0',
+      'dmonster_gongjuro.description.1',
+      'dmonster_gongjuro.description.2',
+    ],
+    isNDA: false,
+    isCommercial: true,
+    commercialPlatforms: {
+      web: true,
+      mobile: true,
+      desktop: false,
+    },
+    commercialLinks: {
+      web: 'https://gongju-ro.com/',
+      ios: 'https://apps.apple.com/ko/app/%EA%B3%B5%EC%A3%BC%EB%A1%9C/id1544712725',
+      android:
+        'https://play.google.com/store/apps/details?id=com.dmonster.dmonster1427',
+      desktop: '',
+    },
+    thumbnail: 'https://storage.googleapis.com/jk-static-assets/gongjuro.png',
+    details: {
+      fullDescription: 'dmonster_diningcode.details.fullDescription',
+      technologies: [
+        'Javascript(ES6)',
+        'React Native',
+        'Redux',
+        'Formik',
+        'Yup',
+        'WebView',
+        'react-native-image-crop-picker',
+        'Kakao Auth',
+        'Naver Auth',
+        'Apple Auth',
+        'Facebook Auth',
+        'axios',
+        'API Integration',
+      ],
+      tools: {
+        communication: ['KakaoTalk'],
+        development: ['VSCode', 'GitHub', 'Xcode', 'Android Studio'],
+        design: ['Figma'],
+        environment: ['App Store Connect', 'Google Play Console'],
+        other: [],
+      },
+      challenges: [
+        'dmonster_gongjuro.details.challenges.0',
+        'dmonster_gongjuro.details.challenges.1',
+        'dmonster_gongjuro.details.challenges.2',
+      ],
+      achievements: [
+        'dmonster_gongjuro.details.achievements.0',
+        'dmonster_gongjuro.details.achievements.1',
+        'dmonster_gongjuro.details.achievements.2',
+      ],
+      image: 'https://storage.googleapis.com/jk-static-assets/gongjuro.png',
+    },
+  },
+  {
+    id: 'dmonster_factoryful',
+    date: 'dmonster_factoryful.date',
+    title: 'dmonster_factoryful.title',
+    company: 'dmonster_factoryful.company',
+    region: 'dmonster_factoryful.region',
+    role: 'dmonster_factoryful.role',
+    description: [
+      'dmonster_factoryful.description.0',
+      'dmonster_factoryful.description.1',
+      'dmonster_factoryful.description.2',
+    ],
+    isNDA: false,
+    isCommercial: true,
+    commercialPlatforms: {
+      web: true,
+      mobile: false,
+      desktop: false,
+    },
+    commercialLinks: {
+      web: 'https://www.factoryful.com/',
+      ios: '',
+      android: '',
+      desktop: '',
+    },
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/banner_ui_bug_fix.png',
+    details: {
+      fullDescription: 'dmonster_diningcode.details.fullDescription',
+      technologies: [
+        'Javascript(ES6)',
+        'React Native',
+        'Redux',
+        'Formik',
+        'Yup',
+        'WebView',
+        'react-native-image-crop-picker',
+        'Kakao Auth',
+        'Naver Auth',
+        'Apple Auth',
+        'Facebook Auth',
+        'axios',
+        'API Integration',
+      ],
+      tools: {
+        communication: ['KakaoTalk'],
+        development: ['VSCode', 'GitHub', 'Xcode', 'Android Studio'],
+        design: ['Figma'],
+        environment: ['App Store Connect', 'Google Play Console'],
+        other: [],
+      },
+      challenges: [
+        'dmonster_factoryful.details.challenges.0',
+        'dmonster_factoryful.details.challenges.1',
+        'dmonster_factoryful.details.challenges.2',
+      ],
+      achievements: [
+        'dmonster_factoryful.details.achievements.0',
+        'dmonster_factoryful.details.achievements.1',
+        'dmonster_factoryful.details.achievements.2',
+      ],
+      image:
+        'https://storage.googleapis.com/jk-static-assets/banner_ui_bug_fix.png',
     },
   },
 ];
