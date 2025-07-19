@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { IoHome } from 'react-icons/io5';
+import { IoLanguage } from 'react-icons/io5';
 
 interface NavProps {
   onHomeClick?: () => void;
@@ -49,6 +50,9 @@ function Nav({ onHomeClick }: NavProps) {
           >
             <IoHome className='w-5 h-5' />
           </Link>
+        </li>
+        <li>
+          <IoLanguage className='w-5 h-5' />
         </li>
       </ul>
     </nav>
