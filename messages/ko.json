@@ -621,5 +621,16 @@
         ]
       }
     }
+  },
+  "modal": {
+    "languageSelector": {
+      "title": "언어 선택",
+      "description": "원하시는 언어를 선택해주세요.",
+      "languages": {
+        "ko": "한국어",
+        "ja": "日本語",
+        "en": "English"
+      }
+    }
   }
 }
