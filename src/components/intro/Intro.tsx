@@ -18,9 +18,6 @@ function Intro() {
   const { resolvedTheme } = useTheme();
   const bubbleRef = useRef<HTMLDivElement>(null);
   const [bubbleStyle, setBubbleStyle] = useState({});
-  const [showHeaderName, setShowHeaderName] = useState(false);
-  const [headerNameStyle, setHeaderNameStyle] = useState({});
-  const nameRef = useRef<HTMLHeadingElement>(null);
 
   // 메시지 세팅
   useEffect(() => {
@@ -48,78 +45,6 @@ function Intro() {
     const timer = setTimeout(() => setShowGreeting(false), 5000);
     return () => clearTimeout(timer);
   }, [t]);
-
-  // 스크롤 감지하여 헤더 이름 애니메이션 (1024px 미만에서만)
-  useEffect(() => {
-    if (window.innerWidth >= 1024) return;
-
-    const handleScroll = () => {
-      if (!nameRef.current) return;
-
-      const nameRect = nameRef.current.getBoundingClientRect();
-      const headerHeight = 65; // 헤더 높이
-      const nameHeight = nameRect.height;
-      const nameWidth = nameRect.width;
-
-      // 이름이 헤더 영역에 들어오는지 확인
-      if (nameRect.top <= headerHeight && nameRect.bottom >= 0) {
-        console.log('Name is in header area');
-      } else if (nameRect.bottom < 0) {
-        console.log('Name is completely above header');
-      }
-
-      // h1이 헤더 영역에 들어오거나 완전히 위로 사라졌을 때 헤더 이름 표시
-      console.log('Checking conditions:', {
-        nameRectTop: nameRect.top,
-        headerHeight,
-        nameRectBottom: nameRect.bottom,
-        shouldShow: nameRect.top <= headerHeight || nameRect.bottom < 0,
-      });
-
-      if (nameRect.top <= headerHeight || nameRect.bottom < 0) {
-        console.log('Setting showHeaderName to true');
-        setShowHeaderName(true);
-
-        // h1 이름 위치 정보 (현재는 사용하지 않음)
-        // const absoluteLeft = nameRect.left;
-        // const absoluteTop = nameRect.top;
-
-        // 헤더 중앙 위치 계산 - 고정된 값 사용
-        const headerCenterLeft = window.innerWidth / 2 - 100; // 대략적인 중앙 위치
-        const headerCenterTop = (headerHeight - nameHeight) / 2 + 8; // 약간 아래쪽으로 조정
-
-        console.log('Header center position:', {
-          headerCenterLeft,
-          headerCenterTop,
-          windowWidth: window.innerWidth,
-          nameWidth,
-          headerHeight,
-          nameHeight,
-        });
-
-        // h1이 헤더 영역에 들어오면 바로 애니메이션 실행
-        if (nameRect.top <= headerHeight) {
-          setHeaderNameStyle({
-            position: 'fixed',
-            left: '50%',
-            top: headerCenterTop,
-            transform: 'translateX(-50%)',
-            width: nameWidth,
-            height: nameHeight,
-            fontSize: '1.5rem', // 고정된 작은 크기
-            filter: 'blur(0px)', // 선명하게
-            opacity: 1, // 완전히 보이게
-            transition: 'all 0.3s ease-out', // 부드러운 전환
-          });
-        }
-      } else {
-        setShowHeaderName(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // 인사말 표시 타이밍
   useEffect(() => {
@@ -169,22 +94,6 @@ function Intro() {
 
   return (
     <section className='flex flex-col items-center justify-center'>
-      {/* 헤더 애니메이션 이름 */}
-      {showHeaderName && (
-        <div className='fixed top-0 z-50 h-[71px] overflow-hidden'>
-          <motion.p
-            className='text-5xl font-bold absolute text-center'
-            style={headerNameStyle}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Joonho Kim
-          </motion.p>
-        </div>
-      )}
-
       <div className='flex flex-col items-center gap-5 py-10'>
         <motion.div
           className='relative'
@@ -221,7 +130,6 @@ function Intro() {
         </motion.div>
 
         <motion.h1
-          ref={nameRef}
           className='text-5xl font-bold text-center'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
