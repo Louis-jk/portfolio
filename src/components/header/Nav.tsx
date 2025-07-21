@@ -1,15 +1,59 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { IoHome } from 'react-icons/io5';
 import { IoLanguage } from 'react-icons/io5';
+import LanguageSelector from '@/components/modal/LanguageSelector';
+import { useLocale } from 'next-intl';
+import Flag from 'react-world-flags';
 
 interface NavProps {
   onHomeClick?: () => void;
 }
 
+const LOCALE_TO_NUMERIC_CODE: Record<string, string> = {
+  ko: '410',
+  ja: '392',
+};
+
+const COUNTRY_CODE_TO_NUMERIC_CODE: Record<string, string> = {
+  US: '840',
+  GB: '826',
+  CA: '124',
+  NZ: '554',
+  AU: '036',
+  HK: '344',
+  ZA: '710',
+  SG: '702',
+  MY: '458',
+  PH: '608',
+  IE: '372',
+  IS: '352',
+};
+
+function getCookieValue(): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(/(?:^|;\s*)countryCode=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 function Nav({ onHomeClick }: NavProps) {
+  const [open, setOpen] = useState(false);
+  const [code, setCode] = useState('840');
+  const locale = useLocale();
+
+  useEffect(() => {
+    if (LOCALE_TO_NUMERIC_CODE[locale]) {
+      setCode(LOCALE_TO_NUMERIC_CODE[locale]);
+    } else if (locale === 'en') {
+      const countryCode = getCookieValue();
+      setCode(COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'US'] ?? '840');
+    } else {
+      setCode('840');
+    }
+  }, [locale]);
+
   const handleHomeClick = (e: React.MouseEvent) => {
     // 현재 홈 페이지에 있다면 URL 파라미터 제거 후 새로고침
     if (
@@ -41,7 +85,7 @@ function Nav({ onHomeClick }: NavProps) {
 
   return (
     <nav className='flex flex-row items-center justify-center gap-4'>
-      <ul className='flex flex-row items-center justify-center gap-4'>
+      <ul className='flex flex-row items-center justify-center gap-8'>
         <li>
           <Link
             href='/'
@@ -52,9 +96,17 @@ function Nav({ onHomeClick }: NavProps) {
           </Link>
         </li>
         <li>
-          <IoLanguage className='w-5 h-5' />
+          <div
+            className='flex flex-row justify-center items-center gap-2 cursor-pointer'
+            onClick={() => setOpen(true)}
+          >
+            <IoLanguage className='w-5 h-5' />
+            <Flag code={code} className='w-9 h-7' />
+          </div>
         </li>
       </ul>
+
+      <LanguageSelector open={open} setOpen={setOpen} code={code} />
     </nav>
   );
 }
