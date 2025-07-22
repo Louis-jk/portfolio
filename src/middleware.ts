@@ -5,17 +5,12 @@ import { routing } from './i18n/routing';
 // export default createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-  const acceptLanguage = request.headers.get('accept-language');
-  const primaryLanguage = acceptLanguage?.split(',')[0];
-
   const countryCode = await fetch('http://ip-api.com/json/')
     .then((res) => res.json())
     .then((data) => {
       return data.countryCode;
     })
     .catch((error) => console.error('Error fetching country:', error));
-
-  console.log('브라우저 기본 언어: ', primaryLanguage);
 
   // next-intl 미들웨어 실행
   const response = createMiddleware(routing)(request);
