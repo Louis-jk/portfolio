@@ -25,7 +25,7 @@
     "projects": {
       "personal": {
         "title": "개인 프로젝트 및 개발 실력 향상",
-        "date": "2025.01 – 현재",
+        "date": "2025.01 - 현재",
         "company": "",
         "region": "한국 양산",
         "role": "프론트엔드 개발자",
@@ -50,7 +50,7 @@
       },
       "confidential_japanese_startup": {
         "title": "신규 B2C 서비스 프론트엔드 개발 지원 (원격근무)",
-        "date": "2024.09 – 2024.12",
+        "date": "2024.09 - 2024.12",
         "company": "Confidential Japanese Startup",
         "region": "일본 도쿄",
         "role": "프리랜서 프론트엔드 개발자",
@@ -60,7 +60,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "일본 B2B 서비스 플랫폼에서 프론트엔드 개발자로 원격 근무하였습니다. 6가지 서로 다른 업종을 위한 애플리케이션 페이지를 개발하고, 공통 UI 컴포넌트를 구축했으며, 반응형 디자인을 구현했습니다. 입력값 검증 및 에러 처리가 포함된 다단계 신청 폼을 설계하고, 서비스 런칭 전후의 버그를 관리하며 UX 개선에 기여했습니다. Datadog을 활용한 지속적인 모니터링과 이슈 해결을 통해 서비스 안정성 향상에 기여했습니다.",
+          "fullDescription": "일본 B2C 서비스 플랫폼의 프론트엔드 개발을 원격으로 수행하였습니다. 릴리즈를 얼마 남기지 않은 시점에 프로젝트에 투입되어, 짧은 기간 내 출시 일정에 맞춰 기여하였습니다. 총 6가지 업종에 맞춘 화면을 개발 및 유지보수하고, shadcn/ui 기반의 재사용 가능한 UI 컴포넌트를 제작하였으며, Tailwind CSS로 일관된 반응형 디자인을 구현했습니다. React Hook Form과 Zod를 사용해 입력 유효성 검사가 포함된 다단계 폼을 구축하였고, fetch를 활용해 RESTful API를 연동하며, React Context API로 클라이언트 상태를 관리했습니다. Datadog을 통해 시스템 상태를 모니터링하고, 출시 이후 발생한 문제들을 빠르게 해결했습니다.",
           "challenges": [
             "Balancing multiple projects simultaneously",
             "Preparing for international job market",
@@ -75,7 +75,7 @@
       },
       "turingum_web03_tokyo_beast_base": {
         "title": "Web3 프로덕트의 캠페인 사이트 및 시스템 개발 지원 업무 (원격근무)",
-        "date": "2024.01 – 2024.08",
+        "date": "2024.01 - 2024.08",
         "company": "Turingum K.K",
         "region": "일본 도쿄",
         "role": "프리랜서 프론트엔드 개발자",
@@ -85,7 +85,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Web3 게임 플랫폼의 BASE 영역 내 내부 페이지 개발 및 유지보수에 기여하였습니다. 신규 기능 구현, 기존 페이지의 디자인 및 기능 업데이트 적용, 그리고 다양한 프론트엔드 이슈와 버그 수정 작업을 수행하여 서비스 안정성과 사용자 경험을 개선했습니다.",
+          "fullDescription": "Web3 게임 플랫폼 BASE 섹션 프론트엔드 개발팀에 합류하여 홈페이지 마키 섹션 업데이트 및 “GACHA”, “MARKET” 페이지 디자인 리뉴얼을 주도했습니다. “NFT Staking” 페이지를 단독 개발하여 인터랙티브 기능을 구현했고, 다국어 SMS 인증 기능을 통합하며 모바일 대응을 완료했습니다. 기존 프론트엔드 버그 수정 작업에서 이전 개발자와 협업하였고, wagmi와 RainbowKit으로 지갑 연동, GSAP로 애니메이션, SWR로 데이터 관리를 수행했습니다. “Mystery Ticket” 페이지에서는 기획 변경에 따른 스타일 및 기능 수정과 Web3 및 API 직접 연동을 포함한 추가 개발을 단독으로 담당했습니다.",
           "challenges": [
             "Balancing multiple projects simultaneously",
             "Preparing for international job market",
@@ -100,7 +100,7 @@
       },
       "turingum_web03_tokyo_beast_mystery_ticket": {
         "title": "Web3 프로덕트의 캠페인 사이트 개발 지원 업무 (원격근무)",
-        "date": "2023.10 – 2024.01",
+        "date": "2023.10 - 2024.01",
         "company": "Turingum K.K",
         "region": "일본 도쿄",
         "role": "프리랜서 프론트엔드 개발자",
@@ -110,7 +110,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Web3 캠페인 사이트의 프론트엔드 개발, 다국어 지원, 코드 리팩토링을 담당했습니다. 역동적이고 애니메이션이 많은 사이트였지만, Next.js와 GSAP 연동 방법을 연구하여 원활하고 효율적인 구현을 가능하게 했습니다. 이후 초기 “미스터리 티켓” 기능을 인수받아 BASE 섹션의 프론트엔드 개발 지원과 기밀 신규 업무도 수행했습니다.Web3 캠페인 사이트의 프론트엔드 개발, 다국어 지원, 코드 리팩토링을 담당했습니다. 역동적이고 애니메이션이 많은 사이트였지만, Next.js와 GSAP 연동 방법을 연구하여 원활하고 효율적인 구현을 가능하게 했습니다. 이후 초기 “미스터리 티켓” 기능을 인수받아 BASE 섹션의 프론트엔드 개발 지원과 기밀 신규 업무도 수행했습니다.",
+          "fullDescription": "동적이고 애니메이션이 많은 Web3 캠페인 사이트의 프론트엔드 개발, 다국어 지원, 코드 리팩토링을 담당했습니다. 철저한 조사 끝에 GSAP를 Next.js에 성공적으로 통합하여 부드럽고 효율적인 애니메이션 구현을 가능하게 했습니다. 이후 초기 \"Mystery Ticket\" 기능을 인수하여 BASE 섹션의 프론트엔드 개발을 지원하였으며, 기밀 신규 업무도 수행했습니다.",
           "challenges": [
             "Balancing multiple projects simultaneously",
             "Preparing for international job market",
@@ -125,7 +125,7 @@
       },
       "turingum_web03_wizardry_campaign": {
         "title": "Web3.0 프로젝트의 캠페인 사이트 구현 (원격근무)",
-        "date": "2023.08 – 2023.09",
+        "date": "2023.08 - 2023.09",
         "company": "Turingum K.K",
         "region": "일본 도쿄",
         "role": "프리랜서 프론트엔드 개발자",
@@ -135,7 +135,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "일본 블록체인 스타트업과 협업하여, 일본 대형 게임사의 Web3 캠페인 사이트 개발에 프론트엔드 프리랜서로 참여했습니다. Next.js 기반의 프론트엔드 아키텍처를 설계 및 구현하고, 다국어 지원, 코드 리팩토링, 반응형 UI 개발을 맡았습니다. 디자이너와 협업하는 구조였지만, 에셋 제작과 UI 문제 식별을 통해 디자인 측면도 함께 지원했습니다. 개발한 Merkle Tree CLI는 내부 도구로 활용되었고, 구성한 프론트엔드 구조는 내부 교육 자료에도 참고되었습니다.",
+          "fullDescription": "일본의 Web3 컨설팅 기업인 Turingum K.K.사와의 인연으로, 일본의 주요 게임 회사 Web3 캠페인 사이트 개발에 기여했습니다. 처음 참여하는 Web3 프로젝트였기에 Turingum K.K. 주요 담당자들로부터 귀중한 교육을 받았고, 덕분에 원활한 프로젝트 진행과 성공적인 릴리즈를 이룰 수 있었습니다. Next.js를 사용해 프론트엔드 아키텍처 설계 및 구현을 주도했으며, 다국어 지원, 코드 리팩토링, 반응형 디자인, 블록체인 스마트컨트랙트와의 직접 연동에 집중했습니다. 디자이너와 협업하여 UI 개선을 위해 에셋 제작과 사용성 향상 작업도 수행했습니다. 주요 담당자로부터 Merkle 트리 CLI 도구 개발을 요청받았고, 처음임에도 문제없이 완성했습니다. 이후 담당자들로부터 높은 평가를 받았으며, 회사 내부 사용 허가를 요청받았습니다. 또한 제가 구축한 프론트엔드 아키텍처를 주니어 개발자 교육 자료로 사용하고 싶다는 요청도 받았습니다.",
           "challenges": [
             "Balancing multiple projects simultaneously",
             "Preparing for international job market",
@@ -149,8 +149,8 @@
         }
       },
       "confidential_korean_startup": {
-        "title": "테니스 코트 및 레슨 예약 모바일 앱 – 프론트엔드 유지보수 및 신규 개발 (풀 리모트)",
-        "date": "2022.12 – 2023.07",
+        "title": "테니스 코트 및 레슨 예약 모바일 앱 - 프론트엔드 유지보수 및 신규 개발 (풀 리모트)",
+        "date": "2022.12 - 2023.07",
         "company": "Confidential Korean Startup",
         "region": "한국 서울",
         "role": "프리랜서 프론트엔드 개발자",
@@ -160,22 +160,22 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "한국의 스포츠 예약 플랫폼을 운영하는 스타트업의 React Native 모바일 앱 유지보수 및 신규 기능 개발 프로젝트에 프리랜서 프론트엔드 개발자로 참여했습니다. 이미 앱이 릴리즈된 상태였기에, 초반에는 버그를 빠르게 수정하는 업무를 책임졌습니다. 신속한 버그 해결과 플랫폼별 스토어 업데이트를 통해 사용자 불편을 해소할 수 있었습니다. 그 이후 기존 코드를 리팩토링하며 UI/UX 개선 업무를 맡았고, 신규 개발 참여 요청도 받아 프로젝트에 합류하였습니다. 사용자 경험과 서비스 신뢰성을 최우선으로 고려하며 클라이언트와 협업하여 원활히 진행했습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "문서가 부족한 기존 코드의 버그를 빠르게 파악하고 수정",
+            "iOS와 Android 양 플랫폼에서 안정성과 호환성 확보",
+            "기존 기능을 해치지 않으면서 UI/UX 개선 수행"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "주요 버그를 신속하게 해결하고 앱스토어에 즉시 업데이트",
+            "유지보수성과 가독성을 높이기 위해 코드 리팩토링 진행",
+            "사용자 경험 개선 및 성능 향상으로 전반적인 앱 품질 향상"
           ]
         }
       },
       "dmonster_dongnaebook": {
         "title": "[배달 앱] POS 시스템(데스크탑) 및 점주용 모바일 앱 프론트엔드 개발",
-        "date": "2022.07 – 2022.10",
+        "date": "2022.07 - 2022.10",
         "company": "Dmonster",
         "region": "한국 부산",
         "role": "프리랜서 프론트엔드 개발자",
@@ -185,22 +185,24 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "한국의 배달 서비스 플랫폼에서, POS 시스템과 점주용 모바일 애플리케이션의 개발을 프리랜서 프론트엔드 개발자로서 담당했습니다. 모바일 앱은 iOS와 Android를 지원하며 React Native로 개발되었고, POS 시스템은 Electron과 React를 활용한 데스크톱 애플리케이션으로 구현되었습니다. 초기에는 로그인 기능(SNS, 일반, 자동)과 점포 관리(전체 또는 개별 매장의 휴무일 설정), 실시간 주문 현황 표시 등 핵심 기능들을 개발했으며, 이후 데스크톱 앱에서의 SerialPort 통신 및 영수증 출력 기능 구현까지 확장되었습니다. 특히 Electron 환경에서 프린터 드라이버 없이 영수증을 출력하는 기능은 기술적으로 매우 까다로운 과제였지만, C# WinPlatform과 Python Qt의 구현 사례를 참고하고 다양한 라이브러리를 검토한 끝에 SerialPort 통신을 통해 성공적으로 해결할 수 있었습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "모바일 앱과 데스크톱 앱을 동시에 개발하고 관리해야 했던 점",
+            "매장별 설정, 실시간 주문 현황 등 복잡한 비즈니스 로직을 안정적으로 구현하는 일",
+            "Electron 환경에서 프린터 드라이버 없이 영수증 출력 기능을 구현해야 했던 기술적 도전",
+            "공식 문서나 사례가 부족한 SerialPort 통신 처리 방식에 대한 안정적인 해결 방안 마련"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "React Native를 활용해 iOS/Android를 지원하는 점주용 모바일 앱을 성공적으로 개발",
+            "Electron + React 기반의 POS 데스크탑 애플리케이션을 안정적으로 구축",
+            "C# 및 Python의 구현 사례를 참고해 SerialPort 기반의 영수증 출력 기능을 구현",
+            "SNS/일반/자동 로그인 방식과 실시간 주문 현황 표시 등 주요 기능 일체를 직접 개발"
           ]
         }
       },
       "dmonster_moli": {
         "title": "동시통역 리스너용 데스크탑 애플리케이션 프론트엔드 개발",
-        "date": "2022.06 – 2022.07",
+        "date": "2022.06 - 2022.07",
         "company": "Dmonster",
         "region": "한국 부산",
         "role": "프리랜서 프론트엔드 개발자",
@@ -210,22 +212,22 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "동시통역 리스너용 모바일 애플리케이션 프로젝트를 다른 개발자로부터 인수받아 기능 추가 개발과 함께 iOS, Android 앱 스토어 등록까지 담당했습니다. 이후 클라이언트의 요청에 따라 동일한 기능을 제공하는 데스크톱 애플리케이션의 개발도 맡아 Electron을 활용하여 구현하였습니다. Agora SDK를 이용해 통역자 모드와 청취자 모드의 음성 통화 기능을 처리하였으며, 운영체제별(Windows, macOS) 창 크기 조절 기능, 자료 다운로드, 실시간 음성 볼륨 시각화 등의 기능을 포함했습니다. 개발 중 Electron용 Agora SDK 통합에서 문제가 발생했지만, 당시 공식적인 해결 방법이 없어 Web용 Agora SDK를 커스터마이징해 Electron에 적용하는 방식으로 문제를 해결하였고, 이 경험을 통해 유연한 사고의 중요성을 다시금 느낄 수 있었습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "개발 중인 모바일 앱을 중간에 인수받아 기존 코드를 빠르게 파악하고 안정적으로 이어받는 일",
+            "Electron에서 Agora SDK 통합 시 발생한 호환성 문제 해결",
+            "공식적인 Electron용 SDK가 없던 상황에서 Web SDK를 커스터마이징해 데스크톱 앱에 적용해야 했던 점"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Agora SDK를 활용한 통역자/리스너 간 음성 통화 기능 구현",
+            "실시간 음성 시각화 및 자료 다운로드 기능이 포함된 macOS/Windows용 데스크톱 앱 개발",
+            "창의적인 문제 해결을 통해 SDK 제약을 극복하고 기능 구현 완수"
           ]
         }
       },
       "dmonster_mozaiq": {
         "title": "별장 예약 앱 모바일(웹뷰) 프론트엔드 개발 지원",
-        "date": "2022.06 – 2022.06",
+        "date": "2022.06 - 2022.06",
         "company": "Dmonster",
         "region": "한국 부산",
         "role": "프리랜서 프론트엔드 개발자",
@@ -417,7 +419,7 @@
         }
       },
       "dmonster_paper_workshop_partners": {
-        "title": "온라인 인쇄 포털 – 인쇄업체용 모바일 앱 프론트엔드 개발",
+        "title": "온라인 인쇄 포털 - 인쇄업체용 모바일 앱 프론트엔드 개발",
         "date": "2021.02 - 2021.06",
         "company": "Dmonster",
         "region": "한국 부산",
@@ -459,7 +461,7 @@
         }
       },
       "dmonster_paper_workshop_customers": {
-        "title": "온라인 인쇄 포털 – 사용자용 모바일 앱 프론트엔드 개발",
+        "title": "온라인 인쇄 포털 - 사용자용 모바일 앱 프론트엔드 개발",
         "date": "2021.02 - 2021.06",
         "company": "Dmonster",
         "region": "한국 부산",
@@ -585,7 +587,7 @@
         }
       },
       "dmonster_factoryful": {
-        "title": "FactoryFul – 지도 연동 기능 수정 및 개선",
+        "title": "FactoryFul - 지도 연동 기능 수정 및 개선",
         "date": "2020.09 - 2020.09",
         "company": "Dmonster",
         "region": "한국 부산",
@@ -638,5 +640,17 @@
         "en": "English"
       }
     }
+  },
+  "details": {
+    "title": "프로젝트 상세",
+    "overview": "개요",
+    "technologies": "기술 스택",
+    "toolsAndEnvironments": "툴 & 개발환경",
+    "development": "개발",
+    "debugging": "모니터링 / 디버깅",
+    "communication": "커뮤니케이션",
+    "design": "디자인",
+    "challenges": "도전 과제",
+    "achievements": "주요 성과"
   }
 }

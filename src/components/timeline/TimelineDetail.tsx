@@ -13,6 +13,7 @@ import { TbBrowserShare } from 'react-icons/tb';
 import { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { useMediaQuery } from 'react-responsive';
+import { Button } from '../ui/button';
 
 interface TimelineDetailProps {
   item: TimelineItem | null;
@@ -25,6 +26,7 @@ export default function TimelineDetail({
 }: TimelineDetailProps) {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('timeline');
+  const tD = useTranslations('details');
   const [imageLoaded, setImageLoaded] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
@@ -227,70 +229,71 @@ export default function TimelineDetail({
           {/* Full Description */}
           <div>
             {!item.isNDA && item.isCommercial && (
-              <div className='mb-5 flex'>
+              <div className='mb-5 flex gap-2'>
                 {webLink && (
-                  <a
-                    href={item.commercialLinks.web}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='mr-5'
+                  <Button
+                    variant='default'
+                    className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
+                    size='sm'
+                    onClick={() => {
+                      window.open(item.commercialLinks.web, '_blank');
+                    }}
                   >
                     <div className='flex items-center gap-1'>
-                      <TbBrowserShare className='w-3 h-3 text-purple-500' />
-                      <span className='text-sm underline text-purple-500'>
-                        Website
-                      </span>
+                      <TbBrowserShare className='w-3 h-3' />
+                      <span>Website</span>
                     </div>
-                  </a>
+                  </Button>
                 )}
                 {iosLink && (
-                  <a
-                    href={item.commercialLinks.ios}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='mr-5'
+                  <Button
+                    variant='default'
+                    className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
+                    size='sm'
+                    onClick={() => {
+                      window.open(item.commercialLinks.ios, '_blank');
+                    }}
                   >
                     <div className='flex items-center gap-1'>
-                      <IoLogoAppleAppstore className='w-3 h-3 text-purple-500' />
-                      <span className='text-sm underline text-purple-500'>
-                        App Store
-                      </span>
+                      <IoLogoAppleAppstore className='w-3 h-3' />
+                      <span>App Store</span>
                     </div>
-                  </a>
+                  </Button>
                 )}
                 {androidLink && (
-                  <a
-                    href={item.commercialLinks.android}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='mr-5'
+                  <Button
+                    variant='default'
+                    className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
+                    size='sm'
+                    onClick={() => {
+                      window.open(item.commercialLinks.android, '_blank');
+                    }}
                   >
                     <div className='flex items-center gap-1'>
-                      <FaGooglePlay className='w-3 h-3 text-purple-500' />
-                      <span className='text-sm underline text-purple-500'>
-                        Google Play
-                      </span>
+                      <FaGooglePlay className='w-3 h-3' />
+                      <span>Google Play</span>
                     </div>
-                  </a>
+                  </Button>
                 )}
                 {desktopLink && (
-                  <a
-                    href={item.commercialLinks.desktop}
-                    target='_blank'
-                    rel='noopener noreferrer'
+                  <Button
+                    variant='default'
+                    className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
+                    size='sm'
+                    onClick={() => {
+                      window.open(item.commercialLinks.desktop, '_blank');
+                    }}
                   >
                     <div className='flex items-center gap-1'>
-                      <FaDesktop className='w-3 h-3 text-purple-500' />
-                      <span className='text-sm underline text-purple-500'>
-                        Desktop
-                      </span>
+                      <FaDesktop className='w-3 h-3' />
+                      <span>Desktop</span>
                     </div>
-                  </a>
+                  </Button>
                 )}
               </div>
             )}
 
-            <h4 className='text-lg font-semibold mb-3'>Overview</h4>
+            <h4 className='text-lg font-semibold mb-3'>{tD('overview')}</h4>
             <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
               {t(item.details.fullDescription)}
             </p>
@@ -298,7 +301,7 @@ export default function TimelineDetail({
 
           {/* Technologies */}
           <div>
-            <h4 className='text-lg font-semibold mb-3'>Technologies</h4>
+            <h4 className='text-lg font-semibold mb-3'>{tD('technologies')}</h4>
             <div className='flex flex-wrap gap-2'>
               {item.details.technologies.map((tech, index) => (
                 <span
@@ -319,30 +322,14 @@ export default function TimelineDetail({
           {/* Tools */}
           {item.details.tools && Object.keys(item.details.tools).length > 0 && (
             <div>
-              <h4 className='text-lg font-semibold mb-3'>Tools</h4>
-              {item.details.tools.communication.length > 0 && (
-                <div className='mb-5'>
-                  <h5 className='text-sm font-medium mb-2'>Communication</h5>
-                  <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.communication.map((tool, index) => (
-                      <span
-                        key={index}
-                        className={cn(
-                          'px-3 py-1 rounded-full text-sm font-medium',
-                          resolvedTheme === 'dark'
-                            ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
-                        )}
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <h4 className='text-lg font-semibold mb-3'>
+                {tD('toolsAndEnvironments')}
+              </h4>
               {item.details.tools.development.length > 0 && (
                 <div className='mb-5'>
-                  <h5 className='text-sm font-medium mb-2'>Development</h5>
+                  <h5 className='text-sm font-medium mb-2'>
+                    {tD('development')}
+                  </h5>
                   <div className='flex flex-wrap gap-2'>
                     {item.details.tools.development.map((tool, index) => (
                       <span
@@ -360,51 +347,58 @@ export default function TimelineDetail({
                   </div>
                 </div>
               )}
+
+              {item.details.tools.debugging.length > 0 && (
+                <div className='mb-5'>
+                  <h5 className='text-sm font-medium mb-2'>
+                    {tD('debugging')}
+                  </h5>
+                  <div className='flex flex-wrap gap-2'>
+                    {item.details.tools.debugging.map((tool, index) => (
+                      <span
+                        key={index}
+                        className={cn(
+                          'px-3 py-1 rounded-full text-sm font-medium',
+                          resolvedTheme === 'dark'
+                            ? 'bg-gray-700 text-gray-200'
+                            : 'bg-gray-200 text-gray-800'
+                        )}
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {item.details.tools.communication.length > 0 && (
+                <div className='mb-5'>
+                  <h5 className='text-sm font-medium mb-2'>
+                    {tD('communication')}
+                  </h5>
+                  <div className='flex flex-wrap gap-2'>
+                    {item.details.tools.communication.map((tool, index) => (
+                      <span
+                        key={index}
+                        className={cn(
+                          'px-3 py-1 rounded-full text-sm font-medium',
+                          resolvedTheme === 'dark'
+                            ? 'bg-gray-700 text-gray-200'
+                            : 'bg-gray-200 text-gray-800'
+                        )}
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {item.details.tools.design.length > 0 && (
                 <div className='mb-5'>
-                  <h5 className='text-sm font-medium mb-2'>Design</h5>
+                  <h5 className='text-sm font-medium mb-2'>{tD('design')}</h5>
                   <div className='flex flex-wrap gap-2'>
                     {item.details.tools.design.map((tool, index) => (
-                      <span
-                        key={index}
-                        className={cn(
-                          'px-3 py-1 rounded-full text-sm font-medium',
-                          resolvedTheme === 'dark'
-                            ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
-                        )}
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {item.details.tools.environment.length > 0 && (
-                <div className='mb-5'>
-                  <h5 className='text-sm font-medium mb-2'>Environment</h5>
-                  <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.environment.map((tool, index) => (
-                      <span
-                        key={index}
-                        className={cn(
-                          'px-3 py-1 rounded-full text-sm font-medium',
-                          resolvedTheme === 'dark'
-                            ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
-                        )}
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {item.details.tools.other.length > 0 && (
-                <div className='mb-5'>
-                  <h5 className='text-sm font-medium mb-2'>Other</h5>
-                  <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.other.map((tool, index) => (
                       <span
                         key={index}
                         className={cn(
@@ -425,7 +419,7 @@ export default function TimelineDetail({
 
           {/* Challenges */}
           <div>
-            <h4 className='text-lg font-semibold mb-3'>Challenges</h4>
+            <h4 className='text-lg font-semibold mb-3'>{tD('challenges')}</h4>
             <ul className='space-y-2'>
               {item.details.challenges.map((challenge, index) => (
                 <li key={index} className='flex items-start'>
@@ -440,7 +434,7 @@ export default function TimelineDetail({
 
           {/* Achievements */}
           <div>
-            <h4 className='text-lg font-semibold mb-3'>Achievements</h4>
+            <h4 className='text-lg font-semibold mb-3'>{tD('achievements')}</h4>
             <ul className='space-y-2'>
               {item.details.achievements.map((achievement, index) => (
                 <li key={index} className='flex items-start'>

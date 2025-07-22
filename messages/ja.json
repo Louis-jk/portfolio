@@ -58,7 +58,7 @@
       "confidential_japanese_startup": {
         "title": "新規B2C事業のフロントエンド開発支援 (フルーリモート)",
         "date": "2024.09 – 2024.12",
-        "company": "Confidential Japanese Startup",
+        "company": "社名非公開の日本スタートアップ",
         "region": "日本・東京",
         "role": "フリーランス フロントエンドエンジニア",
         "description": [
@@ -67,7 +67,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のB2Bサービスプラットフォームにて、フロントエンドエンジニアとしてリモート勤務しました。6つの業種に対応する申請ページを開発し、共通UIコンポーネントを構築、レスポンシブデザインを実装しました。入力バリデーションとエラーハンドリングを備えたマルチステップフォームの設計、リリース前後のバグ管理とUX改善に取り組みました。また、Datadogを活用した継続的なモニタリングと課題解決により、サービスの安定性向上に貢献しました。",
+          "fullDescription": "日本のB2Cサービスプラットフォームのフロントエンド開発をリモートで担当。 リリース直前のタイミングでプロジェクトに参画し、限られた期間内で開発に貢献しました。 6つの業種向けに最適化されたアプリケーションページを構築・保守。 shadcn/ui を使用して再利用可能なUIコンポーネントを開発し、Tailwind CSS により一貫したレスポンシブデザインを実現。 React Hook Form と Zod によるバリデーション付きマルチステップフォームを実装。 fetch を使った RESTful API 連携を行い、React Context API によってクライアント側の状態を管理。 Datadog による継続的なモニタリングで、リリース後の安定性向上と問題解決にも対応しました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -90,7 +90,7 @@
       "turingum_web03_tokyo_beast_base": {
         "title": "Web3プロダクトのキャンペーンサイト、およびシステム開発支援業務 (フルーリモート)",
         "date": "2024.01 – 2024.08",
-        "company": "Turingum K.K",
+        "company": "チューリンガム株式会社",
         "region": "日本・東京",
         "role": "フリーランス フロントエンドエンジニア",
         "description": [
@@ -99,7 +99,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Web3ゲームプラットフォームのBASEエリアにおける内部ページの開発および保守に貢献しました。新機能の実装、既存ページのデザインおよび機能の更新適用、さまざまなフロントエンドの問題やバグ修正を行い、サービスの安定性とユーザー体験の向上に努めました。",
+          "fullDescription": "BASEセクションのフロントエンド開発チームに参加。 ホームページのマルキー部分の更新と、「GACHA」「MARKET」ページのデザイン刷新を主導。 「NFT Staking」ページを単独で開発し、インタラクティブな機能を実装。 多言語対応のSMS認証機能を統合し、モバイル対応も徹底。 既存のフロントエンドのバグ修正において前任者と連携。 ウォレット連携にwagmiとRainbowKit、アニメーションにGSAP、データ管理にSWRを活用。 「Mystery Ticket」ページでは企画変更に伴うスタイルと機能の修正、Web3およびAPIの直接連携を含む追加開発を単独で担当。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -122,7 +122,7 @@
       "turingum_web03_tokyo_beast_mystery_ticket": {
         "title": "Web3プロダクトのキャンペーンサイト開発支援業務 (フルーリモート)",
         "date": "2023.10 – 2024.01",
-        "company": "Turingum K.K",
+        "company": "チューリンガム株式会社",
         "region": "日本・東京",
         "role": "フリーランス フロントエンドエンジニア",
         "description": [
@@ -131,7 +131,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Web3キャンペーンサイトのフロントエンド開発、多言語対応、コードリファクタリングを担当しました。動的でアニメーションが多いサイトでしたが、Next.jsとGSAPの連携方法を研究し、スムーズかつ効率的な実装を実現しました。その後、初期の「ミステリーチケット」機能を引き継ぎ、BASEセクションのフロントエンド開発支援や機密の新規タスクにも対応しました。",
+          "fullDescription": "動的でアニメーションが多用されるWeb3キャンペーンサイトのフロントエンド開発、多言語対応、コードリファクタリングを担当しました。 入念な調査を経て、GSAPをNext.jsに統合し、スムーズかつ効率的なアニメーションを実現しました。 その後、初期の「Mystery Ticket」機能を引き継ぎ、BASEセクションのフロントエンド開発を支援し、機密の新規タスクも対応しました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -154,7 +154,7 @@
       "turingum_web03_wizardry_campaign": {
         "title": "Web3.0プロジェクトのキャンペーンサイト実装 (フルーリモート)",
         "date": "2023.08 – 2024.09",
-        "company": "Turingum K.K",
+        "company": "チューリンガム株式会社",
         "region": "日本・東京",
         "role": "フリーランス フロントエンドエンジニア",
         "description": [
@@ -163,7 +163,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "日本のWeb3コンサルティング企業であるチューリンガム株式会社とのご縁により、大手日本ゲーム会社のWeb3キャンペーンサイト開発に貢献しました。初めてのWeb3プロジェクトだったため、チューリンガム社の主要担当者から貴重なアドバイスを受け、スムーズなプロジェクト遂行と成功裏のリリースを実現しました。 Next.jsを使用してフロントエンドのアーキテクチャ設計と実装を主導し、多言語対応、コードリファクタリング、レスポンシブデザイン、そしてブロックチェーンのスマートコントラクトとの直接連携に注力しました。デザイナーと協力して、アセット作成やユーザビリティの改善を通じてUIのブラッシュアップも行いました。 主要担当者からMerkle treeのCLIツールの開発を依頼されました。初めてのツール作成でしたが問題なく完成にまで至り、後に主要担当者から高く評価され、社内での使用許可を求められました。また、私が構築したフロントエンドアーキテクチャをジュニア開発者の研修資料として使用をしたいとの申し出を受けました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -186,7 +186,7 @@
       "confidential_korean_startup": {
         "title": "テニスレッスン予約アプリのフロントエンド保守・新機能開発 (フルーリモート)",
         "date": "2022.12 – 2023.07",
-        "company": "Confidential Korean Startup",
+        "company": "社名非公開の韓国スタートアップ",
         "region": "韓国・ソウル",
         "role": "フリーランス フロントエンドエンジニア",
         "description": [
@@ -195,7 +195,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "韓国のスタートアップが運営するスポーツ予約プラットフォームのReact Nativeモバイルアプリの保守および新機能開発プロジェクトにフリーランスのフロントエンド開発者として参加しました。 既にアプリがリリースされていたため、当初はバグの迅速な修正を担当しました。問題を素早く解決し、各プラットフォームのストアにアプリを更新することで、ユーザーの不便を解消しました。 その後、既存コードのリファクタリングとUI/UX改善の業務を任され、新規開発にも参加しました。プロジェクトを通じてユーザー体験とサービスの信頼性を最優先し、クライアントと密に連携しながら円滑に進行しました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -204,14 +204,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "詳細なドキュメントがない既存コードのバグを迅速に把握・修正する必要があったこと",
+            "iOSとAndroidの両プラットフォームでの安定性と互換性の確保",
+            "既存機能に影響を与えずにUI/UXを改善すること"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "主要バグを迅速に修正し、各アプリストアにタイムリーなアップデートを実施",
+            "コードの可読性と保守性を高めるためのリファクタリングを実施",
+            "UI/UXの改善およびパフォーマンス調整によりユーザー体験を向上"
           ]
         }
       },
@@ -227,7 +227,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "韓国のデリバリーサービスプラットフォームにおいて、POSシステムおよび店舗オーナー向けモバイルアプリケーションの開発をフリーランスのフロントエンド開発者として担当しました。モバイルアプリはReact NativeでiOSとAndroid向けに開発され、POSシステムはElectronとReactを使ったデスクトップアプリとして実装されました。 SNSログイン・通常ログイン・自動ログインなどの認証機能、店舗ごとの休業日設定、リアルタイム注文状況の表示機能などの主要な機能を開発しました。その後、デスクトップアプリにおけるSerialPort通信とレシート印刷機能の実装にも携わりました。 特にElectron環境でプリンタードライバーを使用せずにレシート印刷を実現することは技術的に非常に困難な課題でしたが、C#のWinPlatformやPythonのQtでの実装例を参考にし、多くのライブラリを検討した結果、SerialPort通信を用いて無事に実現することができました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -236,14 +236,16 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "モバイルアプリとデスクトップアプリの両方を同時に開発・管理する必要があった点",
+            "店舗別の設定やリアルタイム注文表示など、業務ロジックが複雑な機能を安定的に実装すること",
+            "Electron環境でプリンタードライバーを使用せずにレシート印刷を実現するという技術的課題",
+            "SerialPort通信を利用したデバイス連携に関するドキュメントや事例が少ない中での対応"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "React Nativeを用いてiOS/Android対応の店舗オーナー向けモバイルアプリを開発",
+            "Electron + ReactでPOS用デスクトップアプリを構築し、主要機能を安定動作させた",
+            "C#やPythonの実装事例を参考にしながら、ElectronでのSerialPort通信によるレシート印刷を実現",
+            "複数のログイン方式（SNS、一般、自動）やリアルタイム注文表示などの業務機能を一通り開発"
           ]
         }
       },
@@ -259,7 +261,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "同時通訳リスナー向けモバイルアプリのプロジェクトを他のエンジニアから引き継ぎ、追加機能の開発およびiOS・Androidストアへのリリースを担当しました。 その後、クライアントの要望により、同様の機能を備えたデスクトップアプリケーションの開発も担当し、Electronを用いて実装しました。Agora SDKを使用し、通訳者モード・リスナーモードの音声通話処理を実装、WindowsおよびmacOS対応のリサイズ機能、資料のダウンロード、音声のリアルタイム可視化機能なども開発しました。 開発中、Electron用のAgora SDKの埋め込みで不具合が発生し、当時は公式な解決策が存在しなかったため、Web用のAgora SDKをカスタマイズしてElectronに組み込むという柔軟な発想で問題を解決しました。このプロジェクトを通じて、発想の転換と柔軟な問題解決力の重要性を改めて実感しました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -268,14 +270,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "開発途中のモバイルアプリを引き継ぎ、既存コードを迅速に把握して安定的に引き継ぐ必要があった",
+            "Electron環境にAgora SDKを統合する際の互換性問題の解決",
+            "公式のElectron向けSDKが存在しない中、Web SDKをカスタマイズして対応"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Agora SDKを活用し、通訳者とリスナーの音声通話機能を実装",
+            "音声のリアルタイム可視化や資料ダウンロード機能を備えたデスクトップアプリをmacOS/Windows向けに開発",
+            "SDKの制限を柔軟な発想とカスタム実装で乗り越え、安定動作を実現"
           ]
         }
       },
@@ -701,5 +703,17 @@
         "en": "English"
       }
     }
+  },
+  "details": {
+    "title": "プロジェクト詳細",
+    "overview": "概要",
+    "technologies": "技術スタック",
+    "toolsAndEnvironments": "ツール & 開発環境",
+    "development": "開発",
+    "debugging": "モニタリング / デバッグ",
+    "communication": "コミュニケーション",
+    "design": "デザイン",
+    "challenges": "課題 (Challenges)",
+    "achievements": "実績 (Achievements)"
   }
 }

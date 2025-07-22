@@ -67,7 +67,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Worked as a frontend developer for a Japanese B2B service platform (remote). Built application pages for six different business types, developed shared UI components, and implemented responsive design. Designed multi-step forms with input validation and error handling. Managed bugs and improved UX pre- and post-launch. Contributed to service stability through continuous monitoring and issue resolution using Datadog.",
+          "fullDescription": "Collaborated remotely as a frontend developer for a Japanese B2C service platform. Joined the project shortly before release and contributed under tight deadlines to meet the launch schedule. Built and maintained dynamic application pages tailored to six distinct business types. Developed reusable UI components using shadcn/ui and styled them with Tailwind CSS for consistent, responsive design. Designed multi-step forms with React Hook Form and Zod for input validation and error handling. Integrated RESTful APIs using fetch and managed client-side state with React Context API. Monitored system health and resolved issues post-launch through continuous tracking with Datadog.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -99,7 +99,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Contributed to the development and maintenance of internal pages for the BASE area of a Web3 game platform. Worked on new feature implementation, applied design and functionality updates to existing pages, and handled various frontend issues and bug fixes to improve stability and user experience.",
+          "fullDescription": "Joined the frontend development team for the BASE section of a Web3 game platform. Led updates to homepage Marquee sections and redesigned “GACHA” and “MARKET” pages. Solely developed the “NFT Staking” page with interactive features. Integrated multilingual SMS verification and ensured full mobile responsiveness. Collaborated to resolve legacy frontend bugs. Utilized wagmi, RainbowKit for wallet integration, GSAP for animations, and SWR for data management. Independently handled style and functional updates for the “Mystery Ticket” page, including direct Web3 and API integrations.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -131,7 +131,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "I was responsible for frontend development, multilingual support, and code refactoring for a Web3 campaign site. Although it was a dynamic and animation-heavy site, I researched and integrated GSAP with Next.js, enabling smooth and efficient implementation. Later, I took over the initial \"Mystery Ticket\" feature and supported the frontend development of the BASE section, including confidential new tasks.",
+          "fullDescription": "I was responsible for frontend development, multilingual support, and code refactoring for a dynamic, animation-heavy Web3 campaign site. Through thorough research, I successfully integrated GSAP with Next.js to enable smooth and efficient animations. Subsequently, I took over the initial \"Mystery Ticket\" feature and supported frontend development for the BASE section, including handling confidential new tasks.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -163,7 +163,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "As a freelance frontend developer, I contributed to the development of a Web3 campaign site for a major Japanese gaming company, working with a Japanese blockchain startup. I was responsible for frontend architecture and implementation using Next.js, with a focus on multilingual support, refactoring, and responsive design. While the team included a designer, I also supported UI refinement by creating assets and identifying usability issues. I developed a Merkle tree CLI tool, which was later adopted internally, and the frontend structure I built has been used as a reference for internal onboarding and training.",
+          "fullDescription": "Through a connection with Turingum K.K., a Japanese Web3 consulting company, I contributed to the development of a Web3 campaign site for a major Japanese gaming company. As this was my first Web3 project, I received valuable advice from key contacts at Turingum, which enabled smooth project execution and a successful release. I led frontend architecture design and implementation using Next.js, focusing on multilingual support, code refactoring, responsive design, and direct integration with blockchain smart contracts. I also collaborated with a designer to enhance the UI by creating assets and improving usability. One of the key contacts requested that I develop a Merkle tree CLI tool. Although it was my first time creating such a tool, I completed it without issues. Later, the key contacts highly praised the tool and asked for permission to use it internally. Additionally, I received a request to use the frontend architecture I built as training material for junior developers.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -195,7 +195,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "I participated as a freelance frontend developer in the maintenance and new feature development project for a React Native mobile app operated by a Korean startup running a sports reservation platform. Since the app had already been released, I initially took responsibility for quickly fixing bugs. By promptly resolving issues and updating the app on each platform’s store, we were able to alleviate user inconveniences. Later, I was assigned to refactor existing code and improve UI/UX. I was also invited to participate in new development. Throughout the project, I prioritized user experience and service reliability, collaborating closely with the client to ensure smooth progress.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -204,14 +204,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Fixing bugs in legacy code without detailed documentation",
+            "Ensuring compatibility and stability across both iOS and Android platforms",
+            "Improving UI/UX while minimizing disruption to existing features"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Resolved critical bugs and released timely updates to app stores",
+            "Refactored major parts of the codebase for better readability and maintainability",
+            "Enhanced user experience through UI/UX improvements and performance tuning"
           ]
         }
       },
@@ -227,7 +227,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "As a freelance frontend developer, I was responsible for developing the POS system and the store-owner mobile application for a Korean delivery service platform. The mobile app was developed using React Native for both iOS and Android, while the POS system was implemented as a desktop application using Electron and React. I developed key features such as login (SNS, general, auto), store management (holiday settings for all or specific stores), and real-time order status display. Later, my responsibilities expanded to include SerialPort communication and receipt printing features in the desktop application. One of the most technically challenging tasks was implementing receipt printing in the Electron environment without relying on printer drivers. By referencing C# WinPlatform and Python Qt implementations and exploring various libraries, I was able to successfully implement the feature using SerialPort communication.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -236,14 +236,16 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Managing the development of both mobile and desktop applications simultaneously",
+            "Implementing complex business logic such as store-specific settings and real-time order tracking",
+            "Overcoming the technical challenge of printing receipts in Electron without printer drivers",
+            "Finding a stable solution for SerialPort communication with limited official documentation"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Developed a mobile app for store owners using React Native, supporting both iOS and Android",
+            "Built a POS desktop application with Electron and React, ensuring stable performance across features",
+            "Successfully implemented SerialPort-based receipt printing by referencing C# and Python examples",
+            "Implemented various login methods (SNS, general, auto) and real-time order display functionality"
           ]
         }
       },
@@ -259,7 +261,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "fullDescription": "I took over a mobile app project for simultaneous interpretation listeners from another engineer and was responsible for developing additional features and submitting the app to both the iOS and Android stores. Later, at the client's request, I led the development of a desktop version of the same application using Electron. The app featured real-time voice call functionality for both interpreter and listener modes using Agora SDK, window resizing tailored for macOS and Windows, downloadable material support, and sound visualization for live voice volume levels. During development, I faced integration issues with the Electron version of Agora SDK. As no stable solution was available at the time, I implemented a creative workaround by customizing the Web SDK to work within Electron, which allowed the app to function as intended. This experience highlighted the importance of flexible thinking and creative problem-solving.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -268,14 +270,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Taking over an existing mobile app project mid-development and understanding legacy code",
+            "Resolving compatibility issues when integrating Agora SDK into the Electron environment",
+            "Adapting Web SDK for desktop use due to lack of official support for Electron"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully implemented interpreter/listener voice call features using Agora SDK",
+            "Built a cross-platform desktop app (macOS/Windows) with real-time sound visualization and material download features",
+            "Overcame SDK limitations through creative problem-solving and custom integration"
           ]
         }
       },
@@ -701,5 +703,17 @@
         "en": "English"
       }
     }
+  },
+  "details": {
+    "title": "Project Details",
+    "overview": "Overview",
+    "technologies": "Technologies",
+    "toolsAndEnvironments": "Tools & Environments",
+    "development": "Development",
+    "debugging": "Monitoring / Debugging",
+    "communication": "Communication",
+    "design": "Design",
+    "challenges": "Challenges",
+    "achievements": "Achievements"
   }
 }

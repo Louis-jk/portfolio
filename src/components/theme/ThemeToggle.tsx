@@ -49,12 +49,12 @@ export default function ThemeToggle() {
       >
         {resolvedTheme === 'light' ? (
           <div className='flex items-center justify-center'>
-            <p className='mr-1 text-white font-semibold'>Dark</p>
+            <p className='mr-1 text-white font-semibold text-sm'>Dark</p>
             <FaMoon className='w-5 h-5 text-white' />
           </div>
         ) : (
           <div className='flex items-center justify-center'>
-            <p className='mr-1 text-black font-semibold'>Light</p>
+            <p className='mr-1 text-black font-semibold text-sm'>Light</p>
             <GiStripedSun className='w-5 h-5 text-gray-900' />
           </div>
         )}

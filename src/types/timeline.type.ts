@@ -31,8 +31,7 @@ export type TimelineItem = {
       communication: string[];
       development: string[];
       design: string[];
-      environment: string[];
-      other: string[];
+      debugging: string[];
     };
     challenges: string[];
     achievements: string[];
