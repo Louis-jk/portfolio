@@ -325,7 +325,7 @@ export default function Timeline({
     <div className='flex flex-col'>
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 적용 */}
       <h2
-        className={`text-3xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
+        className={`text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
           window.innerWidth < 1024
             ? 'sticky top-[55px] z-50 bg-white dark:bg-[#0a0a0a] py-4'
             : ''
