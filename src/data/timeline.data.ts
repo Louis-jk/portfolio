@@ -34,7 +34,7 @@ export const timelineData: TimelineItem[] = [
     },
     thumbnail: 'https://storage.googleapis.com/jk-static-assets/personal.png',
     details: {
-      fullDescription: 'projects.personal.details.fullDescription',
+      overview: 'projects.personal.details.overview',
       technologies: [
         'TypeScript',
         'Next.js (v15)',
@@ -112,8 +112,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/confidential_nda.png',
     details: {
-      fullDescription:
-        'projects.confidential_japanese_startup.details.fullDescription',
+      overview: 'projects.confidential_japanese_startup.details.overview',
       technologies: [
         'TypeScript',
         'Next.js (v14-15)',
@@ -170,8 +169,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/web3_base_zip.gif',
     details: {
-      fullDescription:
-        'projects.turingum_web03_tokyo_beast_base.details.fullDescription',
+      overview: 'projects.turingum_web03_tokyo_beast_base.details.overview',
       technologies: [
         'TypeScript',
         'Next.js (v13-14)',
@@ -230,8 +228,8 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/web3_mystery_ticket_zip.gif',
     details: {
-      fullDescription:
-        'projects.turingum_web03_tokyo_beast_mystery_ticket.details.fullDescription',
+      overview:
+        'projects.turingum_web03_tokyo_beast_mystery_ticket.details.overview',
       technologies: [
         'TypeScript',
         'Next.js (v13-14)',
@@ -290,8 +288,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/web3_wizardry_campaign_zip.gif',
     details: {
-      fullDescription:
-        'projects.turingum_web03_wizardry_campaign.details.fullDescription',
+      overview: 'projects.turingum_web03_wizardry_campaign.details.overview',
       technologies: [
         'TypeScript',
         'Next.js (v13)',
@@ -350,8 +347,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/ko_startup_thumb.png',
     details: {
-      fullDescription:
-        'projects.confidential_korean_startup.details.fullDescription',
+      overview: 'projects.confidential_korean_startup.details.overview',
       technologies: [
         'TypeScript',
         'React Native',
@@ -419,14 +415,14 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/dongnaebook.png',
     details: {
-      fullDescription: 'projects.dmonster_dongnaebook.details.fullDescription',
+      overview: 'projects.dmonster_dongnaebook.details.overview',
       technologies: [
         'TypeScript',
         'React',
         'React Native',
         'Electron',
         'Material-UI',
-        'Reanimated',
+        'react-native-reanimated',
         'API Integration (RESTful, Axios)',
         'Firebase Cloud Messaging',
         'Social Login (Kakao, Naver)',
@@ -447,13 +443,11 @@ export const timelineData: TimelineItem[] = [
         'projects.dmonster_dongnaebook.details.challenges.0',
         'projects.dmonster_dongnaebook.details.challenges.1',
         'projects.dmonster_dongnaebook.details.challenges.2',
-        'projects.dmonster_dongnaebook.details.challenges.3',
       ],
       achievements: [
         'projects.dmonster_dongnaebook.details.achievements.0',
         'projects.dmonster_dongnaebook.details.achievements.1',
         'projects.dmonster_dongnaebook.details.achievements.2',
-        'projects.dmonster_dongnaebook.details.achievements.3',
       ],
       image: 'https://storage.googleapis.com/jk-static-assets/dongnaebook.png',
     },
@@ -486,7 +480,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/moli_desktop.png',
     details: {
-      fullDescription: 'projects.dmonster_moli.details.fullDescription',
+      overview: 'projects.dmonster_moli.details.overview',
       technologies: [
         'TypeScript',
         'React',
@@ -548,7 +542,7 @@ export const timelineData: TimelineItem[] = [
     },
     thumbnail: 'https://storage.googleapis.com/jk-static-assets/mozaiq.png',
     details: {
-      fullDescription: 'projects.dmonster_mozaiq.details.fullDescription',
+      overview: 'projects.dmonster_mozaiq.details.overview',
       technologies: [
         'TypeScript',
         'React Native',
@@ -608,7 +602,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/vagastong_rn.png',
     details: {
-      fullDescription: 'projects.dmonster_vegastong.details.fullDescription',
+      overview: 'projects.dmonster_vegastong.details.overview',
       technologies: [
         'Javascript',
         'React Native',
@@ -655,6 +649,7 @@ export const timelineData: TimelineItem[] = [
       'projects.dmonster_diningcode.description.0',
       'projects.dmonster_diningcode.description.1',
       'projects.dmonster_diningcode.description.2',
+      'projects.dmonster_diningcode.description.3',
     ],
     isNDA: false,
     isCommercial: true,
@@ -671,7 +666,7 @@ export const timelineData: TimelineItem[] = [
     },
     thumbnail: 'https://storage.googleapis.com/jk-static-assets/diningcode.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_diningcode.details.overview',
       technologies: [
         'Typescript',
         'Next.js (v12)',
@@ -733,12 +728,13 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/todaysorder_256.gif',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_todaysorder.details.overview',
       technologies: [
         'Typescript',
         'Javascript (ES6)',
         'React',
         'React Native',
+        'react-native-reanimated',
         'Electron',
         'Material-UI',
         'API Integration (RESTful, Axios)',
@@ -770,6 +766,8 @@ export const timelineData: TimelineItem[] = [
         'projects.dmonster_todaysorder.details.achievements.0',
         'projects.dmonster_todaysorder.details.achievements.1',
         'projects.dmonster_todaysorder.details.achievements.2',
+        'projects.dmonster_todaysorder.details.achievements.3',
+        'projects.dmonster_todaysorder.details.achievements.4',
       ],
       image:
         'https://storage.googleapis.com/jk-static-assets/todaysorder_256.gif',
@@ -785,7 +783,6 @@ export const timelineData: TimelineItem[] = [
     description: [
       'projects.dmonster_idraw.description.0',
       'projects.dmonster_idraw.description.1',
-      'projects.dmonster_idraw.description.2',
     ],
     isNDA: false,
     isCommercial: true,
@@ -804,7 +801,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/idraw_rn_5row.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_idraw.details.overview',
       technologies: ['Javascript (ES6)', 'React Native'],
       tools: {
         development: [
@@ -860,7 +857,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/paper_workshop_partners.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_paper_workshop_partners.details.overview',
       technologies: [
         'Javascript (ES6)',
         'React Native',
@@ -927,7 +924,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/paper_workshop_customers_rn.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_paper_workshop_customers.details.overview',
       technologies: [
         'Javascript(ES6)',
         'React Native',
@@ -994,7 +991,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/insadong_rn.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_insadong.details.overview',
       technologies: [
         'Javascript (ES6)',
         'PHP',
@@ -1058,7 +1055,7 @@ export const timelineData: TimelineItem[] = [
     },
     thumbnail: 'https://storage.googleapis.com/jk-static-assets/gongjuro.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_gongjuro.details.overview',
       technologies: [
         'Javascript (ES6)',
         'React Native',
@@ -1123,7 +1120,7 @@ export const timelineData: TimelineItem[] = [
     thumbnail:
       'https://storage.googleapis.com/jk-static-assets/banner_ui_bug_fix.png',
     details: {
-      fullDescription: 'projects.dmonster_diningcode.details.fullDescription',
+      overview: 'projects.dmonster_factoryful.details.overview',
       technologies: ['jQuery', 'PHP', 'API Integration (RESTful, fetch)'],
       tools: {
         development: ['Atom'],

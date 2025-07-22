@@ -295,7 +295,7 @@ export default function TimelineDetail({
 
             <h4 className='text-lg font-semibold mb-3'>{tD('overview')}</h4>
             <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
-              {t(item.details.fullDescription)}
+              {t(item.details.overview)}
             </p>
           </div>
 

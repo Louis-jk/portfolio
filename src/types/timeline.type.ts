@@ -25,7 +25,7 @@ export type TimelineItem = {
   };
   thumbnail: string;
   details?: {
-    fullDescription: string;
+    overview: string;
     technologies: string[];
     tools?: {
       communication: string[];

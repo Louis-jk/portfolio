@@ -35,7 +35,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+          "overview": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -62,12 +62,12 @@
         "region": "Tokyo, Japan",
         "role": "Freelance Frontend Engineer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Frontend development for Japanese B2C service platform",
+          "Built and maintained optimized pages for 6 business types",
+          "Developed reusable UI components and implemented responsive design"
         ],
         "details": {
-          "fullDescription": "Collaborated remotely as a frontend developer for a Japanese B2C service platform. Joined the project shortly before release and contributed under tight deadlines to meet the launch schedule. Built and maintained dynamic application pages tailored to six distinct business types. Developed reusable UI components using shadcn/ui and styled them with Tailwind CSS for consistent, responsive design. Designed multi-step forms with React Hook Form and Zod for input validation and error handling. Integrated RESTful APIs using fetch and managed client-side state with React Context API. Monitored system health and resolved issues post-launch through continuous tracking with Datadog.",
+          "overview": "Collaborated remotely as a frontend developer for a Japanese B2C service platform. Joined the project shortly before release and contributed under tight deadlines to meet the launch schedule. Built and maintained dynamic application pages tailored to six distinct business types. Developed reusable UI components using shadcn/ui and styled them with Tailwind CSS for consistent, responsive design. Designed multi-step forms with React Hook Form and Zod for input validation and error handling. Integrated RESTful APIs using fetch and managed client-side state with React Context API. Monitored system health and resolved issues post-launch through continuous tracking with Datadog.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -94,12 +94,12 @@
         "region": "Tokyo, Japan",
         "role": "Freelance Frontend Engineer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Independently developed the NFT Staking page in the BASE section and handled design renewal for several pages",
+          "Developed multilingual support and multilingual SMS verification features",
+          "Adjusted overall page styles and fixed bugs, including mobile responsiveness"
         ],
         "details": {
-          "fullDescription": "I initially participated in the development of the “NFT Staking” page in the BASE section, and later joined the frontend development team. I led style adjustments for the homepage marquee area, design renewal and multilingual support for the “GACHA” and “MARKET” pages, and performed fine style tuning across the entire homepage. I integrated multilingual SMS verification and enhanced mobile responsiveness. For existing frontend bug fixes, I collaborated closely with the previous developer. I utilized wagmi and RainbowKit for wallet integration, GSAP for animations, and SWR for data management. Regarding the “Mystery Ticket” page, I handled style and functional modifications due to planning changes, as well as additional development involving direct Web3 and API integration.",
+          "overview": "I initially participated in the development of the “NFT Staking” page in the BASE section, and later joined the frontend development team. I led style adjustments for the homepage marquee area, design renewal and multilingual support for the “GACHA” and “MARKET” pages, and performed fine style tuning across the entire homepage. I integrated multilingual SMS verification and enhanced mobile responsiveness. For existing frontend bug fixes, I collaborated closely with the previous developer. I utilized wagmi and RainbowKit for wallet integration, GSAP for animations, and SWR for data management. Regarding the “Mystery Ticket” page, I handled style and functional modifications due to planning changes, as well as additional development involving direct Web3 and API integration.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -126,12 +126,12 @@
         "region": "Tokyo, Japan",
         "role": "Freelance Frontend Engineer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Frontend development of a highly animated Web3 campaign site",
+          "Implemented high-performance animations by integrating GSAP with Next.js",
+          "Maintained Mystery Ticket feature and supported new development in the BASE section"
         ],
         "details": {
-          "fullDescription": "I was responsible for frontend development, multilingual support, and code refactoring for a dynamic, animation-heavy Web3 campaign site. Through thorough research, I successfully integrated GSAP with Next.js to enable smooth and efficient animations. Subsequently, I took over the initial \"Mystery Ticket\" feature and supported frontend development for the BASE section, including handling confidential new tasks.",
+          "overview": "I was responsible for frontend development, multilingual support, and code refactoring for a dynamic, animation-heavy Web3 campaign site. Through thorough research, I successfully integrated GSAP with Next.js to enable smooth and efficient animations. Subsequently, I took over the initial \"Mystery Ticket\" feature and supported frontend development for the BASE section, including handling confidential new tasks.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -158,12 +158,12 @@
         "region": "Tokyo, Japan",
         "role": "Freelance Frontend Engineer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Frontend architecture design and development for a Web3.0 campaign site",
+          "Implemented multilingual support, responsive UI, and smart contract integration",
+          "Developed a Merkle Tree CLI tool"
         ],
         "details": {
-          "fullDescription": "Through a connection with Turingum K.K., a Japanese Web3 consulting company, I contributed to the development of a Web3 campaign site for a major Japanese gaming company. As this was my first Web3 project, I received valuable advice from key contacts at Turingum, which enabled smooth project execution and a successful release. I led frontend architecture design and implementation using Next.js, focusing on multilingual support, code refactoring, responsive design, and direct integration with blockchain smart contracts. I also collaborated with a designer to enhance the UI by creating assets and improving usability. One of the key contacts requested that I develop a Merkle tree CLI tool. Although it was my first time creating such a tool, I completed it without issues. Later, the key contacts highly praised the tool and asked for permission to use it internally. Additionally, I received a request to use the frontend architecture I built as training material for junior developers.",
+          "overview": "Through a connection with Turingum K.K., a Japanese Web3 consulting company, I contributed to the development of a Web3 campaign site for a major Japanese gaming company. As this was my first Web3 project, I received valuable advice from key contacts at Turingum, which enabled smooth project execution and a successful release. I led frontend architecture design and implementation using Next.js, focusing on multilingual support, code refactoring, responsive design, and direct integration with blockchain smart contracts. I also collaborated with a designer to enhance the UI by creating assets and improving usability. One of the key contacts requested that I develop a Merkle tree CLI tool. Although it was my first time creating such a tool, I completed it without issues. Later, the key contacts highly praised the tool and asked for permission to use it internally. Additionally, I received a request to use the frontend architecture I built as training material for junior developers.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -190,12 +190,12 @@
         "region": "Seoul, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Maintained and extended a React Native sports reservation app",
+          "Fixed bugs, improved UI/UX, and refactored code for maintainability",
+          "Managed releases for both iOS and Android platforms"
         ],
         "details": {
-          "fullDescription": "I participated as a freelance frontend developer in the maintenance and new feature development project for a React Native mobile app operated by a Korean startup running a sports reservation platform. Since the app had already been released, I initially took responsibility for quickly fixing bugs. By promptly resolving issues and updating the app on each platform’s store, we were able to alleviate user inconveniences. Later, I was assigned to refactor existing code and improve UI/UX. I was also invited to participate in new development. Throughout the project, I prioritized user experience and service reliability, collaborating closely with the client to ensure smooth progress.",
+          "overview": "I participated as a freelance frontend developer in the maintenance and new feature development project for a React Native mobile app operated by a Korean startup running a sports reservation platform. Since the app had already been released, I initially took responsibility for quickly fixing bugs. By promptly resolving issues and updating the app on each platform’s store, we were able to alleviate user inconveniences. Later, I was assigned to refactor existing code and improve UI/UX. I was also invited to participate in new development. Throughout the project, I prioritized user experience and service reliability, collaborating closely with the client to ensure smooth progress.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -222,12 +222,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed a mobile app with React Native and a POS desktop app with Electron + React",
+          "Implemented core features such as login, order management, and receipt printing",
+          "Enabled receipt printing without printer drivers using SerialPort communication"
         ],
         "details": {
-          "fullDescription": "As a freelance frontend developer, I was responsible for developing the POS system and the store-owner mobile application for a Korean delivery service platform. The mobile app was developed using React Native for both iOS and Android, while the POS system was implemented as a desktop application using Electron and React. I developed key features such as login (SNS, general, auto), store management (holiday settings for all or specific stores), and real-time order status display. Later, my responsibilities expanded to include SerialPort communication and receipt printing features in the desktop application. One of the most technically challenging tasks was implementing receipt printing in the Electron environment without relying on printer drivers. By referencing C# WinPlatform and Python Qt implementations and exploring various libraries, I was able to successfully implement the feature using SerialPort communication.",
+          "overview": "As a freelance frontend developer, I was responsible for developing the POS system and the store-owner mobile application for a Korean delivery service platform. The mobile app was developed using React Native for both iOS and Android, while the POS system was implemented as a desktop application using Electron and React. I developed key features such as login (SNS, general, auto), store management (holiday settings for all or specific stores), and real-time order status display. Later, my responsibilities expanded to include SerialPort communication and receipt printing features in the desktop application. One of the most technically challenging tasks was implementing receipt printing in the Electron environment without relying on printer drivers. By referencing C# WinPlatform and Python Qt implementations and exploring various libraries, I was able to successfully implement the feature using SerialPort communication.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -237,15 +237,13 @@
           ],
           "challenges": [
             "Managing the development of both mobile and desktop applications simultaneously",
-            "Implementing complex business logic such as store-specific settings and real-time order tracking",
             "Overcoming the technical challenge of printing receipts in Electron without printer drivers",
             "Finding a stable solution for SerialPort communication with limited official documentation"
           ],
           "achievements": [
             "Developed a mobile app for store owners using React Native, supporting both iOS and Android",
             "Built a POS desktop application with Electron and React, ensuring stable performance across features",
-            "Successfully implemented SerialPort-based receipt printing by referencing C# and Python examples",
-            "Implemented various login methods (SNS, general, auto) and real-time order display functionality"
+            "Successfully implemented SerialPort-based receipt printing by referencing C# and Python examples"
           ]
         }
       },
@@ -256,12 +254,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Added features to a simultaneous interpretation listener mobile app and handled app store deployment",
+          "Developed a desktop version using Electron, implementing voice call and audio visualization features",
+          "Overcame Agora SDK limitations by customizing the Web SDK for stable integration"
         ],
         "details": {
-          "fullDescription": "I took over a mobile app project for simultaneous interpretation listeners from another engineer and was responsible for developing additional features and submitting the app to both the iOS and Android stores. Later, at the client's request, I led the development of a desktop version of the same application using Electron. The app featured real-time voice call functionality for both interpreter and listener modes using Agora SDK, window resizing tailored for macOS and Windows, downloadable material support, and sound visualization for live voice volume levels. During development, I faced integration issues with the Electron version of Agora SDK. As no stable solution was available at the time, I implemented a creative workaround by customizing the Web SDK to work within Electron, which allowed the app to function as intended. This experience highlighted the importance of flexible thinking and creative problem-solving.",
+          "overview": "I took over a mobile app project for simultaneous interpretation listeners from another engineer and was responsible for developing additional features and submitting the app to both the iOS and Android stores. Later, at the client's request, I led the development of a desktop version of the same application using Electron. The app featured real-time voice call functionality for both interpreter and listener modes using Agora SDK, window resizing tailored for macOS and Windows, downloadable material support, and sound visualization for live voice volume levels. During development, I faced integration issues with the Electron version of Agora SDK. As no stable solution was available at the time, I implemented a creative workaround by customizing the Web SDK to work within Electron, which allowed the app to function as intended. This experience highlighted the importance of flexible thinking and creative problem-solving.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -288,12 +286,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed WebView-based mobile app for iOS and Android",
+          "Implemented Deeplink sharing, SNS login, image push notifications",
+          "Collaborated with PHP backend engineer to integrate core features"
         ],
         "details": {
-          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "overview": "I received hardcoded source code and was responsible for making modifications and developing new features. The project was implemented using a WebView-based architecture, and I collaborated closely with a PHP engineer. I developed the mobile app for both iOS and Android using WebView, implementing features such as SMS and SNS sharing via Deeplink, social login, payment module integration, chatbot integration, and image-based push notifications for both background and foreground modes.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -302,14 +300,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Needed to quickly understand and extend a hardcoded codebase while ensuring new features didn’t break existing functionality",
+            "Faced technical complexity in integrating native features such as Deeplink and image-based notifications within a WebView structure",
+            "Resolved platform-specific inconsistencies and authentication issues during SNS login and payment module integration"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully refactored and stabilized a complex hardcoded codebase while integrating new functionality",
+            "Implemented user-friendly features such as SNS/SMS sharing with Deeplink, chatbot integration, and image notifications",
+            "Seamlessly integrated Kakao, Naver, Apple, and Facebook login along with IAMPORT payment gateway for both iOS and Android"
           ]
         }
       },
@@ -320,12 +318,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Participated in mobile tourism app development for the U.S. branch",
+          "Implemented SMS sharing via Deeplink and SNS login functionalities",
+          "Developed category-based and posting search features"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "Responsible for developing a mobile tourism app for the client’s U.S. branch. Developed for both iOS and Android using React Native. Implemented Deeplink-based SMS sharing, SNS and standard login features, as well as category-based search and posting search for users and administrators. The project was halted during development.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -344,14 +342,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Addressed compatibility and authentication issues while integrating multiple SNS login APIs (Kakao, Naver, Facebook, Apple)",
+            "Overcame complexities in implementing Deeplink-based SMS sharing functionality",
+            "Optimized WebView-based map features for smooth integration within the mobile app"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Developed core features of the mobile tourism app optimized for both iOS and Android environments",
+            "Successfully implemented Deeplink SMS sharing and various SNS login features",
+            "Built efficient search capabilities for both users and administrators"
           ]
         }
       },
@@ -362,12 +360,13 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Led frontend architecture design and implementation for site renewal",
+          "Developed responsive UI for desktop and mobile using Next.js and Styled-Components",
+          "Managed team task distribution and schedule, handled AWS deployment environment",
+          "Proposed UI/UX improvements enhancing overall service quality"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "Led the overall frontend architecture design and implementation for the site redevelopment project. As project leader (PL), effectively delegated development tasks among team members, overseeing schedules and ensuring code quality. Implemented responsive UI using Next.js and Styled-Components for both desktop and mobile platforms. Managed key feature development as well as AWS deployment environments. Proactively proposed and executed UI/UX improvements to enhance user experience.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -386,14 +385,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Successfully refactored complex legacy code to meet tight redevelopment deadlines",
+            "Delivered optimized UI designs for both desktop and mobile reflecting diverse UX requirements",
+            "Ensured efficient project progress through effective team coordination and schedule management"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Designed the entire frontend architecture and led team task distribution to deliver the project smoothly",
+            "Improved service quality by proposing and implementing UI/UX enhancements",
+            "Established and maintained stable AWS deployment environments for seamless live service"
           ]
         }
       },
@@ -404,12 +403,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed POS desktop app and multi-platform mobile apps for a client benchmarking a popular delivery app",
+          "Real-time order status management with Redux-saga and existing code improvements",
+          "Implemented automatic receipt printing for POS printers and added UI animation effects"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "I was responsible for developing a desktop POS system app for owners and a multi-platform mobile app for iOS and Android, based on a client request benchmarking a popular delivery app. The POS desktop app was implemented using Electron and React, while the mobile app was developed using React Native. Redux-saga was introduced for real-time order status monitoring and existing code was improved. Additionally, an automatic receipt printing feature for the POS printer was developed, along with UI animation effects to enhance user experience.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -428,14 +427,16 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Managing stable development across both desktop and mobile multi-platform environments",
+            "Integrating Redux-saga smoothly for real-time order monitoring alongside existing code",
+            "Technical challenges in implementing reliable automatic receipt printing for POS printers across various environments"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully developed a stable POS desktop app using Electron and React",
+            "Efficiently built a multi-platform mobile app for iOS and Android with React Native",
+            "Enabled smooth real-time order tracking through Redux-saga integration and code improvements",
+            "Developed automatic receipt printing functionality, increasing operational efficiency",
+            "Enhanced user experience by adding UI animation effects"
           ]
         }
       },
@@ -446,12 +447,11 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Frontend development of iOS/Android basic layouts, login, and detail pages using React Native",
+          "Completed work up to pre-API integration stage and performed handover"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "Contributed to the frontend development of an art education mobile app up to the stage before API integration. Developed basic layouts, login, various pages, and detail pages for iOS and Android using React Native. Also performed handover to facilitate smooth API integration in the next phase.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -470,14 +470,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Developing the frontend before the API was ready, ensuring design and implementation are compatible with future API integration",
+            "Implementing stable UI layouts compatible across both iOS and Android platforms",
+            "Clearly structuring login and page layouts to enable seamless handover to subsequent developers"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully completed frontend development of basic UI and functionality using React Native before API integration",
+            "Delivered consistent user experience with layouts for both iOS and Android platforms",
+            "Provided smooth handover to ensure project continuity for API integration phase"
           ]
         }
       },
@@ -488,12 +488,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed a B2B mobile app allowing users to request prints and printing companies to bid",
+          "Implemented a 1:1 chat system for real-time communication between users and printing companies",
+          "Integrated real-time notifications with Redux and FCM, designing alert logic based on order flow"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "I developed a B2B mobile application for printing companies that allows users to submit printing requests and for printing companies to bid on these requests. The app includes a 1:1 chat feature for communication between users and printing companies, enhancing real-time interaction. Additionally, printing companies can propose detailed plans for printing processes within their bids. I implemented the mobile application using React Native for both iOS and Android platforms, focusing on front-end development. Key features include bidding, price proposals, and delivery management for vendors. I also integrated real-time notifications based on Redux and FCM, and designed notification logic for the entire order flow, improving communication and transparency between users and vendors.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -512,14 +512,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Implementing the bidding and price proposal system while meeting various user requirements.",
+            "Resolving synchronization issues between multiple platforms (iOS, Android) while developing the real-time notification system.",
+            "Developing an efficient 1:1 chat system for seamless communication between users and printing companies."
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully implemented bidding and price proposal features, facilitating efficient communication between users and printing companies.",
+            "Developed a real-time notification system based on Redux and FCM, providing immediate alerts based on order status changes.",
+            "Enabled real-time communication between users and printing companies through the 1:1 chat feature, improving communication efficiency and trust."
           ]
         }
       },
@@ -530,12 +530,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "A platform for shopping various print products and ordering quotes from partner vendors.",
+          "Dynamic quote request form with info buttons, and 1:1 chat & phone consultation features.",
+          "Frontend development of iOS/Android app using React Native, with Android first released."
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "This mobile application is a platform where users can shop for various print products and order quotes from multiple partner vendors. When ordering prints, the quote request form dynamically adjusts based on the type of paper selected, with options like weight and color changing accordingly. Information about each item is provided through buttons on the form. Users can select a vendor from the received bids and, after selecting, view the vendor's information and communicate via 1:1 chat or phone consultation. In this project, I was responsible for the frontend development for both iOS and Android platforms using React Native. Initially, only the Android version was released to the store first.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -554,14 +554,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Designing and implementing a dynamic quote request form that adapts based on the paper type and user input, ensuring a seamless and intuitive experience for the user.",
+            "Ensuring real-time communication through 1:1 chat and phone consultations, providing an efficient way for users to interact with vendors.",
+            "Managing the initial release of the Android version while preparing the iOS version, balancing the deployment strategy and meeting deadlines."
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully developed a dynamic quote request form with real-time adjustments based on user choices, improving user engagement and experience.",
+            "Implemented a smooth 1:1 chat and phone consultation feature, enhancing communication between users and vendors, leading to higher customer satisfaction.",
+            "Completed the Android version and released it successfully to the store first, ensuring a smooth launch and maintaining high-quality standards across both platforms."
           ]
         }
       },
@@ -577,7 +577,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
           "technologies": [
             "Javascript",
             "React Native",
@@ -619,7 +619,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
           "technologies": [
             "Javascript",
             "React Native",
@@ -661,7 +661,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
           "technologies": [
             "Javascript",
             "React Native",
