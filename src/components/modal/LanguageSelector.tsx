@@ -56,8 +56,8 @@ const LanguageSelector = ({
                     ? 'border-b-0'
                     : 'border-b',
                   isActive
-                    ? 'bg-purple-500/10 font-bold cursor-default'
-                    : 'hover:bg-purple-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer'
+                    ? 'bg-gray-100 dark:bg-gray-800/70 font-bold cursor-default'
+                    : 'hover:bg-purple-700 dark:hover:bg-purple-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer'
                 )}
                 tabIndex={isActive ? 0 : -1}
                 aria-current={isActive ? 'true' : undefined}
