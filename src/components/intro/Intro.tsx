@@ -4,12 +4,13 @@ import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Renderer from '../avatar/Renderer';
 import Links from '../links/Links';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { FaCode } from 'react-icons/fa';
 
 function Intro() {
   const t = useTranslations();
+  const locale = useLocale();
   const [isHovered, setIsHovered] = useState(false);
   const [messageIndex, setMessageIndex] = useState(0);
   const [showGreeting, setShowGreeting] = useState(false);
@@ -137,6 +138,28 @@ function Intro() {
         >
           Joonho Kim
         </motion.h1>
+        {locale === 'ko' && (
+          <motion.p
+            className='text-2xl font-bold text-center mb-2'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          >
+            김 준호
+          </motion.p>
+        )}
+        {locale === 'ja' && (
+          <motion.p
+            className='text-2xl font-semibold text-center mb-2'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          >
+            金 俊皓 &nbsp;
+            <span className='w-[0.2em] h-1 text-gray-200'>|</span>
+            &nbsp; <span className='text-gray-400'>きむ じゅの</span>
+          </motion.p>
+        )}
 
         <Links />
 
