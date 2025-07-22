@@ -76,14 +76,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Joined the project shortly before release and needed to complete stable frontend development and deployment under a tight schedule",
+            "Faced complexity in efficiently implementing and maintaining customized pages tailored for six different business types",
+            "Required to utilize various technologies such as React Hook Form, Zod, shadcn/ui, and Tailwind CSS to deliver a consistent user experience and responsive UI simultaneously"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully built and supported the launch of dynamic pages for six business types within a strict deadline",
+            "Designed and implemented reusable UI components, greatly improving development efficiency and code maintainability",
+            "Ensured post-launch system stability through continuous monitoring with Datadog and prompt issue resolution"
           ]
         }
       },
@@ -99,7 +99,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Joined the frontend development team for the BASE section of a Web3 game platform. Led updates to homepage Marquee sections and redesigned “GACHA” and “MARKET” pages. Solely developed the “NFT Staking” page with interactive features. Integrated multilingual SMS verification and ensured full mobile responsiveness. Collaborated to resolve legacy frontend bugs. Utilized wagmi, RainbowKit for wallet integration, GSAP for animations, and SWR for data management. Independently handled style and functional updates for the “Mystery Ticket” page, including direct Web3 and API integrations.",
+          "fullDescription": "I initially participated in the development of the “NFT Staking” page in the BASE section, and later joined the frontend development team. I led style adjustments for the homepage marquee area, design renewal and multilingual support for the “GACHA” and “MARKET” pages, and performed fine style tuning across the entire homepage. I integrated multilingual SMS verification and enhanced mobile responsiveness. For existing frontend bug fixes, I collaborated closely with the previous developer. I utilized wagmi and RainbowKit for wallet integration, GSAP for animations, and SWR for data management. Regarding the “Mystery Ticket” page, I handled style and functional modifications due to planning changes, as well as additional development involving direct Web3 and API integration.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -108,14 +108,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Overcame technical challenges while implementing complex features during Web3 wallet integration and direct API integration",
+            "Performed UI/UX optimization considering both multilingual support and mobile responsiveness",
+            "Identified and quickly fixed numerous bugs in code written by existing frontend developers within the team, improving service stability"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Independently developed the “NFT Staking” page, collaborating with backend developers to review and resolve API latency issues, successfully delivering an interactive user experience",
+            "Promptly handled design updates and multilingual support for renewed pages, enhancing service quality and accessibility",
+            "Collaborated with responsible developers to swiftly fix critical bugs, significantly improving overall project stability"
           ]
         }
       },
@@ -140,14 +140,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Implementing animation-heavy designs optimized for performance within a Next.js environment",
+            "Integrating GSAP into Next.js with minimal impact on rendering and project structure",
+            "Managing inherited code from previous developers while working on new features simultaneously"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully integrated GSAP into Next.js, enabling smooth and efficient animations",
+            "Took over and enhanced the \"Mystery Ticket\" feature, improving and extending its functionality",
+            "Supported frontend development of the BASE section and handled confidential new tasks smoothly"
           ]
         }
       },
@@ -172,14 +172,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "It was my first Web3 project, so I had to quickly gain practical knowledge about blockchain and smart contract integration",
+            "I needed to implement a complex multilingual and responsive architecture within a short timeframe",
+            "Developing a Merkle tree CLI tool was a completely new and technically challenging task for me"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "With guidance from Turingum K.K., I quickly caught up with Web3 concepts and contributed to smooth project delivery",
+            "Successfully led the design and implementation of a multilingual, responsive frontend using Next.js",
+            "Completed a fully functional Merkle tree CLI tool on first attempt, which was well-received and approved for internal use"
           ]
         }
       },

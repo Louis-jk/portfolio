@@ -62,14 +62,14 @@
         "details": {
           "fullDescription": "일본 B2C 서비스 플랫폼의 프론트엔드 개발을 원격으로 수행하였습니다. 릴리즈를 얼마 남기지 않은 시점에 프로젝트에 투입되어, 짧은 기간 내 출시 일정에 맞춰 기여하였습니다. 총 6가지 업종에 맞춘 화면을 개발 및 유지보수하고, shadcn/ui 기반의 재사용 가능한 UI 컴포넌트를 제작하였으며, Tailwind CSS로 일관된 반응형 디자인을 구현했습니다. React Hook Form과 Zod를 사용해 입력 유효성 검사가 포함된 다단계 폼을 구축하였고, fetch를 활용해 RESTful API를 연동하며, React Context API로 클라이언트 상태를 관리했습니다. Datadog을 통해 시스템 상태를 모니터링하고, 출시 이후 발생한 문제들을 빠르게 해결했습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "릴리스를 앞두고 프로젝트에 합류하여 촉박한 일정 내에 안정적인 프론트엔드 개발 및 배포를 완료해야 했음",
+            "6가지 서로 다른 비즈니스 유형별 맞춤 페이지를 효율적으로 구현하고 유지보수하는 데 복잡성이 있었음",
+            "다양한 기술 스택(React Hook Form, Zod, shadcn/ui, Tailwind CSS 등)을 활용하여 일관된 사용자 경험과 반응형 UI를 동시에 구현해야 했음"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "엄격한 일정 내에 6개 비즈니스 유형에 맞춘 동적 페이지를 성공적으로 구축하고 출시를 지원함",
+            "재사용 가능한 UI 컴포넌트를 설계 및 구현하여 개발 효율성과 코드 유지보수성을 크게 향상시킴",
+            "Datadog을 통한 지속적인 모니터링과 빠른 이슈 대응으로 출시 후 시스템 안정성을 확보함"
           ]
         }
       },
@@ -85,16 +85,16 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "Web3 게임 플랫폼 BASE 섹션 프론트엔드 개발팀에 합류하여 홈페이지 마키 섹션 업데이트 및 “GACHA”, “MARKET” 페이지 디자인 리뉴얼을 주도했습니다. “NFT Staking” 페이지를 단독 개발하여 인터랙티브 기능을 구현했고, 다국어 SMS 인증 기능을 통합하며 모바일 대응을 완료했습니다. 기존 프론트엔드 버그 수정 작업에서 이전 개발자와 협업하였고, wagmi와 RainbowKit으로 지갑 연동, GSAP로 애니메이션, SWR로 데이터 관리를 수행했습니다. “Mystery Ticket” 페이지에서는 기획 변경에 따른 스타일 및 기능 수정과 Web3 및 API 직접 연동을 포함한 추가 개발을 단독으로 담당했습니다.",
+          "fullDescription": "처음에 BASE 섹션의 “NFT Staking” 페이지 개발에 참여한 후, 프론트엔드 개발팀에 합류하였습니다. 홈페이지의 marquee 부분 스타일 조정과 “GACHA” 및 “MARKET” 페이지 디자인 리뉴얼과 다국어 지원을 주도하였으며, 홈페이지 전체에 걸쳐 세밀한 스타일 조정도 수행했습니다. 다국어 SMS 인증 기능을 통합하고 모바일 대응도 강화하였습니다. 기존 프론트엔드 버그 수정에 관해서는 이전 개발자와 긴밀히 협력하였습니다. 지갑 연동에는 wagmi와 RainbowKit을, 애니메이션에는 GSAP를, 데이터 관리는 SWR을 활용하였습니다. “Mystery Ticket” 페이지에 대해서는 기획 변경에 따른 스타일 및 기능 수정과 Web3 및 API 직접 연동을 포함한 추가 개발을 진행하였습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Web3 지갑 연동 및 API 직접 통합 과정에서 복잡한 기능을 구현하며 기술적 난관 극복",
+            "다국어 지원과 모바일 대응을 동시에 고려한 UI/UX 최적화 작업 수행",
+            "프론트엔드 개발팀 내 기존 개발자가 작성한 코드에서 다수의 버그가 발견되어 이를 분석하고 신속히 수정하여 서비스 안정성 향상"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "“NFT Staking” 페이지를 단독 개발하면서 백엔드 개발자와 API 지연 상황을 검토·해결하여 인터랙티브한 사용자 경험을 성공적으로 구현함",
+            "리뉴얼된 페이지의 디자인 및 다국어 대응을 신속히 처리하여 서비스 품질과 접근성을 향상시킴",
+            "담당 개발자와 협력하여 주요 버그를 빠르게 해결하고 프로젝트 전반의 안정성을 크게 개선함"
           ]
         }
       },
@@ -112,14 +112,14 @@
         "details": {
           "fullDescription": "동적이고 애니메이션이 많은 Web3 캠페인 사이트의 프론트엔드 개발, 다국어 지원, 코드 리팩토링을 담당했습니다. 철저한 조사 끝에 GSAP를 Next.js에 성공적으로 통합하여 부드럽고 효율적인 애니메이션 구현을 가능하게 했습니다. 이후 초기 \"Mystery Ticket\" 기능을 인수하여 BASE 섹션의 프론트엔드 개발을 지원하였으며, 기밀 신규 업무도 수행했습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "애니메이션이 많은 디자인을 Next.js 환경에서 성능 저하 없이 구현",
+            "GSAP을 Next.js에 무리 없이 통합하기 위한 기술 검토 및 구조 설계",
+            "기존 코드의 인수인계와 동시에 새로운 기능 개발까지 병행해야 했던 점"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "GSAP을 Next.js에 성공적으로 통합하여 부드럽고 효율적인 애니메이션 구현",
+            "\"Mystery Ticket\" 기능을 인수하여 유지보수 및 기능 확장을 원활히 진행",
+            "BASE 섹션 프론트엔드 개발을 지원하고 기밀 신규 업무도 문제없이 수행"
           ]
         }
       },
@@ -137,14 +137,14 @@
         "details": {
           "fullDescription": "일본의 Web3 컨설팅 기업인 Turingum K.K.사와의 인연으로, 일본의 주요 게임 회사 Web3 캠페인 사이트 개발에 기여했습니다. 처음 참여하는 Web3 프로젝트였기에 Turingum K.K. 주요 담당자들로부터 귀중한 교육을 받았고, 덕분에 원활한 프로젝트 진행과 성공적인 릴리즈를 이룰 수 있었습니다. Next.js를 사용해 프론트엔드 아키텍처 설계 및 구현을 주도했으며, 다국어 지원, 코드 리팩토링, 반응형 디자인, 블록체인 스마트컨트랙트와의 직접 연동에 집중했습니다. 디자이너와 협업하여 UI 개선을 위해 에셋 제작과 사용성 향상 작업도 수행했습니다. 주요 담당자로부터 Merkle 트리 CLI 도구 개발을 요청받았고, 처음임에도 문제없이 완성했습니다. 이후 담당자들로부터 높은 평가를 받았으며, 회사 내부 사용 허가를 요청받았습니다. 또한 제가 구축한 프론트엔드 아키텍처를 주니어 개발자 교육 자료로 사용하고 싶다는 요청도 받았습니다.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Web3 프로젝트가 처음이었기 때문에 블록체인과 스마트 컨트랙트 연동에 대한 실무 지식을 빠르게 습득해야 했음",
+            "다국어 대응과 반응형 구조를 짧은 기간 안에 안정적으로 구현해야 했음",
+            "처음 접하는 Merkle 트리 CLI 도구 개발이라는 기술적으로 도전적인 작업을 수행해야 했음"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Turingum K.K.의 담당자들의 조언을 바탕으로 Web3 기술을 빠르게 익히고 프로젝트를 성공적으로 완수",
+            "Next.js 기반으로 다국어 및 반응형 프론트엔드 아키텍처를 설계하고 구현하여 원활한 릴리스에 기여",
+            "처음 만든 CLI 도구임에도 높은 완성도로 Merkle 트리 생성 툴을 개발했고, 회사 내부 사용 승인을 받음"
           ]
         }
       },

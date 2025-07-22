@@ -76,14 +76,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "リリース直前にプロジェクトに参加し、厳しいスケジュール内で安定したフロントエンド開発とデプロイを完了する必要があった",
+            "6つの異なるビジネスタイプに合わせたカスタマイズページの効率的な実装と保守に複雑さがあった",
+            "React Hook Form、Zod、shadcn/ui、Tailwind CSSなど多様な技術スタックを活用し、一貫したユーザー体験とレスポンシブUIを同時に実現する必要があった"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "タイトなスケジュールの中、6つのビジネスタイプ向けの動的ページを成功裏に構築し、リリースを支援した",
+            "再利用可能なUIコンポーネントを設計・実装し、開発効率とコードの保守性を大幅に向上させた",
+            "Datadogによる継続的なモニタリングと迅速な問題対応でリリース後のシステム安定性を確保した"
           ]
         }
       },
@@ -99,7 +99,7 @@
           "IELTS preparation & job search in AU/NZ market"
         ],
         "details": {
-          "fullDescription": "BASEセクションのフロントエンド開発チームに参加。 ホームページのマルキー部分の更新と、「GACHA」「MARKET」ページのデザイン刷新を主導。 「NFT Staking」ページを単独で開発し、インタラクティブな機能を実装。 多言語対応のSMS認証機能を統合し、モバイル対応も徹底。 既存のフロントエンドのバグ修正において前任者と連携。 ウォレット連携にwagmiとRainbowKit、アニメーションにGSAP、データ管理にSWRを活用。 「Mystery Ticket」ページでは企画変更に伴うスタイルと機能の修正、Web3およびAPIの直接連携を含む追加開発を単独で担当。",
+          "fullDescription": "最初にBASEセクションの「NFT Staking」ページの開発から参画し、その後、フロントエンド開発チームに加わりました。 ホームページのmarquee部分のスタイル調整や、「GACHA」および「MARKET」ページのデザイン刷新と多言語対応を主導し、ホームページ全体の細かなスタイル調整も行いました。 多言語対応のSMS認証機能を統合し、モバイル対応も強化しました。 既存のフロントエンドのバグ修正に関しては、前任の開発者と密に連携しました。 ウォレット連携にはwagmiとRainbowKit、アニメーションにはGSAP、データ管理にはSWRを活用しました。 「Mystery Ticket」ページについては、企画変更に伴うスタイルおよび機能の修正と、Web3およびAPIの直接連携を含む追加開発を行いました。",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -108,14 +108,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Web3ウォレット連携およびAPIの直接統合の過程で複雑な機能を実装し、技術的課題を克服すること",
+            "多言語対応とモバイル対応を考慮したUI/UXの最適化を実施すること",
+            "フロントエンド開発チーム内の既存開発者が作成したコードで多数のバグを発見し、迅速に修正してサービスの安定性を向上させること"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "「NFT Staking」ページを単独で開発し、バックエンド開発者と協力してAPI遅延問題を検討・解決し、インタラクティブなユーザー体験を成功裏に実現した",
+            "リニューアルされたページのデザインおよび多言語対応を迅速に処理し、サービス品質とアクセシビリティを向上させた",
+            "担当開発者と連携して主要なバグを速やかに修正し、プロジェクト全体の安定性を大幅に改善した"
           ]
         }
       },
@@ -140,14 +140,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "アニメーションが多用されるデザインをNext.js環境に最適化して実装すること",
+            "GSAPをNext.jsにスムーズに統合するための技術的検証と適切な構成設計",
+            "既存コードの引き継ぎと、新機能開発を並行して対応するタスク管理"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "GSAPとNext.jsを効果的に統合し、パフォーマンスの高いアニメーションを実装",
+            "「Mystery Ticket」機能のコードを把握し、保守・改善・機能追加をスムーズに実施",
+            "新たに割り当てられたBASEセクションや非公開タスクも着実に対応し、開発を支援"
           ]
         }
       },
@@ -172,14 +172,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "初めてのWeb3プロジェクトであり、ブロックチェーンやスマートコントラクトとの連携に慣れていない状態からのキャッチアップ",
+            "多言語対応・レスポンシブ対応など、高度な設計と実装を短期間で完成させる必要があったこと",
+            "Merkle tree CLIツールの開発という未経験かつ複雑なタスクに初めて取り組むこと"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "チューリンガム株式会社のサポートのもと、Web3に関する技術を短期間で習得し、問題なくプロジェクトを遂行",
+            "Next.jsを用いて多言語・レスポンシブ対応のアーキテクチャを設計・実装し、スムーズなリリースに貢献",
+            "初めてのCLIツール開発にも関わらず、完成度の高いMerkle treeツールを納品し、社内利用の承諾も得た"
           ]
         }
       },
@@ -706,13 +706,13 @@
   },
   "details": {
     "title": "プロジェクト詳細",
-    "overview": "概要",
-    "technologies": "技術スタック",
-    "toolsAndEnvironments": "ツール & 開発環境",
-    "development": "開発",
-    "debugging": "モニタリング / デバッグ",
-    "communication": "コミュニケーション",
-    "design": "デザイン",
+    "overview": "概要 (Overview)",
+    "technologies": "技術スタック (Technologies)",
+    "toolsAndEnvironments": "ツール & 開発環境 (Tools & Environments)",
+    "development": "開発 (Development)",
+    "debugging": "モニタリング / デバッグ (Monitoring / Debugging)",
+    "communication": "コミュニケーション (Communication)",
+    "design": "デザイン (Design)",
     "challenges": "課題 (Challenges)",
     "achievements": "実績 (Achievements)"
   }
