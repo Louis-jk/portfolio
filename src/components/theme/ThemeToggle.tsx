@@ -3,8 +3,9 @@
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FaSun } from 'react-icons/fa';
-import { FaMoon } from 'react-icons/fa';
+import { PiSunFill } from 'react-icons/pi';
+import { FaMoon } from 'react-icons/fa6';
+import { cn } from '@/lib/utils';
 
 export default function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -38,17 +39,20 @@ export default function ThemeToggle() {
     <div className='flex items-center gap-2'>
       <motion.button
         onClick={toggleTheme}
-        className='p-2 rounded-full shadow-md border hover:scale-110 transition-transform duration-200 bg-card border-border'
+        className={cn(
+          'p-2 rounded-full shadow-md border hover:scale-110 transition-transform duration-200 bg-card border-border cursor-pointer',
+          resolvedTheme === 'light' ? 'bg-white' : 'dark:bg-gray-900'
+        )}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label='Toggle theme'
       >
         {resolvedTheme === 'light' ? (
           // Moon icon for dark mode
-          <FaMoon className='w-5 h-5 text-foreground' />
+          <FaMoon className='w-5 h-5 text-gray-900' />
         ) : (
           // Sun icon for light mode
-          <FaSun className='w-5 h-5 text-yellow-400' />
+          <PiSunFill className='w-5 h-5 text-yellow-400' />
         )}
       </motion.button>
     </div>
