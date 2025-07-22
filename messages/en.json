@@ -18,670 +18,676 @@
     }
   },
   "timeline": {
-    "personal": {
-      "title": "Personal Projects & Study",
-      "date": "jan 2025 - present",
-      "company": "",
-      "region": "Yangsan, Korea",
-      "role": "Frontend Engineer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
+    "title": "Works & Experiences",
+    "details": {
+      "title": "Project Details"
     },
-    "confidential_japanese_startup": {
-      "title": "Frontend development support for new B2C business initiatives (Fully Remote)",
-      "date": "sep 2024 - dec 2024",
-      "company": "Confidential Japanese Startup",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "Worked as a frontend developer for a Japanese B2B service platform (remote). Built application pages for six different business types, developed shared UI components, and implemented responsive design. Designed multi-step forms with input validation and error handling. Managed bugs and improved UX pre- and post-launch. Contributed to service stability through continuous monitoring and issue resolution using Datadog.",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+    "projects": {
+      "personal": {
+        "title": "Personal Projects & Study",
+        "date": "jan 2025 - present",
+        "company": "",
+        "region": "Yangsan, Korea",
+        "role": "Frontend Engineer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "confidential_japanese_startup": {
+        "title": "Frontend development support for new B2C business initiatives (Fully Remote)",
+        "date": "sep 2024 - dec 2024",
+        "company": "Confidential Japanese Startup",
+        "region": "Tokyo, Japan",
+        "role": "Freelance Frontend Engineer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "turingum_web03_tokyo_beast_base": {
-      "title": "Support services for Web3 product campaign site and system development (Fully Remote)",
-      "date": "jan 2024 - aug 2024",
-      "company": "Turingum K.K",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "Contributed to the development and maintenance of internal pages for the BASE area of a Web3 game platform. Worked on new feature implementation, applied design and functionality updates to existing pages, and handled various frontend issues and bug fixes to improve stability and user experience.",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "Worked as a frontend developer for a Japanese B2B service platform (remote). Built application pages for six different business types, developed shared UI components, and implemented responsive design. Designed multi-step forms with input validation and error handling. Managed bugs and improved UX pre- and post-launch. Contributed to service stability through continuous monitoring and issue resolution using Datadog.",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "turingum_web03_tokyo_beast_base": {
+        "title": "Support services for Web3 product campaign site and system development (Fully Remote)",
+        "date": "jan 2024 - aug 2024",
+        "company": "Turingum K.K",
+        "region": "Tokyo, Japan",
+        "role": "Freelance Frontend Engineer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "Contributed to the development and maintenance of internal pages for the BASE area of a Web3 game platform. Worked on new feature implementation, applied design and functionality updates to existing pages, and handled various frontend issues and bug fixes to improve stability and user experience.",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "turingum_web03_tokyo_beast_mystery_ticket": {
+        "title": "Development support for a Web3 product campaign site (Fully Remote)",
+        "date": "oct 2023 - jan 2024",
+        "company": "Turingum K.K",
+        "region": "Tokyo, Japan",
+        "role": "Freelance Frontend Engineer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "turingum_web03_tokyo_beast_mystery_ticket": {
-      "title": "Development support for a Web3 product campaign site (Fully Remote)",
-      "date": "oct 2023 - jan 2024",
-      "company": "Turingum K.K",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "I was responsible for frontend development, multilingual support, and code refactoring for a Web3 campaign site. Although it was a dynamic and animation-heavy site, I researched and integrated GSAP with Next.js, enabling smooth and efficient implementation. Later, I took over the initial \"Mystery Ticket\" feature and supported the frontend development of the BASE section, including confidential new tasks.",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "I was responsible for frontend development, multilingual support, and code refactoring for a Web3 campaign site. Although it was a dynamic and animation-heavy site, I researched and integrated GSAP with Next.js, enabling smooth and efficient implementation. Later, I took over the initial \"Mystery Ticket\" feature and supported the frontend development of the BASE section, including confidential new tasks.",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "turingum_web03_wizardry_campaign": {
+        "title": "Developed a campaign site for a Web3.0 project (Fully Remote)",
+        "date": "aug 2023 - sep 2023",
+        "company": "Turingum K.K",
+        "region": "Tokyo, Japan",
+        "role": "Freelance Frontend Engineer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "As a freelance frontend developer, I contributed to the development of a Web3 campaign site for a major Japanese gaming company, working with a Japanese blockchain startup. I was responsible for frontend architecture and implementation using Next.js, with a focus on multilingual support, refactoring, and responsive design. While the team included a designer, I also supported UI refinement by creating assets and identifying usability issues. I developed a Merkle tree CLI tool, which was later adopted internally, and the frontend structure I built has been used as a reference for internal onboarding and training.",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "confidential_korean_startup": {
+        "title": "Frontend Maintenance & Development for a Tennis Court Reservation Mobile App(Fully Remote)",
+        "date": "dec 2022 - jul 2023",
+        "company": "Confidential Korean Startup",
+        "region": "Seoul, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "turingum_web03_wizardry_campaign": {
-      "title": "Developed a campaign site for a Web3.0 project (Fully Remote)",
-      "date": "aug 2023 - sep 2023",
-      "company": "Turingum K.K",
-      "region": "Tokyo, Japan",
-      "role": "Freelance Frontend Engineer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "As a freelance frontend developer, I contributed to the development of a Web3 campaign site for a major Japanese gaming company, working with a Japanese blockchain startup. I was responsible for frontend architecture and implementation using Next.js, with a focus on multilingual support, refactoring, and responsive design. While the team included a designer, I also supported UI refinement by creating assets and identifying usability issues. I developed a Merkle tree CLI tool, which was later adopted internally, and the frontend structure I built has been used as a reference for internal onboarding and training.",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_dongnaebook": {
+        "title": "[Delivery App] Frontend Development for POS System (Desktop) and Store Owner Mobile App",
+        "date": "jul 2022 - oct 2022",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_moli": {
+        "title": "Frontend Development for Desktop Application for Simultaneous Interpretation Listeners",
+        "date": "jun 2022 - jul 2022",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "confidential_korean_startup": {
-      "title": "Frontend Maintenance & Development for a Tennis Court Reservation Mobile App(Fully Remote)",
-      "date": "dec 2022 - jul 2023",
-      "company": "Confidential Korean Startup",
-      "region": "Seoul, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_mozaiq": {
+        "title": "Support for the development of a mobile application for vacation cottage (rental villa) booking",
+        "date": "jun 2022 - jun 2022",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
+          "technologies": [
+            "Next.js",
+            "Firebase",
+            "React Three Fiber",
+            "TypeScript",
+            "Tailwind CSS"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_vegastong": {
+        "title": "Frontend Development for a Las Vegas Local Communication App (Project Paused)",
+        "date": "jun 2022 - jun 2022",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_dongnaebook": {
-      "title": "[Delivery App] Frontend Development for POS System (Desktop) and Store Owner Mobile App",
-      "date": "jul 2022 - oct 2022",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_diningcode": {
+        "title": "Frontend Renewal for a Korean Food Information Platform",
+        "date": "Nov 2021 - May 2022",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_todaysorder": {
+        "title": "Frontend Development for User/Owner Delivery Apps & POS System",
+        "date": "Jul 2021 - Feb 2022",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_moli": {
-      "title": "Frontend Development for Desktop Application for Simultaneous Interpretation Listeners",
-      "date": "jun 2022 - jul 2022",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_idraw": {
+        "title": "Frontend Development for an Art Education Mobile App",
+        "date": "Jun 2021 - Jul 2021",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_paper_workshop_partners": {
+        "title": "Frontend Development for Mobile App for Printing Vendors (Online Printing Platform)",
+        "date": "Feb 2021 - Jun 2021",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_mozaiq": {
-      "title": "Support for the development of a mobile application for vacation cottage (rental villa) booking",
-      "date": "jun 2022 - jun 2022",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "日本のブロックチェーンスタートアップと連携し、大手ゲーム会社向けのWeb3キャンペーンサイトのフロントエンド開発にフリーランスとして携わりました。Next.jsを用いたアーキテクチャ設計、多言語対応、リファクタリング、レスポンシブデザインなどを担当しました。 デザイナーの方と協力しながら、UIの改善に向けたアセット作成や課題の洗い出しにも貢献しました。開発したMerkle Tree CLIは社内でツールとして活用され、構築したフロントエンド構成は社内のオンボーディングや研修資料としても参考にされています。",
-        "technologies": [
-          "Next.js",
-          "Firebase",
-          "React Three Fiber",
-          "TypeScript",
-          "Tailwind CSS"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_paper_workshop_customers": {
+        "title": "Frontend Development for User-Facing Mobile App (Online Printing Platform)",
+        "date": "Feb 2021 - Jun 2021",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_insadong": {
+        "title": "Full-Stack Development of Tourist Audio Guide App & Admin Page",
+        "date": "Dec 2020 - Jan 2021",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_vegastong": {
-      "title": "Frontend Development for a Las Vegas Local Communication App (Project Paused)",
-      "date": "jun 2022 - jun 2022",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_gongjuro": {
+        "title": "Frontend Development for a Tourist Guide Mobile Application",
+        "date": "Oct 2020 - Jan 2021",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
+      },
+      "dmonster_factoryful": {
+        "title": "FactoryFul – Map and List Integration Bug Fix",
+        "date": "Sep 2020 - Sep 2020",
+        "company": "Dmonster",
+        "region": "Busan, Korea",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend Job Matching Platform (Next.js + Firebase)",
+          "3D Portfolio with React Three Fiber",
+          "IELTS preparation & job search in AU/NZ market"
         ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_diningcode": {
-      "title": "Frontend Renewal for a Korean Food Information Platform",
-      "date": "Nov 2021 - May 2022",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_todaysorder": {
-      "title": "Frontend Development for User/Owner Delivery Apps & POS System",
-      "date": "Jul 2021 - Feb 2022",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_idraw": {
-      "title": "Frontend Development for an Art Education Mobile App",
-      "date": "Jun 2021 - Jul 2021",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_paper_workshop_partners": {
-      "title": "Frontend Development for Mobile App for Printing Vendors (Online Printing Platform)",
-      "date": "Feb 2021 - Jun 2021",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_paper_workshop_customers": {
-      "title": "Frontend Development for User-Facing Mobile App (Online Printing Platform)",
-      "date": "Feb 2021 - Jun 2021",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_insadong": {
-      "title": "Full-Stack Development of Tourist Audio Guide App & Admin Page",
-      "date": "Dec 2020 - Jan 2021",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_gongjuro": {
-      "title": "Frontend Development for a Tourist Guide Mobile Application",
-      "date": "Oct 2020 - Jan 2021",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
-      }
-    },
-    "dmonster_factoryful": {
-      "title": "FactoryFul – Map and List Integration Bug Fix",
-      "date": "Sep 2020 - Sep 2020",
-      "company": "Dmonster",
-      "region": "Busan, Korea",
-      "role": "Freelance Frontend Developer",
-      "description": [
-        "Frontend Job Matching Platform (Next.js + Firebase)",
-        "3D Portfolio with React Three Fiber",
-        "IELTS preparation & job search in AU/NZ market"
-      ],
-      "details": {
-        "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
-        "technologies": [
-          "Javascript",
-          "React Native",
-          "WebView",
-          "In-app Payments",
-          "Firebase",
-          "Redux",
-          "Kakao Auth",
-          "Naver Auth",
-          "Apple Auth",
-          "Facebook Auth",
-          "Github",
-          "VSCode",
-          "Figma",
-          "Xcode",
-          "Android Studio"
-        ],
-        "challenges": [
-          "Balancing multiple projects simultaneously",
-          "Preparing for international job market",
-          "Learning new technologies"
-        ],
-        "achievements": [
-          "Completed 3D portfolio with interactive elements",
-          "Built job matching platform",
-          "Improved IELTS score"
-        ]
+        "details": {
+          "fullDescription": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "technologies": [
+            "Javascript",
+            "React Native",
+            "WebView",
+            "In-app Payments",
+            "Firebase",
+            "Redux",
+            "Kakao Auth",
+            "Naver Auth",
+            "Apple Auth",
+            "Facebook Auth",
+            "Github",
+            "VSCode",
+            "Figma",
+            "Xcode",
+            "Android Studio"
+          ],
+          "challenges": [
+            "Balancing multiple projects simultaneously",
+            "Preparing for international job market",
+            "Learning new technologies"
+          ],
+          "achievements": [
+            "Completed 3D portfolio with interactive elements",
+            "Built job matching platform",
+            "Improved IELTS score"
+          ]
+        }
       }
     }
   },
