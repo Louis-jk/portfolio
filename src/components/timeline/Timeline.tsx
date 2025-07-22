@@ -6,8 +6,9 @@ import { createPortal } from 'react-dom';
 import { TimelineItem } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
 import { Check } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Lenis from 'lenis';
+import { cn } from '@/lib/utils';
 
 interface TimelineProps {
   items: TimelineItem[];
@@ -21,6 +22,7 @@ export default function Timeline({
   onItemClick,
 }: TimelineProps) {
   const t = useTranslations('timeline');
+  const locale = useLocale();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
   const lenisRef = useRef<Lenis | null>(null);
@@ -118,7 +120,7 @@ export default function Timeline({
     return () => {
       window.removeEventListener('scroll', handleWindowScroll);
     };
-  }, [items.length]); // visibleItems 제거하여 무한 루프 방지
+  }, [items.length, visibleItems]); // visibleItems 제거하여 무한 루프 방지
 
   // 스크롤 감지하여 아이템 점진적 표시 (가로형 태블릿에서만 인피니트 스크롤)
   useEffect(() => {
@@ -150,7 +152,7 @@ export default function Timeline({
     handleScroll();
 
     return () => scrollElement.removeEventListener('scroll', handleScroll);
-  }, [isTablet, items.length]);
+  }, [isTablet, isTabletDevice, items.length, visibleItems]);
 
   // Lenis 초기화
   useEffect(() => {
@@ -176,7 +178,7 @@ export default function Timeline({
       lenisRef.current?.destroy();
       lenisRef.current = null;
     };
-  }, [isMobile]);
+  }, [isMobile, isTablet, isTabletDevice, items.length, visibleItems]);
 
   // 키보드 방향키 처리
   useEffect(() => {
@@ -265,7 +267,7 @@ export default function Timeline({
         lenis.scrollTo(offset);
       }, 20);
     }
-  }, [selectedItem, isMobile]);
+  }, [selectedItem, isMobile, isTablet, isTabletDevice]);
 
   // 키보드 선택 시 자연스러운 스크롤
   useEffect(() => {
@@ -290,7 +292,7 @@ export default function Timeline({
       lenis.scrollTo(targetOffset);
       setIsKeyboardSelection(false); // 키보드 선택 플래그 리셋
     }, 20);
-  }, [selectedItem, isKeyboardSelection, isMobile]);
+  }, [selectedItem, isKeyboardSelection, isMobile, isTablet, isTabletDevice]);
 
   const handleMouseEnter = (e: React.MouseEvent, item: TimelineItem) => {
     if (selectedItem?.id === item.id) {
@@ -329,9 +331,9 @@ export default function Timeline({
             : ''
         }`}
       >
-        <span className='text-purple-700 dark:text-purple-500'>W</span>
-        orks & <span className='text-purple-700 dark:text-purple-500'>E</span>
-        xperiences
+        <p className={cn(locale === 'ja' && 'tracking-[.25em]')}>
+          {t('title')}
+        </p>
       </h2>
 
       {/* 스크롤 컨테이너 - 타임라인 항목만 포함 */}
@@ -358,7 +360,7 @@ export default function Timeline({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg mb-2 p-4  ${
+              className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
                 selectedItem?.id === item.id
                   ? 'bg-gray-100 dark:bg-gray-800/70'
                   : ''
@@ -396,7 +398,7 @@ export default function Timeline({
                   <div className='flex-1 min-w-0'>
                     <div className='flex items-center gap-2 justify-between'>
                       <h3
-                        className={`font-bold text-base max-w-4/6 truncate transition-colors duration-200 ${
+                        className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 ${
                           selectedItem?.id === item.id
                             ? 'text-purple-700 dark:text-purple-500 font-bold'
                             : 'text-gray-900 dark:text-gray-100'
@@ -409,7 +411,7 @@ export default function Timeline({
                       </p>
                     </div>
                     <div className='flex items-center gap-2 justify-between'>
-                      <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
+                      <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1'>
                         {t(item.role)}
                       </p>
                       <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
