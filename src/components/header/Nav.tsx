@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { IoHome } from 'react-icons/io5';
+import { HiHome } from 'react-icons/hi2';
 import { IoLanguage } from 'react-icons/io5';
 import LanguageSelector from '@/components/modal/LanguageSelector';
 import { useLocale } from 'next-intl';
@@ -16,9 +16,10 @@ import { motion } from 'framer-motion';
 
 interface NavProps {
   onHomeClick?: () => void;
+  isDrawerOpen: boolean;
 }
 
-function Nav({ onHomeClick }: NavProps) {
+function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState('840');
   const [showHeaderName, setShowHeaderName] = useState(false);
@@ -93,23 +94,28 @@ function Nav({ onHomeClick }: NavProps) {
             onClick={handleHomeClick}
             className='text-foreground hover:text-foreground/80 transition-colors'
           >
-            <IoHome className='w-5 h-5' />
+            <HiHome className='w-6 h-6' />
           </Link>
         </li>
         <li>
           <div
             className='flex flex-row justify-center items-center gap-2 cursor-pointer'
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setOpen(true);
+              if (isDrawerOpen) {
+                setOpen(false);
+              }
+            }}
           >
-            <IoLanguage className='w-5 h-5' />
-            <Flag code={code} className='w-9 h-7' />
+            <IoLanguage className='w-6 h-6' />
+            <Flag code={code} className='w-8 h-5' />
           </div>
         </li>
       </ul>
 
       <LanguageSelector open={open} setOpen={setOpen} />
 
-      {showHeaderName && (
+      {(isDrawerOpen || showHeaderName) && (
         <motion.p
           className='font-bold text-lg text-center ml-3'
           initial={{ opacity: 0 }}

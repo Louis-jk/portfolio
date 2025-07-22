@@ -11,9 +11,15 @@ import { type TimelineItem } from '@/types/timeline.type';
 import { timelineData } from '@/data/timeline.data';
 import Lenis from 'lenis';
 
-function MainContent() {
+function MainContent({
+  isDrawerOpen,
+  setIsDrawerOpen,
+}: {
+  isDrawerOpen: boolean;
+  setIsDrawerOpen: (isOpen: boolean) => void;
+}) {
   const [selectedItem, setSelectedItem] = useState<TimelineItem | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const timelineDetailScrollRef = useRef<HTMLDivElement | null>(null);
@@ -31,7 +37,7 @@ function MainContent() {
         }
       }
     }
-  }, [searchParams]);
+  }, [searchParams, setIsDrawerOpen]);
 
   useEffect(() => {
     const itemId = searchParams.get('item');
@@ -46,7 +52,7 @@ function MainContent() {
       setSelectedItem(null);
       setIsDrawerOpen(false);
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, setIsDrawerOpen]);
 
   // Lenis 초기화
   useEffect(() => {
@@ -69,7 +75,7 @@ function MainContent() {
       lenisRef.current?.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, [selectedItem]);
 
   // selectedItem 변경 시 Lenis로 스크롤 위치 초기화
   useEffect(() => {
@@ -218,10 +224,19 @@ function MainContent() {
   );
 }
 
-function Main() {
+function Main({
+  isDrawerOpen,
+  setIsDrawerOpen,
+}: {
+  isDrawerOpen: boolean;
+  setIsDrawerOpen: (isOpen: boolean) => void;
+}) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <MainContent />
+      <MainContent
+        isDrawerOpen={isDrawerOpen}
+        setIsDrawerOpen={setIsDrawerOpen}
+      />
     </Suspense>
   );
 }
