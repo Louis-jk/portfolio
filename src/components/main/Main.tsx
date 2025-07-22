@@ -5,11 +5,10 @@ import Timeline from '@/components/timeline/Timeline';
 import TimelineDetail from '@/components/timeline/TimelineDetail';
 import TimelineDrawer from '@/components/timeline/TimelineDrawer';
 import { motion } from 'framer-motion';
-import { useState, useEffect, Suspense, useRef } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { type TimelineItem } from '@/types/timeline.type';
 import { timelineData } from '@/data/timeline.data';
-import Lenis from 'lenis';
 
 function MainContent({
   isDrawerOpen,
@@ -22,8 +21,6 @@ function MainContent({
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const timelineDetailScrollRef = useRef<HTMLDivElement | null>(null);
-  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const itemId = searchParams.get('item');
@@ -53,36 +50,6 @@ function MainContent({
       setIsDrawerOpen(false);
     }
   }, [pathname, searchParams, setIsDrawerOpen]);
-
-  // Lenis 초기화
-  useEffect(() => {
-    if (!timelineDetailScrollRef.current) return;
-
-    lenisRef.current = new Lenis({
-      wrapper: timelineDetailScrollRef.current,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenisRef.current?.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenisRef.current?.destroy();
-      lenisRef.current = null;
-    };
-  }, [selectedItem]);
-
-  // selectedItem 변경 시 Lenis로 스크롤 위치 초기화
-  useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
-    }
-  }, [selectedItem]);
 
   const handleItemClick = (item: TimelineItem) => {
     setSelectedItem(item);
@@ -141,20 +108,17 @@ function MainContent({
 
             {/* Timeline Detail with scroll - Desktop only */}
             <motion.div
-              ref={timelineDetailScrollRef}
               data-timeline-detail-container
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
-              className='xl:col-span-5 overflow-y-auto max-h-[calc(100vh-6rem)] pr-2'
+              className='xl:col-span-5 h-full pr-2'
             >
-              <div className='rounded-xl p-6 pb-8 min-h-[600px]'>
-                <TimelineDetail
-                  key={selectedItem?.id || 'empty'}
-                  item={selectedItem}
-                  isVisible={!!selectedItem}
-                />
-              </div>
+              <TimelineDetail
+                key={selectedItem?.id || 'empty'}
+                item={selectedItem}
+                isVisible={!!selectedItem}
+              />
             </motion.div>
           </div>
 
