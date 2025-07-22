@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { PiSunFill } from 'react-icons/pi';
+import { GiStripedSun } from 'react-icons/gi';
 import { FaMoon } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
 
@@ -40,19 +40,23 @@ export default function ThemeToggle() {
       <motion.button
         onClick={toggleTheme}
         className={cn(
-          'p-2 rounded-full shadow-md border hover:scale-110 transition-transform duration-200 bg-card border-border cursor-pointer',
-          resolvedTheme === 'light' ? 'bg-white' : 'dark:bg-gray-900'
+          'px-2 py-1 rounded-md bg-card cursor-pointer border',
+          resolvedTheme === 'light' ? 'bg-black' : 'dark:bg-white'
         )}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label='Toggle theme'
       >
         {resolvedTheme === 'light' ? (
-          // Moon icon for dark mode
-          <FaMoon className='w-5 h-5 text-gray-900' />
+          <div className='flex items-center justify-center'>
+            <p className='mr-1 text-white font-semibold'>Dark</p>
+            <FaMoon className='w-5 h-5 text-white' />
+          </div>
         ) : (
-          // Sun icon for light mode
-          <PiSunFill className='w-5 h-5 text-yellow-400' />
+          <div className='flex items-center justify-center'>
+            <p className='mr-1 text-black font-semibold'>Light</p>
+            <GiStripedSun className='w-5 h-5 text-gray-900' />
+          </div>
         )}
       </motion.button>
     </div>

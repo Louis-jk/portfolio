@@ -94,11 +94,17 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
             onClick={handleHomeClick}
             className='text-foreground hover:text-foreground/80 transition-colors'
           >
-            <HiHome className='w-6 h-6' />
+            <motion.div
+              className='flex flex-row justify-center items-center gap-2 cursor-pointer'
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <HiHome className='w-6 h-6' />
+            </motion.div>
           </Link>
         </li>
         <li>
-          <div
+          <motion.div
             className='flex flex-row justify-center items-center gap-2 cursor-pointer'
             onClick={() => {
               setOpen(true);
@@ -106,10 +112,12 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
                 setOpen(false);
               }
             }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <IoLanguage className='w-6 h-6' />
             <Flag code={code} className='w-8 h-5' />
-          </div>
+          </motion.div>
         </li>
       </ul>
 

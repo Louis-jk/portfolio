@@ -9,7 +9,7 @@ interface HeaderProps {
 
 function Header({ onHomeClick, isDrawerOpen }: HeaderProps) {
   return (
-    <header className='flex flex-row items-center justify-between px-4 py-2 fixed top-0 left-0 right-0 z-50 bg-background border-b border-border'>
+    <header className='flex flex-row items-center justify-between px-4 py-2 fixed top-0 left-0 right-0 z-50 bg-background border-b border-border h-[55px]'>
       <Nav onHomeClick={onHomeClick} isDrawerOpen={isDrawerOpen} />
       <ThemeToggle />
     </header>
