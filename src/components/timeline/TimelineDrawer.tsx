@@ -5,6 +5,7 @@ import { type TimelineItem } from '@/types/timeline.type';
 import { IoClose } from 'react-icons/io5';
 import TimelineDetail from './TimelineDetail';
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface TimelineDrawerProps {
   item: TimelineItem | null;
@@ -18,6 +19,9 @@ export default function TimelineDrawer({
   onClose,
 }: TimelineDrawerProps) {
   // Drawer가 열렸을 때 배경 스크롤 방지
+
+  const t = useTranslations('timeline');
+
   useEffect(() => {
     if (isOpen) {
       // 현재 스크롤 위치 저장
@@ -61,12 +65,12 @@ export default function TimelineDrawer({
             animate={{ y: 55 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className='fixed right-0 top-0 h-full w-full z-50 xl:hidden'
+            className='fixed right-0 bottom-0 h-full w-full z-50 xl:hidden'
           >
             {/* Header */}
             <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black'>
-              <h3 className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
-                Work Details
+              <h3 className='text-xl font-bold text-gray-900 dark:text-gray-100'>
+                {t('details.title')}
               </h3>
               <button
                 onClick={onClose}
@@ -80,8 +84,8 @@ export default function TimelineDrawer({
             </div>
 
             {/* Content */}
-            <div className='h-[calc(100vh-4rem)] overflow-y-auto bg-white dark:bg-black'>
-              <div className='p-4 pb-8'>
+            <div className='overflow-y-auto bg-white dark:bg-black h-full'>
+              <div className='p-4 h-full'>
                 <TimelineDetail item={item} isVisible={!!item} />
               </div>
             </div>
