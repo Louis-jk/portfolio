@@ -14,7 +14,8 @@
         "I'm glad you're here! 😄",
         "Hope you have a great day! ☀️"
       ],
-      "about_me": "As a frontend engineer, I specialize in building responsive and high-performance UIs across web, mobile, and desktop platforms. I have experience developing Web3 DApps and enterprise service platforms, with a strong focus on writing maintainable code and delivering smooth user experiences. I value teamwork and leverage my background in design to implement user-centric UI/UX with careful attention to detail."
+      "aboutMeTitle": "About Me",
+      "aboutMe": "As a frontend engineer, I specialize in building responsive and high-performance UIs across web, mobile, and desktop platforms. I have experience developing Web3 DApps and enterprise service platforms, with a strong focus on writing maintainable code and delivering smooth user experiences. I value teamwork and leverage my background in design to implement user-centric UI/UX with careful attention to detail."
     }
   },
   "timeline": {
@@ -712,5 +713,9 @@
     "design": "Design",
     "challenges": "Challenges",
     "achievements": "Achievements"
+  },
+  "loading": {
+    "page": "Loading...",
+    "image": "Loading image..."
   }
 }

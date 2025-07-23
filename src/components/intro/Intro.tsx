@@ -6,7 +6,7 @@ import Renderer from '../avatar/Renderer';
 import Links from '../links/Links';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { FaCode } from 'react-icons/fa';
+import { FaCommentDots } from 'react-icons/fa';
 
 function Intro() {
   const t = useTranslations();
@@ -169,22 +169,24 @@ function Intro() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
         >
-          <motion.h3
-            className='flex items-center justify-start text-2xl font-bold mb-2'
+          <motion.h2
+            className={`flex items-center justify-start text-2xl font-bold mb-2 ${
+              locale === 'ja' && 'tracking-[.15em]'
+            }`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
           >
-            <FaCode className='mr-2' color='#ad46ff' size={25} />
-            console.log&#40;&quot;me&quot;&#41;
-          </motion.h3>
+            <FaCommentDots className='mr-2' color='#ad46ff' size={25} />
+            {t('homePage.intro.aboutMeTitle')}
+          </motion.h2>
           <motion.p
             className='text-base text-center whitespace-pre-line max-w-xl'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8, ease: 'easeOut' }}
           >
-            {t('homePage.intro.about_me')}
+            {t('homePage.intro.aboutMe')}
           </motion.p>
         </motion.div>
       </div>

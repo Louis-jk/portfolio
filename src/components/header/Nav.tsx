@@ -91,6 +91,7 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
         <li>
           <Link
             href='/'
+            locale={locale}
             onClick={handleHomeClick}
             className='text-foreground hover:text-foreground/80 transition-colors'
           >

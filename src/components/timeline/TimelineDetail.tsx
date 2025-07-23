@@ -27,6 +27,7 @@ export default function TimelineDetail({
   const { resolvedTheme } = useTheme();
   const t = useTranslations('timeline');
   const tD = useTranslations('details');
+  const tL = useTranslations('loading');
   const [imageLoaded, setImageLoaded] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
@@ -204,7 +205,7 @@ export default function TimelineDetail({
                     </div>
 
                     <p className='text-sm text-purple-600 dark:text-purple-400 font-medium'>
-                      Loading image...
+                      {tL('image')}
                     </p>
                   </div>
                 </div>
