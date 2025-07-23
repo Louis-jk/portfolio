@@ -27,7 +27,7 @@
         "title": "개인 프로젝트 및 개발 실력 향상",
         "date": "2025.01 - 현재",
         "company": "개인 프로젝트",
-        "region": "대한민국 · 양산",
+        "region": "대한민국 양산",
         "role": "프론트엔드 개발자（풀스택 학습 중）",
         "description": [
           "MERN + Socket.io 기반 실시간 채팅 애플리케이션 개발",
@@ -156,7 +156,7 @@
         "title": "테니스 코트 및 레슨 예약 모바일 앱 - 프론트엔드 유지보수 및 신규 개발 (풀 리모트)",
         "date": "2022.12 - 2023.07",
         "company": "비공개 한국 스타트업",
-        "region": "한국 서울",
+        "region": "대한민국 서울",
         "role": "프리랜서 프론트엔드 개발자",
         "description": [
           "React Native 기반 스포츠 예약 앱 유지보수 및 신규 기능 개발",
@@ -181,7 +181,7 @@
         "title": "[배달 앱] POS 시스템(데스크탑) 및 점주용 모바일 앱 프론트엔드 개발",
         "date": "2022.07 - 2022.10",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "프리랜서 프론트엔드 개발자",
         "description": [
           "React Native 기반 모바일 앱, Electron + React 기반 POS 시스템 개발",
@@ -206,7 +206,7 @@
         "title": "동시통역 리스너용 데스크탑 애플리케이션 프론트엔드 개발",
         "date": "2022.06 - 2022.07",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "프리랜서 프론트엔드 개발자",
         "description": [
           "동시통역 리스너용 모바일 앱의 기능 추가 개발 및 앱스토어 등록 담당",
@@ -231,7 +231,7 @@
         "title": "별장 예약 앱 모바일(웹뷰) 프론트엔드 개발 지원",
         "date": "2022.06 - 2022.06",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "프리랜서 프론트엔드 개발자",
         "description": [
           "WebView 기반 iOS/Android 모바일 앱 개발",
@@ -298,7 +298,7 @@
         "title": "한국 외식 정보 플랫폼 리뉴얼 프론트엔드 개발",
         "date": "2021.11 - 2022.05",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "기존 사이트 리뉴얼을 위한 프론트엔드 아키텍처 설계 및 구현 주도",
@@ -341,7 +341,7 @@
         "title": "사용자 및 점주용 배달 앱 & POS 시스템 프론트엔드 개발",
         "date": "2021.07 - 2022.02",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "유명 배달 앱 벤치마킹 클라이언트의 POS 데스크톱 앱 및 멀티 플랫폼 모바일 앱 개발",
@@ -385,7 +385,7 @@
         "title": "미술 교육용 모바일 앱 프론트엔드 개발",
         "date": "2021.06 - 2021.07",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "React Native를 활용한 iOS/Android 기본 레이아웃 및 로그인, 상세 페이지 등 프론트엔드 개발",
@@ -426,7 +426,7 @@
         "title": "온라인 인쇄 포털 - 인쇄업체용 모바일 앱 프론트엔드 개발",
         "date": "2021.02 - 2021.06",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "사용자가 인쇄 요청을 하고, 인쇄업체가 입찰할 수 있는 B2B 모바일 애플리케이션 개발",
@@ -468,7 +468,7 @@
         "title": "온라인 인쇄 포털 - 사용자용 모바일 앱 프론트엔드 개발",
         "date": "2021.02 - 2021.06",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "다양한 인쇄물 상품을 쇼핑하고, 파트너 업체로부터 견적을 주문할 수 있는 플랫폼",
@@ -510,7 +510,7 @@
         "title": "관광지 역사 안내 오디오북 앱 및 관리자 페이지 풀스택 개발",
         "date": "2020.12 - 2021.01",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "관광지 오디오북 Android 앱과 관리자 페이지를 풀스택으로 개발",
@@ -552,7 +552,7 @@
         "title": "관광 안내 모바일 애플리케이션 프론트엔드 개발",
         "date": "2020.10 - 2021.01",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "관광 정보 제공 모바일 앱(iOS/Android) 프론트엔드 개발",
@@ -594,7 +594,7 @@
         "title": "FactoryFul - 지도 연동 기능 수정 및 개선",
         "date": "2020.09 - 2020.09",
         "company": "Dmonster",
-        "region": "한국 부산",
+        "region": "대한민국 부산",
         "role": "Freelance Frontend Developer",
         "description": [
           "지도 및 텍스트 검색 결과 연동 로직 개선",
