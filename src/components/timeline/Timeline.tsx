@@ -378,13 +378,7 @@ export default function Timeline({
                 !isMobile && !isTabletDevice ? handleMouseLeave : undefined
               }
             >
-              <div
-                className={`${
-                  isMobile
-                    ? 'pr-0 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600'
-                    : ''
-                }`}
-              >
+              <div className={`${isMobile ? 'pr-0' : ''}`}>
                 <div className='flex items-start gap-3'>
                   {!isMobile && !isTabletDevice && (
                     <div className='flex-shrink-0 mt-1'>
@@ -398,7 +392,7 @@ export default function Timeline({
                   <div className='flex-1 min-w-0'>
                     <div className='flex items-center gap-2 justify-between'>
                       <h3
-                        className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 ${
+                        className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
                           selectedItem?.id === item.id
                             ? 'text-purple-700 dark:text-purple-500 font-bold'
                             : 'text-gray-900 dark:text-gray-100'
@@ -406,15 +400,15 @@ export default function Timeline({
                       >
                         {t(item.title)}
                       </h3>
-                      <p className='text-base font-medium dark:text-gray-400 mt-1'>
+                      <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
                         {t(item.region)}
                       </p>
                     </div>
                     <div className='flex items-center gap-2 justify-between'>
-                      <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1'>
+                      <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
                         {t(item.role)}
                       </p>
-                      <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
+                      <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
                         {t(item.date)}
                       </p>
                     </div>

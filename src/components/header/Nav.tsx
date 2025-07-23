@@ -87,7 +87,7 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
 
   return (
     <nav className='flex flex-row items-center justify-center gap-4 z-20'>
-      <ul className='flex flex-row items-center justify-center gap-8'>
+      <ul className='flex flex-row items-center justify-center gap-5'>
         <li>
           <Link
             href='/'
@@ -125,7 +125,7 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
 
       {(isDrawerOpen || showHeaderName) && (
         <motion.p
-          className='font-bold text-lg text-center ml-3'
+          className='font-bold text-lg text-center'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

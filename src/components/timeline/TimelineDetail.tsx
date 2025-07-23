@@ -154,14 +154,14 @@ export default function TimelineDetail({
               <div className='flex flex-col gap-1'>
                 <div className='flex items-center gap-2 justify-between w-full'>
                   {item.company && (
-                    <p className='text-sm text-gray-900 dark:text-gray-200 flex items-center'>
+                    <p className='text-sm text-gray-900 dark:text-gray-200 flex items-center flex-8'>
                       <FaBuilding className='inline-block w-3 h-3 mr-1' />
                       {t(item.company)}&nbsp;&nbsp;&nbsp;
                     </p>
                   )}
                   <p
                     className={cn(
-                      'text-sm text-gray-900 dark:text-gray-200',
+                      'text-sm text-gray-900 dark:text-gray-200 flex-4 text-right',
                       !item.company && 'ml-auto'
                     )}
                   >
@@ -171,11 +171,11 @@ export default function TimelineDetail({
 
                 <div className='flex items-center gap-2 justify-between'>
                   {item.role && (
-                    <p className='text-sm text-gray-600 dark:text-gray-400 flex items-center'>
+                    <p className='text-sm text-gray-600 dark:text-gray-400 flex items-center whitespace-pre-line flex-7'>
                       {t(item.role)}
                     </p>
                   )}
-                  <p className='text-sm text-gray-600 dark:text-gray-400'>
+                  <p className='text-sm text-gray-600 dark:text-gray-400 flex-5 text-right'>
                     {t(item.date)}
                   </p>
                 </div>

@@ -25,10 +25,10 @@
     "projects": {
       "personal": {
         "title": "Personal Projects & Technical Skill Enhancement",
-        "date": "2025.01 - Present",
+        "date": "Jan 2025 - Present",
         "company": "Personal Project",
         "region": "Yangsan, Korea",
-        "role": "Frontend Developer (studying Full-Stack)",
+        "role": "Full-Stack Developer\n(in training)",
         "description": [
           "Developed a real-time chat app using MERN stack + Socket.io",
           "Built a Todo app using Go (Fiber) + React",
