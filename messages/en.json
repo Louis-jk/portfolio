@@ -24,34 +24,31 @@
     },
     "projects": {
       "personal": {
-        "title": "Personal Projects & Study",
-        "date": "jan 2025 - present",
-        "company": "",
-        "region": "Yangsan, Korea",
-        "role": "Frontend Engineer",
+        "title": "Personal Projects & Technical Skill Enhancement",
+        "date": "2025.01 - Present",
+        "company": "Personal Project",
+        "region": "Yangsan, South Korea",
+        "role": "Frontend Developer (studying Full-Stack)",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed a real-time chat app using MERN stack + Socket.io",
+          "Built a Todo app using Go (Fiber) + React",
+          "Currently developing a chat app using Next.js + Redis",
+          "Studied frontend TDD (Jest, React Testing Library, Cypress, etc.)",
+          "Updated and redesigned portfolio site with i18n (multilingual) support"
         ],
         "details": {
-          "overview": "Currently focusing on personal development and preparing for international opportunities. Building innovative projects while improving language skills for the Australian/New Zealand job market.",
-          "technologies": [
-            "Next.js",
-            "Firebase",
-            "React Three Fiber",
-            "TypeScript",
-            "Tailwind CSS"
-          ],
+          "overview": "During the first half of 2025, I focused on strengthening my skills through various personal projects, particularly in areas not yet fully utilized in real-world environments. I emphasized mastering practical technologies such as real-time communication, test-driven development (TDD), Go backend, and building stable frontend applications using TypeScript.",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Understanding overall architecture and state management in full-stack development",
+            "Overcoming lack of experience in frontend test automation",
+            "Implementing portfolio site updates, redesign, and multilingual support using i18n"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Completed real-time chat app using MERN + Socket.io",
+            "Developed Todo app with Go (Fiber) + React, gaining experience in REST API design and integration",
+            "Continuing to learn Redis and high-performance processing with Next.js + Redis project",
+            "Accumulated practical experience in TDD using Jest, React Testing Library, and Cypress",
+            "Successfully updated and redesigned portfolio site, personally designing and implementing multilingual support (i18n)"
           ]
         }
       },
@@ -572,12 +569,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed a full-stack tourist audio guide Android app and admin panel",
+          "Implemented location-based audio playback, bottom sheet UI, and content sliders",
+          "Built admin panel with CodeIgniter to manage audio content and user data"
         ],
         "details": {
-          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "I developed a full-stack audio guide mobile application for tourist destinations (Android) along with an admin panel. Using React Native, I implemented features such as real-time location tracking, bottom sheet UI with content sliders, and audio playback. I also developed the admin panel with CodeIgniter (PHP) to manage audio content and user data.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -596,14 +593,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Implementing complex logic for real-time GPS-based audio content playback",
+            "Minimizing UI/UX conflicts between bottom sheet, content slider, and audio player",
+            "Designing an efficient admin panel for content management and user operations"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Successfully launched a location-based audio guide app with enhanced user engagement",
+            "Created an intuitive UI combining content sliders and audio playback",
+            "Delivered a stable admin panel for seamless content and user management"
           ]
         }
       },
@@ -614,12 +611,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Developed a mobile app for tourism info (iOS/Android) with React Native",
+          "Built community, search, map, and admin list features",
+          "Implemented login and signup with SNS integration"
         ],
         "details": {
-          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "I developed a mobile application for tourism information on both iOS and Android platforms. Using React Native, I implemented essential user features including standard and social login, registration, and profile editing. I also developed key screens such as the admin's posting list page, a user community blog-style page, a search page, and a WebView-based map view for tourist destinations and recommendations.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -638,14 +635,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Creating an intuitive blog-style community page for user-generated content",
+            "Ensuring stable display of location-based data and recommendations via WebView",
+            "Integrating multiple login methods (SNS included) with consistent UX"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Delivered a tourism app combining informative content and user community features",
+            "Successfully implemented multi-login and profile features with high stability",
+            "Strengthened integration between admin and user-side interfaces"
           ]
         }
       },
@@ -656,12 +653,12 @@
         "region": "Busan, Korea",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "Improved map and search result synchronization",
+          "Fixed UI/UX bugs on a legacy PHP + jQuery site",
+          "Maintained and debugged front-end issues"
         ],
         "details": {
-          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "Worked on a legacy website built with PHP and jQuery, resolving synchronization issues between map markers and text-based search results. Focused on fixing front-end bugs and improving the user experience across different pages and devices.",
           "technologies": [
             "Javascript",
             "React Native",
@@ -680,14 +677,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "Fixing desynchronized behavior between map display and search result list",
+            "Debugging and maintaining legacy jQuery codebase",
+            "Resolving UI inconsistencies and layout bugs across different browsers"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "Implemented real-time sync between search results and map markers",
+            "Fixed visual bugs and improved cross-browser compatibility",
+            "Refactored repetitive jQuery logic for better maintainability"
           ]
         }
       }

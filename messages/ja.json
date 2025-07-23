@@ -24,34 +24,31 @@
     },
     "projects": {
       "personal": {
-        "title": "個人プロジェクト・スタディ",
-        "date": "2025.01 – 現在",
-        "company": "",
+        "title": "個人プロジェクトおよび技術力向上",
+        "date": "2025.01 - 現在",
+        "company": "個人プロジェクト",
         "region": "韓国・梁山",
-        "role": "フロントエンドエンジニア",
+        "role": "フロントエンドエンジニア（フルスタック学習中）",
         "description": [
-          "Next.jsを用いたポートフォリオサイトの開発",
-          "React Three Fiberを用いた3Dポートフォリオの開発",
-          "MongoDB、Express、React、Node.js、Socket.ioを活用したリアルタイムチャットアプリケーションの開発"
+          "MERN + Socket.ioを使用したリアルタイムチャットアプリの開発",
+          "Go(Fiber) + Reactを用いたTodoアプリの開発",
+          "Next.js + Redisを使ったチャットアプリを開発中",
+          "フロントエンドTDDの学習（Jest, React Testing Library, Cypressなど）",
+          "ポートフォリオサイトの更新・リニューアル＆多言語対応（i18n）"
         ],
         "details": {
-          "overview": "フルスタック開発の学習を目標に、MongoDB、Express、React、Node.js、Socket.ioを活用したリアルタイムチャットアプリケーションの開発を行いました。ユーザー間のリアルタイムメッセージ送受信機能の実装および関連技術スタックの学習に重点を置きました。",
-          "technologies": [
-            "Next.js",
-            "Firebase",
-            "React Three Fiber",
-            "TypeScript",
-            "Tailwind CSS"
-          ],
+          "overview": "2025年前半は、実務で使用できていなかったフロントエンドおよびバックエンド技術の強化を目的に、さまざまな個人プロジェクトに取り組みました。特に、リアルタイム通信、テスト駆動開発（TDD）、Goバックエンド、TypeScriptによる安定したフロントエンド構築など、実務での応用性が高い技術の習得と応用に力を入れました。",
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "フルスタック開発における全体構成や状態管理の理解",
+            "フロントエンドテスト自動化導入経験の不足を克服",
+            "ポートフォリオサイトの更新・リニューアルとi18nを用いた多言語対応の実装"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "MERN + Socket.ioを使ったリアルタイムチャットアプリを完成",
+            "Go(Fiber) + ReactによるTodoアプリを開発し、REST APIの設計と連携経験を獲得",
+            "Next.js + Redisを使用したプロジェクトでRedisと高パフォーマンス処理の学習を継続中",
+            "Jest、React Testing Library、Cypressを活用したTDDの学習と実践経験を積む",
+            "ポートフォリオサイトの更新・リニューアルを実施し、多言語対応(i18n)を自ら設計・実装"
           ]
         }
       },
@@ -572,12 +569,12 @@
         "region": "韓国・釜山",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "観光地向けオーディオブックAndroidアプリと管理者ページをフルスタックで開発",
+          "現在地に基づくオーディオ再生、Bottom Sheet、スライダー機能を実装",
+          "CodeIgniterを用いた管理者ページでコンテンツとユーザーデータを管理"
         ],
         "details": {
-          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "観光地向けのオーディオブックAndroidアプリと管理者用Webページをフルスタックで開発しました。React Nativeを使用して、現在地追跡、リスト内でのBottom Sheet表示、スライドコンテンツ、オーディオ再生などの機能を実装しました。また、CodeIgniter（PHP）で管理者ページを開発し、オーディオブックコンテンツやユーザーデータの管理ができるようにしました。",
           "technologies": [
             "Javascript",
             "React Native",
@@ -596,14 +593,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "GPSを活用したリアルタイム位置連動オーディオ再生ロジックの複雑さ",
+            "Bottom Sheet内のスライダーとオーディオプレイヤーのUI/UXの干渉を最小限に抑えること",
+            "コンテンツ登録とユーザー管理を効率的に行える管理ページ設計"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "位置連動型オーディオガイドアプリを成功裏に実装し、ユーザーの没入感を向上",
+            "スライダーとオーディオ再生を統合した直感的なUIを実現",
+            "コンテンツとユーザーを安定して管理できる管理者ページを構築"
           ]
         }
       },
@@ -614,12 +611,12 @@
         "region": "韓国・釜山",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "観光案内モバイルアプリ(iOS・Android)をReact Nativeで開発",
+          "コミュニティ、検索、地図、管理者リストなど主要機能を実装",
+          "SNSを含むログイン・会員登録機能を開発"
         ],
         "details": {
-          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "観光情報を提供するiOS・Android対応のモバイルアプリ開発を担当しました。React Nativeを使用して、一般ログインやSNSログイン、会員登録、プロフィール修正などの基本機能を実装しました。また、管理者向けのポスティングリストページ、ユーザー向けのブログ形式コミュニティページ、検索ページ、観光地とおすすめスポットを紹介するWebViewベースのマップページも開発し、観光アプリとしての利便性とユーザー体験を向上させました。",
           "technologies": [
             "Javascript",
             "React Native",
@@ -638,14 +635,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "直感的なUI/UXを持つブログ形式のコミュニティページを実装",
+            "WebViewベースの地図ページで安定的に位置情報やおすすめスポットを表示",
+            "各種SNSログインを含めた多様なログイン方式を一貫したUXで統合"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "観光情報とユーザーコミュニティ機能を組み合わせたアプリを実現",
+            "多様なログインおよび会員機能を安定的に実装",
+            "管理者ページとユーザー向け画面の連携を強化"
           ]
         }
       },
@@ -656,12 +653,12 @@
         "region": "韓国・釜山",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend Job Matching Platform (Next.js + Firebase)",
-          "3D Portfolio with React Three Fiber",
-          "IELTS preparation & job search in AU/NZ market"
+          "地図と検索結果の連動処理を改善",
+          "UI表示や視覚的なバグ修正",
+          "PHP + jQueryベースのサイト保守とデバッグ"
         ],
         "details": {
-          "overview": "クライアントの方針変更により、プロジェクトは途中で中止となりました。初期のUI設計およびフロントエンド実装を担当しました。",
+          "overview": "PHPとjQueryで構築された既存サイトにおいて、地図とテキスト検索結果の連動に関する不具合を修正しました。ユーザー体験向上のため、UIや視覚的なバグの修正を中心に対応しました。",
           "technologies": [
             "Javascript",
             "React Native",
@@ -680,14 +677,14 @@
             "Android Studio"
           ],
           "challenges": [
-            "Balancing multiple projects simultaneously",
-            "Preparing for international job market",
-            "Learning new technologies"
+            "地図と検索結果が非同期で連動しない不具合への対応",
+            "jQueryベースのレガシーコードの中でのデバッグ作業",
+            "ブラウザ間で発生するスタイル崩れや表示の不具合対応"
           ],
           "achievements": [
-            "Completed 3D portfolio with interactive elements",
-            "Built job matching platform",
-            "Improved IELTS score"
+            "検索結果と地図のマーカーがリアルタイムで連動するよう改善",
+            "複数のブラウザにおける表示のズレやレイアウトバグを修正",
+            "冗長なロジックの簡素化により保守性を向上"
           ]
         }
       }
