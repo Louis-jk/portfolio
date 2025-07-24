@@ -16,10 +16,9 @@ import { motion } from 'framer-motion';
 
 interface NavProps {
   onHomeClick?: () => void;
-  isDrawerOpen: boolean;
 }
 
-function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
+function Nav({ onHomeClick }: NavProps) {
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState('840');
   const [showHeaderName, setShowHeaderName] = useState(false);
@@ -109,9 +108,6 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
             className='flex flex-row justify-center items-center gap-2 cursor-pointer'
             onClick={() => {
               setOpen(true);
-              if (isDrawerOpen) {
-                setOpen(false);
-              }
             }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -124,7 +120,7 @@ function Nav({ onHomeClick, isDrawerOpen }: NavProps) {
 
       <LanguageSelector open={open} setOpen={setOpen} />
 
-      {(isDrawerOpen || showHeaderName) && (
+      {showHeaderName && (
         <motion.p
           className='font-bold text-lg text-center'
           initial={{ opacity: 0 }}
