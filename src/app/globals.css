@@ -198,6 +198,7 @@ html,
 body {
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 
 /* iOS Safari 바운스 제거 */

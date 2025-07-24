@@ -4,10 +4,10 @@ import Links from '../links/Links';
 
 function Footer() {
   return (
-    <footer className='text-center text-sm py-8 space-y-3 border-t'>
+    <footer className='flex flex-col items-center justify-center gap-4 text-sm border-t h-[150px] py-6 bg-white dark:bg-[#0a0a0a] z-50 mt-auto'>
       <div>Open to new opportunities.</div>
       <Links />
-      <div className='mt-2'>© 2025 Joonho Kim. All rights reserved.</div>
+      <div>© 2025 Joonho Kim. All rights reserved.</div>
     </footer>
   );
 }
