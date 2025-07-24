@@ -480,7 +480,7 @@ export default function Timeline({
         ))}
 
         {/* 하단 여백 */}
-        <div className={`${isTablet ? 'h-32' : 'h-24'}`}></div>
+        {!isMobile && <div className={`${isTablet ? 'h-32' : 'h-24'}`}></div>}
       </div>
 
       {showThumbnail &&

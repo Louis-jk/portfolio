@@ -142,7 +142,8 @@ export default function TimelineDetail({
       {/* PC에서만 스크롤 가능한 컨테이너 */}
       <div
         ref={scrollRef}
-        className='pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+        // className='pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+        className='pr-2 h-[calc(100vh-126px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
       >
         <motion.div
           initial={{ opacity: 0, x: 20 }}
