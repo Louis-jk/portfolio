@@ -90,7 +90,7 @@ export default function Timeline({
     checkDevice();
     window.addEventListener('resize', checkDevice);
     return () => window.removeEventListener('resize', checkDevice);
-  }, [isTablet, items.length]);
+  }, [isTablet, isTabletDevice, items.length]);
 
   // Intersection Observer를 사용한 인피니트 스크롤 (모바일과 세로형 태블릿에서만)
   useEffect(() => {

@@ -704,6 +704,11 @@
     "shareModal": {
       "title": "共有",
       "description": "このプロジェクトを友達に共有してください。"
+    },
+    "shareButton": {
+      "buttonTitle": {
+        "kakaoTalk": "ウェブに移動"
+      }
     }
   },
   "details": {

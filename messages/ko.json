@@ -648,6 +648,11 @@
     "shareModal": {
       "title": "공유",
       "description": "이 프로젝트를 친구들에게 공유해주세요."
+    },
+    "shareButton": {
+      "buttonTitle": {
+        "kakaoTalk": "웹으로 이동"
+      }
     }
   },
   "details": {

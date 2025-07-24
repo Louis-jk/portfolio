@@ -704,6 +704,11 @@
     "shareModal": {
       "title": "Share",
       "description": "Please share this project with your friends."
+    },
+    "shareButton": {
+      "buttonTitle": {
+        "kakaoTalk": "Go to Web"
+      }
     }
   },
   "details": {

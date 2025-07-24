@@ -10,14 +10,14 @@ import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
-  EmailShareButton,
   FacebookIcon,
   XIcon,
   LinkedinIcon,
-  EmailIcon,
+  LineShareButton,
+  LineIcon,
 } from 'react-share';
+import KakaoTalkShareButton from '@/components/button/share/KakaoTalkShareButton';
 import { useTranslations } from 'next-intl';
-import LineShareButton from '../button/share/LineShareButton';
 
 interface ShareModalProps {
   open: boolean;
@@ -47,10 +47,16 @@ function ShareModal({ open, setOpen, url, title, text }: ShareModalProps) {
           <LinkedinShareButton url={url} title={title} summary={text}>
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
-          <EmailShareButton url={url} subject={title} body={text}>
-            <EmailIcon size={32} round />
-          </EmailShareButton>
-          <LineShareButton url={url} size={32} round />
+          <LineShareButton url={url} title={title}>
+            <LineIcon size={32} round />
+          </LineShareButton>
+          <KakaoTalkShareButton
+            url={url}
+            title={title}
+            description={text}
+            size={32}
+            round
+          />
         </div>
       </DialogContent>
     </Dialog>

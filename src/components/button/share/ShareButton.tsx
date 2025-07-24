@@ -41,8 +41,11 @@ function ShareButton({ onShareClick }: ShareButtonProps) {
   };
 
   return (
-    <div onClick={handleShare}>
-      <LuShare2 className='w-4 h-4 cursor-pointer' />
+    <div
+      onClick={handleShare}
+      className='inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer'
+    >
+      <LuShare2 className='w-4 h-4' />
     </div>
   );
 }
