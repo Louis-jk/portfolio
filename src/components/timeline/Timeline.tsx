@@ -100,20 +100,32 @@ export default function Timeline({
       return;
     }
 
+    let isLoading = false;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && visibleItems < items.length) {
+          if (
+            entry.isIntersecting &&
+            visibleItems < items.length &&
+            !isLoading
+          ) {
+            isLoading = true;
             console.log('Loading more items with Intersection Observer:', {
               visibleItems,
               totalItems: items.length,
             });
             setVisibleItems((prev) => Math.min(prev + 3, items.length));
+
+            // 로딩 상태를 잠시 후 해제
+            setTimeout(() => {
+              isLoading = false;
+            }, 500);
           }
         });
       },
       {
-        rootMargin: '100px', // 하단에서 100px 전에 로드 시작
+        rootMargin: '150px', // 하단에서 150px 전에 로드 시작
         threshold: 0.1,
       }
     );
@@ -143,17 +155,29 @@ export default function Timeline({
     )
       return;
 
+    let isLoading = false;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && visibleItems < items.length) {
+          if (
+            entry.isIntersecting &&
+            visibleItems < items.length &&
+            !isLoading
+          ) {
+            isLoading = true;
             setVisibleItems((prev) => Math.min(prev + 3, items.length));
+
+            // 로딩 상태를 잠시 후 해제
+            setTimeout(() => {
+              isLoading = false;
+            }, 500);
           }
         });
       },
       {
         root: scrollRef.current, // 스크롤 컨테이너를 root로 설정
-        rootMargin: '100px',
+        rootMargin: '150px',
         threshold: 0.1,
       }
     );
@@ -373,6 +397,7 @@ export default function Timeline({
           overscrollBehavior: 'contain',
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
+          willChange: 'scroll-position',
         }}
       >
         {memoizedItems.map((item, index) => (
@@ -384,14 +409,14 @@ export default function Timeline({
               ref={(el) => {
                 itemRefs.current.set(item.id, el);
               }}
-              initial={{ opacity: 0, y: 2 }}
+              initial={{ opacity: 0, y: 1 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.25,
-                delay: Math.min(index * 0.015, 0.15),
+                duration: 0.2,
+                delay: Math.min(index * 0.01, 0.1),
                 ease: 'easeOut',
               }}
-              className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
+              className={`relative cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
                 selectedItem?.id === item.id
                   ? 'bg-gray-100 dark:bg-gray-800/70'
                   : ''
