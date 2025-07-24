@@ -85,7 +85,7 @@ export default function TimelineDrawer({
 
             {/* Content */}
             <div className='overflow-y-auto bg-white dark:bg-black h-full'>
-              <div className='p-4 h-full'>
+              <div className='px-4 py-0 h-full'>
                 <TimelineDetail item={item} isVisible={!!item} />
               </div>
             </div>

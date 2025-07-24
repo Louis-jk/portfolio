@@ -150,7 +150,7 @@ export default function TimelineDetail({
           <div>
             {/* Header */}
             <div>
-              <h3 className='text-2xl font-bold mb-2'>{t(item.title)}</h3>
+              <h3 className='text-2xl font-bold mt-4 mb-2'>{t(item.title)}</h3>
 
               <div className='flex flex-col gap-1'>
                 <div className='flex items-center gap-2 justify-between w-full'>
