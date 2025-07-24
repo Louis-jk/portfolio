@@ -1,27 +1,39 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Renderer from '../avatar/Renderer';
 import Links from '../links/Links';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { FaCommentDots } from 'react-icons/fa';
+import { useIntroState } from '@/hooks/useIntroState';
 
 function Intro() {
   const t = useTranslations();
   const locale = useLocale();
-  const [isHovered, setIsHovered] = useState(false);
-  const [messageIndex, setMessageIndex] = useState(0);
-  const [showGreeting, setShowGreeting] = useState(false);
-  const [isGreetingVisible, setIsGreetingVisible] = useState(false);
-  const [messages, setMessages] = useState<string[]>([]);
+
+  // 커스텀 훅으로 상태 관리
+  const {
+    isHovered,
+    messageIndex,
+    showGreeting,
+    isGreetingVisible,
+    messages,
+    bubbleStyle,
+    setShowGreeting,
+    setIsGreetingVisible,
+    setMessages,
+    setBubbleStyle,
+    setRandomMessage,
+    resetGreeting,
+  } = useIntroState();
+
   const { resolvedTheme } = useTheme();
   const bubbleRef = useRef<HTMLDivElement>(null);
-  const [bubbleStyle, setBubbleStyle] = useState({});
 
-  // 메시지 세팅
-  useEffect(() => {
+  // 메시지 세팅 - useMemo로 메시지 배열 메모이제이션
+  const messagesData = useMemo(() => {
     const hour = new Date().getHours();
     const greeting =
       hour < 12
@@ -40,12 +52,20 @@ function Intro() {
       t('homePage.intro.randomGreetings.4'),
     ];
 
-    setMessages([greeting, ...randoms]);
-    setShowGreeting(true);
+    return [greeting, ...randoms];
+  }, [t]);
 
+  // 메시지 설정
+  useEffect(() => {
+    setMessages(messagesData);
+  }, [messagesData, setMessages]);
+
+  // 인사말 타이머
+  useEffect(() => {
+    setShowGreeting(true);
     const timer = setTimeout(() => setShowGreeting(false), 5000);
     return () => clearTimeout(timer);
-  }, [t]);
+  }, [setShowGreeting, setIsGreetingVisible, showGreeting]);
 
   // 인사말 표시 타이밍
   useEffect(() => {
@@ -60,14 +80,12 @@ function Intro() {
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [showGreeting, isHovered]);
+  }, [showGreeting, isHovered, setIsGreetingVisible]); // 함수 의존성 제거
 
   // 마우스 오버 시 메시지 변경
   const handleMouseEnter = () => {
     if (!showGreeting) {
-      setIsHovered(true);
-      const randomIndex = Math.floor(Math.random() * (messages.length - 1)) + 1;
-      setMessageIndex(randomIndex);
+      setRandomMessage(); // 새로운 액션 사용
     }
   };
 
@@ -91,7 +109,7 @@ function Intro() {
       color: resolvedTheme === 'dark' ? '#000' : '#fff',
       wordBreak: 'break-word',
     });
-  }, [currentMessage, isGreetingVisible, resolvedTheme]);
+  }, [currentMessage, isGreetingVisible, resolvedTheme, setBubbleStyle]);
 
   return (
     <section className='flex flex-col items-center justify-center'>
@@ -102,7 +120,11 @@ function Intro() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseLeave={() => {
+            if (!showGreeting) {
+              resetGreeting();
+            }
+          }}
         >
           <Renderer />
 
@@ -181,7 +203,7 @@ function Intro() {
             {t('homePage.intro.aboutMeTitle')}
           </motion.h2>
           <motion.p
-            className='text-base text-center whitespace-pre-line max-w-xl'
+            className='text-base text-center whitespace-pre-line max-w-xl leading-relaxed'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8, ease: 'easeOut' }}

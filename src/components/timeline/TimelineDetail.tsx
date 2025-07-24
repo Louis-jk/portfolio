@@ -153,7 +153,14 @@ export default function TimelineDetail({
           <div>
             {/* Header */}
             <div>
-              <h3 className='text-2xl font-bold mt-4 mb-2'>{t(item.title)}</h3>
+              <h3
+                className={cn(
+                  'text-2xl font-bold mb-2',
+                  !isDesktopOrLaptop && 'mt-4'
+                )}
+              >
+                {t(item.title)}
+              </h3>
 
               <div className='flex flex-col gap-1'>
                 <div className='flex items-center gap-2 justify-between w-full'>
@@ -317,7 +324,7 @@ export default function TimelineDetail({
                     'px-3 py-1 rounded-full text-sm font-medium',
                     resolvedTheme === 'dark'
                       ? 'bg-gray-700 text-gray-200'
-                      : 'bg-gray-200 text-gray-800'
+                      : 'bg-gray-100 text-gray-800'
                   )}
                 >
                   {tech}
@@ -345,7 +352,7 @@ export default function TimelineDetail({
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
+                            : 'bg-gray-100 text-gray-800'
                         )}
                       >
                         {tool}
@@ -368,7 +375,7 @@ export default function TimelineDetail({
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
+                            : 'bg-gray-100 text-gray-800'
                         )}
                       >
                         {tool}
@@ -391,7 +398,7 @@ export default function TimelineDetail({
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
+                            : 'bg-gray-100 text-gray-800'
                         )}
                       >
                         {tool}
@@ -412,7 +419,7 @@ export default function TimelineDetail({
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-200 text-gray-800'
+                            : 'bg-gray-100 text-gray-800'
                         )}
                       >
                         {tool}

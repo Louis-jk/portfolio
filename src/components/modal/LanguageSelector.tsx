@@ -9,6 +9,7 @@ import {
 import Link from 'next/link';
 import Flag from 'react-world-flags';
 import { useLocale } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import {
   getEnglishLanguageCode,
   LOCALE_TO_NUMERIC_CODE,
@@ -24,14 +25,14 @@ const LanguageSelector = ({
   setOpen: (open: boolean) => void;
 }) => {
   const t = useTranslations('modal.languageSelector');
+  const currentLocale = useLocale();
+  const pathname = usePathname();
 
   const LANGUAGES = [
     { locale: 'en', label: 'English', code: getEnglishLanguageCode() },
     { locale: 'ja', label: '日本語', code: LOCALE_TO_NUMERIC_CODE['ja'] },
     { locale: 'ko', label: '한국어', code: LOCALE_TO_NUMERIC_CODE['ko'] },
   ];
-
-  const currentLocale = useLocale();
   const sortedLanguages = [
     ...LANGUAGES.filter((l) => l.locale === currentLocale),
     ...LANGUAGES.filter((l) => l.locale !== currentLocale),
@@ -69,7 +70,10 @@ const LanguageSelector = ({
                   </div>
                 ) : (
                   <Link
-                    href={`/${lang.locale}`}
+                    href={`/${lang.locale}${pathname.replace(
+                      `/${currentLocale}`,
+                      ''
+                    )}`}
                     className='flex flex-row items-center gap-2'
                     tabIndex={-1}
                   >
