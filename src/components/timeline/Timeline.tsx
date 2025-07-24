@@ -111,10 +111,6 @@ export default function Timeline({
             !isLoading
           ) {
             isLoading = true;
-            console.log('Loading more items with Intersection Observer:', {
-              visibleItems,
-              totalItems: items.length,
-            });
             setVisibleItems((prev) => Math.min(prev + 3, items.length));
 
             // 로딩 상태를 잠시 후 해제
