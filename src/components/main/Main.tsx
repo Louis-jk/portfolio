@@ -9,18 +9,25 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { type TimelineItem } from '@/types/timeline.type';
 import { timelineData } from '@/data/timeline.data';
+import { useMediaQuery } from 'react-responsive';
 
-function MainContent({
-  isDrawerOpen,
-  setIsDrawerOpen,
-}: {
-  isDrawerOpen: boolean;
-  setIsDrawerOpen: (isOpen: boolean) => void;
-}) {
+function MainContent() {
   const [selectedItem, setSelectedItem] = useState<TimelineItem | null>(null);
-
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 1280px)',
+  });
+
+  const isTablet = useMediaQuery({
+    query: '(min-width: 1024px) and (max-width: 1279px)',
+  });
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
 
   useEffect(() => {
     const itemId = searchParams.get('item');
@@ -72,110 +79,120 @@ function MainContent({
   };
 
   return (
-    <div className='h-full lg:overflow-hidden'>
-      <main className='h-full w-full flex flex-col pt-16 lg:overflow-hidden'>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-          className='w-full lg:px-10 h-full'
-        >
-          {/* Desktop Layout (1280px+) */}
-          <div className='hidden xl:grid xl:grid-cols-12 gap-6 lg:gap-8 h-full'>
-            {/* Intro */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-              className='xl:col-span-3'
-            >
-              <Intro />
-            </motion.div>
+    <>
+      <main className='flex flex-col pt-16'>
+        <section>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          >
+            {/* Desktop Layout (1280px+) */}
+            {isDesktop && (
+              <div className='flex justify-center items-start h-[calc(100vh-264px)]'>
+                <div className='grid grid-cols-12 gap-6 h-full'>
+                  {/* Intro */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+                    className='col-span-3'
+                  >
+                    <Intro />
+                  </motion.div>
 
-            {/* Timeline with scroll */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-              className='xl:col-span-4 pr-2'
-            >
-              <Timeline
-                items={timelineData}
-                selectedItem={selectedItem}
-                onItemClick={handleItemClick}
-              />
-            </motion.div>
+                  {/* Timeline with scroll */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                    className='col-span-4 h-full overflow-hidden'
+                  >
+                    <Timeline
+                      items={timelineData}
+                      selectedItem={selectedItem}
+                      onItemClick={handleItemClick}
+                    />
+                  </motion.div>
 
-            {/* Timeline Detail with scroll - Desktop only */}
-            <motion.div
-              data-timeline-detail-container
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
-              className='xl:col-span-5 h-full pr-2'
-            >
-              <TimelineDetail
-                key={selectedItem?.id || 'empty'}
-                item={selectedItem}
-                isVisible={!!selectedItem}
-              />
-            </motion.div>
-          </div>
+                  {/* Timeline Detail with scroll - Desktop only */}
+                  <motion.div
+                    data-timeline-detail-container
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
+                    className='col-span-5 h-full overflow-hidden'
+                    style={{ overflowX: 'hidden' }}
+                  >
+                    <TimelineDetail
+                      key={selectedItem?.id || 'empty'}
+                      item={selectedItem}
+                      isVisible={!!selectedItem}
+                    />
+                  </motion.div>
+                </div>
+              </div>
+            )}
 
-          {/* Tablet Layout (1024px - 1279px) */}
-          <div className='hidden lg:block xl:hidden'>
-            <div className='grid grid-cols-2 gap-6 h-full'>
-              {/* Intro */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-              >
-                <Intro />
-              </motion.div>
+            {/* Tablet Layout (1024px - 1279px) */}
+            {isTablet && (
+              <div className='block'>
+                <div className='grid grid-cols-2 gap-6 h-full w-full'>
+                  {/* Intro */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+                  >
+                    <Intro />
+                  </motion.div>
 
-              {/* Timeline */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-                className='flex flex-col h-full'
-              >
-                <Timeline
-                  items={timelineData}
-                  selectedItem={selectedItem}
-                  onItemClick={handleItemClick}
-                />
-              </motion.div>
-            </div>
-          </div>
+                  {/* Timeline */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                    className='flex flex-col h-full'
+                  >
+                    <Timeline
+                      items={timelineData}
+                      selectedItem={selectedItem}
+                      onItemClick={handleItemClick}
+                    />
+                  </motion.div>
+                </div>
+              </div>
+            )}
 
-          {/* Mobile Layout (768px 미만) */}
-          <div className='lg:hidden space-y-8'>
-            {/* Intro */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-            >
-              <Intro />
-            </motion.div>
+            {/* Mobile Layout (768px 미만) */}
+            {isMobile && (
+              <div className='space-y-8'>
+                {/* Intro */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+                >
+                  <Intro />
+                </motion.div>
 
-            {/* Timeline */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-              className='relative'
-            >
-              <Timeline
-                items={timelineData}
-                selectedItem={selectedItem}
-                onItemClick={handleItemClick}
-              />
-            </motion.div>
-          </div>
-        </motion.div>
+                {/* Timeline */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                  className='relative'
+                >
+                  <Timeline
+                    items={timelineData}
+                    selectedItem={selectedItem}
+                    onItemClick={handleItemClick}
+                  />
+                </motion.div>
+              </div>
+            )}
+          </motion.div>
+        </section>
       </main>
 
       {/* Mobile/Tablet Drawer */}
@@ -184,23 +201,14 @@ function MainContent({
         isOpen={isDrawerOpen}
         onClose={handleDrawerClose}
       />
-    </div>
+    </>
   );
 }
 
-function Main({
-  isDrawerOpen,
-  setIsDrawerOpen,
-}: {
-  isDrawerOpen: boolean;
-  setIsDrawerOpen: (isOpen: boolean) => void;
-}) {
+function Main() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <MainContent
-        isDrawerOpen={isDrawerOpen}
-        setIsDrawerOpen={setIsDrawerOpen}
-      />
+      <MainContent />
     </Suspense>
   );
 }

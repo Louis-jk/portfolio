@@ -142,28 +142,39 @@ export default function TimelineDetail({
       {/* PC에서만 스크롤 가능한 컨테이너 */}
       <div
         ref={scrollRef}
-        // className='pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
-        className='pr-2 h-[calc(100vh-126px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+        className='h-[calc(100vh-16rem)] overflow-y-auto overflow-x-hidden'
       >
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.5 }}
-          className='flex flex-col gap-7 pb-4'
+          className='flex flex-col gap-7 px-0 lg:px-4 overflow-hidden'
         >
           <div>
             {/* Header */}
             <div>
-              <h3
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ duration: 0.5, delay: 0.2 }}
                 className={cn(
                   'text-2xl font-bold mb-2',
                   !isDesktopOrLaptop && 'mt-4'
                 )}
               >
                 {t(item.title)}
-              </h3>
+              </motion.h3>
 
-              <div className='flex flex-col gap-1'>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                }
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className='flex flex-col gap-1'
+              >
                 <div className='flex items-center gap-2 justify-between w-full'>
                   {item.company && (
                     <p className='text-sm text-gray-900 dark:text-gray-200 flex items-center flex-8'>
@@ -191,19 +202,24 @@ export default function TimelineDetail({
                     {t(item.date)}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
           {/* Image */}
           {item.details.image && (
-            <div className='relative rounded-sm overflow-hidden'>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className='relative flex items-center justify-center'
+            >
               {/* 로딩 스켈레톤 */}
               {!imageLoaded && (
-                <div className='w-full h-[300px] rounded-sm flex items-center justify-center'>
-                  <div className='flex flex-col items-center gap-4'>
+                <div className='w-full h-[300px] rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-900'>
+                  <div className='flex flex-col items-center justify-center gap-4 w-full h-full'>
                     {/* 옵션 1: 더블 링 스피너 */}
-                    <div className='relative'>
+                    <div className='relative flex items-center justify-center'>
                       <div className='w-12 h-12 border-4 border-purple-200 dark:border-purple-800 rounded-full'></div>
                       <div className='absolute top-0 left-0 w-12 h-12 border-4 border-transparent border-t-purple-500 rounded-full animate-spin'></div>
                       <div
@@ -215,7 +231,7 @@ export default function TimelineDetail({
                       ></div>
                     </div>
 
-                    <p className='text-sm text-purple-600 dark:text-purple-400 font-medium'>
+                    <p className='text-sm text-purple-600 dark:text-purple-400 font-medium text-center'>
                       {tL('image')}
                     </p>
                   </div>
@@ -223,11 +239,11 @@ export default function TimelineDetail({
               )}
 
               <Image
-                key={item.details.image} // 이미지가 변경될 때마다 컴포넌트를 새로 렌더링
+                key={item.details.image}
                 src={item.details.image}
                 alt={item.title}
                 className={cn(
-                  'w-full h-auto object-contain select-none pointer-events-none transition-opacity duration-300',
+                  'object-contain rounded-sm select-none pointer-events-none transition-opacity duration-300 w-full mx-auto',
                   imageLoaded ? 'opacity-100' : 'opacity-0'
                 )}
                 width={1200}
@@ -235,11 +251,15 @@ export default function TimelineDetail({
                 onLoad={() => setImageLoaded(true)}
                 priority={true} // 우선순위 로딩
               />
-            </div>
+            </motion.div>
           )}
 
           {/* Full Description */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
             {!item.isNDA && item.isCommercial && (
               <div className='mb-5 flex gap-2'>
                 {webLink && (
@@ -312,10 +332,14 @@ export default function TimelineDetail({
             <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
               {t(item.details.overview)}
             </p>
-          </div>
+          </motion.div>
 
           {/* Technologies */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 1 }}
+          >
             <h4 className='text-lg font-semibold mb-3'>{tD('technologies')}</h4>
             <div className='flex flex-wrap gap-2'>
               {item.details.technologies.map((tech, index) => (
@@ -332,11 +356,15 @@ export default function TimelineDetail({
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Tools */}
           {item.details.tools && Object.keys(item.details.tools).length > 0 && (
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+            >
               <h4 className='text-lg font-semibold mb-3'>
                 {tD('toolsAndEnvironments')}
               </h4>
@@ -429,11 +457,15 @@ export default function TimelineDetail({
                   </div>
                 </div>
               )}
-            </div>
+            </motion.div>
           )}
 
           {/* Challenges */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 1.4 }}
+          >
             <h4 className='text-lg font-semibold mb-3'>{tD('challenges')}</h4>
             <ul className='space-y-2'>
               {item.details.challenges.map((challenge, index) => (
@@ -445,10 +477,14 @@ export default function TimelineDetail({
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Achievements */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 1.6 }}
+          >
             <h4 className='text-lg font-semibold mb-3'>{tD('achievements')}</h4>
             <ul className='space-y-2'>
               {item.details.achievements.map((achievement, index) => (
@@ -460,10 +496,10 @@ export default function TimelineDetail({
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* 하단 여백 */}
-          {isDesktopOrLaptop && <div className='h-18'></div>}
+          {isDesktopOrLaptop && <div className='h-26'></div>}
         </motion.div>
       </div>
 

@@ -383,10 +383,10 @@ export default function Timeline({
         data-timeline-container
         className={`${
           window.innerWidth < 1024
-            ? 'pr-0 will-change-scroll' // 모바일과 세로형 태블릿에서는 스크롤 제거, 성능 최적화
+            ? 'pr-0' // 모바일에서는 전체 페이지 스크롤 사용
             : isTablet
             ? 'pr-0 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
-            : 'pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
+            : 'pr-2 h-[calc(100vh-16rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
         }`}
         style={{
           WebkitOverflowScrolling: 'touch',
