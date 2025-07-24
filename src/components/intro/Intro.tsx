@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import Renderer from '../avatar/Renderer';
-import Links from '../links/Links';
 import { useLocale, useTranslations } from 'next-intl';
+import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { FaCommentDots } from 'react-icons/fa';
+import Renderer from '@/components/avatar/Renderer';
+import Links from '@/components/links/Links';
 import { useIntroState } from '@/hooks/useIntroState';
+import Technologies from '@/components/intro/Technologies';
 
 function Intro() {
   const t = useTranslations();
@@ -210,6 +211,15 @@ function Intro() {
           >
             {t('homePage.intro.aboutMe')}
           </motion.p>
+        </motion.div>
+
+        <motion.div
+          className='flex flex-col items-center mt-2 px-4'
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
+        >
+          <Technologies />
         </motion.div>
       </div>
     </section>
