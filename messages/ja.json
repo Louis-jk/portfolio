@@ -282,7 +282,7 @@
         "date": "2022.06 – 2022.06",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "WebViewベースのiOS・Androidモバイルアプリを開発",
           "Deeplink共有、SNSログイン、画像プッシュ通知を実装",
@@ -314,7 +314,7 @@
         "date": "2022.06 - 2022.06",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "アメリカ支社向けモバイル観光アプリの開発に参加",
           "Deeplinkを利用したSMS共有およびSNSログイン機能を実装",
@@ -356,7 +356,7 @@
         "date": "2021.11 - 2022.05",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "既存サイトリニューアルのためのフロントエンドアーキテクチャ設計と実装を主導",
           "Next.jsおよびStyled-Componentsを用いたPC・モバイル対応のレスポンシブUI開発",
@@ -399,7 +399,7 @@
         "date": "2021.07 - 2022.02",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "有名配達アプリをベンチマークしたクライアント向けのPOSデスクトップアプリ及びマルチプラットフォームモバイルアプリ開発",
           "Redux-sagaによるリアルタイム注文管理と既存コードの改善",
@@ -443,7 +443,7 @@
         "date": "2021.06 - 2021.07",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "React Nativeを使用したiOS/Androidの基本レイアウト、ログイン、詳細ページなどのフロントエンド開発",
           "API連携前の段階までの開発および引き継ぎ作業"
@@ -484,7 +484,7 @@
         "date": "2021.02 - 2021.06",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "ユーザーが印刷依頼を行い、印刷業者が入札できるB2Bモバイルアプリケーションを開発",
           "ユーザーと印刷業者間でリアルタイムに通信できる1:1チャット機能を実装",
@@ -526,7 +526,7 @@
         "date": "2021.02 - 2021.06",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "様々な印刷物商品をショッピングし、パートナー業者から見積もりを注文できるプラットフォーム。",
           "動的な見積もり依頼フォームと情報提供ボタン、1対1のチャット・電話相談機能。",
@@ -568,7 +568,7 @@
         "date": "2020.12 - 2021.01",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "観光地向けオーディオブックAndroidアプリと管理者ページをフルスタックで開発",
           "現在地に基づくオーディオ再生、Bottom Sheet、スライダー機能を実装",
@@ -610,7 +610,7 @@
         "date": "2020.10 - 2021.01",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "観光案内モバイルアプリ(iOS・Android)をReact Nativeで開発",
           "コミュニティ、検索、地図、管理者リストなど主要機能を実装",
@@ -652,7 +652,7 @@
         "date": "2020.09 - 2020.09",
         "company": "Dmonster",
         "region": "韓国・釜山",
-        "role": "Freelance Frontend Developer",
+        "role": "フリーランス フロントエンドエンジニア",
         "description": [
           "地図と検索結果の連動処理を改善",
           "UI表示や視覚的なバグ修正",
