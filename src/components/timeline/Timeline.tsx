@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { TimelineItem } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
@@ -81,8 +81,8 @@ export default function Timeline({
         setVisibleItems(5); // 초기 아이템 수로 리셋
       }
 
-      // 1024px 이상에서는 모든 아이템 표시
-      if (width >= 1024) {
+      // 1024px 이상에서는 모든 아이템 표시 (데스크톱에서만)
+      if (width >= 1024 && !isTabletDevice) {
         setVisibleItems(items.length);
       }
     };
@@ -92,66 +92,84 @@ export default function Timeline({
     return () => window.removeEventListener('resize', checkDevice);
   }, [isTablet, items.length]);
 
-  // 스크롤 감지하여 아이템 점진적 표시 (모바일과 세로형 태블릿에서만 전체 페이지 스크롤)
+  // Intersection Observer를 사용한 인피니트 스크롤 (모바일과 세로형 태블릿에서만)
   useEffect(() => {
     const isMobileOrPortraitTablet = window.innerWidth < 1024; // 1024px 미만 (모바일 + 세로형 태블릿)
 
-    if (!isMobileOrPortraitTablet) {
+    if (!isMobileOrPortraitTablet || visibleItems >= items.length) {
       return;
     }
 
-    const handleWindowScroll = () => {
-      const scrollTop = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = window.innerHeight;
-      const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-
-      // 스크롤이 70% 이상일 때 더 많은 아이템 표시 (모바일과 세로형 태블릿에서만)
-      if (scrollPercentage > 0.7 && visibleItems < items.length) {
-        setVisibleItems((prev) => Math.min(prev + 3, items.length));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && visibleItems < items.length) {
+            console.log('Loading more items with Intersection Observer:', {
+              visibleItems,
+              totalItems: items.length,
+            });
+            setVisibleItems((prev) => Math.min(prev + 3, items.length));
+          }
+        });
+      },
+      {
+        rootMargin: '100px', // 하단에서 100px 전에 로드 시작
+        threshold: 0.1,
       }
-    };
+    );
 
-    window.addEventListener('scroll', handleWindowScroll);
-
-    // 초기 로드 시에도 한 번 실행
-    handleWindowScroll();
+    // 마지막 아이템을 관찰 대상으로 설정
+    const lastItem = lastItemRef.current;
+    if (lastItem) {
+      observer.observe(lastItem);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleWindowScroll);
+      if (lastItem) {
+        observer.unobserve(lastItem);
+      }
+      observer.disconnect();
     };
-  }, [items.length, visibleItems]); // visibleItems 제거하여 무한 루프 방지
+  }, [items.length, visibleItems]);
 
-  // 스크롤 감지하여 아이템 점진적 표시 (가로형 태블릿에서만 인피니트 스크롤)
+  // Intersection Observer를 사용한 인피니트 스크롤 (가로형 태블릿에서만)
   useEffect(() => {
     if (
       !isTablet ||
       !scrollRef.current ||
       window.innerWidth >= 1280 ||
-      !isTabletDevice
+      !isTabletDevice ||
+      visibleItems >= items.length
     )
       return;
 
-    const handleScroll = () => {
-      const scrollElement = scrollRef.current;
-      if (!scrollElement) return;
-
-      const { scrollTop, scrollHeight, clientHeight } = scrollElement;
-      const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-
-      // 스크롤이 70% 이상일 때 더 많은 아이템 표시 (가로형 태블릿에서만)
-      if (scrollPercentage > 0.7 && visibleItems < items.length) {
-        setVisibleItems((prev) => Math.min(prev + 3, items.length));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && visibleItems < items.length) {
+            setVisibleItems((prev) => Math.min(prev + 3, items.length));
+          }
+        });
+      },
+      {
+        root: scrollRef.current, // 스크롤 컨테이너를 root로 설정
+        rootMargin: '100px',
+        threshold: 0.1,
       }
+    );
+
+    // 마지막 아이템을 관찰 대상으로 설정
+    const lastItem = lastItemRef.current;
+    if (lastItem) {
+      observer.observe(lastItem);
+    }
+
+    return () => {
+      if (lastItem) {
+        observer.unobserve(lastItem);
+      }
+      observer.disconnect();
     };
-
-    const scrollElement = scrollRef.current;
-    scrollElement.addEventListener('scroll', handleScroll);
-
-    // 초기 로드 시에도 한 번 실행
-    handleScroll();
-
-    return () => scrollElement.removeEventListener('scroll', handleScroll);
   }, [isTablet, isTabletDevice, items.length, visibleItems]);
 
   // Lenis 초기화
@@ -321,6 +339,9 @@ export default function Timeline({
   const itemsToRender =
     window.innerWidth < 1024 ? items.slice(0, visibleItems) : items;
 
+  // 모바일에서 스크롤 성능 최적화를 위한 메모이제이션
+  const memoizedItems = useMemo(() => itemsToRender, [itemsToRender]);
+
   return (
     <div className='flex flex-col'>
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 적용 */}
@@ -342,13 +363,19 @@ export default function Timeline({
         data-timeline-container
         className={`${
           window.innerWidth < 1024
-            ? 'pr-0' // 모바일과 세로형 태블릿에서는 스크롤 제거
+            ? 'pr-0 will-change-scroll' // 모바일과 세로형 태블릿에서는 스크롤 제거, 성능 최적화
             : isTablet
-            ? 'pr-0 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
-            : 'pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'
+            ? 'pr-0 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
+            : 'pr-2 h-[calc(100vh-14rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
         }`}
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden',
+        }}
       >
-        {itemsToRender.map((item, index) => (
+        {memoizedItems.map((item, index) => (
           <div
             key={item.id}
             ref={index === itemsToRender.length - 1 ? lastItemRef : null}
@@ -357,9 +384,13 @@ export default function Timeline({
               ref={(el) => {
                 itemRefs.current.set(item.id, el);
               }}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 2 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{
+                duration: 0.25,
+                delay: Math.min(index * 0.015, 0.15),
+                ease: 'easeOut',
+              }}
               className={`relative cursor-pointer transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
                 selectedItem?.id === item.id
                   ? 'bg-gray-100 dark:bg-gray-800/70'
@@ -426,40 +457,6 @@ export default function Timeline({
             )}
           </div>
         ))}
-
-        {/* 모바일과 세로형 태블릿에서 로딩 인디케이터 */}
-        {window.innerWidth < 1024 && visibleItems < items.length && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className='p-4 text-center'
-          >
-            <div className='flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400'>
-              <div className='w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'></div>
-              <span className='text-sm'>
-                더 많은 항목을 불러오는 중... ({visibleItems}/{items.length})
-              </span>
-            </div>
-          </motion.div>
-        )}
-
-        {/* 가로형 태블릿에서 로딩 인디케이터 */}
-        {isTablet &&
-          window.innerWidth < 1280 &&
-          visibleItems < items.length && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className='p-4 text-center'
-            >
-              <div className='flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400'>
-                <div className='w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin'></div>
-                <span className='text-sm'>
-                  더 많은 항목을 불러오는 중... ({visibleItems}/{items.length})
-                </span>
-              </div>
-            </motion.div>
-          )}
 
         {/* 하단 여백 */}
         <div className={`${isTablet ? 'h-32' : 'h-24'}`}></div>
