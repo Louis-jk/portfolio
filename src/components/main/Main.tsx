@@ -80,7 +80,7 @@ function MainContent() {
 
   return (
     <>
-      <main className='flex flex-col pt-16'>
+      <main className='flex flex-col pt-[55px] h-[calc(100vh-205px)]'>
         <section>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -89,7 +89,7 @@ function MainContent() {
           >
             {/* Desktop Layout (1280px+) */}
             {isDesktop && (
-              <div className='flex justify-center items-start h-[calc(100vh-264px)]'>
+              <div className='flex justify-center items-start h-full'>
                 <div className='grid grid-cols-12 gap-6 h-full'>
                   {/* Intro */}
                   <motion.div
@@ -136,7 +136,7 @@ function MainContent() {
 
             {/* Tablet Layout (1024px - 1279px) */}
             {isTablet && (
-              <div className='block'>
+              <div className='block h-full'>
                 <div className='grid grid-cols-2 gap-6 h-full w-full'>
                   {/* Intro */}
                   <motion.div

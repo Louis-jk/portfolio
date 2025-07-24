@@ -41,7 +41,7 @@ export default function HomePage() {
 
   return (
     <Suspense fallback={<LoadingScreen isLoading={true} />}>
-      <div className='flex flex-col min-h-screen w-full'>
+      <div className='flex flex-col h-screen w-full'>
         <Header />
         <Main />
         <Footer />

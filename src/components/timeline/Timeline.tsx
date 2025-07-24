@@ -365,17 +365,22 @@ export default function Timeline({
   return (
     <div className='flex flex-col'>
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 적용 */}
-      <h2
-        className={`text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6 ${
-          window.innerWidth < 1024
-            ? 'sticky top-[55px] z-50 bg-white dark:bg-[#0a0a0a] py-4'
-            : ''
-        }`}
+      <div
+        className={cn(
+          'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center',
+          window.innerWidth < 1024 && 'mt-6',
+          isMobile || (isTablet && isTabletDevice && 'sticky top-[55px] z-50 ')
+        )}
       >
-        <p className={cn(locale === 'ja' && 'tracking-[.25em]')}>
+        <h2
+          className={cn(
+            'text-2xl font-bold text-center text-gray-900 dark:text-gray-100',
+            locale === 'ja' && 'tracking-[.25em]'
+          )}
+        >
           {t('title')}
-        </p>
-      </h2>
+        </h2>
+      </div>
 
       {/* 스크롤 컨테이너 - 타임라인 항목만 포함 */}
       <div
@@ -385,8 +390,8 @@ export default function Timeline({
           window.innerWidth < 1024
             ? 'pr-0' // 모바일에서는 전체 페이지 스크롤 사용
             : isTablet
-            ? 'pr-0 h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
-            : 'pr-2 h-[calc(100vh-16rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
+            ? 'pr-0 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
+            : 'pr-2 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
         }`}
         style={{
           WebkitOverflowScrolling: 'touch',
@@ -478,9 +483,6 @@ export default function Timeline({
             )}
           </div>
         ))}
-
-        {/* 하단 여백 */}
-        {!isMobile && <div className={`${isTablet ? 'h-32' : 'h-24'}`}></div>}
       </div>
 
       {showThumbnail &&

@@ -134,21 +134,26 @@ export default function TimelineDetail({
       {/* PC에서만 보이는 제목 - 스크롤되지 않음 */}
 
       {isDesktopOrLaptop && (
-        <h2 className='text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100 mt-6'>
-          <p>{t('details.title')}</p>
-        </h2>
+        <div className='bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center'>
+          <h2 className='text-2xl font-bold text-center text-gray-900 dark:text-gray-100'>
+            {t('details.title')}
+          </h2>
+        </div>
       )}
 
       {/* PC에서만 스크롤 가능한 컨테이너 */}
       <div
         ref={scrollRef}
-        className='h-[calc(100vh-16rem)] overflow-y-auto overflow-x-hidden'
+        className='h-[calc(100vh-275px)] overflow-y-auto overflow-x-hidden'
       >
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.5 }}
-          className='flex flex-col gap-7 px-0 lg:px-4 overflow-hidden'
+          className={cn(
+            'flex flex-col gap-7 px-0 lg:px-4 overflow-hidden',
+            isDesktopOrLaptop && 'mb-5'
+          )}
         >
           <div>
             {/* Header */}
@@ -212,7 +217,7 @@ export default function TimelineDetail({
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className='relative flex items-center justify-center'
+              className='relative flex items-center justify-center w-full'
             >
               {/* 로딩 스켈레톤 */}
               {!imageLoaded && (
@@ -497,9 +502,6 @@ export default function TimelineDetail({
               ))}
             </ul>
           </motion.div>
-
-          {/* 하단 여백 */}
-          {isDesktopOrLaptop && <div className='h-26'></div>}
         </motion.div>
       </div>
 
