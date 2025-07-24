@@ -13,7 +13,9 @@ import { TbBrowserShare } from 'react-icons/tb';
 import { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { useMediaQuery } from 'react-responsive';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
+import ShareButton from '@/components/button/share/ShareButton';
+import ShareModal from '@/components/modal/shareModal';
 
 interface TimelineDetailProps {
   item: TimelineItem | null;
@@ -24,6 +26,7 @@ export default function TimelineDetail({
   item,
   isVisible,
 }: TimelineDetailProps) {
+  const [openShareModal, setOpenShareModal] = useState(false);
   const { resolvedTheme } = useTheme();
   const t = useTranslations('timeline');
   const tD = useTranslations('details');
@@ -294,7 +297,10 @@ export default function TimelineDetail({
               </div>
             )}
 
-            <h4 className='text-lg font-semibold mb-3'>{tD('overview')}</h4>
+            <div className='flex items-center justify-between mb-3'>
+              <h4 className='text-lg font-semibold'>{tD('overview')}</h4>
+              <ShareButton onShareClick={() => setOpenShareModal(true)} />
+            </div>
             <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
               {t(item.details.overview)}
             </p>
@@ -452,6 +458,15 @@ export default function TimelineDetail({
           {isDesktopOrLaptop && <div className='h-18'></div>}
         </motion.div>
       </div>
+
+      {/* Share Modal */}
+      <ShareModal
+        open={openShareModal}
+        setOpen={setOpenShareModal}
+        url={window.location.href}
+        title='Joonho Kim Portfolio'
+        text='Frontend Developer Joonho Kim'
+      />
     </div>
   );
 }

@@ -700,6 +700,10 @@
         "ja": "日本語",
         "en": "English"
       }
+    },
+    "shareModal": {
+      "title": "共有",
+      "description": "このプロジェクトを友達に共有してください。"
     }
   },
   "details": {

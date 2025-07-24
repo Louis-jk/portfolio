@@ -644,6 +644,10 @@
         "ja": "日本語",
         "en": "English"
       }
+    },
+    "shareModal": {
+      "title": "공유",
+      "description": "이 프로젝트를 친구들에게 공유해주세요."
     }
   },
   "details": {
