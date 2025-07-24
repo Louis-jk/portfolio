@@ -156,13 +156,13 @@ html {
 
 /* 스크롤바 전체 영역 */
 ::-webkit-scrollbar {
-  width: 8px; /* 세로 스크롤바 너비 */
-  height: 8px; /* 가로 스크롤바 높이 */
+  width: 4px; /* 세로 스크롤바 너비 - 더 얇게 */
+  height: 4px; /* 가로 스크롤바 높이 - 더 얇게 */
 }
 
 /* 스크롤바 막대 */
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(173, 70, 255, 0.5);
+  background-color: rgba(173, 70, 255, 1);
   border-radius: 4px;
   border: 2px solid transparent; /* 트랙과 구분 */
   background-clip: content-box;
@@ -170,12 +170,19 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(173, 70, 255, 0.5);
+  background-color: rgba(173, 70, 255, 1);
 }
 
 /* 스크롤바 트랙 */
 ::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* Firefox 스크롤바 스타일 */
+* {
+  scrollbar-width: thin; /* 항상 얇게 표시 */
+  scrollbar-color: rgba(173, 70, 255, 1) transparent;
+  scrollbar-gutter: stable; /* 스크롤바 공간 미리 확보 */
 }
 
 /* 스크롤 바운스 제거 */
