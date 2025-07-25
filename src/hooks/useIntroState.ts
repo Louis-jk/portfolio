@@ -24,7 +24,7 @@ type IntroAction =
 // 초기 상태
 const initialState: IntroState = {
   isHovered: false,
-  messageIndex: 0,
+  messageIndex: 1, // 0이 아닌 1로 시작 (첫 번째 랜덤 메시지)
   showGreeting: false,
   isGreetingVisible: false,
   messages: [],
@@ -54,8 +54,13 @@ function introReducer(state: IntroState, action: IntroAction): IntroState {
         isHovered: false,
       };
     case 'SET_RANDOM_MESSAGE':
-      const randomIndex =
-        Math.floor(Math.random() * (state.messages.length - 1)) + 1;
+      // 이전 인덱스와 다른 랜덤 인덱스 선택
+      let randomIndex;
+      do {
+        randomIndex =
+          Math.floor(Math.random() * (state.messages.length - 1)) + 1;
+      } while (randomIndex === state.messageIndex && state.messages.length > 2);
+
       return {
         ...state,
         messageIndex: randomIndex,

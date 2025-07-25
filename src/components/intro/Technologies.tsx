@@ -6,7 +6,7 @@ function Technologies() {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div className='flex flex-wrap gap-2'>
+    <div className='flex flex-wrap justify-center items-center gap-2'>
       {technologies.map((tech, index) => (
         <span
           key={index}

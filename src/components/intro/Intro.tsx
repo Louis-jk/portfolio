@@ -61,12 +61,12 @@ function Intro() {
     setMessages(messagesData);
   }, [messagesData, setMessages]);
 
-  // 인사말 타이머
+  // 인사말 타이머 - 컴포넌트 마운트 시에만 실행
   useEffect(() => {
     setShowGreeting(true);
     const timer = setTimeout(() => setShowGreeting(false), 5000);
     return () => clearTimeout(timer);
-  }, [setShowGreeting, setIsGreetingVisible, showGreeting]);
+  }, [setShowGreeting]);
 
   // 인사말 표시 타이밍
   useEffect(() => {
@@ -90,7 +90,9 @@ function Intro() {
     }
   };
 
-  const currentMessage = showGreeting ? messages[0] : messages[messageIndex];
+  const currentMessage = showGreeting
+    ? messages[0]
+    : messages[messageIndex] || messages[1];
 
   // 말풍선 위치 계산
   useEffect(() => {
