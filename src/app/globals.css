@@ -128,7 +128,6 @@
 body {
   transition: background-color 0.3s ease, color 0.3s ease;
   width: 100%;
-  min-width: 100vw;
   margin: 0;
   padding: 0;
 }
@@ -145,7 +144,6 @@ body {
 html {
   font-family: var(--font-en), var(--font-mono), sans-serif;
   width: 100%;
-  min-width: 100vw;
   margin: 0;
   padding: 0;
 }
@@ -198,7 +196,7 @@ html,
 body {
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* iOS Safari 바운스 제거 */

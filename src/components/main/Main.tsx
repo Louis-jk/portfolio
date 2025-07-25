@@ -80,12 +80,13 @@ function MainContent() {
 
   return (
     <>
-      <main className='flex flex-col pt-[55px] h-[calc(100vh-205px)]'>
-        <section>
+      <main className={`flex flex-col pt-[55px] ${isMobile ? '' : 'flex-1'}`}>
+        <section className={isMobile ? '' : 'h-full'}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: 'easeOut' }}
+            className={isMobile ? '' : 'h-full'}
           >
             {/* Desktop Layout (1280px+) */}
             {isDesktop && (

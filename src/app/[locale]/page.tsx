@@ -5,9 +5,14 @@ import Footer from '@/components/footer/Footer';
 import LoadingScreen from '@/components/loading/Loading';
 import { Suspense, useState, useEffect } from 'react';
 import Header from '@/components/header/Header';
+import { useMediaQuery } from 'react-responsive';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
 
   useEffect(() => {
     const minLoadingTime = setTimeout(() => {
@@ -41,7 +46,9 @@ export default function HomePage() {
 
   return (
     <Suspense fallback={<LoadingScreen isLoading={true} />}>
-      <div className='flex flex-col h-screen w-full'>
+      <div
+        className={`${isMobile ? 'block' : 'flex flex-col h-screen'} w-full`}
+      >
         <Header />
         <Main />
         <Footer />

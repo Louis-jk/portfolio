@@ -85,6 +85,11 @@ export default function Timeline({
       if (width >= 1024 && !isTabletDevice) {
         setVisibleItems(items.length);
       }
+
+      // 모바일에서는 처음 5개만 표시 (인피니트 스크롤)
+      if (width < 768) {
+        setVisibleItems(5);
+      }
     };
 
     checkDevice();
@@ -94,7 +99,7 @@ export default function Timeline({
 
   // Intersection Observer를 사용한 인피니트 스크롤 (모바일과 세로형 태블릿에서만)
   useEffect(() => {
-    const isMobileOrPortraitTablet = window.innerWidth < 1024; // 1024px 미만 (모바일 + 세로형 태블릿)
+    const isMobileOrPortraitTablet = isMobile || isTablet; // 모바일 또는 태블릿
 
     if (!isMobileOrPortraitTablet || visibleItems >= items.length) {
       return;
@@ -355,21 +360,20 @@ export default function Timeline({
     setTarget({ x: 0, y: 0 });
   };
 
-  // 모바일과 세로형 태블릿에서는 visibleItems만큼만 렌더링
+  // 모바일과 태블릿에서는 visibleItems만큼만 렌더링 (인피니트 스크롤)
   const itemsToRender =
-    window.innerWidth < 1024 ? items.slice(0, visibleItems) : items;
+    isMobile || isTablet ? items.slice(0, visibleItems) : items;
 
   // 모바일에서 스크롤 성능 최적화를 위한 메모이제이션
   const memoizedItems = useMemo(() => itemsToRender, [itemsToRender]);
 
   return (
     <div className='flex flex-col'>
-      {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 적용 */}
+      {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 제거 */}
       <div
         className={cn(
           'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center',
-          window.innerWidth < 1024 && 'mt-6',
-          isMobile || (isTablet && isTabletDevice && 'sticky top-[55px] z-50 ')
+          isMobile && 'mt-6'
         )}
       >
         <h2
@@ -382,108 +386,168 @@ export default function Timeline({
         </h2>
       </div>
 
-      {/* 스크롤 컨테이너 - 타임라인 항목만 포함 */}
-      <div
-        ref={scrollRef}
-        data-timeline-container
-        className={`${
-          window.innerWidth < 1024
-            ? 'pr-0' // 모바일에서는 전체 페이지 스크롤 사용
-            : isTablet
-            ? 'pr-0 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
-            : 'pr-2 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
-        }`}
-        style={{
-          WebkitOverflowScrolling: 'touch',
-          overscrollBehavior: 'contain',
-          transform: 'translateZ(0)',
-          backfaceVisibility: 'hidden',
-          willChange: 'scroll-position',
-        }}
-      >
-        {memoizedItems.map((item, index) => (
-          <div
-            key={item.id}
-            ref={index === itemsToRender.length - 1 ? lastItemRef : null}
-          >
-            <motion.div
-              ref={(el) => {
-                itemRefs.current.set(item.id, el);
-              }}
-              initial={{ opacity: 0, y: 1 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.2,
-                delay: Math.min(index * 0.01, 0.1),
-                ease: 'easeOut',
-              }}
-              className={`relative cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
-                selectedItem?.id === item.id
-                  ? 'bg-gray-100 dark:bg-gray-800/70'
-                  : ''
-              }`}
-              onClick={() => onItemClick(item)}
-              onMouseEnter={
-                !isMobile && !isTabletDevice
-                  ? (e) => handleMouseEnter(e, item)
-                  : undefined
-              }
-              onMouseMove={
-                !isMobile && !isTabletDevice ? handleMouseMove : undefined
-              }
-              onMouseLeave={
-                !isMobile && !isTabletDevice ? handleMouseLeave : undefined
-              }
+      {/* 모바일에서는 스크롤 컨테이너 없이 직접 렌더링 */}
+      {isMobile ? (
+        <div>
+          {memoizedItems.map((item, index) => (
+            <div
+              key={item.id}
+              ref={index === itemsToRender.length - 1 ? lastItemRef : null}
             >
-              <div className={`${isMobile ? 'pr-0' : ''}`}>
-                <div className='flex items-start gap-3'>
-                  {!isMobile && !isTabletDevice && (
-                    <div className='flex-shrink-0 mt-1'>
-                      {selectedItem?.id === item.id ? (
-                        <Check className='w-4 h-4 text-purple-700 dark:text-purple-500' />
-                      ) : (
-                        <div className='w-4 h-4' />
-                      )}
+              <motion.div
+                ref={(el) => {
+                  itemRefs.current.set(item.id, el);
+                }}
+                initial={{ opacity: 0, y: 1 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.2,
+                  delay: Math.min(index * 0.01, 0.1),
+                  ease: 'easeOut',
+                }}
+                className={`relative cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
+                  selectedItem?.id === item.id
+                    ? 'bg-gray-100 dark:bg-gray-800/70'
+                    : ''
+                }`}
+                onClick={() => onItemClick(item)}
+              >
+                <div className='pr-0'>
+                  <div className='flex items-start gap-3'>
+                    <div className='flex-1 min-w-0'>
+                      <div className='flex items-center gap-2 justify-between'>
+                        <h3
+                          className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
+                            selectedItem?.id === item.id
+                              ? 'text-purple-700 dark:text-purple-500 font-bold'
+                              : 'text-gray-900 dark:text-gray-100'
+                          }`}
+                        >
+                          {t(item.title)}
+                        </h3>
+                        <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
+                          {t(item.region)}
+                        </p>
+                      </div>
+                      <div className='flex items-center gap-2 justify-between'>
+                        <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
+                          {t(item.role)}
+                        </p>
+                        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
+                          {t(item.date)}
+                        </p>
+                      </div>
+                      <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
+                        {item.description.map((line: string, i: number) => (
+                          <li key={i}>{t(line)}</li>
+                        ))}
+                      </ul>
                     </div>
-                  )}
-                  <div className='flex-1 min-w-0'>
-                    <div className='flex items-center gap-2 justify-between'>
-                      <h3
-                        className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
-                          selectedItem?.id === item.id
-                            ? 'text-purple-700 dark:text-purple-500 font-bold'
-                            : 'text-gray-900 dark:text-gray-100'
-                        }`}
-                      >
-                        {t(item.title)}
-                      </h3>
-                      <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                        {t(item.region)}
-                      </p>
-                    </div>
-                    <div className='flex items-center gap-2 justify-between'>
-                      <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                        {t(item.role)}
-                      </p>
-                      <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                        {t(item.date)}
-                      </p>
-                    </div>
-                    <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                      {item.description.map((line: string, i: number) => (
-                        <li key={i}>{t(line)}</li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-            {index < itemsToRender.length - 1 && (
-              <div className='h-px border-t border-dashed border-gray-200 dark:border-gray-700 mx-4' />
-            )}
-          </div>
-        ))}
-      </div>
+              </motion.div>
+              {index < itemsToRender.length - 1 && (
+                <div className='h-px border-t border-dashed border-gray-200 dark:border-gray-700 mx-4' />
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        /* PC/태블릿에서는 스크롤 컨테이너 사용 */
+        <div
+          ref={scrollRef}
+          data-timeline-container
+          className={`${
+            isTablet
+              ? 'pr-0 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
+              : 'pr-2 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll'
+          }`}
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'contain',
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+            willChange: 'scroll-position',
+          }}
+        >
+          {memoizedItems.map((item, index) => (
+            <div
+              key={item.id}
+              ref={index === itemsToRender.length - 1 ? lastItemRef : null}
+            >
+              <motion.div
+                ref={(el) => {
+                  itemRefs.current.set(item.id, el);
+                }}
+                initial={{ opacity: 0, y: 1 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.2,
+                  delay: Math.min(index * 0.01, 0.1),
+                  ease: 'easeOut',
+                }}
+                className={`relative cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
+                  selectedItem?.id === item.id
+                    ? 'bg-gray-100 dark:bg-gray-800/70'
+                    : ''
+                }`}
+                onClick={() => onItemClick(item)}
+                onMouseEnter={
+                  !isTabletDevice ? (e) => handleMouseEnter(e, item) : undefined
+                }
+                onMouseMove={!isTabletDevice ? handleMouseMove : undefined}
+                onMouseLeave={!isTabletDevice ? handleMouseLeave : undefined}
+              >
+                <div className={`${isMobile ? 'pr-0' : ''}`}>
+                  <div className='flex items-start gap-3'>
+                    {!isTabletDevice && (
+                      <div className='flex-shrink-0 mt-1'>
+                        {selectedItem?.id === item.id ? (
+                          <Check className='w-4 h-4 text-purple-700 dark:text-purple-500' />
+                        ) : (
+                          <div className='w-4 h-4' />
+                        )}
+                      </div>
+                    )}
+                    <div className='flex-1 min-w-0'>
+                      <div className='flex items-center gap-2 justify-between'>
+                        <h3
+                          className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
+                            selectedItem?.id === item.id
+                              ? 'text-purple-700 dark:text-purple-500 font-bold'
+                              : 'text-gray-900 dark:text-gray-100'
+                          }`}
+                        >
+                          {t(item.title)}
+                        </h3>
+                        <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
+                          {t(item.region)}
+                        </p>
+                      </div>
+                      <div className='flex items-center gap-2 justify-between'>
+                        <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
+                          {t(item.role)}
+                        </p>
+                        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
+                          {t(item.date)}
+                        </p>
+                      </div>
+                      <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
+                        {item.description.map((line: string, i: number) => (
+                          <li key={i}>{t(line)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              {index < itemsToRender.length - 1 && (
+                <div className='h-px border-t border-dashed border-gray-200 dark:border-gray-700 mx-4' />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {showThumbnail &&
         hoveredItem &&
