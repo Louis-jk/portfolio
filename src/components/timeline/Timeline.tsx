@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { TimelineItem } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
@@ -86,8 +86,8 @@ export default function Timeline({
         setVisibleItems(items.length);
       }
 
-      // 모바일에서는 처음 5개만 표시 (인피니트 스크롤)
-      if (width < 768) {
+      // 모바일에서는 처음 5개만 표시 (인피니트 스크롤) - 초기 로드시에만
+      if (width < 768 && visibleItems === items.length) {
         setVisibleItems(5);
       }
     };
@@ -95,106 +95,6 @@ export default function Timeline({
     checkDevice();
     window.addEventListener('resize', checkDevice);
     return () => window.removeEventListener('resize', checkDevice);
-  }, [isTablet, isTabletDevice, items.length]);
-
-  // Intersection Observer를 사용한 인피니트 스크롤 (모바일과 세로형 태블릿에서만)
-  useEffect(() => {
-    const isMobileOrPortraitTablet = isMobile || isTablet; // 모바일 또는 태블릿
-
-    if (!isMobileOrPortraitTablet || visibleItems >= items.length) {
-      return;
-    }
-
-    let isLoading = false;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            visibleItems < items.length &&
-            !isLoading
-          ) {
-            isLoading = true;
-            setVisibleItems((prev) => Math.min(prev + 3, items.length));
-
-            // 로딩 상태를 잠시 후 해제
-            setTimeout(() => {
-              isLoading = false;
-            }, 500);
-          }
-        });
-      },
-      {
-        rootMargin: '150px', // 하단에서 150px 전에 로드 시작
-        threshold: 0.1,
-      }
-    );
-
-    // 마지막 아이템을 관찰 대상으로 설정
-    const lastItem = lastItemRef.current;
-    if (lastItem) {
-      observer.observe(lastItem);
-    }
-
-    return () => {
-      if (lastItem) {
-        observer.unobserve(lastItem);
-      }
-      observer.disconnect();
-    };
-  }, [items.length, visibleItems]);
-
-  // Intersection Observer를 사용한 인피니트 스크롤 (가로형 태블릿에서만)
-  useEffect(() => {
-    if (
-      !isTablet ||
-      !scrollRef.current ||
-      window.innerWidth >= 1280 ||
-      !isTabletDevice ||
-      visibleItems >= items.length
-    )
-      return;
-
-    let isLoading = false;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            visibleItems < items.length &&
-            !isLoading
-          ) {
-            isLoading = true;
-            setVisibleItems((prev) => Math.min(prev + 3, items.length));
-
-            // 로딩 상태를 잠시 후 해제
-            setTimeout(() => {
-              isLoading = false;
-            }, 500);
-          }
-        });
-      },
-      {
-        root: scrollRef.current, // 스크롤 컨테이너를 root로 설정
-        rootMargin: '150px',
-        threshold: 0.1,
-      }
-    );
-
-    // 마지막 아이템을 관찰 대상으로 설정
-    const lastItem = lastItemRef.current;
-    if (lastItem) {
-      observer.observe(lastItem);
-    }
-
-    return () => {
-      if (lastItem) {
-        observer.unobserve(lastItem);
-      }
-      observer.disconnect();
-    };
   }, [isTablet, isTabletDevice, items.length, visibleItems]);
 
   // Lenis 초기화
@@ -360,12 +260,8 @@ export default function Timeline({
     setTarget({ x: 0, y: 0 });
   };
 
-  // 모바일과 태블릿에서는 visibleItems만큼만 렌더링 (인피니트 스크롤)
-  const itemsToRender =
-    isMobile || isTablet ? items.slice(0, visibleItems) : items;
-
-  // 모바일에서 스크롤 성능 최적화를 위한 메모이제이션
-  const memoizedItems = useMemo(() => itemsToRender, [itemsToRender]);
+  // 모든 디바이스에서 모든 아이템 렌더링
+  const itemsToRender = items;
 
   return (
     <div className='flex flex-col'>
@@ -389,7 +285,7 @@ export default function Timeline({
       {/* 모바일에서는 스크롤 컨테이너 없이 직접 렌더링 */}
       {isMobile ? (
         <div>
-          {memoizedItems.map((item, index) => (
+          {itemsToRender.map((item, index) => (
             <div
               key={item.id}
               ref={index === itemsToRender.length - 1 ? lastItemRef : null}
@@ -470,7 +366,7 @@ export default function Timeline({
             willChange: 'scroll-position',
           }}
         >
-          {memoizedItems.map((item, index) => (
+          {itemsToRender.map((item, index) => (
             <div
               key={item.id}
               ref={index === itemsToRender.length - 1 ? lastItemRef : null}
