@@ -132,7 +132,6 @@ export default function TimelineDetail({
   return (
     <div className='flex flex-col h-full'>
       {/* PC에서만 보이는 제목 - 스크롤되지 않음 */}
-
       {isDesktopOrLaptop && (
         <div className='bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center'>
           <h2 className='text-2xl font-bold text-center text-gray-900 dark:text-gray-100'>
@@ -141,10 +140,12 @@ export default function TimelineDetail({
         </div>
       )}
 
-      {/* PC에서만 스크롤 가능한 컨테이너 */}
       <div
         ref={scrollRef}
-        className='h-[calc(100vh-275px)] overflow-y-auto overflow-x-hidden'
+        className={cn(
+          'h-[calc(100vh-135px)] overflow-y-auto overflow-x-hidden',
+          isDesktopOrLaptop && 'h-[calc(100vh-275px)]'
+        )}
       >
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -217,13 +218,18 @@ export default function TimelineDetail({
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className='relative flex items-center justify-center w-full'
+              className='relative w-full'
             >
               {/* 로딩 스켈레톤 */}
               {!imageLoaded && (
-                <div className='w-full h-[300px] rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-900'>
-                  <div className='flex flex-col items-center justify-center gap-4 w-full h-full'>
-                    {/* 옵션 1: 더블 링 스피너 */}
+                <div
+                  className={cn(
+                    'w-full h-[150px] rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-900',
+                    isDesktopOrLaptop && 'h-[300px]'
+                  )}
+                >
+                  <div className='flex flex-col items-center justify-center gap-4'>
+                    {/* 더블 링 스피너 */}
                     <div className='relative flex items-center justify-center'>
                       <div className='w-12 h-12 border-4 border-purple-200 dark:border-purple-800 rounded-full'></div>
                       <div className='absolute top-0 left-0 w-12 h-12 border-4 border-transparent border-t-purple-500 rounded-full animate-spin'></div>
@@ -243,19 +249,24 @@ export default function TimelineDetail({
                 </div>
               )}
 
-              <Image
-                key={item.details.image}
-                src={item.details.image}
-                alt={item.title}
+              {/* 이미지 - 로드되면 스피너 위에 표시 */}
+              <div
                 className={cn(
-                  'object-contain rounded-sm select-none pointer-events-none transition-opacity duration-300 w-full mx-auto',
-                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                  'transition-opacity duration-300',
+                  imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'
                 )}
-                width={1200}
-                height={579}
-                onLoad={() => setImageLoaded(true)}
-                priority={true} // 우선순위 로딩
-              />
+              >
+                <Image
+                  key={item.details.image}
+                  src={item.details.image}
+                  alt={item.title}
+                  className='object-contain rounded-sm select-none pointer-events-none w-full mx-auto'
+                  width={1200}
+                  height={579}
+                  onLoad={() => setImageLoaded(true)}
+                  priority={true} // 우선순위 로딩
+                />
+              </div>
             </motion.div>
           )}
 
