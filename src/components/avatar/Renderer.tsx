@@ -94,7 +94,7 @@ export default function Renderer() {
   if (!isClient) return null;
 
   return (
-    <div className='h-[17.5rem] w-[17.5rem]'>
+    <div className='h-[14.5rem] w-[14.5rem] 2xl:h-[17.5rem] 2xl:w-[17.5rem]'>
       <Canvas
         camera={{ position: [0, 0, 3], fov: 17 }}
         gl={{
