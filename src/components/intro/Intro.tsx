@@ -8,11 +8,16 @@ import { FaCommentDots } from 'react-icons/fa';
 import Renderer from '@/components/avatar/Renderer';
 import Links from '@/components/links/Links';
 import { useIntroState } from '@/hooks/useIntroState';
-import Technologies from '@/components/intro/Technologies';
+import { useMediaQuery } from 'react-responsive';
+import { cn } from '@/lib/utils';
 
 function Intro() {
   const t = useTranslations();
   const locale = useLocale();
+
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 1280px)',
+  });
 
   // 커스텀 훅으로 상태 관리
   const {
@@ -115,7 +120,12 @@ function Intro() {
   }, [currentMessage, isGreetingVisible, resolvedTheme, setBubbleStyle]);
 
   return (
-    <section className='flex flex-col items-center justify-center'>
+    <section
+      className={cn(
+        'flex flex-col items-center justify-start',
+        isDesktop && 'h-[calc(100vh-205px)] overflow-y-auto'
+      )}
+    >
       <div className='flex flex-col items-center gap-5 py-10'>
         <motion.div
           className='relative'
@@ -134,7 +144,7 @@ function Intro() {
           {messages.length > 0 && isGreetingVisible && (
             <motion.div
               ref={bubbleRef}
-              className='absolute px-4 py-2 rounded-2xl text-sm shadow-lg inline-block text-center font-bold leading-snug'
+              className='absolute px-4 py-2 rounded-2xl text-sm shadow-lg inline-block text-center font-bold leading-snug -top-5! left-0! w-full!'
               style={bubbleStyle}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -156,7 +166,7 @@ function Intro() {
         </motion.div>
 
         <motion.h1
-          className='text-5xl font-bold text-center'
+          className='text-4xl md:text-5xl font-bold text-center'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
@@ -189,13 +199,13 @@ function Intro() {
         <Links />
 
         <motion.div
-          className='flex flex-col items-center mt-5 px-4'
+          className='flex flex-col items-center mt-5 px-4 2xl:px-10'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
         >
           <motion.h2
-            className={`flex items-center justify-start text-2xl font-bold mb-2 ${
+            className={`flex items-center justify-start text-xl lg:text-2xl font-bold mb-2 ${
               locale === 'ja' && 'tracking-[.15em]'
             }`}
             initial={{ opacity: 0, y: 20 }}
@@ -206,22 +216,13 @@ function Intro() {
             {t('homePage.intro.aboutMeTitle')}
           </motion.h2>
           <motion.p
-            className='text-base text-center whitespace-pre-line max-w-xl leading-relaxed'
+            className='text-center whitespace-pre-line max-w-xl leading-relaxed text-base'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8, ease: 'easeOut' }}
           >
             {t('homePage.intro.aboutMe')}
           </motion.p>
-        </motion.div>
-
-        <motion.div
-          className='flex flex-col items-center mt-2 px-4'
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-        >
-          <Technologies />
         </motion.div>
       </div>
     </section>
