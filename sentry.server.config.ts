@@ -2,10 +2,10 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 Sentry.init({
-  dsn: "https://YOUR_KEY@oORG_ID.ingest.us.sentry.io/PROJECT_ID",
+  dsn: 'https://YOUR_KEY@oORG_ID.ingest.us.sentry.io/PROJECT_ID',
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
