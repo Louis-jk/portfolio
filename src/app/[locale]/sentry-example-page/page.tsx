@@ -1,16 +1,12 @@
 'use client';
 
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
+
 export default function SentryExamplePage() {
-  return (
-    <div>
-      <h1>Sentry Example Page</h1>
-      <button
-        onClick={() => {
-          throw new Error('Sentry test error');
-        }}
-      >
-        Trigger Error
-      </button>
-    </div>
-  );
+  useEffect(() => {
+    Sentry.captureException(new Error('🔥 Sentry manual test error!'));
+  }, []);
+
+  return <div>Sending test error...</div>;
 }
