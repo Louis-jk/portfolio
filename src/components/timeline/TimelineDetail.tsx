@@ -265,6 +265,7 @@ export default function TimelineDetail({
                   height={579}
                   onLoad={() => setImageLoaded(true)}
                   priority={true} // 우선순위 로딩
+                  unoptimized={item.details.image?.endsWith('.gif')} // 애니메이션 GIF는 최적화 비활성화
                 />
               </div>
             </motion.div>
