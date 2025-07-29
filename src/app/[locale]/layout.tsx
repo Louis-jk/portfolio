@@ -2,6 +2,8 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import CrispChat from '@/components/crisp/CrispChat';
+import BotPress from '@/components/chatbot/BotPress';
 
 export default async function LocaleLayout({
   children,
@@ -18,7 +20,11 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        {children}
+        {/* <CrispChat /> */}
+        <BotPress />
+      </ThemeProvider>
     </NextIntlClientProvider>
   );
 }
