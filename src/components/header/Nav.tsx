@@ -20,7 +20,7 @@ interface NavProps {
 
 function Nav({ onHomeClick }: NavProps) {
   const [open, setOpen] = useState(false);
-  const [code, setCode] = useState('840');
+  const [code, setCode] = useState('826');
 
   // setHeaderNameStyle 관련 코드와 상태 정의 제거
   const locale = useLocale();
@@ -30,9 +30,9 @@ function Nav({ onHomeClick }: NavProps) {
       setCode(LOCALE_TO_NUMERIC_CODE[locale]);
     } else if (locale === 'en') {
       const countryCode = getCookieValue();
-      setCode(COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'US'] ?? '840');
+      setCode(COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'GB'] ?? '826');
     } else {
-      setCode('840');
+      setCode('826');
     }
   }, [locale]);
 
