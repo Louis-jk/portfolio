@@ -211,3 +211,7 @@ body {
 .font-hanalei-fill {
   font-family: var(--font-hanalei-fill) !important;
 }
+
+#bp-web-widget {
+  z-index: 999999 !important;
+}
