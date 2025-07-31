@@ -5,7 +5,7 @@ import { routing } from './i18n/routing';
 // export default createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-  const countryCode = request.headers.get('x-vercel-ip-country') ?? 'US';
+  const countryCode = request.headers.get('x-vercel-ip-country') ?? 'GB';
 
   // next-intl 미들웨어 실행
   const response = createMiddleware(routing)(request);
