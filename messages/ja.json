@@ -709,6 +709,26 @@
       "buttonTitle": {
         "kakaoTalk": "ウェブに移動"
       }
+    },
+    "chatbot": {
+      "title": "ポートフォリオ チャットボット",
+      "description": "こんにちは！ ポートフォリオ チャットボットです。 ご質問がありますか？ 質問を選択するか、直接入力してください。",
+      "placeholder": "質問を入力してください。",
+      "button": "チャットボットを開く",
+      "close": "チャットボットを閉じる",
+      "open": "チャットボットを開く",
+      "whatIsMySkill": {
+        "question": "スキルは何ですか？",
+        "answer": "React, Next.js, TypeScriptを主に使用しています。"
+      },
+      "projectExperience": {
+        "question": "プロジェクト エクスペリエンス？",
+        "answer": "Web、モバイルアプリ、AIチャットボットの開発経験があります。"
+      },
+      "languages": {
+        "question": "言語は？",
+        "answer": "韓国語、英語、日本語が可能です。"
+      }
     }
   },
   "details": {

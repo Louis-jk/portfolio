@@ -3,55 +3,37 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { IoChatboxEllipses, IoClose } from 'react-icons/io5';
+import { useTheme } from 'next-themes';
+import { cn } from '@/lib/utils';
 
 type Message = {
   from: 'user' | 'bot';
   text: string;
 };
 
-const faqData = {
-  ko: [
-    {
-      question: '내 스킬이 뭐야?',
-      answer: 'React, Next.js, TypeScript를 주로 사용합니다.',
-    },
-    {
-      question: '프로젝트 경험?',
-      answer: '웹, 모바일 앱, AI 챗봇 개발 경험이 있습니다.',
-    },
-    { question: '언어는?', answer: '한국어, 영어, 일본어 가능합니다.' },
-  ],
-  en: [
-    {
-      question: 'What are my skills?',
-      answer: 'I mainly use React, Next.js, and TypeScript.',
-    },
-    {
-      question: 'Project experience?',
-      answer:
-        'I have experience in web, mobile apps, and AI chatbot development.',
-    },
-    {
-      question: 'Languages?',
-      answer: 'I speak Korean, English, and Japanese.',
-    },
-  ],
-};
-
 export default function Chatbot() {
-  const locale = useLocale();
-  const faqs = faqData[locale as keyof typeof faqData] || faqData['en'];
+  const { resolvedTheme } = useTheme();
+  const t = useTranslations('modal.chatbot');
+
+  const faqs = [
+    {
+      question: t('whatIsMySkill.question'),
+      answer: t('whatIsMySkill.answer'),
+    },
+    {
+      question: t('projectExperience.question'),
+      answer: t('projectExperience.answer'),
+    },
+    { question: t('languages.question'), answer: t('languages.answer') },
+  ];
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       from: 'bot',
-      text:
-        locale === 'ko'
-          ? '안녕하세요! 궁금한 질문을 선택하거나 직접 입력하세요.'
-          : 'Hello! Choose or type a question.',
+      text: t('description'),
     },
   ]);
   const [input, setInput] = useState('');
@@ -79,11 +61,7 @@ export default function Chatbot() {
 
     const result = fuse.search(trimmed);
     const bestMatch = result.length > 0 ? result[0].item : null;
-    const reply = bestMatch
-      ? bestMatch.answer
-      : locale === 'ko'
-      ? '죄송합니다. 답변을 준비 중입니다.'
-      : 'Sorry, answer is not ready yet.';
+    const reply = bestMatch ? bestMatch.answer : t('sorry');
 
     setTimeout(() => {
       setMessages((msgs) => [...msgs, { from: 'bot', text: reply }]);
@@ -96,8 +74,13 @@ export default function Chatbot() {
     <>
       <button
         onClick={() => setOpen((p) => !p)}
-        aria-label={open ? '챗봇 닫기' : '챗봇 열기'}
-        className='fixed bottom-6 right-6 w-15 h-15 rounded-full bg-[#ad46ff] text-white border-none cursor-pointer z-[10000] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-2xl flex items-center justify-center select-none'
+        aria-label={open ? t('close') : t('open')}
+        className={cn(
+          'fixed bottom-6 right-6 w-15 h-15 rounded-full text-white border-none cursor-pointer z-[10000] text-2xl flex items-center justify-center select-none',
+          resolvedTheme === 'dark'
+            ? 'bg-purple-500 hover:bg-purple-600 shadow-[0_4px_8px_rgba(0,0,0,0.3)]'
+            : 'bg-purple-700 hover:bg-purple-700 shadow-[0_4px_8px_rgba(0,0,0,0.3)]'
+        )}
       >
         {open ? <IoClose size={30} /> : <IoChatboxEllipses size={30} />}
       </button>
@@ -108,13 +91,29 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className='fixed bottom-[90px] right-6 w-80 md:w-96 h-[70vh] bg-white rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] flex flex-col z-[10000] overflow-hidden font-sans'
+            className={cn(
+              'fixed bottom-[90px] right-6 left-6 md:left-auto md:w-96 h-[70vh] rounded-xl flex flex-col z-[10000] font-sans',
+              resolvedTheme === 'dark'
+                ? 'bg-black shadow-[0_8px_24px_rgba(173,70,255,0.15)]'
+                : 'bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  '
+            )}
           >
-            <div className='px-4 py-3 border-b border-gray-200 font-bold bg-[#ad46ff] text-white text-base select-none'>
-              {locale === 'ko' ? '포트폴리오 챗봇' : 'Portfolio Chatbot'}
+            <div
+              className={cn(
+                'px-4 py-3 border-b border-gray-200 font-bold text-base select-none rounded-t-xl',
+                resolvedTheme === 'dark'
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-purple-700 text-white'
+              )}
+            >
+              {t('title')}
             </div>
 
-            <div className='flex-1 p-3 overflow-y-auto bg-white text-sm leading-relaxed w-full'>
+            <div
+              className={`flex-1 px-2 py-3 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full ${
+                resolvedTheme === 'dark' ? 'bg-[#111111]' : 'bg-white'
+              }`}
+            >
               <AnimatePresence initial={false}>
                 {messages.map((m, i) => (
                   <motion.div
@@ -122,32 +121,46 @@ export default function Chatbot() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className={`flex mb-2 ${
-                      m.from === 'user' ? 'justify-end' : 'justify-start'
+                    className={`mb-3 ${
+                      m.from === 'user'
+                        ? 'flex justify-end'
+                        : 'flex justify-start'
                     }`}
                   >
-                    <div className='relative'>
+                    <div
+                      className={`max-w-[85%] ${
+                        m.from === 'user' ? 'ml-auto' : ''
+                      }`}
+                    >
                       <div
                         className={`font-${
                           m.from === 'bot' ? 'semibold' : 'normal'
                         } bg-${
-                          m.from === 'bot' ? 'gray-100' : '[#ad46ff]'
+                          m.from === 'bot'
+                            ? 'gray-100'
+                            : resolvedTheme === 'dark'
+                            ? 'purple-500'
+                            : 'purple-700'
                         } text-${
                           m.from === 'bot' ? 'black' : 'white'
-                        } px-3 py-1.5 rounded-xl max-w-[80%] break-words`}
+                        } px-3 py-1.5 rounded-xl break-words relative`}
                       >
                         {m.text}
+                        {/* 말풍선 꼬리 */}
+                        <div
+                          className={`absolute bottom-0 ${
+                            m.from === 'user' ? 'right-3' : 'left-3'
+                          } w-2 h-2 transform translate-y-1/2 rotate-45`}
+                          style={{
+                            backgroundColor:
+                              m.from === 'bot'
+                                ? '#f3f4f6'
+                                : resolvedTheme === 'dark'
+                                ? '#ad46ff'
+                                : '#8200db',
+                          }}
+                        />
                       </div>
-                      {/* 말풍선 꼬리 */}
-                      <div
-                        className={`absolute bottom-0 ${
-                          m.from === 'user' ? 'right-2' : 'left-2'
-                        } w-2 h-2 transform translate-y-full rotate-45`}
-                        style={{
-                          backgroundColor:
-                            m.from === 'bot' ? '#f3f4f6' : '#ad46ff',
-                        }}
-                      />
                     </div>
                   </motion.div>
                 ))}
@@ -155,13 +168,23 @@ export default function Chatbot() {
               <div ref={bottomRef} />
             </div>
 
-            <div className='p-3 border-t border-gray-200 bg-gray-50'>
+            <div
+              className={`p-3 border-t ${
+                resolvedTheme === 'dark'
+                  ? 'border-gray-600 bg-[#111111]'
+                  : 'border-gray-200 bg-gray-50'
+              }`}
+            >
               <div className='flex flex-wrap gap-2 mb-3'>
                 {faqs.map(({ question }) => (
                   <button
                     key={question}
                     onClick={() => sendMessage(question)}
-                    className='bg-white border-1 border-gray-300 border-dotted text-black rounded-full px-3 py-1.5 cursor-pointer text-sm select-none flex-shrink-0 hover:bg-purple-400 hover:text-white transition-colors'
+                    className={`border-1 border-dotted rounded-full px-3 py-1.5 cursor-pointer text-sm select-none flex-shrink-0 transition-colors ${
+                      resolvedTheme === 'dark'
+                        ? 'bg-[#111111] border-gray-400 text-white hover:bg-purple-400 hover:text-white'
+                        : 'bg-white border-gray-300 text-black hover:bg-purple-400 hover:text-white'
+                    }`}
                   >
                     {question}
                   </button>
@@ -169,15 +192,17 @@ export default function Chatbot() {
               </div>
               <input
                 type='text'
-                placeholder={
-                  locale === 'ko' ? '직접 질문 입력' : 'Type your question'
-                }
+                placeholder={t('placeholder')}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') sendMessage(input);
                 }}
-                className='w-full p-2 rounded-md border border-gray-300 text-sm'
+                className={`w-full p-3 rounded-md border text-base font-bold ${
+                  resolvedTheme === 'dark'
+                    ? 'bg-[#111111] border-gray-400 text-purple-500 placeholder-purple-500'
+                    : 'bg-white border-gray-300 text-black placeholder-gray-500'
+                }`}
               />
             </div>
           </motion.div>

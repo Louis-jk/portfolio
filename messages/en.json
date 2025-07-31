@@ -709,6 +709,26 @@
       "buttonTitle": {
         "kakaoTalk": "Go to Web"
       }
+    },
+    "chatbot": {
+      "title": "Portfolio Chatbot",
+      "description": "Hello! This is the portfolio chatbot. Do you have any questions? Please select or type your question.",
+      "placeholder": "Type your question.",
+      "button": "Open Chatbot",
+      "close": "Close Chatbot",
+      "open": "Open Chatbot",
+      "whatIsMySkill": {
+        "question": "What is my skill?",
+        "answer": "I mainly use React, Next.js, and TypeScript."
+      },
+      "projectExperience": {
+        "question": "Project experience?",
+        "answer": "I have experience in web, mobile apps, and AI chatbot development."
+      },
+      "languages": {
+        "question": "Languages?",
+        "answer": "I speak Korean, English, and Japanese."
+      }
     }
   },
   "details": {
