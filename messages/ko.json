@@ -653,6 +653,26 @@
       "buttonTitle": {
         "kakaoTalk": "웹으로 이동"
       }
+    },
+    "chatbot": {
+      "title": "포트폴리오 챗봇",
+      "description": "안녕하세요! 포트폴리오 챗봇입니다. 궁금한 점이 있으신가요? 질문을 선택하거나 직접 입력해주세요.",
+      "placeholder": "질문을 입력해주세요.",
+      "button": "챗봇 열기",
+      "close": "챗봇 닫기",
+      "open": "챗봇 열기",
+      "whatIsMySkill": {
+        "question": "스킬이 뭐야?",
+        "answer": "React, Next.js, TypeScript를 주로 사용합니다."
+      },
+      "projectExperience": {
+        "question": "프로젝트 경험?",
+        "answer": "웹, 모바일 앱, AI 챗봇 개발 경험이 있습니다."
+      },
+      "languages": {
+        "question": "언어는?",
+        "answer": "한국어, 영어, 일본어 가능합니다."
+      }
     }
   },
   "details": {
