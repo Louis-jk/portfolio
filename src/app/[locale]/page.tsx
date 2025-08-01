@@ -6,6 +6,7 @@ import LoadingScreen from '@/components/loading/Loading';
 import { Suspense, useState, useEffect } from 'react';
 import Header from '@/components/header/Header';
 import { useMediaQuery } from 'react-responsive';
+import Chatbot from '@/components/chatbot/Chatbot';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +53,7 @@ export default function HomePage() {
         <Header />
         <Main />
         <Footer />
+        <Chatbot />
       </div>
     </Suspense>
   );

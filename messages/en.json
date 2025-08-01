@@ -717,17 +717,34 @@
       "button": "Open Chatbot",
       "close": "Close Chatbot",
       "open": "Open Chatbot",
+      "sorry": "Sorry, answer is not ready yet.",
       "whatIsMySkill": {
-        "question": "What is my skill?",
-        "answer": "I mainly use React, Next.js, and TypeScript."
+        "question": "What are your skills?",
+        "answer": "I specialize in building fast and maintainable frontend applications using React, Next.js, and TypeScript. I implement consistent UI with Tailwind CSS, and manage state using Zustand, Redux, and Context API. I also develop mobile apps with React Native, and recently have been focusing on Web3, chatbots, and interactive animations."
       },
       "projectExperience": {
-        "question": "Project experience?",
-        "answer": "I have experience in web, mobile apps, and AI chatbot development."
+        "question": "What kind of project experience do you have?",
+        "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I’ve collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
       },
       "languages": {
-        "question": "Languages?",
-        "answer": "I speak Korean, English, and Japanese."
+        "question": "What languages do you speak?",
+        "answer": "I am a native Korean speaker and fluent in Japanese for business communication. I’m currently studying English from the basics, and while I can handle simple communication, I’m working hard to improve my skills."
+      },
+      "workStyle": {
+        "question": "How do you work?",
+        "answer": "I actively participate from the planning phase and value clear communication. I’m responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I’m comfortable working independently as well as collaborating with designers and backend developers."
+      },
+      "strengths": {
+        "question": "What are your strengths?",
+        "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs."
+      },
+      "interestedIn": {
+        "question": "What are you interested in?",
+        "answer": "I’m passionate about building user-friendly frontend experiences, and I'm especially interested in Web3, chatbot UIs, interactive animations, and building multilingual global services."
+      },
+      "contact": {
+        "question": "How can I contact you?",
+        "answer": "You can reach me via email or LinkedIn. Please check the footer or the Contact section of my portfolio for details."
       }
     }
   },
