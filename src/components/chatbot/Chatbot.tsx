@@ -154,11 +154,52 @@ export default function Chatbot() {
   const [input, setInput] = useState('');
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(0); // 어드레스바 상태 변화 감지를 위한 강제 리렌더링 상태
+  const [headerHeight, setHeaderHeight] = useState(70);
+  const [inputHeight, setInputHeight] = useState(50);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [forceUpdate, setForceUpdate] = useState(0); // 어드레스바 상태 변화 감지를 위한 강제 리렌더링 상태
+  const headerRef = useRef<HTMLDivElement>(null);
+  const inputAreaRef = useRef<HTMLDivElement>(null);
 
   const fuse = new Fuse(faqs, { keys: ['question'], threshold: 0.3 });
+
+  // 실제 헤더와 입력 영역 높이 측정
+  useEffect(() => {
+    if (open && isMobile) {
+      const updateHeights = () => {
+        if (headerRef.current && inputAreaRef.current) {
+          const headerRect = headerRef.current.getBoundingClientRect();
+          const inputRect = inputAreaRef.current.getBoundingClientRect();
+          const newHeaderHeight = headerRect.height;
+          const newInputHeight = inputRect.height;
+
+          console.log('Height Debug:', {
+            windowHeight: window.innerHeight,
+            headerHeight: newHeaderHeight,
+            inputHeight: newInputHeight,
+            calculatedHeight:
+              window.innerHeight - newHeaderHeight - newInputHeight,
+          });
+
+          setHeaderHeight(newHeaderHeight);
+          setInputHeight(newInputHeight);
+        }
+      };
+
+      // 초기 측정
+      updateHeights();
+
+      // 리사이즈 시 재측정
+      const resizeObserver = new ResizeObserver(updateHeights);
+      if (headerRef.current) resizeObserver.observe(headerRef.current);
+      if (inputAreaRef.current) resizeObserver.observe(inputAreaRef.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+  }, [open, isMobile, forceUpdate]);
 
   // 모바일 감지
   useEffect(() => {
@@ -225,36 +266,61 @@ export default function Chatbot() {
   }, [messages]);
 
   useEffect(() => {
-    if (open) {
-      // 데스크톱과 모바일 모두에서 스크롤 방지
+    if (open && isMobile) {
+      // 모바일에서만 스크롤 방지
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
       document.body.style.top = `-${window.scrollY}px`;
-    } else {
-      // 스크롤 방지 해제 및 원래 위치 복원
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
-    }
 
-    return () => {
-      // 컴포넌트 언마운트 시 스크롤 방지 해제
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
-    };
-  }, [open]);
+      return () => {
+        // 컴포넌트 언마운트 시 스크롤 방지 해제
+        const scrollY = document.body.style.top;
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+      };
+    }
+  }, [open, isMobile]);
+
+  // PC에서 스크롤 방지 없이 챗봇만 모달로 처리
+  useEffect(() => {
+    if (open && !isMobile) {
+      // PC에서는 body에 클래스만 추가하여 CSS로 처리
+      document.body.classList.add('chatbot-open');
+
+      // backdrop을 body에 직접 추가하여 스크롤바 영역까지 완벽하게 덮기
+      const backdrop = document.createElement('div');
+      backdrop.className = 'chatbot-backdrop-overlay';
+      backdrop.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9998;
+        pointer-events: auto;
+      `;
+      backdrop.onclick = () => setOpen(false);
+      document.body.appendChild(backdrop);
+
+      return () => {
+        document.body.classList.remove('chatbot-open');
+        // backdrop 제거
+        const existingBackdrop = document.querySelector(
+          '.chatbot-backdrop-overlay'
+        );
+        if (existingBackdrop) {
+          existingBackdrop.remove();
+        }
+      };
+    }
+  }, [open, isMobile]);
 
   useEffect(() => {
     if (open && messages.length > 1) {
@@ -362,7 +428,7 @@ export default function Chatbot() {
   // 모바일에서 전체화면, 데스크톱에서 기존 크기
   const getChatbotWidth = () => {
     if (isMobile) return 'w-full left-0 right-0';
-    return 'left-6 md:left-auto md:w-96';
+    return 'right-6 w-96'; // 오른쪽 정렬로 수정
   };
 
   // 아이폰 사파리 어드레스바 문제 해결을 위한 실제 사용 가능한 높이 계산
@@ -416,15 +482,6 @@ export default function Chatbot() {
       visualViewport.addEventListener('resize', handleViewportChange);
     }
 
-    // 주기적 체크 제거 (키보드 상태와 충돌 방지)
-    // const intervalTimer = setInterval(() => {
-    //   const vh = window.innerHeight;
-    //   const vw = window.outerHeight;
-    //   if (vh !== vw) {
-    //     handleViewportChange();
-    //   }
-    // }, 500);
-
     return () => {
       clearTimeout(resizeTimer);
       // clearInterval(intervalTimer);
@@ -441,6 +498,7 @@ export default function Chatbot() {
 
   return (
     <>
+      {/* Chatbot Button */}
       <button
         onClick={() => setOpen((p) => !p)}
         aria-label={open ? t('close') : t('open')}
@@ -454,6 +512,7 @@ export default function Chatbot() {
         {open ? <IoClose size={30} /> : <IoChatboxEllipses size={30} />}
       </button>
 
+      {/* Chatbot */}
       <AnimatePresence>
         {open && (
           <>
@@ -463,10 +522,19 @@ export default function Chatbot() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className='fixed inset-0 bg-[rgba(0,0,0,0.5)] z-[9999]'
+              className={cn(
+                'fixed inset-0 bg-[rgba(0,0,0,0.5)] z-[9999] chatbot-backdrop',
+                !isMobile && 'hidden' // PC에서는 숨김 (별도 backdrop 사용)
+              )}
               style={{
                 touchAction: 'none',
                 overscrollBehavior: 'none',
+                width: '100vw',
+                height: '100vh',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
               }}
             />
 
@@ -497,11 +565,10 @@ export default function Chatbot() {
                   isMobile
                     ? 'bottom-0 w-full left-0 right-0'
                     : `${getChatbotPosition()} ${getChatbotWidth()} ${getChatbotHeight()}`
-                } rounded-xl flex flex-col z-[10000] font-sans`,
+                } flex flex-col z-[10000] font-sans`,
                 resolvedTheme === 'dark'
-                  ? 'bg-black shadow-[0_8px_24px_rgba(255,255,255,0.15)]'
-                  : 'bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]',
-                isMobile && 'rounded-none'
+                  ? 'shadow-[0_8px_24px_rgba(255,255,255,0.15)]'
+                  : 'shadow-[0_8px_24px_rgba(0,0,0,0.15)]'
               )}
               style={{
                 ...(isMobile
@@ -517,24 +584,14 @@ export default function Chatbot() {
             >
               {/* Header */}
               <div
+                ref={headerRef}
                 className={cn(
-                  'px-4 py-4 font-bold text-lg select-none rounded-t-xl border-b flex items-center justify-between flex-shrink-0 absolute top-0 left-0 right-0 z-20',
+                  'px-4 py-3 font-bold text-lg select-none border-b flex items-center justify-between flex-shrink-0 z-20 rounded-t-lg',
                   resolvedTheme === 'dark'
                     ? 'bg-purple-500 text-white border-gray-700'
                     : 'bg-purple-700 text-white border-gray-200',
-                  isMobile && 'rounded-none'
+                  isMobile ? 'absolute top-0 left-0 right-0 rounded-none' : '' // 모바일에서만 absolute
                 )}
-                style={
-                  isMobile
-                    ? {
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        zIndex: 20,
-                      }
-                    : {}
-                }
               >
                 <div className='flex items-center gap-3'>
                   {isMobile && (
@@ -550,7 +607,7 @@ export default function Chatbot() {
                 {!isMobile && (
                   <button
                     onClick={() => setOpen(false)}
-                    className='p-1 hover:bg-white/20 rounded-full transition-colors'
+                    className='p-1 hover:bg-white/20 rounded-full transition-colors cursor-pointer'
                   >
                     <IoClose size={20} />
                   </button>
@@ -559,14 +616,17 @@ export default function Chatbot() {
 
               {/* Messages */}
               <div
-                className={`flex-1 px-4 py-4 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full ${
+                className={`flex-1 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full ${
                   resolvedTheme === 'dark' ? 'bg-[#111111]' : 'bg-white'
                 }`}
                 style={{
                   maxHeight: isMobile
-                    ? `${window.innerHeight - 140}px`
-                    : 'none',
-                  paddingTop: isMobile ? '80px' : '16px',
+                    ? `${window.innerHeight - headerHeight - inputHeight}px`
+                    : 'auto',
+                  paddingTop: isMobile ? `${headerHeight}px` : '16px', // 모바일에서만 헤더 높이만큼 패딩
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  paddingBottom: '0px',
                 }}
               >
                 <AnimatePresence initial={false}>
@@ -646,13 +706,17 @@ export default function Chatbot() {
 
               {/* Input Area */}
               <div
-                className={`p-4 border-t flex-shrink-0 ${
+                ref={inputAreaRef}
+                className={`border-t flex-shrink-0 ${
                   resolvedTheme === 'dark'
                     ? 'border-gray-700 bg-[#111111]'
                     : 'border-gray-200 bg-gray-50'
                 }`}
+                style={{
+                  padding: isMobile ? '12px 16px' : '16px',
+                }}
               >
-                <div className='flex gap-3 items-end'>
+                <div className='flex gap-3 justify-center items-center'>
                   <div className='flex-1 relative'>
                     <input
                       ref={inputRef}
@@ -665,7 +729,7 @@ export default function Chatbot() {
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') handleSendMessage();
                       }}
-                      className={`w-full p-3 pr-12 rounded-2xl border text-base font-medium outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 ${
+                      className={`w-full p-3 pr-12 rounded-lg border text-base font-medium outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 ${
                         resolvedTheme === 'dark'
                           ? 'bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400'
                           : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
@@ -676,7 +740,7 @@ export default function Chatbot() {
                     onClick={handleSendMessage}
                     disabled={!input.trim()}
                     className={cn(
-                      'p-3 rounded-2xl text-white transition-all duration-200 flex items-center justify-center',
+                      'size-[50px] rounded-lg text-white transition-all duration-200 flex items-center justify-center cursor-pointer',
                       input.trim()
                         ? resolvedTheme === 'dark'
                           ? 'bg-purple-500 hover:bg-purple-600 active:scale-95'
@@ -686,7 +750,7 @@ export default function Chatbot() {
                         : 'bg-gray-400 cursor-not-allowed'
                     )}
                   >
-                    <IoSend size={18} />
+                    <IoSend size={20} />
                   </button>
                 </div>
               </div>

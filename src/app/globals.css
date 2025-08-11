@@ -215,3 +215,20 @@ body {
 #bp-web-widget {
   z-index: 999999 !important;
 }
+
+/* 챗봇 스크롤 제어 */
+body.chatbot-open {
+  overflow: hidden;
+}
+
+/* 챗봇 backdrop이 전체 뷰포트를 덮도록 보장 */
+.chatbot-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+}
