@@ -4,46 +4,221 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { useTranslations } from 'next-intl';
-import { IoChatboxEllipses, IoClose } from 'react-icons/io5';
+import {
+  IoChatboxEllipses,
+  IoClose,
+  IoSend,
+  IoArrowBack,
+} from 'react-icons/io5';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 
 type Message = {
   from: 'user' | 'bot';
   text: string;
+  choices?: string[];
+  isChoiceMessage?: boolean;
+};
+
+type FAQItem = {
+  question: string;
+  answer: string;
+  followUpChoices?: string[];
 };
 
 export default function Chatbot() {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('modal.chatbot');
 
-  const faqs = [
+  const faqs: FAQItem[] = [
     {
       question: t('whatIsMySkill.question'),
       answer: t('whatIsMySkill.answer'),
+      followUpChoices: [
+        '어떤 프로젝트 경험이 있어?',
+        '일하는 방식은?',
+        '강점은 뭐야?',
+      ],
     },
     {
       question: t('projectExperience.question'),
       answer: t('projectExperience.answer'),
+      followUpChoices: [
+        '기술 스택은?',
+        '팀워크는 어떻게 해?',
+        '문제 해결 능력은?',
+      ],
     },
-    { question: t('languages.question'), answer: t('languages.answer') },
-    { question: t('workStyle.question'), answer: t('workStyle.answer') },
-    { question: t('strengths.question'), answer: t('strengths.answer') },
-    { question: t('interestedIn.question'), answer: t('interestedIn.answer') },
-    { question: t('contact.question'), answer: t('contact.answer') },
+    {
+      question: t('languages.question'),
+      answer: t('languages.answer'),
+      followUpChoices: [
+        '프레임워크 경험은?',
+        '데이터베이스 경험은?',
+        '클라우드 경험은?',
+      ],
+    },
+    {
+      question: t('workStyle.question'),
+      answer: t('workStyle.answer'),
+      followUpChoices: [
+        '커뮤니케이션 스타일은?',
+        '학습 방법은?',
+        '업무 환경 선호도는?',
+      ],
+    },
+    {
+      question: t('strengths.question'),
+      answer: t('strengths.answer'),
+      followUpChoices: [
+        '개선하고 있는 부분은?',
+        '목표는 뭐야?',
+        '더 자세히 설명해줘',
+      ],
+    },
+    {
+      question: t('interestedIn.question'),
+      answer: t('interestedIn.answer'),
+      followUpChoices: [
+        '현재 공부 중인 기술은?',
+        '미래 계획은?',
+        '새로운 도전에 대한 생각은?',
+      ],
+    },
+    {
+      question: t('contact.question'),
+      answer: t('contact.answer'),
+      followUpChoices: [
+        '이력서를 보내고 싶어',
+        '프로젝트 협업 제안이 있어',
+        '기술 상담을 받고 싶어',
+      ],
+    },
   ];
+
+  // 추가 질문들에 대한 답변
+  const additionalAnswers: Record<string, string> = {
+    '어떤 프로젝트 경험이 있어?':
+      '웹 개발, 모바일 앱, AI/ML 프로젝트 등 다양한 경험이 있습니다. 특히 React, Node.js를 활용한 풀스택 프로젝트를 많이 진행했어요.',
+    '일하는 방식은?':
+      '애자일 방법론을 선호하며, 빠른 프로토타이핑과 지속적인 피드백을 통해 효율적으로 개발합니다.',
+    '강점은 뭐야?':
+      '문제 해결 능력과 새로운 기술 학습에 대한 열정, 그리고 팀과의 원활한 소통이 제 강점입니다.',
+    '기술 스택은?':
+      'Frontend: React, Next.js, TypeScript / Backend: Node.js, Python, Java / Database: MongoDB, PostgreSQL / Cloud: AWS, Azure',
+    '팀워크는 어떻게 해?':
+      '원격 근무 환경에서도 적극적인 커뮤니케이션을 통해 팀원들과 협력하며, 코드 리뷰와 지식 공유를 중요하게 생각합니다.',
+    '문제 해결 능력은?':
+      '시스템적인 접근으로 문제를 분석하고, 다양한 해결책을 제시하며, 최적의 솔루션을 찾아내는 것을 좋아합니다.',
+    '프레임워크 경험은?':
+      'React, Next.js, Vue.js, Angular 등 주요 프론트엔드 프레임워크와 Express, FastAPI, Spring Boot 등 백엔드 프레임워크 경험이 있습니다.',
+    '데이터베이스 경험은?':
+      '관계형 데이터베이스(MySQL, PostgreSQL)와 NoSQL(MongoDB, Redis) 모두 경험이 있으며, 데이터 모델링과 최적화에 관심이 많습니다.',
+    '클라우드 경험은?':
+      'AWS, Azure, GCP 등 주요 클라우드 플랫폼에서 서비스 배포, CI/CD 파이프라인 구축, 인프라 관리 경험이 있습니다.',
+    '커뮤니케이션 스타일은?':
+      '명확하고 간결한 설명을 선호하며, 기술적 내용을 비개발자도 이해할 수 있도록 설명하는 것을 잘합니다.',
+    '학습 방법은?':
+      '온라인 강의, 기술 문서, 오픈소스 프로젝트 참여, 기술 블로그 작성 등을 통해 지속적으로 학습하고 있습니다.',
+    '업무 환경 선호도는?':
+      '원격 근무와 사무실 근무를 적절히 조합하는 하이브리드 방식을 선호하며, 유연한 근무 시간을 중요하게 생각합니다.',
+    '개선하고 있는 부분은?':
+      '클라우드 네이티브 기술, DevOps, 보안 등 새로운 영역에 대한 학습을 지속하고 있으며, 성능 최적화와 코드 품질 향상에 노력하고 있습니다.',
+    '목표는 뭐야?':
+      '사용자 경험을 향상시키는 혁신적인 서비스를 개발하고, 기술 리더로서 팀을 이끌어가는 것이 목표입니다.',
+    '더 자세히 설명해줘':
+      '어떤 부분에 대해 더 자세히 알고 싶으신지 구체적으로 말씀해 주시면 더 정확한 답변을 드릴 수 있습니다.',
+    '현재 공부 중인 기술은?':
+      'AI/ML, 블록체인, IoT 등 최신 기술 트렌드를 파악하고 있으며, 특히 AI를 활용한 웹 서비스 개발에 관심이 많습니다.',
+    '미래 계획은?':
+      '풀스택 개발자로서의 역량을 더욱 강화하고, 새로운 기술을 도입하여 사용자에게 가치 있는 서비스를 제공하는 것이 계획입니다.',
+    '새로운 도전에 대한 생각은?':
+      '새로운 기술과 도메인에 대한 도전을 두려워하지 않으며, 학습 곡선을 즐기고 있습니다.',
+    '이력서를 보내고 싶어':
+      '이력서를 보내주시면 검토 후 연락드리겠습니다. 이메일이나 LinkedIn을 통해 보내주세요.',
+    '프로젝트 협업 제안이 있어':
+      '프로젝트에 대한 자세한 내용을 이메일로 보내주시면 검토 후 답변드리겠습니다.',
+    '기술 상담을 받고 싶어':
+      '어떤 기술적 문제나 궁금한 점이 있으신지 구체적으로 말씀해 주시면 도움을 드리겠습니다.',
+  };
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       from: 'bot',
       text: t('description'),
+      choices: faqs.map((faq) => faq.question),
+      isChoiceMessage: true,
     },
   ]);
   const [input, setInput] = useState('');
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [forceUpdate, setForceUpdate] = useState(0); // 어드레스바 상태 변화 감지를 위한 강제 리렌더링 상태
 
   const fuse = new Fuse(faqs, { keys: ['question'], threshold: 0.3 });
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // 뷰포트 높이 감지 및 키보드 상태 체크
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      const vh = window.innerHeight;
+      const vw = window.outerHeight;
+
+      // 키보드가 열렸는지 감지 (뷰포트 높이가 줄어들면 키보드가 열린 것으로 간주)
+      // 더 안정적인 감지를 위해 임계값을 조정
+      const isKeyboard = vh < vw * 0.75;
+
+      // 상태가 실제로 변경되었을 때만 업데이트
+      if (isKeyboard !== isKeyboardOpen) {
+        setIsKeyboardOpen(isKeyboard);
+      }
+    };
+
+    // 초기 설정
+    updateViewportHeight();
+
+    // 리사이즈 이벤트 리스너 (디바운싱 적용)
+    let resizeTimer: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateViewportHeight, 150); // 키보드 감지에 더 긴 지연
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // 모바일에서 키보드 열림/닫힘 감지
+    if ('visualViewport' in window) {
+      const visualViewport = (
+        window as Window & { visualViewport: VisualViewport }
+      ).visualViewport;
+      visualViewport.addEventListener('resize', handleResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+      if ('visualViewport' in window) {
+        const visualViewport = (
+          window as Window & { visualViewport: VisualViewport }
+        ).visualViewport;
+        visualViewport.removeEventListener('resize', handleResize);
+      }
+    };
+  }, [isKeyboardOpen]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -51,15 +226,33 @@ export default function Chatbot() {
 
   useEffect(() => {
     if (open) {
+      // 데스크톱과 모바일 모두에서 스크롤 방지
       document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '0px';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
     } else {
+      // 스크롤 방지 해제 및 원래 위치 복원
+      const scrollY = document.body.style.top;
       document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
+
     return () => {
+      // 컴포넌트 언마운트 시 스크롤 방지 해제
+      const scrollY = document.body.style.top;
       document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     };
   }, [open]);
 
@@ -69,22 +262,182 @@ export default function Chatbot() {
     }
   }, [open, messages.length]);
 
+  // 키보드 상태 변화 시 스크롤 조정
+  useEffect(() => {
+    if (open && isMobile) {
+      // 약간의 지연 후 스크롤 조정 (키보드 애니메이션 완료 후)
+      const timer = setTimeout(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isKeyboardOpen, open, isMobile]);
+
+  // 입력 필드 포커스 시 키보드 상태 업데이트
+  const handleInputFocus = () => {
+    // 모바일에서 입력 필드 포커스 시 약간의 지연 후 키보드 상태 체크
+    setTimeout(() => {
+      const vh = window.innerHeight;
+      setIsKeyboardOpen(vh < window.outerHeight * 0.8);
+
+      // 모바일에서 포커스 시 스크롤을 하단으로 조정
+      if (isMobile) {
+        setTimeout(() => {
+          bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    }, 300);
+  };
+
   const sendMessage = (userMsg: string) => {
     const trimmed = userMsg.trim();
     if (!trimmed) return;
 
     setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
 
+    // FAQ에서 답변 찾기
     const result = fuse.search(trimmed);
     const bestMatch = result.length > 0 ? result[0].item : null;
-    const reply = bestMatch ? bestMatch.answer : t('sorry');
+
+    let reply = '';
+    let followUpChoices: string[] = [];
+
+    if (bestMatch) {
+      reply = bestMatch.answer;
+      followUpChoices = bestMatch.followUpChoices || [];
+    } else if (additionalAnswers[trimmed]) {
+      reply = additionalAnswers[trimmed];
+      // 추가 답변 후에도 기본 질문들 제공
+      followUpChoices = faqs.map((faq) => faq.question);
+    } else {
+      reply = t('sorry');
+      followUpChoices = faqs.map((faq) => faq.question);
+    }
 
     setTimeout(() => {
-      setMessages((msgs) => [...msgs, { from: 'bot', text: reply }]);
+      setMessages((msgs) => [
+        ...msgs,
+        {
+          from: 'bot',
+          text: reply,
+          choices: followUpChoices,
+          isChoiceMessage: true,
+        },
+      ]);
     }, 800);
 
     setInput('');
+
+    // 모바일에서 메시지 전송 후 키보드 숨기기
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
   };
+
+  const handleSendMessage = () => {
+    if (input.trim()) {
+      sendMessage(input);
+    }
+  };
+
+  // 키보드가 열렸을 때의 챗봇 위치 계산 (데스크톱만)
+  const getChatbotPosition = () => {
+    if (isMobile) return 'bottom-0';
+    if (isKeyboardOpen) {
+      return 'bottom-4';
+    }
+    return 'bottom-[100px]';
+  };
+
+  // 키보드가 열렸을 때의 챗봇 높이 계산 (데스크톱만)
+  const getChatbotHeight = () => {
+    if (isMobile) return 'h-screen';
+    if (isKeyboardOpen) {
+      return 'h-[50vh]';
+    }
+    return 'h-[70vh]';
+  };
+
+  // 모바일에서 전체화면, 데스크톱에서 기존 크기
+  const getChatbotWidth = () => {
+    if (isMobile) return 'w-full left-0 right-0';
+    return 'left-6 md:left-auto md:w-96';
+  };
+
+  // 아이폰 사파리 어드레스바 문제 해결을 위한 실제 사용 가능한 높이 계산
+  const getActualViewportHeight = () => {
+    if (!isMobile) return '100vh';
+
+    // 아이폰 사파리에서 어드레스바 상태를 고려한 높이 계산
+    const vh = window.innerHeight;
+    const vw = window.outerHeight;
+
+    // 어드레스바가 올라와 있거나 키보드가 열려있을 때
+    if (isKeyboardOpen || vh < vw * 0.9) {
+      return `${vh}px`;
+    }
+
+    // 어드레스바가 내려가 있을 때는 전체 화면 사용
+    return '100vh';
+  };
+
+  // 어드레스바 상태 변화를 더 정확하게 감지
+  useEffect(() => {
+    if (!isMobile) return;
+
+    let resizeTimer: NodeJS.Timeout;
+
+    const handleViewportChange = () => {
+      // 디바운싱으로 과도한 리렌더링 방지
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        // 키보드 상태가 아닌 어드레스바 상태만 체크
+        const vh = window.innerHeight;
+        const vw = window.outerHeight;
+        const isAddressBarVisible = vh < vw * 0.9;
+
+        // 어드레스바 상태가 실제로 변경되었을 때만 리렌더링
+        if (isAddressBarVisible !== (isKeyboardOpen && vh < vw * 0.9)) {
+          setForceUpdate((prev) => prev + 1);
+        }
+      }, 200); // 더 긴 지연으로 키보드 상태와 충돌 방지
+    };
+
+    // 어드레스바 관련 이벤트만 감지 (키보드 이벤트와 분리)
+    window.addEventListener('resize', handleViewportChange);
+    window.addEventListener('orientationchange', handleViewportChange);
+
+    // visualViewport API 사용 (지원하는 브라우저에서)
+    if ('visualViewport' in window) {
+      const visualViewport = (
+        window as Window & { visualViewport: VisualViewport }
+      ).visualViewport;
+      visualViewport.addEventListener('resize', handleViewportChange);
+    }
+
+    // 주기적 체크 제거 (키보드 상태와 충돌 방지)
+    // const intervalTimer = setInterval(() => {
+    //   const vh = window.innerHeight;
+    //   const vw = window.outerHeight;
+    //   if (vh !== vw) {
+    //     handleViewportChange();
+    //   }
+    // }, 500);
+
+    return () => {
+      clearTimeout(resizeTimer);
+      // clearInterval(intervalTimer);
+      window.removeEventListener('resize', handleViewportChange);
+      window.removeEventListener('orientationchange', handleViewportChange);
+      if ('visualViewport' in window) {
+        const visualViewport = (
+          window as Window & { visualViewport: VisualViewport }
+        ).visualViewport;
+        visualViewport.removeEventListener('resize', handleViewportChange);
+      }
+    };
+  }, [isMobile, isKeyboardOpen]);
 
   return (
     <>
@@ -111,36 +464,110 @@ export default function Chatbot() {
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
               className='fixed inset-0 bg-[rgba(0,0,0,0.5)] z-[9999]'
+              style={{
+                touchAction: 'none',
+                overscrollBehavior: 'none',
+              }}
             />
 
             {/* Chat Window */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
+              initial={{
+                opacity: 0,
+                y: isMobile ? 0 : 20,
+                scale: 1,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                y: isMobile ? 0 : 20,
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: [0.4, 0.0, 0.2, 1],
+              }}
               onClick={(e) => e.stopPropagation()}
               className={cn(
-                'fixed bottom-[100px] right-6 left-6 md:left-auto md:w-96 h-[70vh] rounded-xl flex flex-col z-[10000] font-sans',
+                `fixed ${
+                  isMobile
+                    ? 'bottom-0 w-full left-0 right-0'
+                    : `${getChatbotPosition()} ${getChatbotWidth()} ${getChatbotHeight()}`
+                } rounded-xl flex flex-col z-[10000] font-sans`,
                 resolvedTheme === 'dark'
                   ? 'bg-black shadow-[0_8px_24px_rgba(255,255,255,0.15)]'
-                  : 'bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  '
+                  : 'bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]',
+                isMobile && 'rounded-none'
               )}
+              style={{
+                ...(isMobile
+                  ? {
+                      height: getActualViewportHeight(),
+                      bottom: 0,
+                    }
+                  : {}),
+                touchAction: 'none',
+                overscrollBehavior: 'none',
+              }}
+              key={forceUpdate} // 어드레스바 상태 변화 시 강제 리렌더링
             >
+              {/* Header */}
               <div
                 className={cn(
-                  'px-4 py-3 font-bold text-base select-none rounded-t-xl border-b border-gray-200',
+                  'px-4 py-4 font-bold text-lg select-none rounded-t-xl border-b flex items-center justify-between flex-shrink-0 absolute top-0 left-0 right-0 z-20',
                   resolvedTheme === 'dark'
-                    ? 'bg-purple-500 text-white'
-                    : 'bg-purple-700 text-white'
+                    ? 'bg-purple-500 text-white border-gray-700'
+                    : 'bg-purple-700 text-white border-gray-200',
+                  isMobile && 'rounded-none'
                 )}
+                style={
+                  isMobile
+                    ? {
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 20,
+                      }
+                    : {}
+                }
               >
-                {t('title')}
+                <div className='flex items-center gap-3'>
+                  {isMobile && (
+                    <button
+                      onClick={() => setOpen(false)}
+                      className='p-1 hover:bg-white/20 rounded-full transition-colors'
+                    >
+                      <IoArrowBack size={20} />
+                    </button>
+                  )}
+                  <span>{t('title')}</span>
+                </div>
+                {!isMobile && (
+                  <button
+                    onClick={() => setOpen(false)}
+                    className='p-1 hover:bg-white/20 rounded-full transition-colors'
+                  >
+                    <IoClose size={20} />
+                  </button>
+                )}
               </div>
 
+              {/* Messages */}
               <div
-                className={`flex-1 px-1 py-3 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full ${
+                className={`flex-1 px-4 py-4 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full ${
                   resolvedTheme === 'dark' ? 'bg-[#111111]' : 'bg-white'
                 }`}
+                style={{
+                  maxHeight: isMobile
+                    ? `${window.innerHeight - 140}px`
+                    : 'none',
+                  paddingTop: isMobile ? '80px' : '16px',
+                }}
               >
                 <AnimatePresence initial={false}>
                   {messages.map((m, i) => (
@@ -149,7 +576,7 @@ export default function Chatbot() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className={`mb-3 ${
+                      className={`mb-4 ${
                         m.from === 'user'
                           ? 'flex justify-end'
                           : 'flex justify-start'
@@ -157,7 +584,7 @@ export default function Chatbot() {
                     >
                       <div
                         className={`max-w-[85%] ${
-                          m.from === 'user' ? 'ml-auto' : 'mr-auto pl-3'
+                          m.from === 'user' ? 'ml-auto' : 'mr-auto'
                         }`}
                       >
                         <div
@@ -171,14 +598,14 @@ export default function Chatbot() {
                               : 'purple-700'
                           } text-${
                             m.from === 'bot' ? 'black' : 'white'
-                          } px-3 py-1.5 rounded-xl break-words relative`}
+                          } px-4 py-3 rounded-2xl break-words relative shadow-sm`}
                         >
                           {m.text}
                           {/* 말풍선 꼬리 */}
                           <div
                             className={`absolute bottom-0 ${
-                              m.from === 'user' ? 'right-3' : 'left-3'
-                            } w-2 h-2 transform translate-y-1/2 rotate-45`}
+                              m.from === 'user' ? 'right-4' : 'left-4'
+                            } w-3 h-3 transform translate-y-1/2 rotate-45`}
                             style={{
                               backgroundColor:
                                 m.from === 'bot'
@@ -189,6 +616,27 @@ export default function Chatbot() {
                             }}
                           />
                         </div>
+
+                        {/* 선택지 버튼들 */}
+                        {m.isChoiceMessage &&
+                          m.choices &&
+                          m.choices.length > 0 && (
+                            <div className='mt-4 flex flex-wrap gap-2'>
+                              {m.choices.map((choice, choiceIndex) => (
+                                <button
+                                  key={choiceIndex}
+                                  onClick={() => sendMessage(choice)}
+                                  className={`border border-dashed rounded-full px-4 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                    resolvedTheme === 'dark'
+                                      ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
+                                      : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
+                                  }`}
+                                >
+                                  {choice}
+                                </button>
+                              ))}
+                            </div>
+                          )}
                       </div>
                     </motion.div>
                   ))}
@@ -196,43 +644,51 @@ export default function Chatbot() {
                 <div ref={bottomRef} />
               </div>
 
+              {/* Input Area */}
               <div
-                className={`p-3 border-t ${
+                className={`p-4 border-t flex-shrink-0 ${
                   resolvedTheme === 'dark'
-                    ? 'border-gray-600 bg-[#111111]'
+                    ? 'border-gray-700 bg-[#111111]'
                     : 'border-gray-200 bg-gray-50'
                 }`}
               >
-                <div className='flex flex-wrap gap-2 mb-3'>
-                  {faqs.map(({ question }) => (
-                    <button
-                      key={question}
-                      onClick={() => sendMessage(question)}
-                      className={`border-1 border-dotted rounded-full px-3 py-1.5 cursor-pointer text-xs select-none flex-shrink-0 transition-colors ${
+                <div className='flex gap-3 items-end'>
+                  <div className='flex-1 relative'>
+                    <input
+                      ref={inputRef}
+                      autoFocus={!isMobile}
+                      type='text'
+                      placeholder={t('placeholder')}
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onFocus={handleInputFocus}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSendMessage();
+                      }}
+                      className={`w-full p-3 pr-12 rounded-2xl border text-base font-medium outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 ${
                         resolvedTheme === 'dark'
-                          ? 'bg-[#111111] border-gray-400 text-white hover:bg-purple-500 hover:text-white'
-                          : 'bg-white border-gray-300 text-black hover:bg-purple-700 hover:text-white'
+                          ? 'bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400'
+                          : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                       }`}
-                    >
-                      {question}
-                    </button>
-                  ))}
+                    />
+                  </div>
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={!input.trim()}
+                    className={cn(
+                      'p-3 rounded-2xl text-white transition-all duration-200 flex items-center justify-center',
+                      input.trim()
+                        ? resolvedTheme === 'dark'
+                          ? 'bg-purple-500 hover:bg-purple-600 active:scale-95'
+                          : 'bg-purple-700 hover:bg-purple-800 active:scale-95'
+                        : resolvedTheme === 'dark'
+                        ? 'bg-gray-600 cursor-not-allowed'
+                        : 'bg-gray-400 cursor-not-allowed'
+                    )}
+                  >
+                    <IoSend size={18} />
+                  </button>
                 </div>
-                <input
-                  autoFocus
-                  type='text'
-                  placeholder={t('placeholder')}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') sendMessage(input);
-                  }}
-                  className={`w-full p-3 rounded-md border text-base font-bold outline-none focus:ring-0 focus:border-1 ${
-                    resolvedTheme === 'dark'
-                      ? 'bg-[#111111] border-purple-500 focus:border-purple-500 text-purple-500 placeholder-purple-500'
-                      : 'bg-white border-purple-700 focus:border-purple-700 text-purple-700 placeholder-purple-700'
-                  }`}
-                />
               </div>
             </motion.div>
           </>
