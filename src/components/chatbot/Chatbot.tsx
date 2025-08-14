@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { useTranslations } from 'next-intl';
+import useDetectKeyboardOpen from 'use-detect-keyboard-open';
+
 import {
   IoChatboxEllipses,
   IoClose,
@@ -29,6 +31,7 @@ type FAQItem = {
 export default function Chatbot() {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('modal.chatbot');
+  const isKeyboardOpen = useDetectKeyboardOpen();
 
   const faqs: FAQItem[] = [
     {
@@ -152,54 +155,14 @@ export default function Chatbot() {
     },
   ]);
   const [input, setInput] = useState('');
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [forceUpdate, setForceUpdate] = useState(0); // 어드레스바 상태 변화 감지를 위한 강제 리렌더링 상태
-  const [headerHeight, setHeaderHeight] = useState(70);
-  const [inputHeight, setInputHeight] = useState(50);
+
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const inputAreaRef = useRef<HTMLDivElement>(null);
 
   const fuse = new Fuse(faqs, { keys: ['question'], threshold: 0.3 });
-
-  // 실제 헤더와 입력 영역 높이 측정
-  useEffect(() => {
-    if (open && isMobile) {
-      const updateHeights = () => {
-        if (headerRef.current && inputAreaRef.current) {
-          const headerRect = headerRef.current.getBoundingClientRect();
-          const inputRect = inputAreaRef.current.getBoundingClientRect();
-          const newHeaderHeight = headerRect.height;
-          const newInputHeight = inputRect.height;
-
-          console.log('Height Debug:', {
-            windowHeight: window.innerHeight,
-            headerHeight: newHeaderHeight,
-            inputHeight: newInputHeight,
-            calculatedHeight:
-              window.innerHeight - newHeaderHeight - newInputHeight,
-          });
-
-          setHeaderHeight(newHeaderHeight);
-          setInputHeight(newInputHeight);
-        }
-      };
-
-      // 초기 측정
-      updateHeights();
-
-      // 리사이즈 시 재측정
-      const resizeObserver = new ResizeObserver(updateHeights);
-      if (headerRef.current) resizeObserver.observe(headerRef.current);
-      if (inputAreaRef.current) resizeObserver.observe(inputAreaRef.current);
-
-      return () => {
-        resizeObserver.disconnect();
-      };
-    }
-  }, [open, isMobile, forceUpdate]);
 
   // 모바일 감지
   useEffect(() => {
@@ -216,16 +179,10 @@ export default function Chatbot() {
   // 뷰포트 높이 감지 및 키보드 상태 체크
   useEffect(() => {
     const updateViewportHeight = () => {
-      const vh = window.innerHeight;
-      const vw = window.outerHeight;
-
-      // 키보드가 열렸는지 감지 (뷰포트 높이가 줄어들면 키보드가 열린 것으로 간주)
-      // 더 안정적인 감지를 위해 임계값을 조정
-      const isKeyboard = vh < vw * 0.75;
-
-      // 상태가 실제로 변경되었을 때만 업데이트
-      if (isKeyboard !== isKeyboardOpen) {
-        setIsKeyboardOpen(isKeyboard);
+      // 모바일에서만 키보드 상태 감지
+      if (isMobile) {
+        // 키보드 상태 변화는 use-detect-keyboard-open 라이브러리가 처리
+        // 추가 리렌더링 불필요
       }
     };
 
@@ -236,13 +193,13 @@ export default function Chatbot() {
     let resizeTimer: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(updateViewportHeight, 150); // 키보드 감지에 더 긴 지연
+      resizeTimer = setTimeout(updateViewportHeight, 100);
     };
 
     window.addEventListener('resize', handleResize);
 
-    // 모바일에서 키보드 열림/닫힘 감지
-    if ('visualViewport' in window) {
+    // 모바일에서 키보드 열림/닫힘 감지 (visualViewport API 사용)
+    if ('visualViewport' in window && isMobile) {
       const visualViewport = (
         window as Window & { visualViewport: VisualViewport }
       ).visualViewport;
@@ -252,14 +209,14 @@ export default function Chatbot() {
     return () => {
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer);
-      if ('visualViewport' in window) {
+      if ('visualViewport' in window && isMobile) {
         const visualViewport = (
           window as Window & { visualViewport: VisualViewport }
         ).visualViewport;
         visualViewport.removeEventListener('resize', handleResize);
       }
     };
-  }, [isKeyboardOpen]);
+  }, [isKeyboardOpen, isMobile]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -340,20 +297,14 @@ export default function Chatbot() {
     }
   }, [isKeyboardOpen, open, isMobile]);
 
-  // 입력 필드 포커스 시 키보드 상태 업데이트
+  // 입력 필드 포커스 시 스크롤 조정
   const handleInputFocus = () => {
-    // 모바일에서 입력 필드 포커스 시 약간의 지연 후 키보드 상태 체크
-    setTimeout(() => {
-      const vh = window.innerHeight;
-      setIsKeyboardOpen(vh < window.outerHeight * 0.8);
+    if (!isMobile) return;
 
-      // 모바일에서 포커스 시 스크롤을 하단으로 조정
-      if (isMobile) {
-        setTimeout(() => {
-          bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-      }
-    }, 300);
+    // 모바일에서 포커스 시 스크롤을 하단으로 조정
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
   };
 
   const sendMessage = (userMsg: string) => {
@@ -396,7 +347,7 @@ export default function Chatbot() {
     setInput('');
 
     // 모바일에서 메시지 전송 후 키보드 숨기기
-    if (inputRef.current) {
+    if (isMobile && inputRef.current) {
       inputRef.current.blur();
     }
   };
@@ -448,53 +399,45 @@ export default function Chatbot() {
     return '100vh';
   };
 
-  // 어드레스바 상태 변화를 더 정확하게 감지
-  useEffect(() => {
-    if (!isMobile) return;
+  // 모바일에서 키보드 상태에 따른 레이아웃 조정
+  const getMobileKeyboardLayout = () => {
+    if (!isMobile) return {};
 
-    let resizeTimer: NodeJS.Timeout;
-
-    const handleViewportChange = () => {
-      // 디바운싱으로 과도한 리렌더링 방지
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        // 키보드 상태가 아닌 어드레스바 상태만 체크
-        const vh = window.innerHeight;
-        const vw = window.outerHeight;
-        const isAddressBarVisible = vh < vw * 0.9;
-
-        // 어드레스바 상태가 실제로 변경되었을 때만 리렌더링
-        if (isAddressBarVisible !== (isKeyboardOpen && vh < vw * 0.9)) {
-          setForceUpdate((prev) => prev + 1);
-        }
-      }, 200); // 더 긴 지연으로 키보드 상태와 충돌 방지
-    };
-
-    // 어드레스바 관련 이벤트만 감지 (키보드 이벤트와 분리)
-    window.addEventListener('resize', handleViewportChange);
-    window.addEventListener('orientationchange', handleViewportChange);
-
-    // visualViewport API 사용 (지원하는 브라우저에서)
-    if ('visualViewport' in window) {
-      const visualViewport = (
-        window as Window & { visualViewport: VisualViewport }
-      ).visualViewport;
-      visualViewport.addEventListener('resize', handleViewportChange);
+    if (isKeyboardOpen) {
+      // 키보드가 열렸을 때는 헤더를 고정하고 컨텐츠를 스크롤 가능하게
+      return {
+        height: `${window.innerHeight}px`,
+        // overflow: 'hidden' 제거하여 자연스러운 전환
+        transition: 'height 0.3s ease-in-out' as const,
+      };
     }
 
-    return () => {
-      clearTimeout(resizeTimer);
-      // clearInterval(intervalTimer);
-      window.removeEventListener('resize', handleViewportChange);
-      window.removeEventListener('orientationchange', handleViewportChange);
-      if ('visualViewport' in window) {
-        const visualViewport = (
-          window as Window & { visualViewport: VisualViewport }
-        ).visualViewport;
-        visualViewport.removeEventListener('resize', handleViewportChange);
-      }
+    return {
+      transition: 'height 0.3s ease-in-out' as const,
     };
-  }, [isMobile, isKeyboardOpen]);
+  };
+
+  // 모바일에서 키보드 상태에 따른 메시지 영역 조정
+  const getMobileMessagesLayout = () => {
+    if (!isMobile) return {};
+
+    if (isKeyboardOpen) {
+      // 키보드가 열렸을 때는 헤더 아래부터 input 영역 위까지 스크롤
+      return {
+        paddingTop: '70px', // 헤더 높이
+        paddingBottom: '70px', // input 영역 높이
+        height: `${window.innerHeight - 140}px`, // 전체 높이 - 헤더 - input
+        overflowY: 'auto' as const,
+        transition: 'all 0.3s ease-in-out' as const,
+      };
+    }
+
+    return {
+      paddingTop: '70px',
+      paddingBottom: '0px',
+      transition: 'all 0.3s ease-in-out' as const,
+    };
+  };
 
   return (
     <>
@@ -575,12 +518,12 @@ export default function Chatbot() {
                   ? {
                       height: getActualViewportHeight(),
                       bottom: 0,
+                      ...getMobileKeyboardLayout(),
                     }
                   : {}),
                 touchAction: 'none',
                 overscrollBehavior: 'none',
               }}
-              key={forceUpdate} // 어드레스바 상태 변화 시 강제 리렌더링
             >
               {/* Header */}
               <div
@@ -620,13 +563,9 @@ export default function Chatbot() {
                   resolvedTheme === 'dark' ? 'bg-[#111111]' : 'bg-white'
                 }`}
                 style={{
-                  maxHeight: isMobile
-                    ? `${window.innerHeight - headerHeight - inputHeight}px`
-                    : 'auto',
-                  paddingTop: isMobile ? `${headerHeight}px` : '16px', // 모바일에서만 헤더 높이만큼 패딩
+                  ...(isMobile ? getMobileMessagesLayout() : {}),
                   paddingLeft: '16px',
                   paddingRight: '16px',
-                  paddingBottom: '0px',
                 }}
               >
                 <AnimatePresence initial={false}>
