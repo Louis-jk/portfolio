@@ -26,6 +26,7 @@ export default function Timeline({
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
   const lenisRef = useRef<Lenis | null>(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
 
   const [hoveredItem, setHoveredItem] = useState<TimelineItem | null>(null);
   const [showThumbnail, setShowThumbnail] = useState(false);
@@ -265,11 +266,12 @@ export default function Timeline({
 
   return (
     <div className='flex flex-col'>
-      {/* 제목 - 모든 화면에서 표시, 모바일에서는 sticky 제거 */}
+      {/* 제목 - 모든 화면에서 표시, 모바일에서는 Header 아래에 sticky */}
       <div
+        ref={titleRef}
         className={cn(
-          'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center',
-          isMobile && 'mt-6'
+          'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800 transition-all duration-200',
+          isMobile && 'sticky top-[55px] z-30'
         )}
       >
         <h2
