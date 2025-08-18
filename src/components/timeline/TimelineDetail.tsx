@@ -39,6 +39,14 @@ export default function TimelineDetail({
     query: '(min-width: 1224px)',
   });
 
+  const isTablet = useMediaQuery({
+    query: '(min-width: 768px) and (max-width: 1223px)',
+  });
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
   // 이미지가 변경될 때마다 로딩 상태를 리셋
   useEffect(() => {
     setImageLoaded(false);
@@ -157,8 +165,15 @@ export default function TimelineDetail({
           )}
         >
           <div>
-            {/* Header */}
-            <div>
+            {/* Header - 태블릿과 모바일에서 sticky 처리 */}
+            <div
+              className={cn(
+                isTablet &&
+                  'sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] py-3 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800',
+                isMobile &&
+                  'sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] py-3 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800'
+              )}
+            >
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 animate={
@@ -167,7 +182,7 @@ export default function TimelineDetail({
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className={cn(
                   'text-2xl font-bold mb-2',
-                  !isDesktopOrLaptop && 'mt-4'
+                  !isDesktopOrLaptop && 'mt-0'
                 )}
               >
                 {t(item.title)}
