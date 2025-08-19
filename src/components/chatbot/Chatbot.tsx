@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Fuse from 'fuse.js';
 import { useTranslations } from 'next-intl';
 import useDetectKeyboardOpen from 'use-detect-keyboard-open';
+import { FaLinkedin } from 'react-icons/fa6';
+import { SiMinutemailer } from 'react-icons/si';
 
 import {
   IoChatboxEllipses,
@@ -20,12 +22,22 @@ type Message = {
   text: string;
   choices?: string[];
   isChoiceMessage?: boolean;
+  contactButtons?: {
+    text: React.ReactNode;
+    action: string;
+    url: string;
+  }[];
 };
 
 type FAQItem = {
   question: string;
   answer: string;
   followUpChoices?: string[];
+  contactButtons?: {
+    text: React.ReactNode;
+    action: string;
+    url: string;
+  }[];
 };
 
 export default function Chatbot() {
@@ -33,117 +45,116 @@ export default function Chatbot() {
   const t = useTranslations('modal.chatbot');
   const isKeyboardOpen = useDetectKeyboardOpen();
 
-  const faqs: FAQItem[] = [
-    {
-      question: t('whatIsMySkill.question'),
-      answer: t('whatIsMySkill.answer'),
-      followUpChoices: [
-        '어떤 프로젝트 경험이 있어?',
-        '일하는 방식은?',
-        '강점은 뭐야?',
-      ],
-    },
-    {
-      question: t('projectExperience.question'),
-      answer: t('projectExperience.answer'),
-      followUpChoices: [
-        '기술 스택은?',
-        '팀워크는 어떻게 해?',
-        '문제 해결 능력은?',
-      ],
-    },
-    {
-      question: t('languages.question'),
-      answer: t('languages.answer'),
-      followUpChoices: [
-        '프레임워크 경험은?',
-        '데이터베이스 경험은?',
-        '클라우드 경험은?',
-      ],
-    },
-    {
-      question: t('workStyle.question'),
-      answer: t('workStyle.answer'),
-      followUpChoices: [
-        '커뮤니케이션 스타일은?',
-        '학습 방법은?',
-        '업무 환경 선호도는?',
-      ],
-    },
-    {
-      question: t('strengths.question'),
-      answer: t('strengths.answer'),
-      followUpChoices: [
-        '개선하고 있는 부분은?',
-        '목표는 뭐야?',
-        '더 자세히 설명해줘',
-      ],
-    },
-    {
-      question: t('interestedIn.question'),
-      answer: t('interestedIn.answer'),
-      followUpChoices: [
-        '현재 공부 중인 기술은?',
-        '미래 계획은?',
-        '새로운 도전에 대한 생각은?',
-      ],
-    },
-    {
-      question: t('contact.question'),
-      answer: t('contact.answer'),
-      followUpChoices: [
-        '이력서를 보내고 싶어',
-        '프로젝트 협업 제안이 있어',
-        '기술 상담을 받고 싶어',
-      ],
-    },
-  ];
+  const faqs: FAQItem[] = useMemo(
+    () => [
+      {
+        question: t('whatIsMySkill.question'),
+        answer: t('whatIsMySkill.answer'),
+        followUpChoices: [
+          t('whatIsMySkill.followUpChoices.0.question'),
+          t('whatIsMySkill.followUpChoices.1.question'),
+          t('whatIsMySkill.followUpChoices.2.question'),
+        ],
+      },
+      {
+        question: t('projectExperience.question'),
+        answer: t('projectExperience.answer'),
+        followUpChoices: [
+          t('projectExperience.followUpChoices.0.question'),
+          t('projectExperience.followUpChoices.1.question'),
+          t('projectExperience.followUpChoices.2.question'),
+        ],
+      },
+      {
+        question: t('languages.question'),
+        answer: t('languages.answer'),
+        followUpChoices: [
+          t('languages.followUpChoices.0.question'),
+          t('languages.followUpChoices.1.question'),
+          t('languages.followUpChoices.2.question'),
+        ],
+      },
+      {
+        question: t('workStyle.question'),
+        answer: t('workStyle.answer'),
+        followUpChoices: [
+          t('workStyle.followUpChoices.0.question'),
+          t('workStyle.followUpChoices.1.question'),
+          t('workStyle.followUpChoices.2.question'),
+        ],
+      },
+      {
+        question: t('strengths.question'),
+        answer: t('strengths.answer'),
+        followUpChoices: [
+          t('strengths.followUpChoices.0.question'),
+          t('strengths.followUpChoices.1.question'),
+          t('strengths.followUpChoices.2.question'),
+        ],
+      },
+      {
+        question: t('interestedIn.question'),
+        answer: t('interestedIn.answer'),
+        followUpChoices: [
+          t('interestedIn.followUpChoices.0.question'),
+          t('interestedIn.followUpChoices.1.question'),
+          t('interestedIn.followUpChoices.2.question'),
+          t('interestedIn.followUpChoices.3.question'),
+          t('interestedIn.followUpChoices.4.question'),
+        ],
+      },
+      {
+        question: t('contact.question'),
+        answer: t('contact.answer'),
+        contactButtons: [
+          {
+            text: (
+              <p className='flex items-center gap-2'>
+                <SiMinutemailer size={16} />
+                <span>{t('contact.contactButtons.0.text')}</span>
+              </p>
+            ),
+            action: t('contact.contactButtons.0.action'),
+            url: t('contact.contactButtons.0.url'),
+          },
+          {
+            text: (
+              <p className='flex items-center gap-2'>
+                <FaLinkedin size={16} />
+                <span>{t('contact.contactButtons.1.text')}</span>
+              </p>
+            ),
+            action: t('contact.contactButtons.1.action'),
+            url: t('contact.contactButtons.1.url'),
+          },
+        ],
+      },
+    ],
+    [t]
+  );
 
-  // 추가 질문들에 대한 답변
-  const additionalAnswers: Record<string, string> = {
-    '어떤 프로젝트 경험이 있어?':
-      '웹 개발, 모바일 앱, AI/ML 프로젝트 등 다양한 경험이 있습니다. 특히 React, Node.js를 활용한 풀스택 프로젝트를 많이 진행했어요.',
-    '일하는 방식은?':
-      '애자일 방법론을 선호하며, 빠른 프로토타이핑과 지속적인 피드백을 통해 효율적으로 개발합니다.',
-    '강점은 뭐야?':
-      '문제 해결 능력과 새로운 기술 학습에 대한 열정, 그리고 팀과의 원활한 소통이 제 강점입니다.',
-    '기술 스택은?':
-      'Frontend: React, Next.js, TypeScript / Backend: Node.js, Python, Java / Database: MongoDB, PostgreSQL / Cloud: AWS, Azure',
-    '팀워크는 어떻게 해?':
-      '원격 근무 환경에서도 적극적인 커뮤니케이션을 통해 팀원들과 협력하며, 코드 리뷰와 지식 공유를 중요하게 생각합니다.',
-    '문제 해결 능력은?':
-      '시스템적인 접근으로 문제를 분석하고, 다양한 해결책을 제시하며, 최적의 솔루션을 찾아내는 것을 좋아합니다.',
-    '프레임워크 경험은?':
-      'React, Next.js, Vue.js, Angular 등 주요 프론트엔드 프레임워크와 Express, FastAPI, Spring Boot 등 백엔드 프레임워크 경험이 있습니다.',
-    '데이터베이스 경험은?':
-      '관계형 데이터베이스(MySQL, PostgreSQL)와 NoSQL(MongoDB, Redis) 모두 경험이 있으며, 데이터 모델링과 최적화에 관심이 많습니다.',
-    '클라우드 경험은?':
-      'AWS, Azure, GCP 등 주요 클라우드 플랫폼에서 서비스 배포, CI/CD 파이프라인 구축, 인프라 관리 경험이 있습니다.',
-    '커뮤니케이션 스타일은?':
-      '명확하고 간결한 설명을 선호하며, 기술적 내용을 비개발자도 이해할 수 있도록 설명하는 것을 잘합니다.',
-    '학습 방법은?':
-      '온라인 강의, 기술 문서, 오픈소스 프로젝트 참여, 기술 블로그 작성 등을 통해 지속적으로 학습하고 있습니다.',
-    '업무 환경 선호도는?':
-      '원격 근무와 사무실 근무를 적절히 조합하는 하이브리드 방식을 선호하며, 유연한 근무 시간을 중요하게 생각합니다.',
-    '개선하고 있는 부분은?':
-      '클라우드 네이티브 기술, DevOps, 보안 등 새로운 영역에 대한 학습을 지속하고 있으며, 성능 최적화와 코드 품질 향상에 노력하고 있습니다.',
-    '목표는 뭐야?':
-      '사용자 경험을 향상시키는 혁신적인 서비스를 개발하고, 기술 리더로서 팀을 이끌어가는 것이 목표입니다.',
-    '더 자세히 설명해줘':
-      '어떤 부분에 대해 더 자세히 알고 싶으신지 구체적으로 말씀해 주시면 더 정확한 답변을 드릴 수 있습니다.',
-    '현재 공부 중인 기술은?':
-      'AI/ML, 블록체인, IoT 등 최신 기술 트렌드를 파악하고 있으며, 특히 AI를 활용한 웹 서비스 개발에 관심이 많습니다.',
-    '미래 계획은?':
-      '풀스택 개발자로서의 역량을 더욱 강화하고, 새로운 기술을 도입하여 사용자에게 가치 있는 서비스를 제공하는 것이 계획입니다.',
-    '새로운 도전에 대한 생각은?':
-      '새로운 기술과 도메인에 대한 도전을 두려워하지 않으며, 학습 곡선을 즐기고 있습니다.',
-    '이력서를 보내고 싶어':
-      '이력서를 보내주시면 검토 후 연락드리겠습니다. 이메일이나 LinkedIn을 통해 보내주세요.',
-    '프로젝트 협업 제안이 있어':
-      '프로젝트에 대한 자세한 내용을 이메일로 보내주시면 검토 후 답변드리겠습니다.',
-    '기술 상담을 받고 싶어':
-      '어떤 기술적 문제나 궁금한 점이 있으신지 구체적으로 말씀해 주시면 도움을 드리겠습니다.',
-  };
+  // faqs 배열에서 followUpChoices를 포함한 모든 답변을 수집
+  const followUpAnswers = useMemo(() => {
+    const answers: Record<string, string> = {};
+
+    // faqs 배열에서 직접 followUpChoices 정보를 가져옴
+    faqs.forEach((faq) => {
+      if (faq.followUpChoices && Array.isArray(faq.followUpChoices)) {
+        faq.followUpChoices.forEach((choice) => {
+          if (typeof choice === 'string' && choice.trim() !== '') {
+            // choice가 문자열인 경우, 해당 질문에 대한 답변을 찾아야 함
+            // 이는 faqs 배열의 다른 항목에서 찾을 수 있음
+            const matchingFaq = faqs.find((f) => f.question === choice);
+            if (matchingFaq) {
+              answers[choice] = matchingFaq.answer;
+            }
+          }
+        });
+      }
+    });
+
+    return answers;
+  }, [faqs]); // faqs 배열을 의존성으로 추가
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -319,12 +330,16 @@ export default function Chatbot() {
 
     let reply = '';
     let followUpChoices: string[] = [];
+    let contactButtons:
+      | { text: React.ReactNode; action: string; url: string }[]
+      | undefined;
 
     if (bestMatch) {
       reply = bestMatch.answer;
       followUpChoices = bestMatch.followUpChoices || [];
-    } else if (additionalAnswers[trimmed]) {
-      reply = additionalAnswers[trimmed];
+      contactButtons = bestMatch.contactButtons;
+    } else if (followUpAnswers[trimmed]) {
+      reply = followUpAnswers[trimmed];
       // 추가 답변 후에도 기본 질문들 제공
       followUpChoices = faqs.map((faq) => faq.question);
     } else {
@@ -339,6 +354,7 @@ export default function Chatbot() {
           from: 'bot',
           text: reply,
           choices: followUpChoices,
+          contactButtons: contactButtons,
           isChoiceMessage: true,
         },
       ]);
@@ -348,7 +364,7 @@ export default function Chatbot() {
 
     // 모바일에서 메시지 전송 후 키보드 숨기기
     if (isMobile && inputRef.current) {
-      inputRef.current.blur();
+      bottomRef.current?.blur();
     }
   };
 
@@ -616,26 +632,53 @@ export default function Chatbot() {
                           />
                         </div>
 
-                        {/* 선택지 버튼들 */}
-                        {m.isChoiceMessage &&
-                          m.choices &&
-                          m.choices.length > 0 && (
-                            <div className='mt-4 flex flex-wrap gap-2'>
-                              {m.choices.map((choice, choiceIndex) => (
-                                <button
-                                  key={choiceIndex}
-                                  onClick={() => sendMessage(choice)}
-                                  className={`border border-dashed rounded-full px-4 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
-                                    resolvedTheme === 'dark'
-                                      ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
-                                      : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
-                                  }`}
-                                >
-                                  {choice}
-                                </button>
-                              ))}
-                            </div>
-                          )}
+                        {/* 선택지 버튼들 또는 연락 버튼들 */}
+                        {m.isChoiceMessage && (
+                          <>
+                            {/* 연락 버튼들 */}
+                            {m.contactButtons &&
+                              m.contactButtons.length > 0 && (
+                                <div className='mt-4 flex flex-wrap gap-2'>
+                                  {m.contactButtons.map(
+                                    (button, buttonIndex) => (
+                                      <button
+                                        key={buttonIndex}
+                                        onClick={() =>
+                                          window.open(button.url, '_blank')
+                                        }
+                                        className={`border border-dashed rounded-full px-4 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                          resolvedTheme === 'dark'
+                                            ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
+                                            : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
+                                        }`}
+                                      >
+                                        {button.text}
+                                      </button>
+                                    )
+                                  )}
+                                </div>
+                              )}
+
+                            {/* 기존 선택지 버튼들 */}
+                            {m.choices && m.choices.length > 0 && (
+                              <div className='mt-4 flex flex-wrap gap-2'>
+                                {m.choices.map((choice, choiceIndex) => (
+                                  <button
+                                    key={choiceIndex}
+                                    onClick={() => sendMessage(choice)}
+                                    className={`border border-dashed rounded-full px-4 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                      resolvedTheme === 'dark'
+                                        ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
+                                        : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
+                                    }`}
+                                  >
+                                    {choice}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        )}
                       </div>
                     </motion.div>
                   ))}
