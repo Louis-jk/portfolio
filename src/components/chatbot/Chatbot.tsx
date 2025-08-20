@@ -1,13 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Fuse from 'fuse.js';
 import { useTranslations } from 'next-intl';
 import useDetectKeyboardOpen from 'use-detect-keyboard-open';
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiMinutemailer } from 'react-icons/si';
-
 import {
   IoChatboxEllipses,
   IoClose,
@@ -16,26 +14,24 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
+import {
+  chatbotDataByLocale,
+  type ChatbotData,
+  type ChatbotChoice,
+} from '@/data/chatbot';
 
 type Message = {
   from: 'user' | 'bot';
   text: string;
-  choices?: string[];
+  choices?: ChatbotChoice[];
   isChoiceMessage?: boolean;
   contactButtons?: {
     text: React.ReactNode;
     action: string;
     url: string;
   }[];
-};
-
-type FAQItem = {
-  question: string;
-  answer: string;
-  followUpChoices?: string[];
-  contactButtons?: {
+  goToProjectLink?: {
     text: React.ReactNode;
-    action: string;
     url: string;
   }[];
 };
@@ -45,123 +41,26 @@ export default function Chatbot() {
   const t = useTranslations('modal.chatbot');
   const isKeyboardOpen = useDetectKeyboardOpen();
 
-  const faqs: FAQItem[] = useMemo(
-    () => [
-      {
-        question: t('whatIsMySkill.question'),
-        answer: t('whatIsMySkill.answer'),
-        followUpChoices: [
-          t('whatIsMySkill.followUpChoices.0.question'),
-          t('whatIsMySkill.followUpChoices.1.question'),
-          t('whatIsMySkill.followUpChoices.2.question'),
-        ],
-      },
-      {
-        question: t('projectExperience.question'),
-        answer: t('projectExperience.answer'),
-        followUpChoices: [
-          t('projectExperience.followUpChoices.0.question'),
-          t('projectExperience.followUpChoices.1.question'),
-          t('projectExperience.followUpChoices.2.question'),
-        ],
-      },
-      {
-        question: t('languages.question'),
-        answer: t('languages.answer'),
-        followUpChoices: [
-          t('languages.followUpChoices.0.question'),
-          t('languages.followUpChoices.1.question'),
-          t('languages.followUpChoices.2.question'),
-        ],
-      },
-      {
-        question: t('workStyle.question'),
-        answer: t('workStyle.answer'),
-        followUpChoices: [
-          t('workStyle.followUpChoices.0.question'),
-          t('workStyle.followUpChoices.1.question'),
-          t('workStyle.followUpChoices.2.question'),
-        ],
-      },
-      {
-        question: t('strengths.question'),
-        answer: t('strengths.answer'),
-        followUpChoices: [
-          t('strengths.followUpChoices.0.question'),
-          t('strengths.followUpChoices.1.question'),
-          t('strengths.followUpChoices.2.question'),
-        ],
-      },
-      {
-        question: t('interestedIn.question'),
-        answer: t('interestedIn.answer'),
-        followUpChoices: [
-          t('interestedIn.followUpChoices.0.question'),
-          t('interestedIn.followUpChoices.1.question'),
-          t('interestedIn.followUpChoices.2.question'),
-          t('interestedIn.followUpChoices.3.question'),
-          t('interestedIn.followUpChoices.4.question'),
-        ],
-      },
-      {
-        question: t('contact.question'),
-        answer: t('contact.answer'),
-        contactButtons: [
-          {
-            text: (
-              <p className='flex items-center gap-2'>
-                <SiMinutemailer size={16} />
-                <span>{t('contact.contactButtons.0.text')}</span>
-              </p>
-            ),
-            action: t('contact.contactButtons.0.action'),
-            url: t('contact.contactButtons.0.url'),
-          },
-          {
-            text: (
-              <p className='flex items-center gap-2'>
-                <FaLinkedin size={16} />
-                <span>{t('contact.contactButtons.1.text')}</span>
-              </p>
-            ),
-            action: t('contact.contactButtons.1.action'),
-            url: t('contact.contactButtons.1.url'),
-          },
-        ],
-      },
-    ],
-    [t]
-  );
+  // 현재 로케일 가져오기 (URL에서 추출)
+  const getCurrentLocale = (): string => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      const localeMatch = path.match(/^\/([a-z]{2})/);
+      return localeMatch ? localeMatch[1] : 'ko';
+    }
+    return 'ko';
+  };
 
-  // faqs 배열에서 followUpChoices를 포함한 모든 답변을 수집
-  const followUpAnswers = useMemo(() => {
-    const answers: Record<string, string> = {};
-
-    // faqs 배열에서 직접 followUpChoices 정보를 가져옴
-    faqs.forEach((faq) => {
-      if (faq.followUpChoices && Array.isArray(faq.followUpChoices)) {
-        faq.followUpChoices.forEach((choice) => {
-          if (typeof choice === 'string' && choice.trim() !== '') {
-            // choice가 문자열인 경우, 해당 질문에 대한 답변을 찾아야 함
-            // 이는 faqs 배열의 다른 항목에서 찾을 수 있음
-            const matchingFaq = faqs.find((f) => f.question === choice);
-            if (matchingFaq) {
-              answers[choice] = matchingFaq.answer;
-            }
-          }
-        });
-      }
-    });
-
-    return answers;
-  }, [faqs]); // faqs 배열을 의존성으로 추가
+  const currentLocale = getCurrentLocale();
+  const chatbotData: ChatbotData =
+    chatbotDataByLocale[currentLocale] || chatbotDataByLocale.ko;
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       from: 'bot',
-      text: t('description'),
-      choices: faqs.map((faq) => faq.question),
+      text: chatbotData.welcome.message,
+      choices: chatbotData.welcome.choices.map((id) => chatbotData.choices[id]),
       isChoiceMessage: true,
     },
   ]);
@@ -172,8 +71,6 @@ export default function Chatbot() {
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const inputAreaRef = useRef<HTMLDivElement>(null);
-
-  const fuse = new Fuse(faqs, { keys: ['question'], threshold: 0.3 });
 
   // 모바일 감지
   useEffect(() => {
@@ -324,27 +221,65 @@ export default function Chatbot() {
 
     setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
 
-    // FAQ에서 답변 찾기
-    const result = fuse.search(trimmed);
-    const bestMatch = result.length > 0 ? result[0].item : null;
+    // 선택지에서 답변 찾기
+    const choice = Object.values(chatbotData.choices).find(
+      (choice) => choice.text === trimmed
+    );
 
     let reply = '';
-    let followUpChoices: string[] = [];
+    let nextChoices: ChatbotChoice[] = [];
     let contactButtons:
       | { text: React.ReactNode; action: string; url: string }[]
       | undefined;
+    let goToProjectLink: { text: React.ReactNode; url: string }[] | undefined;
 
-    if (bestMatch) {
-      reply = bestMatch.answer;
-      followUpChoices = bestMatch.followUpChoices || [];
-      contactButtons = bestMatch.contactButtons;
-    } else if (followUpAnswers[trimmed]) {
-      reply = followUpAnswers[trimmed];
-      // 추가 답변 후에도 기본 질문들 제공
-      followUpChoices = faqs.map((faq) => faq.question);
+    if (choice) {
+      reply = choice.response;
+
+      // 다음 선택지들 가져오기
+      if (choice.nextChoices) {
+        nextChoices = choice.nextChoices
+          .map((id) => chatbotData.choices[id])
+          .filter(Boolean);
+      }
+
+      // 연락 버튼들 처리
+      if (choice.contactButtons) {
+        contactButtons = choice.contactButtons.map((button) => ({
+          text: (
+            <p className='flex items-center gap-2'>
+              {button.action === 'email' ? (
+                <SiMinutemailer size={16} />
+              ) : (
+                <FaLinkedin size={16} />
+              )}
+              <span>{button.text}</span>
+            </p>
+          ),
+          action: button.action,
+          url: button.url,
+        }));
+      }
+
+      // 프로젝트 링크 처리
+      if (choice.goToProjectLink) {
+        goToProjectLink = choice.goToProjectLink.map((link) => ({
+          text: (
+            <p className='flex items-center gap-2'>
+              <span>🔗</span>
+              <span>{link.text}</span>
+            </p>
+          ),
+          url: link.url,
+        }));
+      }
     } else {
+      // 입력된 메시지가 선택지에 없는 경우
       reply = t('sorry');
-      followUpChoices = faqs.map((faq) => faq.question);
+      // 기본 선택지들 제공
+      nextChoices = chatbotData.welcome.choices.map(
+        (id) => chatbotData.choices[id]
+      );
     }
 
     setTimeout(() => {
@@ -353,8 +288,9 @@ export default function Chatbot() {
         {
           from: 'bot',
           text: reply,
-          choices: followUpChoices,
+          choices: nextChoices,
           contactButtons: contactButtons,
+          goToProjectLink: goToProjectLink,
           isChoiceMessage: true,
         },
       ]);
@@ -575,7 +511,7 @@ export default function Chatbot() {
 
               {/* Messages */}
               <div
-                className={`flex-1 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full ${
+                className={`flex-1 overflow-y-auto overflow-x-hidden text-sm leading-relaxed w-full pt-4 ${
                   resolvedTheme === 'dark' ? 'bg-[#111111]' : 'bg-white'
                 }`}
                 style={{
@@ -646,7 +582,7 @@ export default function Chatbot() {
                                         onClick={() =>
                                           window.open(button.url, '_blank')
                                         }
-                                        className={`border border-dashed rounded-full px-4 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                        className={`border border-dashed rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
                                           resolvedTheme === 'dark'
                                             ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
                                             : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
@@ -659,20 +595,63 @@ export default function Chatbot() {
                                 </div>
                               )}
 
-                            {/* 기존 선택지 버튼들 */}
+                            {/* 프로젝트 링크 버튼들 */}
+                            {m.goToProjectLink &&
+                              m.goToProjectLink.length > 0 && (
+                                <div className='mt-4 flex flex-wrap gap-2'>
+                                  {m.goToProjectLink.map((link, linkIndex) => (
+                                    <button
+                                      key={linkIndex}
+                                      onClick={() => {
+                                        // 모바일에서는 새 탭, PC에서는 현재 페이지에서 push
+                                        if (isMobile) {
+                                          // 모바일: 새 탭에서 열기
+                                          window.open(link.url, '_blank');
+                                        } else {
+                                          // PC: 현재 페이지에서 push
+                                          if (link.url.startsWith('?')) {
+                                            // 챗봇 닫기
+                                            setOpen(false);
+                                            // URL 업데이트 (페이지 이동 없이)
+                                            window.history.pushState(
+                                              {},
+                                              '',
+                                              link.url
+                                            );
+                                            // 페이지 새로고침 없이 URL만 변경
+                                            // 프로젝트 상세 페이지는 URL 변경을 감지하여 표시됨
+                                          } else {
+                                            // 외부 링크는 새 탭에서 열기
+                                            window.open(link.url, '_blank');
+                                          }
+                                        }
+                                      }}
+                                      className={`border border-dashed rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                        resolvedTheme === 'dark'
+                                          ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
+                                          : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
+                                      }`}
+                                    >
+                                      {link.text}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+
+                            {/* 선택지 버튼들 */}
                             {m.choices && m.choices.length > 0 && (
                               <div className='mt-4 flex flex-wrap gap-2'>
                                 {m.choices.map((choice, choiceIndex) => (
                                   <button
                                     key={choiceIndex}
-                                    onClick={() => sendMessage(choice)}
-                                    className={`border border-dashed rounded-full px-4 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                    onClick={() => sendMessage(choice.text)}
+                                    className={`border border-dashed rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
                                       resolvedTheme === 'dark'
                                         ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
                                         : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
                                     }`}
                                   >
-                                    {choice}
+                                    {choice.text}
                                   </button>
                                 ))}
                               </div>
