@@ -53,7 +53,7 @@ export const chatbotDataKo: ChatbotData = {
     },
     skills: {
       id: 'skills',
-      text: '어떤 기술을 사용하나요?',
+      text: '어떤 기술을 사용해?',
       response:
         '프론트엔드: TypeScript, React, Next.js, React Native, Electron / 백엔드: Node.js, Go(개인 프로젝트 경험) / 데이터베이스: MongoDB, MySQL, MariaDB / 클라우드: AWS(EC2, S3, Route53, CloudFront)',
       nextChoices: ['experience', 'first'],
@@ -74,7 +74,7 @@ export const chatbotDataKo: ChatbotData = {
     },
     website: {
       id: 'website',
-      text: '웹사이트 경험은?',
+      text: '웹 개발 경험은?',
       response:
         '웹사이트 경험으로는 일본 한국 식당 안내 플랫폼의 리뉴얼 프로젝트의 프론트엔드 개발 담당, 일본 Web3 프로젝트의 캠페인 사이트 프론트엔드 개발 담당, 일본 B2C 사이트 프론트엔드 개발 담당 의 프로젝트 경험이 있습니다. Next.js 버전은 12부터 15까지 사용한 경험이 있습니다.',
       nextChoices: ['nextjs', 'mobileApp', 'desktopApp', 'contact'],
@@ -110,20 +110,81 @@ export const chatbotDataKo: ChatbotData = {
           url: '?item=projects.personal',
         },
       ],
+      nextChoices: ['workStyle', 'contact', 'first'],
     },
     mobileApp: {
       id: 'mobileApp',
-      text: 'React Native 경험은?',
+      text: '모바일 앱 개발 경험은?',
       response:
-        'React Native를 사용한 프로젝트 경험으로는 일본 배송 관리 앱의 프론트엔드 개발 담당, 일본 배송 관리 앱의 프론트엔드 개발 담당, 일본 배송 관리 앱의 프론트엔드 개발 담당 의 프로젝트 경험이 있습니다. React Native 버전은 0.60부터 0.71까지 사용한 경험이 있습니다.',
-      nextChoices: ['skills', 'experience', 'contact'],
+        '모바일 앱 개발 경험으로는 React Native를 사용한 프론트엔드 개발로 다양한 프로젝트에 참여한 경험이 있습니다.',
+      goToProjectLink: [
+        {
+          text: '공주로',
+          url: '?item=projects.dmonster_gongjuro',
+        },
+        {
+          text: '사라진 인사동',
+          url: '?item=projects.dmonster_insadong',
+        },
+        {
+          text: '페이퍼공작소-고객',
+          url: '?item=projects.dmonster_paper_workshop_customers',
+        },
+        {
+          text: '페이퍼공작소-파트너스',
+          url: '?item=projects.dmonster_paper_workshop_partners',
+        },
+        {
+          text: '아이드로우',
+          url: '?item=projects.dmonster_idraw',
+        },
+        {
+          text: '오늘의주문',
+          url: '?item=projects.dmonster_todaysorder',
+        },
+        {
+          text: '베가스통',
+          url: '?item=projects.dmonster_vegastong',
+        },
+        {
+          text: 'MOZAIQ',
+          url: '?item=projects.dmonster_mozaiq',
+        },
+        {
+          text: 'MOLI',
+          url: '?item=projects.dmonster_moli',
+        },
+        {
+          text: '동네북',
+          url: '?item=projects.dmonster_dongnaebook',
+        },
+        {
+          text: '테니스예약앱',
+          url: '?item=projects.confidential_korean_startup',
+        },
+      ],
+      nextChoices: ['workStyle', 'contact', 'first'],
     },
     desktopApp: {
       id: 'desktopApp',
-      text: 'Desktop App 경험은?',
+      text: '데스크탑 앱 개발 경험은?',
       response:
-        'Desktop App 경험으로는 일본 배송 관리 앱의 프론트엔드 개발 담당, 일본 배송 관리 앱의 프론트엔드 개발 담당, 일본 배송 관리 앱의 프론트엔드 개발 담당 의 프로젝트 경험이 있습니다. React Native 버전은 0.60부터 0.71까지 사용한 경험이 있습니다.',
-      nextChoices: ['skills', 'experience', 'contact'],
+        '데스크탑 앱 개발 경험으로는 electron + React를 사용한 프로젝트 경험이 있습니다. 아래 링크로 확인하실 수 있습니다.',
+      goToProjectLink: [
+        {
+          text: '동네북 점주용 POS',
+          url: '?item=projects.dmonster_dongnaebook',
+        },
+        {
+          text: 'MOLI(모리)',
+          url: '?item=projects.dmonster_moli',
+        },
+        {
+          text: '오늘의 주문 점주용 POS',
+          url: '?item=projects.dmonster_todaysorder',
+        },
+      ],
+      nextChoices: ['workStyle', 'contact', 'first'],
     },
     backend: {
       id: 'backend',
@@ -169,7 +230,7 @@ export const chatbotDataKo: ChatbotData = {
     },
     languages: {
       id: 'languages',
-      text: '어떤 언어를 사용하나요?',
+      text: '어떤 언어를 사용해?',
       response:
         '한국어가 모국어이고, 비즈니스 커뮤니케이션을 위한 일본어에 능숙합니다. 영어는 기초부터 공부 중이며, 간단한 커뮤니케이션은 가능하지만 더욱 향상시키기 위해 노력하고 있습니다.',
       nextChoices: ['korean', 'japanese', 'english'],

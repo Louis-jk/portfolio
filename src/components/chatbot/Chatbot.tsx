@@ -127,7 +127,10 @@ export default function Chatbot() {
   }, [isKeyboardOpen, isMobile]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // 메시지가 추가될 때만 스크롤 다운 (챗봇을 처음 열 때는 스크롤하지 않음)
+    if (messages.length > 1) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages]);
 
   useEffect(() => {
@@ -188,8 +191,14 @@ export default function Chatbot() {
   }, [open, isMobile]);
 
   useEffect(() => {
-    if (open && messages.length > 1) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (open) {
+      // 챗봇이 열릴 때 메시지가 있으면 최신 메시지가 보이도록 스크롤
+      if (messages.length > 1) {
+        // 약간의 지연 후 스크롤 (애니메이션 완료 후)
+        setTimeout(() => {
+          bottomRef.current?.scrollIntoView({ behavior: 'instant' });
+        }, 100);
+      }
     }
   }, [open, messages.length]);
 
