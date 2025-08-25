@@ -74,6 +74,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        {/* GTM Head */}
         <Script
           id='gtm-head'
           strategy='afterInteractive'
@@ -87,10 +88,30 @@ export default function RootLayout({
             `,
           }}
         />
+
+        {/* GA4 gtag.js 추가 */}
+        <Script
+          id='ga4'
+          strategy='afterInteractive'
+          src='https://www.googletagmanager.com/gtag/js?id=G-CKP70PTE30'
+        />
+        <Script
+          id='ga4-init'
+          strategy='afterInteractive'
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-CKP70PTE30', { send_page_view: false });
+            `,
+          }}
+        />
       </head>
       <body
         className={`${notoSansJP.variable} ${notoSansKR.variable} ${geist.variable} ${geistMono.variable} ${hanaleiFill.variable} antialiased`}
       >
+        {/* GTM Body */}
         <noscript>
           <iframe
             src='https://www.googletagmanager.com/ns.html?id=GTM-52GRS4X'
@@ -99,6 +120,7 @@ export default function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
+
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
@@ -107,6 +129,8 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+
+        {/* SPA 페이지뷰 & 이벤트 추적 */}
         <GTMTracker />
       </body>
     </html>
