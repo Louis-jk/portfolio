@@ -261,7 +261,7 @@ export const chatbotDataKo: ChatbotData = {
       text: '일하는 방식은?',
       response:
         '기획 단계부터 적극적으로 참여하고, 명확한 커뮤니케이션을 통해 협업합니다. 일정 준수에 책임감을 가지며, 빠르게 피드백을 반영하고 유연하게 대응합니다.',
-      nextChoices: ['communication', 'learning', 'environment'],
+      nextChoices: ['communication', 'environment', 'contact'],
     },
     communication: {
       id: 'communication',

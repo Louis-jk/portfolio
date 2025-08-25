@@ -19,6 +19,8 @@ import {
   type ChatbotData,
   type ChatbotChoice,
 } from '@/data/chatbot';
+import { CiLink } from 'react-icons/ci';
+import Image from 'next/image';
 
 type Message = {
   from: 'user' | 'bot';
@@ -275,7 +277,7 @@ export default function Chatbot() {
         goToProjectLink = choice.goToProjectLink.map((link) => ({
           text: (
             <p className='flex items-center gap-2'>
-              <span>🔗</span>
+              <CiLink size={16} />
               <span>{link.text}</span>
             </p>
           ),
@@ -547,35 +549,62 @@ export default function Chatbot() {
                           m.from === 'user' ? 'ml-auto' : 'mr-auto'
                         }`}
                       >
-                        <div
-                          className={`font-${
-                            m.from === 'bot' ? 'semibold' : 'normal'
-                          } bg-${
-                            m.from === 'bot'
-                              ? 'gray-100'
-                              : resolvedTheme === 'dark'
-                              ? 'purple-500'
-                              : 'purple-700'
-                          } text-${
-                            m.from === 'bot' ? 'black' : 'white'
-                          } px-4 py-3 rounded-2xl break-words relative shadow-sm`}
-                        >
-                          {m.text}
-                          {/* 말풍선 꼬리 */}
-                          <div
-                            className={`absolute bottom-0 ${
-                              m.from === 'user' ? 'right-4' : 'left-4'
-                            } w-3 h-3 transform translate-y-1/2 rotate-45`}
-                            style={{
-                              backgroundColor:
-                                m.from === 'bot'
-                                  ? '#f3f4f6'
-                                  : resolvedTheme === 'dark'
-                                  ? '#ad46ff'
-                                  : '#8200db',
-                            }}
-                          />
-                        </div>
+                        {/* 봇 메시지: 아바타와 말풍선을 한 줄로 배치 */}
+                        {m.from === 'bot' && (
+                          <div className='flex items-start gap-2'>
+                            <Image
+                              src='/images/chatbot_me.png'
+                              alt='me'
+                              width={40}
+                              height={40}
+                              className='rounded-full flex-shrink-0'
+                            />
+                            <div
+                              className={`font-semibold bg-gray-100 text-black px-4 py-3 rounded-2xl break-words relative shadow-sm`}
+                            >
+                              {m.text}
+                              {/* 말풍선 꼬리 */}
+                              <div
+                                className='absolute left-1 top-4 w-3 h-3 transform -translate-x-1/2 -translate-y-1/2 rotate-45'
+                                style={{
+                                  backgroundColor: '#f3f4f6',
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* 사용자 메시지: 말풍선과 아바타를 한 줄로 배치 */}
+                        {m.from === 'user' && (
+                          <div className='flex items-start gap-2 flex-row-reverse'>
+                            <Image
+                              src='/images/chatbot_visitor.png'
+                              alt='you'
+                              width={40}
+                              height={40}
+                              className='rounded-full flex-shrink-0'
+                            />
+                            <div
+                              className={`font-normal bg-${
+                                resolvedTheme === 'dark'
+                                  ? 'purple-500'
+                                  : 'purple-700'
+                              } text-white px-4 py-3 rounded-2xl break-words relative shadow-sm`}
+                            >
+                              {m.text}
+                              {/* 말풍선 꼬리 */}
+                              <div
+                                className='absolute right-1 top-4 w-3 h-3 transform translate-x-1/2 -translate-y-1/2 rotate-45'
+                                style={{
+                                  backgroundColor:
+                                    resolvedTheme === 'dark'
+                                      ? '#ad46ff'
+                                      : '#8200db',
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
 
                         {/* 선택지 버튼들 또는 연락 버튼들 */}
                         {m.isChoiceMessage && (
@@ -635,10 +664,10 @@ export default function Chatbot() {
                                           }
                                         }
                                       }}
-                                      className={`border border-dashed rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                      className={`rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 flex items-center gap-2 transition-all duration-200 ${
                                         resolvedTheme === 'dark'
-                                          ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
-                                          : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
+                                          ? 'bg-purple-500 hover:bg-purple-400 text-white'
+                                          : 'bg-purple-700 hover:bg-purple-600 text-white'
                                       }`}
                                     >
                                       {link.text}
