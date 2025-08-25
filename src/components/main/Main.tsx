@@ -68,6 +68,46 @@ function MainContent() {
     if (window.innerWidth < 1280) {
       setIsDrawerOpen(true);
     }
+
+    // GTM 이벤트 전송
+    const dataLayer = (
+      window as {
+        dataLayer?: {
+          push: (data: {
+            event: string;
+            item_id: string;
+            item_title: string;
+            item_region: string;
+          }) => void;
+        };
+      }
+    )?.dataLayer;
+    if (typeof window !== 'undefined' && dataLayer) {
+      dataLayer.push({
+        event: 'timeline_item_click',
+        item_id: item.id,
+        item_title: item.title,
+        item_region: item.region,
+      });
+    }
+
+    // GA4 이벤트 전송
+    const gtag = (
+      window as {
+        gtag?: (
+          command: string,
+          event: string,
+          params: { item_id: string; item_title: string; item_region: string }
+        ) => void;
+      }
+    )?.gtag;
+    if (gtag) {
+      gtag('event', 'timeline_item_click', {
+        item_id: item.id,
+        item_title: item.title,
+        item_region: item.region,
+      });
+    }
   };
 
   const handleDrawerClose = () => {
