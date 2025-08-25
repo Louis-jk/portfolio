@@ -37,26 +37,12 @@ export const chatbotDataKo: ChatbotData = {
     ],
   },
   choices: {
-    first: {
-      id: 'first',
-      text: '↺ 처음으로',
-      response: '무엇을 도와드릴까요?',
-      nextChoices: [
-        'skills',
-        'experience',
-        'languages',
-        'workStyle',
-        'strengths',
-        'interests',
-        'contact',
-      ],
-    },
     skills: {
       id: 'skills',
       text: '어떤 기술을 사용해?',
       response:
         '프론트엔드: TypeScript, React, Next.js, React Native, Electron / 백엔드: Node.js, Go(개인 프로젝트 경험) / 데이터베이스: MongoDB, MySQL, MariaDB / 클라우드: AWS(EC2, S3, Route53, CloudFront)',
-      nextChoices: ['experience', 'first'],
+      nextChoices: ['experience'],
     },
     frontend: {
       id: 'frontend',
@@ -81,7 +67,7 @@ export const chatbotDataKo: ChatbotData = {
     },
     nextjs: {
       id: 'nextjs',
-      text: 'Next.js 경험은?',
+      text: 'Next.js 프로젝트',
       response:
         'Next.js를 사용한 프로젝트 경험으로는 한국 외식 정보 플랫폼의 리뉴얼 프로젝트의 프론트엔드 개발 담당, 일본 Web3 프로젝트의 캠페인 사이트 프론트엔드 개발 담당, 일본 B2C 사이트 프론트엔드 개발 담당 의 프로젝트 경험이 있습니다. Next.js 버전은 12부터 15까지 사용한 경험이 있습니다.',
       goToProjectLink: [
@@ -110,7 +96,7 @@ export const chatbotDataKo: ChatbotData = {
           url: '?item=projects.personal',
         },
       ],
-      nextChoices: ['workStyle', 'contact', 'first'],
+      nextChoices: ['workStyle', 'contact'],
     },
     mobileApp: {
       id: 'mobileApp',
@@ -163,7 +149,7 @@ export const chatbotDataKo: ChatbotData = {
           url: '?item=projects.confidential_korean_startup',
         },
       ],
-      nextChoices: ['workStyle', 'contact', 'first'],
+      nextChoices: ['workStyle', 'contact'],
     },
     desktopApp: {
       id: 'desktopApp',
@@ -184,7 +170,7 @@ export const chatbotDataKo: ChatbotData = {
           url: '?item=projects.dmonster_todaysorder',
         },
       ],
-      nextChoices: ['workStyle', 'contact', 'first'],
+      nextChoices: ['workStyle', 'contact'],
     },
     backend: {
       id: 'backend',
@@ -289,14 +275,14 @@ export const chatbotDataKo: ChatbotData = {
       text: '강점은 뭐야?',
       response:
         '문제를 빠르게 파악하고 해결하는 능력이 강점입니다. 컴포넌트 단위 설계, 퍼포먼스 최적화, 사용자 중심의 UI 구현에 강하며, 다양한 환경에서의 크로스 브라우징과 모바일 대응도 잘합니다.',
-      nextChoices: ['techStack', 'teamwork', 'problemSolving'],
+      nextChoices: ['techStack', 'teamwork', 'problemSolving', 'contact'],
     },
     techStack: {
       id: 'techStack',
       text: '기술 스택은?',
       response:
         'Frontend: TypeScript, React, Next.js, React Native, Electron / Backend: Node.js, Go(개인 프로젝트 경험) / Database: MongoDB, MySQL, MariaDB / Cloud: AWS(EC2, S3, Route53, CloudFront)',
-      nextChoices: ['strengths', 'contact'],
+      nextChoices: ['strengths', 'problemSolving', 'contact'],
     },
     teamwork: {
       id: 'teamwork',
@@ -375,7 +361,7 @@ export const chatbotDataKo: ChatbotData = {
           url: 'https://www.linkedin.com/in/louis-jk',
         },
       ],
-      nextChoices: ['first'],
+      nextChoices: ['skills'],
     },
   },
 };

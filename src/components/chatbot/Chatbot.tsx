@@ -692,6 +692,30 @@ export default function Chatbot() {
                                     {choice.text}
                                   </button>
                                 ))}
+                                {/* 항상 마지막에 '처음으로' 버튼 추가 */}
+                                <button
+                                  onClick={() => {
+                                    // welcome 메시지로 초기화
+                                    setMessages([
+                                      {
+                                        from: 'bot',
+                                        text: chatbotData.welcome.message,
+                                        choices:
+                                          chatbotData.welcome.choices.map(
+                                            (id) => chatbotData.choices[id]
+                                          ),
+                                        isChoiceMessage: true,
+                                      },
+                                    ]);
+                                  }}
+                                  className={`border border-dashed rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
+                                    resolvedTheme === 'dark'
+                                      ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
+                                      : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
+                                  }`}
+                                >
+                                  ↺ 처음으로
+                                </button>
                               </div>
                             )}
                           </>
