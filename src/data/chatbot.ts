@@ -25,7 +25,8 @@ export interface ChatbotData {
 // 한국어 챗봇 데이터
 export const chatbotDataKo: ChatbotData = {
   welcome: {
-    message: '저는 프론트엔드 개발자 김준호입니다. 궁금한 점이 있으신가요?',
+    message:
+      '안녕하세요. 저는 프론트엔드 개발자 김준호입니다. 궁금한 점이 있으신가요?',
     choices: [
       'skills',
       'experience',
@@ -365,6 +366,23 @@ export const chatbotDataKo: ChatbotData = {
     },
   },
 };
+
+// 한국어 욕설 감지
+export const profanityWords = [
+  '개',
+  '좆',
+  '씨발',
+  '병신',
+  '미친',
+  '새끼',
+  '놈',
+  '년',
+  '개새끼',
+  '좆같은',
+  '씨발놈',
+  '호로',
+  '씹',
+];
 
 // 영어 챗봇 데이터
 export const chatbotDataEn: ChatbotData = {
