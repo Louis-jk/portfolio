@@ -14,13 +14,9 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
-import {
-  chatbotDataByLocale,
-  type ChatbotData,
-  type ChatbotChoice,
-  profanityWords,
-  sexualWords,
-} from '@/data/chatbot';
+import { chatbotDataByLocale } from '@/data/chatbot';
+import type { ChatbotData, ChatbotChoice } from '@/types/chatbot';
+import { profanityWords, sexualWords } from '@/data/chatbot/prohibited-words';
 import { CiLink } from 'react-icons/ci';
 import Image from 'next/image';
 
