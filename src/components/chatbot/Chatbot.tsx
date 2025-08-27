@@ -18,6 +18,7 @@ import {
   chatbotDataByLocale,
   type ChatbotData,
   type ChatbotChoice,
+  profanityWords,
 } from '@/data/chatbot';
 import { CiLink } from 'react-icons/ci';
 import Image from 'next/image';
@@ -67,12 +68,14 @@ export default function Chatbot() {
     },
   ]);
   const [input, setInput] = useState('');
+  const [inputKey, setInputKey] = useState(0); // input 강제 리렌더링용
   const [isMobile, setIsMobile] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const inputAreaRef = useRef<HTMLDivElement>(null);
+  const isProcessingRef = useRef<boolean>(false); // 중복 호출 방지용
 
   // 모바일 감지
   useEffect(() => {
@@ -226,10 +229,71 @@ export default function Chatbot() {
     }, 200);
   };
 
+  // input 값이 변경될 때마다 DOM을 동기화
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = input;
+    }
+  }, [input]);
+
   const sendMessage = (userMsg: string) => {
     const trimmed = userMsg.trim();
     if (!trimmed) return;
 
+    // 이미 처리 중인지 확인 (중복 전송 방지)
+    // if (messages.some((msg) => msg.from === 'user' && msg.text === trimmed)) {
+    //   return;
+    // }
+
+    // 입력값이 직전 메시지와 동일하면 무시 (중복 방지)
+    if (
+      messages[messages.length - 1]?.from === 'user' &&
+      messages[messages.length - 1]?.text === trimmed
+    ) {
+      return;
+    }
+
+    // 욕설 감지 - 단순한 includes로 감지 (더 확실한 방법)
+    const hasProfanity = profanityWords.some((word) => trimmed.includes(word));
+
+    // 디버깅용 로그
+    console.log('입력된 메시지:', trimmed);
+    console.log('욕설 감지 결과:', hasProfanity);
+    if (hasProfanity) {
+      const detectedWords = profanityWords.filter((word) =>
+        trimmed.includes(word)
+      );
+      console.log('감지된 욕설 단어들:', detectedWords);
+    }
+
+    if (hasProfanity) {
+      // 욕설이 감지되어도 사용자 메시지는 채팅창에 표시
+      setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
+
+      // input 초기화 (강제 리렌더링으로 완전 초기화)
+      setInput('');
+      setInputKey((prev) => prev + 1); // input 컴포넌트 강제 리렌더링
+      if (inputRef.current) {
+        inputRef.current.blur(); // 포커스 해제
+      }
+
+      // 즉시 봇 응답 추가
+      setMessages((msgs) => [
+        ...msgs,
+        {
+          from: 'bot',
+          text: '욕은 좀 삼가해주십시오. 정중한 대화를 부탁드립니다.',
+          choices: chatbotData.welcome.choices.map(
+            (id) => chatbotData.choices[id]
+          ),
+          isChoiceMessage: true,
+        },
+      ]);
+
+      return; // 여기서 함수를 완전히 종료
+    }
+
+    // 욕설이 아닌 경우에만 일반 메시지 처리
     setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
 
     // 선택지에서 답변 찾기
@@ -316,8 +380,38 @@ export default function Chatbot() {
   };
 
   const handleSendMessage = () => {
-    if (input.trim()) {
-      sendMessage(input);
+    console.log('handleSendMessage 호출됨, input:', input);
+
+    // 중복 호출 방지
+    if (isProcessingRef.current) {
+      console.log('이미 처리 중입니다. 중복 호출 무시');
+      return;
+    }
+
+    // inputRef의 현재 값을 직접 사용하여 중복 호출 방지
+    const currentInput = inputRef.current?.value || input;
+    const trimmedInput = currentInput.trim();
+
+    if (
+      trimmedInput &&
+      !trimmedInput.includes('undefined') &&
+      trimmedInput.length > 0
+    ) {
+      console.log('sendMessage 호출됨');
+
+      // 처리 중 플래그 설정
+      isProcessingRef.current = true;
+
+      // 즉시 input 초기화 (강제 리렌더링으로 완전 초기화)
+      setInput('');
+      setInputKey((prev) => prev + 1); // input 컴포넌트 강제 리렌더링
+
+      sendMessage(trimmedInput);
+
+      // 처리 완료 후 플래그 해제 (약간의 지연 후)
+      setTimeout(() => {
+        isProcessingRef.current = false;
+      }, 100);
     }
   };
 
@@ -557,7 +651,7 @@ export default function Chatbot() {
                               alt='me'
                               width={40}
                               height={40}
-                              className='rounded-full flex-shrink-0'
+                              className='rounded-full flex-shrink-0 select-none pointer-events-none'
                             />
                             <div
                               className={`font-semibold bg-gray-100 text-black px-4 py-3 rounded-2xl break-words relative shadow-sm`}
@@ -582,7 +676,7 @@ export default function Chatbot() {
                               alt='you'
                               width={40}
                               height={40}
-                              className='rounded-full flex-shrink-0'
+                              className='rounded-full flex-shrink-0 select-none pointer-events-none'
                             />
                             <div
                               className={`font-normal bg-${
@@ -742,6 +836,7 @@ export default function Chatbot() {
                 <div className='flex gap-3 justify-center items-center'>
                   <div className='flex-1 relative'>
                     <input
+                      key={inputKey}
                       ref={inputRef}
                       autoFocus={!isMobile}
                       type='text'
