@@ -31,8 +31,6 @@ function ShareButton({ onShareClick }: ShareButtonProps) {
           // 공유 취소 - 아무것도 하지 않음
           return;
         }
-        // 다른 에러의 경우에만 로그 출력
-        console.error('공유 중 오류 발생:', err);
       }
     } else {
       // PC에서는 모달 열기
