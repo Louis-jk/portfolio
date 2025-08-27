@@ -19,6 +19,7 @@ import {
   type ChatbotData,
   type ChatbotChoice,
   profanityWords,
+  sexualWords,
 } from '@/data/chatbot';
 import { CiLink } from 'react-icons/ci';
 import Image from 'next/image';
@@ -68,14 +69,13 @@ export default function Chatbot() {
     },
   ]);
   const [input, setInput] = useState('');
-  const [inputKey, setInputKey] = useState(0); // input 강제 리렌더링용
+
   const [isMobile, setIsMobile] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const inputAreaRef = useRef<HTMLDivElement>(null);
-  const isProcessingRef = useRef<boolean>(false); // 중복 호출 방지용
 
   // 모바일 감지
   useEffect(() => {
@@ -229,72 +229,66 @@ export default function Chatbot() {
     }, 200);
   };
 
-  // input 값이 변경될 때마다 DOM을 동기화
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.value = input;
-    }
-  }, [input]);
-
   const sendMessage = (userMsg: string) => {
     const trimmed = userMsg.trim();
     if (!trimmed) return;
 
-    // 이미 처리 중인지 확인 (중복 전송 방지)
-    // if (messages.some((msg) => msg.from === 'user' && msg.text === trimmed)) {
-    //   return;
-    // }
+    // 사용자 메시지를 채팅창에 추가
+    setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
 
-    // 입력값이 직전 메시지와 동일하면 무시 (중복 방지)
-    if (
-      messages[messages.length - 1]?.from === 'user' &&
-      messages[messages.length - 1]?.text === trimmed
-    ) {
-      return;
-    }
-
-    // 욕설 감지 - 단순한 includes로 감지 (더 확실한 방법)
+    // 욕설 및 성적 표현 감지
     const hasProfanity = profanityWords.some((word) => trimmed.includes(word));
+    const hasSexual = sexualWords.some((word) => trimmed.includes(word));
 
-    // 디버깅용 로그
-    console.log('입력된 메시지:', trimmed);
-    console.log('욕설 감지 결과:', hasProfanity);
-    if (hasProfanity) {
-      const detectedWords = profanityWords.filter((word) =>
-        trimmed.includes(word)
-      );
-      console.log('감지된 욕설 단어들:', detectedWords);
-    }
+    if (hasProfanity || hasSexual) {
+      let warningMessage = '';
 
-    if (hasProfanity) {
-      // 욕설이 감지되어도 사용자 메시지는 채팅창에 표시
-      setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
-
-      // input 초기화 (강제 리렌더링으로 완전 초기화)
-      setInput('');
-      setInputKey((prev) => prev + 1); // input 컴포넌트 강제 리렌더링
-      if (inputRef.current) {
-        inputRef.current.blur(); // 포커스 해제
+      if (hasProfanity) {
+        // 현재 로케일에 따라 욕설 경고 메시지 설정
+        switch (currentLocale) {
+          case 'en':
+            warningMessage =
+              'Please refrain from using profanity. I request a polite conversation.';
+            break;
+          case 'ja':
+            warningMessage =
+              '下品な言葉遣いはお控えください。丁寧な会話をお願いします。';
+            break;
+          default: // ko
+            warningMessage =
+              '욕은 좀 삼가해주십시오. 정중한 대화를 부탁드립니다.';
+        }
+      } else if (hasSexual) {
+        // 현재 로케일에 따라 성적 표현 경고 메시지 설정
+        switch (currentLocale) {
+          case 'en':
+            warningMessage =
+              'Please refrain from inappropriate sexual expressions. I request a polite and healthy conversation.';
+            break;
+          case 'ja':
+            warningMessage =
+              '不適切な性的表現はお控えください。丁寧で健全な会話をお願いします。';
+            break;
+          default: // ko
+            warningMessage =
+              '부적절한 성적 표현은 삼가해주십시오. 정중하고 건전한 대화를 부탁드립니다.';
+        }
       }
 
-      // 즉시 봇 응답 추가
+      // 경고 메시지 표시
       setMessages((msgs) => [
         ...msgs,
         {
           from: 'bot',
-          text: '욕은 좀 삼가해주십시오. 정중한 대화를 부탁드립니다.',
+          text: warningMessage,
           choices: chatbotData.welcome.choices.map(
             (id) => chatbotData.choices[id]
           ),
           isChoiceMessage: true,
         },
       ]);
-
-      return; // 여기서 함수를 완전히 종료
+      return;
     }
-
-    // 욕설이 아닌 경우에만 일반 메시지 처리
-    setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
 
     // 선택지에서 답변 찾기
     const choice = Object.values(chatbotData.choices).find(
@@ -380,38 +374,9 @@ export default function Chatbot() {
   };
 
   const handleSendMessage = () => {
-    console.log('handleSendMessage 호출됨, input:', input);
-
-    // 중복 호출 방지
-    if (isProcessingRef.current) {
-      console.log('이미 처리 중입니다. 중복 호출 무시');
-      return;
-    }
-
-    // inputRef의 현재 값을 직접 사용하여 중복 호출 방지
-    const currentInput = inputRef.current?.value || input;
-    const trimmedInput = currentInput.trim();
-
-    if (
-      trimmedInput &&
-      !trimmedInput.includes('undefined') &&
-      trimmedInput.length > 0
-    ) {
-      console.log('sendMessage 호출됨');
-
-      // 처리 중 플래그 설정
-      isProcessingRef.current = true;
-
-      // 즉시 input 초기화 (강제 리렌더링으로 완전 초기화)
-      setInput('');
-      setInputKey((prev) => prev + 1); // input 컴포넌트 강제 리렌더링
-
-      sendMessage(trimmedInput);
-
-      // 처리 완료 후 플래그 해제 (약간의 지연 후)
-      setTimeout(() => {
-        isProcessingRef.current = false;
-      }, 100);
+    if (input.trim()) {
+      sendMessage(input);
+      setInput(''); // 간단하게 input 비우기
     }
   };
 
@@ -833,10 +798,15 @@ export default function Chatbot() {
                   padding: isMobile ? '12px 16px' : '16px',
                 }}
               >
-                <div className='flex gap-3 justify-center items-center'>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                  className='flex gap-3 justify-center items-center'
+                >
                   <div className='flex-1 relative'>
                     <input
-                      key={inputKey}
                       ref={inputRef}
                       autoFocus={!isMobile}
                       type='text'
@@ -844,9 +814,6 @@ export default function Chatbot() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onFocus={handleInputFocus}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleSendMessage();
-                      }}
                       className={`w-full p-3 pr-12 rounded-lg border text-base font-medium outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 ${
                         resolvedTheme === 'dark'
                           ? 'bg-[#1a1a1a] border-gray-600 text-white placeholder-gray-400'
@@ -855,14 +822,14 @@ export default function Chatbot() {
                     />
                   </div>
                   <button
-                    onClick={handleSendMessage}
+                    type='submit'
                     disabled={!input.trim()}
                     className={cn(
                       'size-[50px] rounded-lg text-white transition-all duration-200 flex items-center justify-center cursor-pointer',
                       input.trim()
                         ? resolvedTheme === 'dark'
                           ? 'bg-purple-500 hover:bg-purple-600 active:scale-95'
-                          : 'bg-purple-700 hover:bg-purple-800 active:scale-95'
+                          : 'bg-gray-600 cursor-not-allowed'
                         : resolvedTheme === 'dark'
                         ? 'bg-gray-600 cursor-not-allowed'
                         : 'bg-gray-400 cursor-not-allowed'
@@ -870,7 +837,7 @@ export default function Chatbot() {
                   >
                     <IoSend size={20} />
                   </button>
-                </div>
+                </form>
               </div>
             </motion.div>
           </>
