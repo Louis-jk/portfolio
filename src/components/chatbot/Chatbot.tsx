@@ -232,9 +232,30 @@ export default function Chatbot() {
     // 사용자 메시지를 채팅창에 추가
     setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
 
-    // 욕설 및 성적 표현 감지
-    const hasProfanity = profanityWords.some((word) => trimmed.includes(word));
-    const hasSexual = sexualWords.some((word) => trimmed.includes(word));
+    // 욕설 및 성적 표현 감지 (한국어 단어 경계 고려)
+    const hasProfanity = profanityWords.some((word) => {
+      // 특수문자 이스케이프 처리
+      const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+      // 한국어의 경우 단어 경계가 다르게 작동하므로 정확한 매칭 사용
+      // 영어/숫자/한글이 아닌 문자로 시작하거나 끝나는 경우를 고려
+      const regex = new RegExp(
+        `(^|[^가-힣a-zA-Z0-9])${escapedWord}([^가-힣a-zA-Z0-9]|$)`,
+        'i'
+      );
+      return regex.test(trimmed);
+    });
+    const hasSexual = sexualWords.some((word) => {
+      // 특수문자 이스케이프 처리
+      const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+      // 한국어의 경우 단어 경계가 다르게 작동하므로 정확한 매칭 사용
+      const regex = new RegExp(
+        `(^|[^가-힣a-zA-Z0-9])${escapedWord}([^가-힣a-zA-Z0-9]|$)`,
+        'i'
+      );
+      return regex.test(trimmed);
+    });
 
     if (hasProfanity || hasSexual) {
       let warningMessage = '';
