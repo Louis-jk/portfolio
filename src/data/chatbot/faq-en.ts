@@ -4,7 +4,7 @@ import { ChatbotData } from '@/types/chatbot';
 export const chatbotDataEn: ChatbotData = {
   welcome: {
     message:
-      'Hello. I am Kim Junho, a frontend developer. Do you have any questions?',
+      "Hello, I'm Joonho Kim. Thank you for visiting my portfolio site. If you have any questions, please don’t hesitate to ask.",
     choices: [
       'skills',
       'experience',

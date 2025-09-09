@@ -4,7 +4,7 @@ import { ChatbotData } from '@/types/chatbot';
 export const chatbotDataKo: ChatbotData = {
   welcome: {
     message:
-      '안녕하세요. 저는 프론트엔드 개발자 김준호입니다. 궁금한 점이 있으신가요?',
+      '안녕하세요. 김준호입니다. 먼저 제 포트폴리오 사이트에 방문해주셔서 감사드립니다. 간단하더라도 궁금하신 점에 대해 답변드릴 수 있으면 좋겠습니다.',
     choices: [
       'skills',
       'experience',
