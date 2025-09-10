@@ -53,30 +53,14 @@ export const metadata: Metadata = {
   keywords: 'Joonho Kim, Frontend Engineer, Web Developer, Web3 Developer',
   authors: [{ name: 'Joonho Kim', url: 'https://joonhokim.dev' }],
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-    shortcut: '/favicon.ico',
-    other: [
-      {
-        rel: 'icon',
-        url: '/icon-192.png',
-        sizes: '192x192',
-        type: 'image/png',
-      },
-      {
-        rel: 'icon',
-        url: '/icon-512.png',
-        sizes: '512x512',
-        type: 'image/png',
-      },
-      {
-        rel: 'icon',
-        url: '/icon-mask.png',
-        sizes: '512x512',
-        type: 'image/png',
-      },
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon-32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/icon-16.png', type: 'image/png', sizes: '16x16' },
     ],
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/site.webmanifest',
   openGraph: {
     title: 'Joonho Kim',
     description: 'Frontend Engineer Joonho Kim',
