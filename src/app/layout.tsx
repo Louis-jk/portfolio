@@ -52,6 +52,31 @@ export const metadata: Metadata = {
   description: 'Frontend Engineer Joonho Kim',
   keywords: 'Joonho Kim, Frontend Engineer, Web Developer, Web3 Developer',
   authors: [{ name: 'Joonho Kim', url: 'https://joonhokim.dev' }],
+  icons: {
+    icon: 'favicon.ico',
+    apple: '/apple-touch-icon.png',
+    shortcut: 'favicon.ico',
+    other: [
+      {
+        rel: 'icon',
+        url: '/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        rel: 'icon',
+        url: '/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+      {
+        rel: 'icon',
+        url: '/icon-mask.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+    ],
+  },
   openGraph: {
     title: 'Joonho Kim',
     description: 'Frontend Engineer Joonho Kim',
@@ -74,6 +99,10 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        <link rel='icon' href='favicon.ico' sizes='any' />
+        <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
+        <link rel='shortcut icon' href='favicon.ico' sizes='32x32' />
+
         {/* GTM Head */}
         <Script
           id='gtm-head'
