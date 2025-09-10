@@ -265,10 +265,11 @@ export default function Timeline({
   const itemsToRender = items;
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col' data-timeline-section>
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 Header 아래에 sticky */}
       <div
         ref={titleRef}
+        data-timeline-title
         className={cn(
           'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800 transition-all duration-200',
           isMobile && 'sticky top-[55px] z-30'
