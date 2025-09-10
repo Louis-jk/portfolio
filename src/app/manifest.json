@@ -1,0 +1,27 @@
+{
+  "name": "Joonho's Portfolio",
+  "short_name": "Portfolio",
+  "description": "This is Joonho's Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#090c17",
+  "background_color": "#090c17",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-mask.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
