@@ -53,9 +53,9 @@ export const metadata: Metadata = {
   keywords: 'Joonho Kim, Frontend Engineer, Web Developer, Web3 Developer',
   authors: [{ name: 'Joonho Kim', url: 'https://joonhokim.dev' }],
   icons: {
-    icon: 'favicon.ico',
+    icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
-    shortcut: 'favicon.ico',
+    shortcut: '/favicon.ico',
     other: [
       {
         rel: 'icon',
@@ -99,10 +99,6 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <link rel='icon' href='favicon.ico' sizes='any' />
-        <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
-        <link rel='shortcut icon' href='favicon.ico' sizes='32x32' />
-
         {/* GTM Head */}
         <Script
           id='gtm-head'
