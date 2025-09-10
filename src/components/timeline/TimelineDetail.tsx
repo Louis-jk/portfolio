@@ -152,7 +152,8 @@ export default function TimelineDetail({
         ref={scrollRef}
         className={cn(
           'h-[calc(100vh-135px)] overflow-y-auto overflow-x-hidden',
-          isDesktopOrLaptop && 'h-[calc(100vh-275px)]'
+          isDesktopOrLaptop && 'h-[calc(100vh-275px)]',
+          isMobile && 'pb-36'
         )}
       >
         <motion.div
