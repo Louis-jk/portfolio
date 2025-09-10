@@ -52,15 +52,6 @@ export const metadata: Metadata = {
   description: 'Frontend Engineer Joonho Kim',
   keywords: 'Joonho Kim, Frontend Engineer, Web Developer, Web3 Developer',
   authors: [{ name: 'Joonho Kim', url: 'https://joonhokim.dev' }],
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon-32.png', type: 'image/png', sizes: '32x32' },
-      { url: '/icon-16.png', type: 'image/png', sizes: '16x16' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
-  manifest: '/site.webmanifest',
   openGraph: {
     title: 'Joonho Kim',
     description: 'Frontend Engineer Joonho Kim',
@@ -83,6 +74,22 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        <link
+          rel='icon'
+          type='image/png'
+          href='/favicon-96x96.png'
+          sizes='96x96'
+        />
+        <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+        <link rel='shortcut icon' href='/favicon.ico' />
+        <link
+          rel='apple-touch-icon'
+          sizes='180x180'
+          href='/apple-touch-icon.png'
+        />
+        <meta name='apple-mobile-web-app-title' content="J.K's Works" />
+        <link rel='manifest' href='/site.webmanifest' />
+
         {/* GTM Head */}
         <Script
           id='gtm-head'
