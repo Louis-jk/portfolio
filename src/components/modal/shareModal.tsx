@@ -17,6 +17,7 @@ import {
   LineIcon,
 } from 'react-share';
 import KakaoTalkShareButton from '@/components/button/share/KakaoTalkShareButton';
+import ClipboardShareButton from '@/components/button/share/ClipboardShareButton';
 import { useTranslations } from 'next-intl';
 
 interface ShareModalProps {
@@ -57,6 +58,7 @@ function ShareModal({ open, setOpen, url, title, text }: ShareModalProps) {
             size={32}
             round
           />
+          <ClipboardShareButton url={url} size={32} round />
         </div>
       </DialogContent>
     </Dialog>
