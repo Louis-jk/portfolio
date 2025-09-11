@@ -264,6 +264,19 @@ export default function Timeline({
   // 모든 디바이스에서 모든 아이템 렌더링
   const itemsToRender = items;
 
+  const handleItemClick = (item: TimelineItem) => {
+    onItemClick(item);
+
+    // GTM 이벤트 전송
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({
+        event: 'timeline_item_click',
+        timeline_id: item.id,
+        timeline_title: item.title,
+      });
+    }
+  };
+
   return (
     <div className='flex flex-col' data-timeline-section>
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 Header 아래에 sticky */}
@@ -309,7 +322,7 @@ export default function Timeline({
                     ? 'bg-gray-100 dark:bg-gray-800/70'
                     : ''
                 }`}
-                onClick={() => onItemClick(item)}
+                onClick={() => handleItemClick(item)}
               >
                 <div className='pr-0'>
                   <div className='flex items-start gap-3'>
@@ -389,7 +402,7 @@ export default function Timeline({
                     ? 'bg-gray-100 dark:bg-gray-800/70'
                     : ''
                 }`}
-                onClick={() => onItemClick(item)}
+                onClick={() => handleItemClick(item)}
                 onMouseEnter={
                   !isTabletDevice ? (e) => handleMouseEnter(e, item) : undefined
                 }
