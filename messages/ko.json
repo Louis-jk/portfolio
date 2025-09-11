@@ -647,7 +647,10 @@
     },
     "shareModal": {
       "title": "공유",
-      "description": "이 프로젝트를 친구들에게 공유해주세요."
+      "description": "이 프로젝트를 친구들에게 공유해주세요.",
+      "copyToClipboard": "클립보드에 복사",
+      "copied": "복사됨!",
+      "copyFailed": "복사 실패!"
     },
     "shareButton": {
       "buttonTitle": {

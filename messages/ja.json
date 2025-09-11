@@ -703,7 +703,10 @@
     },
     "shareModal": {
       "title": "共有",
-      "description": "このプロジェクトを友達に共有してください。"
+      "description": "このプロジェクトを友達に共有してください。",
+      "copyToClipboard": "クリップボードにコピー",
+      "copied": "コピーしました！",
+      "copyFailed": "コピーに失敗しました！"
     },
     "shareButton": {
       "buttonTitle": {

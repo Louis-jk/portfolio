@@ -232,3 +232,78 @@ body.chatbot-open {
   height: 100vh !important;
   z-index: 9999 !important;
 }
+
+@keyframes drawCheck {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 성공 메시지 애니메이션 */
+.animate-success-message {
+  animation: successMessage 0.4s ease-out forwards;
+}
+
+@keyframes successMessage {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 에러 메시지 애니메이션 */
+.animate-error-message {
+  animation: errorMessage 0.4s ease-out forwards;
+}
+
+@keyframes errorMessage {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(1) translateX(-3px);
+  }
+  40% {
+    transform: scale(1) translateX(3px);
+  }
+  50% {
+    transform: scale(1) translateX(-2px);
+  }
+  60% {
+    transform: scale(1) translateX(2px);
+  }
+  70% {
+    transform: scale(1) translateX(-1px);
+  }
+  80% {
+    transform: scale(1) translateX(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}

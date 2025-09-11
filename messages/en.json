@@ -703,7 +703,10 @@
     },
     "shareModal": {
       "title": "Share",
-      "description": "Please share this project with your friends."
+      "description": "Please share this project with your friends.",
+      "copyToClipboard": "Copy to clipboard",
+      "copied": "Copied!",
+      "copyFailed": "Copy failed!"
     },
     "shareButton": {
       "buttonTitle": {
