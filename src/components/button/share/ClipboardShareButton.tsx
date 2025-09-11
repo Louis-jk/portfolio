@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
-import { useTheme } from 'next-themes';
 
 interface ClipboardShareButtonProps {
   url: string;
@@ -21,7 +20,6 @@ function ClipboardShareButton({
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
   const t = useTranslations('modal.shareModal');
-  const { resolvedTheme } = useTheme();
 
   const handleCopy = async () => {
     try {
