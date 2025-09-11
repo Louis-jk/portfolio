@@ -52,7 +52,7 @@ export default function TimelineDetail({
     setImageLoaded(false);
   }, [item?.details?.image]);
 
-  // Lenis 초기화
+  // Lenis 초기화 (한 번만)
   useEffect(() => {
     if (!scrollRef.current || window.innerWidth < 1024) return;
 
@@ -73,12 +73,15 @@ export default function TimelineDetail({
       lenisRef.current?.destroy();
       lenisRef.current = null;
     };
-  }, [item]);
+  }, []); // 의존성 배열에서 item 제거
 
-  // item 변경 시 Lenis로 스크롤 위치 초기화
+  // item 변경 시 Lenis로 스크롤 위치 초기화 (Lenis 초기화 후 실행)
   useEffect(() => {
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
+      // 약간의 지연을 두고 스크롤 초기화
+      setTimeout(() => {
+        lenisRef.current?.scrollTo(0, { immediate: true });
+      }, 100);
     }
   }, [item]);
 
