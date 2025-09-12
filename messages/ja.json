@@ -721,6 +721,7 @@
       "close": "チャットボットを閉じる",
       "open": "チャットボットを開く",
       "sorry": "申し訳ありません。回答はまだ準備ができていません。",
+      "resetToStart": "↺ 最初に戻る",
       "whatIsMySkill": {
         "question": "技術スタックは？",
         "answer": "React、Next.js、TypeScriptを中心に、迅速で保守性の高いフロントエンド開発を得意としています。Tailwind CSSで統一感のあるUIを構築し、状態管理はZustand、Redux、Context APIを使い分けています。React Nativeを使ってモバイルアプリの開発も行い、最近ではWeb3やチャットボット、インタラクティブなアニメーションにも注力しています。",

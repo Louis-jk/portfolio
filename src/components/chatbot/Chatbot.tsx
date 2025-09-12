@@ -19,10 +19,13 @@ import type { ChatbotData, ChatbotChoice } from '@/types/chatbot';
 import { profanityWords, sexualWords } from '@/data/chatbot/prohibited-words';
 import { CiLink } from 'react-icons/ci';
 import Image from 'next/image';
+import { formatTime } from '@/util/time';
+import { getCurrentLocale } from '@/util/locale';
 
 type Message = {
   from: 'user' | 'bot';
   text: string;
+  timestamp?: Date;
   choices?: ChatbotChoice[];
   isChoiceMessage?: boolean;
   contactButtons?: {
@@ -40,16 +43,6 @@ export default function Chatbot() {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('modal.chatbot');
   const isKeyboardOpen = useDetectKeyboardOpen();
-
-  // 현재 로케일 가져오기 (URL에서 추출)
-  const getCurrentLocale = (): string => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.pathname;
-      const localeMatch = path.match(/^\/([a-z]{2})/);
-      return localeMatch ? localeMatch[1] : 'ko';
-    }
-    return 'ko';
-  };
 
   const currentLocale = getCurrentLocale();
   const chatbotData: ChatbotData =
@@ -230,7 +223,10 @@ export default function Chatbot() {
     if (!trimmed) return;
 
     // 사용자 메시지를 채팅창에 추가
-    setMessages((msgs) => [...msgs, { from: 'user', text: trimmed }]);
+    setMessages((msgs) => [
+      ...msgs,
+      { from: 'user', text: trimmed, timestamp: new Date() },
+    ]);
 
     // 욕설 및 성적 표현 감지 (한국어 단어 경계 고려)
     const hasProfanity = profanityWords.some((word) => {
@@ -374,6 +370,7 @@ export default function Chatbot() {
         {
           from: 'bot',
           text: reply,
+          timestamp: new Date(),
           choices: nextChoices,
           contactButtons: contactButtons,
           goToProjectLink: goToProjectLink,
@@ -635,49 +632,48 @@ export default function Chatbot() {
                               height={40}
                               className='rounded-full flex-shrink-0 select-none pointer-events-none'
                             />
-                            <div
-                              className={`font-semibold bg-gray-100 text-black px-4 py-3 rounded-2xl break-words relative shadow-sm`}
-                            >
-                              {m.text}
-                              {/* 말풍선 꼬리 */}
+                            <div className='flex flex-col'>
                               <div
-                                className='absolute left-1 top-4 w-3 h-3 transform -translate-x-1/2 -translate-y-1/2 rotate-45'
-                                style={{
-                                  backgroundColor: '#f3f4f6',
-                                }}
-                              />
+                                className={`font-semibold bg-gray-100 text-black px-4 py-3 rounded-2xl break-words relative shadow-sm`}
+                              >
+                                {m.text}
+                                {/* 말풍선 꼬리 */}
+                                <div
+                                  className='absolute left-1 top-4 w-3 h-3 transform -translate-x-1/2 -translate-y-1/2 rotate-45'
+                                  style={{
+                                    backgroundColor: '#f3f4f6',
+                                  }}
+                                />
+                              </div>
+                              {/* 시간 표시 */}
+                              {m.timestamp && (
+                                <div className='text-xs text-gray-500 mt-1 ml-2'>
+                                  {formatTime(m.timestamp, currentLocale)}
+                                </div>
+                              )}
                             </div>
                           </div>
                         )}
 
                         {/* 사용자 메시지: 말풍선과 아바타를 한 줄로 배치 */}
                         {m.from === 'user' && (
-                          <div className='flex items-start gap-2 flex-row-reverse'>
-                            <Image
-                              src='/images/chatbot_visitor.png'
-                              alt='you'
-                              width={40}
-                              height={40}
-                              className='rounded-full flex-shrink-0 select-none pointer-events-none'
-                            />
-                            <div
-                              className={`font-normal bg-${
-                                resolvedTheme === 'dark'
-                                  ? 'purple-500'
-                                  : 'purple-700'
-                              } text-white px-4 py-3 rounded-2xl break-words relative shadow-sm`}
-                            >
-                              {m.text}
-                              {/* 말풍선 꼬리 */}
+                          <div className='flex items-start gap-2 flex-row-reverse mt-5 mb-3'>
+                            <div className='flex flex-col items-end'>
                               <div
-                                className='absolute right-1 top-4 w-3 h-3 transform translate-x-1/2 -translate-y-1/2 rotate-45'
-                                style={{
-                                  backgroundColor:
-                                    resolvedTheme === 'dark'
-                                      ? '#ad46ff'
-                                      : '#8200db',
-                                }}
-                              />
+                                className={`font-normal bg-${
+                                  resolvedTheme === 'dark'
+                                    ? 'purple-500'
+                                    : 'purple-700'
+                                } text-white px-4 py-3 rounded-2xl break-words relative shadow-sm`}
+                              >
+                                {m.text}
+                              </div>
+                              {/* 시간 표시 */}
+                              {m.timestamp && (
+                                <div className='text-xs text-gray-500 mt-1 mr-2'>
+                                  {formatTime(m.timestamp, currentLocale)}
+                                </div>
+                              )}
                             </div>
                           </div>
                         )}
@@ -790,7 +786,7 @@ export default function Chatbot() {
                                       : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-purple-700 hover:border-purple-600 hover:text-white'
                                   }`}
                                 >
-                                  ↺ 처음으로
+                                  {t('resetToStart')}
                                 </button>
                               </div>
                             )}
