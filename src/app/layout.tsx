@@ -52,6 +52,7 @@ export const metadata: Metadata = {
   description: 'Frontend Engineer Joonho Kim',
   keywords: 'Joonho Kim, Frontend Engineer, Web Developer, Web3 Developer',
   authors: [{ name: 'Joonho Kim', url: 'https://joonhokim.dev' }],
+  metadataBase: new URL('https://joonhokim.dev'),
   openGraph: {
     title: 'Joonho Kim',
     description: 'Frontend Engineer Joonho Kim',
@@ -63,6 +64,12 @@ export const metadata: Metadata = {
         height: 600,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Joonho Kim',
+    description: 'Frontend Engineer Joonho Kim',
+    images: ['/images/og_image.png'],
   },
 };
 
