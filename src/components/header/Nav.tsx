@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { HiHome } from 'react-icons/hi2';
 import { IoLanguage } from 'react-icons/io5';
 import LanguageSelector from '@/components/modal/LanguageSelector';
@@ -71,7 +71,6 @@ function Nav({ onHomeClick }: NavProps) {
         <li>
           <Link
             href='/'
-            locale={locale}
             onClick={handleHomeClick}
             className='text-foreground hover:text-foreground/80 transition-colors'
           >
