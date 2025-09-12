@@ -66,6 +66,9 @@ export const metadata: Metadata = {
   },
 };
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID || '';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -90,6 +93,25 @@ export default function RootLayout({
         <meta name='apple-mobile-web-app-title' content="J.K's Works" />
         <link rel='manifest' href='/site.webmanifest' />
 
+        {/* GA4 gtag.js 추가 */}
+        <Script
+          id='ga4'
+          strategy='afterInteractive'
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+        />
+        <Script
+          id='ga4-init'
+          strategy='afterInteractive'
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA4_ID}', { send_page_view: false });
+            `,
+          }}
+        />
+
         {/* GTM Head */}
         <Script
           id='gtm-head'
@@ -100,26 +122,7 @@ export default function RootLayout({
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-5P2GRS4X');
-            `,
-          }}
-        />
-
-        {/* GA4 gtag.js 추가 */}
-        <Script
-          id='ga4'
-          strategy='afterInteractive'
-          src='https://www.googletagmanager.com/gtag/js?id=G-CKP70PTE30'
-        />
-        <Script
-          id='ga4-init'
-          strategy='afterInteractive'
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-CKP70PTE30', { send_page_view: false });
+            })(window,document,'script','dataLayer','${GTM_ID}');
             `,
           }}
         />
@@ -130,7 +133,7 @@ export default function RootLayout({
         {/* GTM Body */}
         <noscript>
           <iframe
-            src='https://www.googletagmanager.com/ns.html?id=GTM-5P2GRS4X'
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height='0'
             width='0'
             style={{ display: 'none', visibility: 'hidden' }}
