@@ -37,6 +37,8 @@ function Intro() {
 
   const { resolvedTheme } = useTheme();
   const bubbleRef = useRef<HTMLDivElement>(null);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isHidingRef = useRef(false); // 인사말이 사라지는 중인지 추적
 
   // 메시지 세팅 - useMemo로 메시지 배열 메모이제이션
   const messagesData = useMemo(() => {
@@ -88,10 +90,44 @@ function Intro() {
     };
   }, [showGreeting, isHovered, setIsGreetingVisible]); // 함수 의존성 제거
 
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (hideTimerRef.current) {
+        clearTimeout(hideTimerRef.current);
+      }
+    };
+  }, []);
+
   // 마우스 오버 시 메시지 변경
   const handleMouseEnter = () => {
-    if (!showGreeting) {
+    // 기존 타이머가 있다면 취소
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = null;
+    }
+
+    // 인사말이 사라지는 중이 아니라면 새로운 메시지 설정
+    if (!showGreeting && !isHidingRef.current) {
       setRandomMessage(); // 새로운 액션 사용
+    }
+
+    // 인사말이 사라지는 상태를 해제
+    isHidingRef.current = false;
+  };
+
+  // 마우스가 떠날 때 지연 처리
+  const handleMouseLeave = () => {
+    if (!showGreeting) {
+      // 인사말이 사라지는 상태로 설정
+      isHidingRef.current = true;
+
+      // 마우스가 떠난 후 2초 후에 인사말 사라지도록 지연
+      hideTimerRef.current = setTimeout(() => {
+        resetGreeting();
+        hideTimerRef.current = null;
+        isHidingRef.current = false; // 상태 초기화
+      }, 2000);
     }
   };
 
@@ -133,11 +169,7 @@ function Intro() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={() => {
-            if (!showGreeting) {
-              resetGreeting();
-            }
-          }}
+          onMouseLeave={handleMouseLeave}
         >
           <Renderer />
 
