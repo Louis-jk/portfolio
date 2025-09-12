@@ -665,6 +665,7 @@
       "close": "챗봇 닫기",
       "open": "챗봇 열기",
       "sorry": "죄송합니다. 답변을 준비 중입니다.",
+      "resetToStart": "↺ 처음으로",
       "whatIsMySkill": {
         "question": "스킬이 어떻게 돼?",
         "answer": "React, Next.js, TypeScript를 중심으로 빠르고 유지보수하기 쉬운 프론트엔드를 개발합니다. Tailwind CSS로 일관된 UI를 구현하고, 상태 관리는 Zustand와 Redux, Context API를 사용합니다. React Native로 모바일 앱도 개발하며, 최근에는 Web3, 챗봇, 애니메이션 인터페이스에도 집중하고 있습니다.",

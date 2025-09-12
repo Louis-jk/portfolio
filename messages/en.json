@@ -721,6 +721,7 @@
       "close": "Close Chatbot",
       "open": "Open Chatbot",
       "sorry": "Sorry, answer is not ready yet.",
+      "resetToStart": "↺ Back to Start",
       "whatIsMySkill": {
         "question": "What are your skills?",
         "answer": "I specialize in building fast and maintainable frontend applications using React, Next.js, and TypeScript. I implement consistent UI with Tailwind CSS, and manage state using Zustand, Redux, and Context API. I also develop mobile apps with React Native, and recently have been focusing on Web3, chatbots, and interactive animations.",
