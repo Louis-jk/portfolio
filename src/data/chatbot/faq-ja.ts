@@ -18,14 +18,14 @@ export const chatbotDataJa: ChatbotData = {
   choices: {
     skills: {
       id: 'skills',
-      text: 'どのような技術を使用していますか？',
+      text: 'スキルは？',
       response:
         'フロントエンド: TypeScript, React, Next.js, React Native, Electron / バックエンド: Node.js, Go（個人プロジェクト経験） / データベース: MongoDB, MySQL, MariaDB / クラウド: AWS（EC2, S3, Route53, CloudFront）',
       nextChoices: ['experience'],
     },
     frontend: {
       id: 'frontend',
-      text: 'フロントエンド技術は？',
+      text: 'フロントエンドスキルは？',
       response:
         'TypeScriptベースのReact、Next.js、React Native、Electronなどを使用しています。コンポーネントベースのアーキテクチャとパフォーマンス最適化に重点を置いて開発しています。',
       nextChoices: ['experience', 'contact'],
@@ -195,7 +195,7 @@ export const chatbotDataJa: ChatbotData = {
     },
     languages: {
       id: 'languages',
-      text: 'どのような言語を使用しますか？',
+      text: '言語能力は？',
       response:
         '韓国語が母国語で、ビジネスコミュニケーションのための日本語に堪能です。英語は基礎から勉強中で、簡単なコミュニケーションは可能ですが、さらに向上させるために努力しています。',
       nextChoices: ['korean', 'japanese', 'english'],
@@ -251,7 +251,7 @@ export const chatbotDataJa: ChatbotData = {
     },
     strengths: {
       id: 'strengths',
-      text: '強みは何ですか？',
+      text: '強みは？',
       response:
         '問題を素早く把握し解決する能力が強みです。コンポーネント単位設計、パフォーマンス最適化、ユーザー中心のUI実装に強く、様々な環境でのクロスブラウジングとモバイル対応も得意としています。',
       nextChoices: ['techStack', 'teamwork', 'problemSolving', 'contact'],
@@ -265,7 +265,7 @@ export const chatbotDataJa: ChatbotData = {
     },
     teamwork: {
       id: 'teamwork',
-      text: 'チームワークはどうしますか？',
+      text: 'チームワークはどうしてる？',
       response:
         'リモートワーク環境でも積極的なコミュニケーションを通じてチームメンバーと協力し、コードレビューと知識共有を重要視しています。',
       nextChoices: ['strengths', 'contact'],
@@ -299,7 +299,7 @@ export const chatbotDataJa: ChatbotData = {
     },
     goals: {
       id: 'goals',
-      text: '目標は何ですか？',
+      text: '目標は？',
       response:
         '常に新しい技術と挑戦を通じてユーザーエクスペリエンスを改善し、チームと共に成長するフロントエンド開発者になることが目標です。',
       nextChoices: ['interests', 'contact'],
@@ -320,14 +320,14 @@ export const chatbotDataJa: ChatbotData = {
     },
     newChallenges: {
       id: 'newChallenges',
-      text: '新しい挑戦についてどう思いますか？',
+      text: '新しい挑戦についてどう思う？',
       response:
         '新しい技術とドメインへの挑戦を恐れず、学習曲線を楽しんでいます。',
       nextChoices: ['interests', 'contact'],
     },
     contact: {
       id: 'contact',
-      text: 'どのように連絡しますか？',
+      text: '連絡先は？',
       response: '連絡したい場合は、下記のボタンをクリックしてください。',
       contactButtons: [
         {
