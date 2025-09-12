@@ -27,7 +27,6 @@ function Model({
     const now = Date.now();
     let targetY = ref.current.rotation.y;
 
-    // 자동 회전 조건
     if (
       rotationStage === 'idle' &&
       userInteracted &&
@@ -36,18 +35,13 @@ function Model({
       setRotationStage('toDiagonal');
     }
 
-    if (rotationStage === 'toFront') {
-      targetY = 0;
-    } else if (rotationStage === 'toDiagonal') {
-      targetY = Math.PI / 4;
-    }
+    if (rotationStage === 'toFront') targetY = 0;
+    else if (rotationStage === 'toDiagonal') targetY = Math.PI / 4;
 
     const currentY = ref.current.rotation.y;
     ref.current.rotation.y = THREE.MathUtils.lerp(currentY, targetY, 0.05);
 
-    if (Math.abs(currentY - targetY) < 0.01) {
-      ref.current.rotation.y = targetY;
-    }
+    if (Math.abs(currentY - targetY) < 0.01) ref.current.rotation.y = targetY;
   });
 
   return (
@@ -63,24 +57,20 @@ function Model({
 
 export default function Renderer() {
   const [isClient, setIsClient] = useState(false);
-
   const [rotationStage, setRotationStage] = useState<
     'idle' | 'toFront' | 'toDiagonal'
   >('idle');
-
   const [userInteracted, setUserInteracted] = useState(false);
   const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
+  const [canvasSize, setCanvasSize] = useState({ width: 232, height: 232 });
 
-  // 초기 애니메이션 실행
+  // 초기 애니메이션
   useEffect(() => {
-    const toFrontTimer = setTimeout(() => {
-      setRotationStage('toFront');
-    }, 1000);
-
-    const toDiagonalTimer = setTimeout(() => {
-      setRotationStage('toDiagonal');
-    }, 4800);
-
+    const toFrontTimer = setTimeout(() => setRotationStage('toFront'), 1000);
+    const toDiagonalTimer = setTimeout(
+      () => setRotationStage('toDiagonal'),
+      4800
+    );
     return () => {
       clearTimeout(toFrontTimer);
       clearTimeout(toDiagonalTimer);
@@ -91,18 +81,52 @@ export default function Renderer() {
     setIsClient(true);
   }, []);
 
+  // 반응형 Canvas 사이즈
+  useEffect(() => {
+    const updateSize = () => {
+      const w = window.innerWidth < 768 ? window.innerWidth * 0.6 : 232;
+      const h = w;
+      setCanvasSize({ width: w, height: h });
+    };
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
+  // WebGL context lost / restore
+  useEffect(() => {
+    const canvas = document.querySelector('canvas');
+    if (!canvas) return;
+
+    const handleLost = (e: Event) => {
+      e.preventDefault();
+      console.warn('WebGL context lost');
+    };
+    const handleRestore = () => console.log('WebGL context restored');
+
+    canvas.addEventListener('webglcontextlost', handleLost);
+    canvas.addEventListener('webglcontextrestored', handleRestore);
+
+    return () => {
+      canvas.removeEventListener('webglcontextlost', handleLost);
+      canvas.removeEventListener('webglcontextrestored', handleRestore);
+    };
+  }, []);
+
   if (!isClient) return null;
 
   return (
-    <div className='h-[14.5rem] w-[14.5rem] 2xl:h-[17.5rem] 2xl:w-[17.5rem]'>
+    <div style={{ width: canvasSize.width, height: canvasSize.height }}>
       <Canvas
         camera={{ position: [0, 0, 3], fov: 17 }}
+        dpr={[1, 1.5]} // 모바일 고성능 GPU를 위해 dpr 제한
         gl={{
-          antialias: true,
+          antialias: false,
           alpha: true,
           powerPreference: 'high-performance',
+          preserveDrawingBuffer: false,
         }}
-        performance={{ min: 0.5 }}
+        performance={{ min: 0.5, max: 1 }}
       >
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
@@ -136,9 +160,7 @@ export default function Renderer() {
             setUserInteracted(true);
             setRotationStage('idle');
           }}
-          onEnd={() => {
-            setLastInteractionTime(Date.now());
-          }}
+          onEnd={() => setLastInteractionTime(Date.now())}
         />
       </Canvas>
     </div>
