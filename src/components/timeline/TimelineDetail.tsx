@@ -365,7 +365,7 @@ export default function TimelineDetail({
               <h4 className='text-lg font-semibold'>{tD('overview')}</h4>
               <ShareButton onShareClick={() => setOpenShareModal(true)} />
             </div>
-            <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
+            <p className='text-gray-700 dark:text-gray-300 leading-[1.5] whitespace-pre-line'>
               {t(item.details.overview)}
             </p>
           </motion.div>

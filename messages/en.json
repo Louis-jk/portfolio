@@ -38,7 +38,7 @@
           "Updated and redesigned portfolio site with i18n (multilingual) support"
         ],
         "details": {
-          "overview": "During the first half of 2025, I focused on strengthening my skills through various personal projects, particularly in areas not yet fully utilized in real-world environments. I emphasized mastering practical technologies such as real-time communication, test-driven development (TDD), Go backend, and building stable frontend applications using TypeScript.",
+          "overview": "During the first half of 2025, I focused on strengthening my skills through various personal projects, particularly in areas not yet fully utilized in real-world environments.\nI emphasized mastering practical technologies such as real-time communication, test-driven development (TDD), Go backend, and building stable frontend applications using TypeScript.",
           "challenges": [
             "Understanding overall architecture and state management in full-stack development",
             "Overcoming lack of experience in frontend test automation",
@@ -65,7 +65,7 @@
           "Developed reusable UI components and implemented responsive design"
         ],
         "details": {
-          "overview": "Collaborated remotely as a frontend developer for a Japanese B2C service platform. Joined the project shortly before release and contributed under tight deadlines to meet the launch schedule. Built and maintained dynamic application pages tailored to six distinct business types. Developed reusable UI components using shadcn/ui and styled them with Tailwind CSS for consistent, responsive design. Designed multi-step forms with React Hook Form and Zod for input validation and error handling. Integrated RESTful APIs using fetch and managed client-side state with React Context API. Monitored system health and resolved issues post-launch through continuous tracking with Datadog.",
+          "overview": "Joined the project as a frontend developer in the final pre-launch phase of a Japanese B2C service platform, successfully completing stable frontend development and deployment within a short timeframe.\nDeveloped and maintained six industry-specific custom screens, creating reusable UI components and implementing responsive design to enhance both user experience and development efficiency.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -74,14 +74,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Joined the project shortly before release and needed to complete stable frontend development and deployment under a tight schedule",
-            "Faced complexity in efficiently implementing and maintaining customized pages tailored for six different business types",
-            "Required to utilize various technologies such as React Hook Form, Zod, shadcn/ui, and Tailwind CSS to deliver a consistent user experience and responsive UI simultaneously"
+            "Achieved a stable release under a compressed development schedule just before launch",
+            "Unified the complexity of six dynamic, industry-specific pages into a consistent design system despite differing business requirements",
+            "Combined multiple libraries to meet requirements for UX, responsive design, and form validation"
           ],
           "achievements": [
-            "In collaboration with the team, successfully built and supported the launch of dynamic pages for six business types within a strict deadline",
-            "Designed and implemented reusable UI components, greatly improving development efficiency and code maintainability",
-            "Ensured post-launch system stability through continuous monitoring with Datadog and prompt issue resolution"
+            "Successfully developed and released six types of business pages within a strict timeline",
+            "Designed reusable UI components, greatly improving development efficiency and code maintainability",
+            "Implemented real-time monitoring with Datadog, enabling rapid issue resolution and ensuring post-launch service stability"
           ]
         }
       },
@@ -97,7 +97,7 @@
           "Adjusted overall page styles and fixed bugs, including mobile responsiveness"
         ],
         "details": {
-          "overview": "I initially participated in the development of the “NFT Staking” page in the BASE section, and later joined the frontend development team. I led style adjustments for the homepage marquee area, design renewal and multilingual support for the “GACHA” and “MARKET” pages, and performed fine style tuning across the entire homepage. I integrated multilingual SMS verification and enhanced mobile responsiveness. For existing frontend bug fixes, I collaborated closely with the previous developer. I utilized wagmi and RainbowKit for wallet integration, GSAP for animations, and SWR for data management. Regarding the “Mystery Ticket” page, I handled style and functional modifications due to planning changes, as well as additional development involving direct Web3 and API integration.",
+          "overview": "I was responsible for frontend development of a Web3-based campaign platform, collaborating with the team to build a new site and drive continuous improvements.\n\nAt the early stage of the project, I independently developed the frontend of the “NFT Staking” page on the new site (BASE), successfully implementing API integrations and interactive user experiences. After joining the client-side frontend development team, I took the lead in key UI/UX enhancements, including design renewal, multilingual support, and mobile responsiveness.\n\nI also analyzed and resolved version-related issues over time to improve frontend stability and maintainability, and implemented a multilingual SMS authentication feature to enhance global accessibility.Throughout the process, I worked closely with planners, designers, and backend developers, reviewing feature requirements and design mockups, and proactively handling edge cases and additional requests from a frontend perspective. \n\nIn addition, I flexibly managed updates to the “Mystery Ticket” page, including style and functionality changes as well as Web3 and API integration improvements in response to evolving project requirements.",
           "technologies": [
             "Next.js",
             "Firebase",
@@ -106,14 +106,14 @@
             "Tailwind CSS"
           ],
           "challenges": [
-            "Overcame technical challenges while implementing complex features during Web3 wallet integration and direct API integration",
-            "Performed UI/UX optimization considering both multilingual support and mobile responsiveness",
-            "Identified and quickly fixed numerous bugs in code written by existing frontend developers within the team, improving service stability"
+            "Resolved complex authentication and data processing logic during direct integration of Web3 wallets and APIs",
+            "Optimized UI/UX with consideration for both multilingual support and mobile responsiveness",
+            "Ensured system stability by analyzing and improving frontend issues across different versions over time"
           ],
           "achievements": [
-            "Independently developed the “NFT Staking” page, collaborating with backend developers to review and resolve API latency issues, successfully delivering an interactive user experience",
-            "Promptly handled design updates and multilingual support for renewed pages, enhancing service quality and accessibility",
-            "Collaborated with responsible developers to swiftly fix critical bugs, significantly improving overall project stability"
+            "Developed the \"NFT Staking\" page to resolve API latency issues and deliver an interactive user experience",
+            "Redesigned the GACHA and MARKET pages, improved multilingual support, and adjusted overall site styling (including mobile responsiveness) to enhance service quality and accessibility",
+            "Quickly resolved version-specific frontend issues, improving overall project stability and maintainability"
           ]
         }
       },
