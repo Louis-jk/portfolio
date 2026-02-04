@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { HiHome } from 'react-icons/hi2';
 import { IoLanguage } from 'react-icons/io5';
@@ -20,20 +20,18 @@ interface NavProps {
 
 function Nav({ onHomeClick }: NavProps) {
   const [open, setOpen] = useState(false);
-  const [code, setCode] = useState('826');
-
-  // setHeaderNameStyle 관련 코드와 상태 정의 제거
   const locale = useLocale();
 
-  useEffect(() => {
+  // locale이 바뀌면 바로 국기 코드 계산 (useEffect 대신 useMemo로 동기 반영)
+  const code = useMemo(() => {
     if (LOCALE_TO_NUMERIC_CODE[locale]) {
-      setCode(LOCALE_TO_NUMERIC_CODE[locale]);
-    } else if (locale === 'en') {
-      const countryCode = getCookieValue();
-      setCode(COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'GB'] ?? '826');
-    } else {
-      setCode('826');
+      return LOCALE_TO_NUMERIC_CODE[locale];
     }
+    if (locale === 'en') {
+      const countryCode = getCookieValue();
+      return COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'US'] ?? '840';
+    }
+    return '840';
   }, [locale]);
 
   const handleHomeClick = (e: React.MouseEvent) => {

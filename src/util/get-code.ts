@@ -26,5 +26,5 @@ export function getCookieValue(): string | null {
 
 export function getEnglishLanguageCode(): string {
   const countryCode = getCookieValue();
-  return COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'GB'] ?? '826';
+  return COUNTRY_CODE_TO_NUMERIC_CODE[countryCode ?? 'US'] ?? '840';
 }

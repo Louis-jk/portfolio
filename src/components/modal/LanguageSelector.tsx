@@ -6,10 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Link from 'next/link';
+import { Link, usePathname } from '@/i18n/navigation';
 import Flag from 'react-world-flags';
 import { useLocale } from 'next-intl';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import {
   getEnglishLanguageCode,
   LOCALE_TO_NUMERIC_CODE,
@@ -26,7 +26,7 @@ const LanguageSelector = ({
 }) => {
   const t = useTranslations('modal.languageSelector');
   const currentLocale = useLocale();
-  const pathname = usePathname();
+  const pathname = usePathname(); // next-intl: locale 제외한 경로
   const searchParams = useSearchParams();
 
   const LANGUAGES = [
@@ -71,16 +71,15 @@ const LanguageSelector = ({
                   </div>
                 ) : (
                   <Link
-                    href={`/${lang.locale}${pathname.replace(
-                      `/${currentLocale}`,
-                      ''
-                    )}${
+                    href={
                       searchParams.toString()
-                        ? `?${searchParams.toString()}`
-                        : ''
-                    }`}
+                        ? `${pathname}?${searchParams.toString()}`
+                        : pathname
+                    }
+                    locale={lang.locale}
                     className='flex flex-row items-center gap-2'
                     tabIndex={-1}
+                    onClick={() => setOpen(false)}
                   >
                     <Flag code={lang.code} className='w-9 h-7' />
                     <p className='text-lg font-semibold'>{lang.label}</p>
