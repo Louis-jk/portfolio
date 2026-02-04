@@ -2,6 +2,62 @@ import { TimelineItem } from '@/types/timeline.type';
 
 export const timelineData: TimelineItem[] = [
   {
+    id: 'projects.crewinc_mobile_frontend',
+    date: 'projects.crewinc_mobile_frontend.date',
+    title: 'projects.crewinc_mobile_frontend.title',
+    company: 'projects.crewinc_mobile_frontend.company',
+    region: 'projects.crewinc_mobile_frontend.region',
+    role: 'projects.crewinc_mobile_frontend.role',
+    description: [
+      'projects.crewinc_mobile_frontend.description.0',
+      'projects.crewinc_mobile_frontend.description.1',
+      'projects.crewinc_mobile_frontend.description.2',
+    ],
+    isNDA: true,
+    isCommercial: true,
+    commercialPlatforms: {
+      web: false,
+      mobile: false,
+      desktop: false,
+    },
+    commercialLinks: {
+      web: '',
+      ios: '',
+      android: '',
+      desktop: '',
+    },
+    thumbnail:
+      'https://storage.googleapis.com/jk-static-assets/confidential_nda.png',
+    details: {
+      overview: 'projects.crewinc_mobile_frontend.details.overview',
+      technologies: [
+        'TypeScript',
+        'React Native',
+        'React Native Testing Library',
+      ],
+      tools: {
+        development: ['Cursor', 'GitHub'],
+        communication: ['Slack', 'Google Meet', 'Miro'],
+        design: ['Figma'],
+        debugging: ['Jest', 'Detox'],
+      },
+      challenges: [
+        'projects.crewinc_mobile_frontend.details.challenges.0',
+        'projects.crewinc_mobile_frontend.details.challenges.1',
+        'projects.crewinc_mobile_frontend.details.challenges.2',
+        'projects.crewinc_mobile_frontend.details.challenges.3',
+      ],
+      achievements: [
+        'projects.crewinc_mobile_frontend.details.achievements.0',
+        'projects.crewinc_mobile_frontend.details.achievements.1',
+        'projects.crewinc_mobile_frontend.details.achievements.2',
+        'projects.crewinc_mobile_frontend.details.achievements.3',
+      ],
+      image:
+        'https://storage.googleapis.com/jk-static-assets/confidential_nda.png',
+    },
+  },
+  {
     id: 'projects.personal',
     date: 'projects.personal.date',
     title: 'projects.personal.title',
