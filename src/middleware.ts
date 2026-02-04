@@ -5,7 +5,7 @@ import { routing } from './i18n/routing';
 // export default createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-  const countryCode = request.headers.get('x-vercel-ip-country') ?? 'GB';
+  const countryCode = request.headers.get('x-vercel-ip-country') ?? 'US';
 
   // next-intl 미들웨어 실행
   const response = createMiddleware(routing)(request);
@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
   if (countryCode) {
     response.headers.append(
       'Set-Cookie',
-      `countryCode=${countryCode}; Path=/; SameSite=Lax`
+      `countryCode=${countryCode}; Path=/; SameSite=Lax`,
     );
   }
 
