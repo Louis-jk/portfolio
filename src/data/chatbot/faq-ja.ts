@@ -127,6 +127,10 @@ export const chatbotDataJa: ChatbotData = {
           text: 'テニス予約アプリ',
           url: '?item=projects.confidential_korean_startup',
         },
+        {
+          text: 'Crew Inc.モバイルアプリ',
+          url: '?item=projects.crewinc_mobile_frontend',
+        },
       ],
       nextChoices: ['workStyle', 'contact'],
     },

@@ -24,9 +24,36 @@
       "title": "Project Details"
     },
     "projects": {
+      "crewinc_mobile_frontend": {
+        "title": "Contributed to Frontend Development of a React Native Mobile App (Fully Remote)",
+        "date": "Dec 2025 - Present",
+        "company": "Crew, Inc.",
+        "region": "Tokyo, Japan",
+        "role": "Freelance Frontend Developer",
+        "description": [
+          "Frontend page development for a specific functional area within a non-public project",
+          "Design and implementation of user interfaces with multilingual support in mind",
+          "Improvement of responsive UI and stability across various device environments"
+        ],
+        "details": {
+          "overview": "I am involved in frontend development for a React Native–based mobile application. The project is currently in a pre-release testing phase, where I focus on screen-level architecture, state management patterns, and building reusable UI components with an emphasis on maintainability and scalability.",
+          "challenges": [
+            "Designing a scalable frontend architecture for a React Native mobile application",
+            "Organizing state management and asynchronous data flows with real-world service conditions in mind",
+            "Designing maintainable and readable components during the testing phase of the application",
+            "Handling UI and user experience differences between iOS and Android platforms"
+          ],
+          "achievements": [
+            "Gained hands-on experience in frontend development for React Native mobile applications",
+            "Improved code maintainability through reusable UI components and screen-level architecture design",
+            "Established stable rendering by organizing state management and API integration patterns",
+            "Analyzed and improved various UI/UX issues identified during the testing phase"
+          ]
+        }
+      },
       "personal": {
         "title": "Personal Projects & Technical Skill Enhancement",
-        "date": "Jan 2025 - Present",
+        "date": "Jan 2025 - Dec 2025",
         "company": "Personal Project",
         "region": "Yangsan, Korea",
         "role": "Full-Stack Developer\n(in training)",
