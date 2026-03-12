@@ -15,7 +15,7 @@
         "Hope you have a great day! ☀️"
       ],
       "aboutMeTitle": "About Me",
-      "aboutMe": "I am a frontend developer with 5+ years of experience, skilled in problem-solving and user-focused UI design. I have worked extensively with React and Next.js on web and mobile projects, collaborating remotely with global teams. Open to freelance and full-time remote roles, I am ready to contribute immediately to meaningful projects while continuing to grow my skills."
+      "aboutMe": "I am a frontend engineer with over 15 years of experience in web production and frontend development, including approximately 6 years of professional experience as a frontend developer. I specialize in building web and mobile applications using React, Next.js, and React Native, with a strong focus on user-centered UI design and maintainable, scalable frontend architecture. In recent years, I have also worked on projects involving AI (LLM)-powered applications and Web3 technologies. I have experience collaborating with international development teams in remote environments, communicating in Japanese and English to effectively support global project development. I am available for both freelance and full-time remote positions and would be glad to contribute as an immediately productive team member."
     }
   },
   "timeline": {
@@ -25,29 +25,31 @@
     },
     "projects": {
       "crewinc_mobile_frontend": {
-        "title": "Contributed to Frontend Development of a React Native Mobile App (Fully Remote)",
-        "date": "Dec 2025 - Current",
+        "title": "Frontend Development for an AI (LLM) Mobile Application (React Native / Full Remote)",
+        "date": "Dec 2025 - Feb 2026",
         "company": "Crew, Inc.",
         "region": "Tokyo, Japan",
         "role": "Freelance Frontend Developer",
         "description": [
-          "Frontend page development for a specific functional area within a non-public project",
-          "Design and implementation of user interfaces with multilingual support in mind",
-          "Improvement of responsive UI and stability across various device environments"
+          "Participated in frontend development of an AI LLM-based React Native mobile application",
+          "Designed screen-level structures and implemented reusable UI components",
+          "Collaborated with Japanese and Taiwanese development teams to improve features and UI in a multilingual environment"
         ],
         "details": {
-          "overview": "I am involved in frontend development for a React Native–based mobile application. The project is currently in a pre-release testing phase, where I focus on screen-level architecture, state management patterns, and building reusable UI components with an emphasis on maintainability and scalability.",
+          "overview": "I was responsible for frontend development in a React Native-based mobile application project utilizing AI LLM technology. My work included designing screen-level architecture, organizing state management patterns, and building reusable UI components, focusing on maintainability and scalability. During the project, I collaborated with the Japanese development team in Japanese and communicated with the Taiwan-based development team in English via Slack, working within a global development environment.",
           "challenges": [
-            "Designing a scalable frontend architecture for a React Native mobile application",
-            "Organizing state management and asynchronous data flows with real-world service conditions in mind",
-            "Designing maintainable and readable components during the testing phase of the application",
-            "Handling UI and user experience differences between iOS and Android platforms"
+            "Designed a scalable frontend architecture for a React Native-based mobile application",
+            "Organized state management patterns and asynchronous data flows considering real-world service environments",
+            "Addressed UI/UX issues and platform differences between iOS and Android during the testing phase",
+            "Designed reusable UI components with a focus on maintainability and readability"
           ],
           "achievements": [
-            "Gained hands-on experience in frontend development for React Native mobile applications",
-            "Improved code maintainability through reusable UI components and screen-level architecture design",
-            "Established stable rendering by organizing state management and API integration patterns",
-            "Analyzed and improved various UI/UX issues identified during the testing phase"
+            "Gained experience in designing and implementing the frontend architecture of an AI LLM-based mobile service",
+            "Built and structured the frontend architecture of a React Native mobile application",
+            "Improved code maintainability through reusable UI components and screen-level structural design",
+            "Organized state management and API integration patterns to ensure stable UI rendering",
+            "Improved UI behavior and user experience by addressing platform differences between iOS and Android",
+            "Collaborated with Japanese and Taiwanese development teams in a multilingual environment (Japanese / English)"
           ]
         }
       },

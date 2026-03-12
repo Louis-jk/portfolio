@@ -34,6 +34,8 @@ export const timelineData: TimelineItem[] = [
         'TypeScript',
         'React Native',
         'React Native Testing Library',
+        'LLM Integration',
+        'Global Collaboration',
       ],
       tools: {
         development: ['Cursor', 'GitHub'],
@@ -52,6 +54,8 @@ export const timelineData: TimelineItem[] = [
         'projects.crewinc_mobile_frontend.details.achievements.1',
         'projects.crewinc_mobile_frontend.details.achievements.2',
         'projects.crewinc_mobile_frontend.details.achievements.3',
+        'projects.crewinc_mobile_frontend.details.achievements.4',
+        'projects.crewinc_mobile_frontend.details.achievements.5',
       ],
       image:
         'https://storage.googleapis.com/jk-static-assets/confidential_nda.png',
