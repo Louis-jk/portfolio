@@ -16,7 +16,7 @@ function Footer() {
     >
       <div>Open to new opportunities.</div>
       <Links />
-      <div>© 2025 Joonho Kim. All rights reserved.</div>
+      <div>© {new Date().getFullYear()} Joonho Kim · Frontend Developer</div>
     </footer>
   );
 }

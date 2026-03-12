@@ -128,7 +128,7 @@ export const chatbotDataJa: ChatbotData = {
           url: '?item=projects.confidential_korean_startup',
         },
         {
-          text: 'Crew Inc.モバイルアプリ',
+          text: 'AI（LLM）モバイルアプリ',
           url: '?item=projects.crewinc_mobile_frontend',
         },
       ],
