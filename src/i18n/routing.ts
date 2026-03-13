@@ -6,4 +6,16 @@ export const routing = defineRouting({
 
   // Used when no locale matches
   defaultLocale: 'en',
+  pathnames: {
+    '/': {
+      en: '/',
+      ko: '/',
+      ja: '/',
+    },
+    '/success-gate-raon-2019': {
+      en: '/success-gate-raon-2019',
+      ko: '/success-gate-raon-2019',
+      ja: '/success-gate-raon-2019',
+    },
+  },
 });
