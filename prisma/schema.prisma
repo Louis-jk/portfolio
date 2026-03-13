@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id           Int                  @id @default(autoincrement())
+  imageUrl     String               // 공통 이미지 URL
+  startDate    DateTime
+  endDate      DateTime?
+  isPublic     Boolean              @default(false)
+  
+  // 기술 스택 (영문 공통)
+  technologies String[]
+  tools        ProjectTools?
+  
+  // 플랫폼 링크 통합 (별도 모델 대신 1:1 관계 하나로 정리)
+  platforms    ProjectPlatform?
+
+  // 다국어 데이터 (여기에 상세 정보인 description, challenges 등이 모두 들어감)
+  translations ProjectTranslation[] 
+  
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+model ProjectTranslation {
+  id           Int      @id @default(autoincrement())
+  projectId    Int
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  locale       String   // "ko", "ja", "en"
+  title        String
+  company      String
+  region       String
+  role         String
+  overview     String   @db.Text
+  description  String[]
+  challenges   String[]
+  achievements String[]
+  
+  // 상세 페이지용 추가 이미지나 텍스트가 필요하다면 여기에 추가
+  detailImage  String?
+
+  @@unique([projectId, locale])
+}
+
+model ProjectPlatform {
+  id          Int      @id @default(autoincrement())
+  projectId   Int      @unique
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  webLink     String?
+  iosLink     String?
+  androidLink String?
+  desktopLink String?
+  
+  // 활성화 여부는 링크 존재 여부로 프론트에서 판단하거나, 필드를 추가할 수 있습니다.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ProjectTools {
+  id              Int            @id @default(autoincrement())
+  projectId       Int      @unique
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  development     String[]
+  communication   String[]
+  design          String[]
+  debugging       String[]
+  
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}

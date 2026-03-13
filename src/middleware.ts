@@ -5,10 +5,21 @@ import { routing } from './i18n/routing';
 // export default createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-  const countryCode = request.headers.get('x-vercel-ip-country') ?? 'US';
+  const { pathname } = request.nextUrl;
+
+  // 1. next-intl 미들웨어 인스턴스 생성
+  const handleI18nRouting = createMiddleware(routing);
+
+  // 2. 실행 (여기서 i18n 관련 rewrite/redirect가 결정됨)
+  const response = handleI18nRouting(request);
+
+  if (pathname.includes('success-gate')) {
+    console.log('✅ Admin Path Detected:', pathname);
+  }
 
   // next-intl 미들웨어 실행
-  const response = createMiddleware(routing)(request);
+  const countryCode = request.headers.get('x-vercel-ip-country') ?? 'US';
+  // const response = createMiddleware(routing)(request);
 
   // countryCode 쿠키 저장 (HttpOnly 빼야 프론트에서 읽을 수 있음)
   if (countryCode) {
