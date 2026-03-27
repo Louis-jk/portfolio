@@ -1,27 +1,70 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
+import { createClient } from '@/utils/supabase/middleware';
+import { ADMIN_ROUTES } from '@/lib/constants';
 
-// export default createMiddleware(routing);
+const EXPECTED_ADMIN_PATH = (
+  process.env.NEXT_PUBLIC_ADMIN_SECRET_PATH ?? ''
+).replace(/^\//, '');
+
+function isAdminRoute(pathname: string): boolean {
+  const segments = pathname.split('/').filter(Boolean);
+  return segments[1] === EXPECTED_ADMIN_PATH && EXPECTED_ADMIN_PATH.length > 0;
+}
+
+function isAdminAuthRoute(pathname: string): boolean {
+  const segments = pathname.split('/').filter(Boolean);
+  const authPages = ['login', 'signup'];
+  return (
+    segments[1] === EXPECTED_ADMIN_PATH &&
+    authPages.includes(segments[2] ?? '') &&
+    EXPECTED_ADMIN_PATH.length > 0
+  );
+}
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  // 1. next-intl 미들웨어 인스턴스 생성
   const handleI18nRouting = createMiddleware(routing);
+  const response = await handleI18nRouting(request);
 
-  // 2. 실행 (여기서 i18n 관련 rewrite/redirect가 결정됨)
-  const response = handleI18nRouting(request);
+  // Admin 경로 보호: Supabase Auth 세션 검증
+  if (EXPECTED_ADMIN_PATH && isAdminRoute(request.nextUrl.pathname)) {
+    const supabase = createClient(request, response as NextResponse);
+    const { data } = await supabase.auth.getClaims();
+    const claims = data?.claims ?? null;
 
-  if (pathname.includes('success-gate')) {
-    console.log('✅ Admin Path Detected:', pathname);
+    const isAuthPage = isAdminAuthRoute(request.nextUrl.pathname);
+
+    if (!claims && !isAuthPage) {
+      // 비로그인: 로그인 페이지로 리다이렉트
+      const locale = request.nextUrl.pathname.split('/')[1] ?? 'en';
+      const loginUrl = new URL(
+        `/${locale}${ADMIN_ROUTES.DASHBOARD}/login`,
+        request.url,
+      );
+      const redirectResponse = NextResponse.redirect(loginUrl);
+      response.headers.getSetCookie?.()?.forEach((cookie) =>
+        redirectResponse.headers.append('Set-Cookie', cookie),
+      );
+      return redirectResponse;
+    }
+
+    if (claims && isAuthPage) {
+      // 이미 로그인됨: 대시보드로 리다이렉트
+      const locale = request.nextUrl.pathname.split('/')[1] ?? 'en';
+      const dashboardUrl = new URL(
+        `/${locale}${ADMIN_ROUTES.DASHBOARD}`,
+        request.url,
+      );
+      const redirectResponse = NextResponse.redirect(dashboardUrl);
+      response.headers.getSetCookie?.()?.forEach((cookie) =>
+        redirectResponse.headers.append('Set-Cookie', cookie),
+      );
+      return redirectResponse;
+    }
   }
 
-  // next-intl 미들웨어 실행
   const countryCode = request.headers.get('x-vercel-ip-country') ?? 'US';
-  // const response = createMiddleware(routing)(request);
-
-  // countryCode 쿠키 저장 (HttpOnly 빼야 프론트에서 읽을 수 있음)
   if (countryCode) {
     response.headers.append(
       'Set-Cookie',

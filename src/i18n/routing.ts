@@ -12,10 +12,5 @@ export const routing = defineRouting({
       ko: '/',
       ja: '/',
     },
-    '/success-gate-raon-2019': {
-      en: '/success-gate-raon-2019',
-      ko: '/success-gate-raon-2019',
-      ja: '/success-gate-raon-2019',
-    },
   },
 });
