@@ -57,7 +57,7 @@ export const chatbotDataEn: ChatbotData = {
       text: 'What about mobile app development experience?',
       response:
         'My mobile app development experience includes frontend development using React Native for various projects.',
-      goToProjectLink: 'React Native',
+      goToProjectLink: 'mobile',
       nextChoices: ['workStyle', 'contact'],
     },
     desktopApp: {

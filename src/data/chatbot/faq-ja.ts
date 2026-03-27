@@ -57,7 +57,7 @@ export const chatbotDataJa: ChatbotData = {
       text: 'モバイルアプリ開発経験は？',
       response:
         'モバイルアプリ開発経験としては、React Nativeを使用したフロントエンド開発で様々なプロジェクトに参加した経験があります。',
-      goToProjectLink: 'React Native',
+      goToProjectLink: 'mobile',
       nextChoices: ['workStyle', 'contact'],
     },
     desktopApp: {
