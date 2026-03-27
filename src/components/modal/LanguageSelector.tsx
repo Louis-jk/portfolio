@@ -13,7 +13,7 @@ import { useSearchParams } from 'next/navigation';
 import {
   getEnglishLanguageCode,
   LOCALE_TO_NUMERIC_CODE,
-} from '@/util/get-code';
+} from '@/utils/get-code';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 
@@ -59,7 +59,7 @@ const LanguageSelector = ({
                     : 'border-b',
                   isActive
                     ? 'bg-gray-100 dark:bg-gray-800/70 font-bold cursor-default'
-                    : 'hover:bg-purple-700 dark:hover:bg-purple-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer'
+                    : 'hover:bg-purple-700 dark:hover:bg-purple-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer',
                 )}
                 tabIndex={isActive ? 0 : -1}
                 aria-current={isActive ? 'true' : undefined}

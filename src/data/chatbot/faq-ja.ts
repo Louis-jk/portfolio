@@ -49,32 +49,7 @@ export const chatbotDataJa: ChatbotData = {
       text: 'Next.jsプロジェクト',
       response:
         'Next.jsを使用したプロジェクト経験としては、韓国の外食情報プラットフォームのリニューアルプロジェクトのフロントエンド開発担当、日本のWeb3プロジェクトのキャンペーンサイトフロントエンド開発担当、日本のB2Cサイトフロントエンド開発担当のプロジェクト経験があります。Next.jsバージョンは12から15まで使用した経験があります。',
-      goToProjectLink: [
-        {
-          text: '韓国外食情報プラットフォームリニューアル',
-          url: '?item=projects.dmonster_diningcode',
-        },
-        {
-          text: 'Web3-Wizardry',
-          url: '?item=projects.turingum_web03_wizardry_campaign',
-        },
-        {
-          text: 'Web3-Mystery Ticket',
-          url: '?item=projects.turingum_web03_tokyo_beast_mystery_ticket',
-        },
-        {
-          text: 'Web3-Tokyo Beast Base',
-          url: '?item=projects.turingum_web03_tokyo_beast_base',
-        },
-        {
-          text: '新規B2Cサイト',
-          url: '?item=projects.confidential_japanese_startup',
-        },
-        {
-          text: '個人プロジェクト',
-          url: '?item=projects.personal',
-        },
-      ],
+      goToProjectLink: 'web',
       nextChoices: ['workStyle', 'contact'],
     },
     mobileApp: {
@@ -82,56 +57,7 @@ export const chatbotDataJa: ChatbotData = {
       text: 'モバイルアプリ開発経験は？',
       response:
         'モバイルアプリ開発経験としては、React Nativeを使用したフロントエンド開発で様々なプロジェクトに参加した経験があります。',
-      goToProjectLink: [
-        {
-          text: 'コンジュロ',
-          url: '?item=projects.dmonster_gongjuro',
-        },
-        {
-          text: '消えた仁寺洞',
-          url: '?item=projects.dmonster_insadong',
-        },
-        {
-          text: 'ペーパーワークショップ-顧客',
-          url: '?item=projects.dmonster_paper_workshop_customers',
-        },
-        {
-          text: 'ペーパーワークショップ-パートナー',
-          url: '?item=projects.dmonster_paper_workshop_partners',
-        },
-        {
-          text: 'アイドロー',
-          url: '?item=projects.dmonster_idraw',
-        },
-        {
-          text: '今日の注文',
-          url: '?item=projects.dmonster_todaysorder',
-        },
-        {
-          text: 'ベガストン',
-          url: '?item=projects.dmonster_vegastong',
-        },
-        {
-          text: 'MOZAIQ',
-          url: '?item=projects.dmonster_mozaiq',
-        },
-        {
-          text: 'MOLI',
-          url: '?item=projects.dmonster_moli',
-        },
-        {
-          text: 'ドンネブック',
-          url: '?item=projects.dmonster_dongnaebook',
-        },
-        {
-          text: 'テニス予約アプリ',
-          url: '?item=projects.confidential_korean_startup',
-        },
-        {
-          text: 'AI（LLM）モバイルアプリ',
-          url: '?item=projects.crewinc_mobile_frontend',
-        },
-      ],
+      goToProjectLink: 'React Native',
       nextChoices: ['workStyle', 'contact'],
     },
     desktopApp: {
@@ -139,20 +65,7 @@ export const chatbotDataJa: ChatbotData = {
       text: 'デスクトップアプリ開発経験は？',
       response:
         'デスクトップアプリ開発経験としては、Electron + Reactを使用したプロジェクト経験があります。下記のリンクでご確認いただけます。',
-      goToProjectLink: [
-        {
-          text: 'ドンネブック店舗用POS',
-          url: '?item=projects.dmonster_dongnaebook',
-        },
-        {
-          text: 'MOLI（モリ）',
-          url: '?item=projects.dmonster_moli',
-        },
-        {
-          text: '今日の注文店舗用POS',
-          url: '?item=projects.dmonster_todaysorder',
-        },
-      ],
+      goToProjectLink: 'desktop',
       nextChoices: ['workStyle', 'contact'],
     },
     backend: {

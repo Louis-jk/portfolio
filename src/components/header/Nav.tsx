@@ -11,7 +11,7 @@ import {
   COUNTRY_CODE_TO_NUMERIC_CODE,
   getCookieValue,
   LOCALE_TO_NUMERIC_CODE,
-} from '@/util/get-code';
+} from '@/utils/get-code';
 import { motion } from 'framer-motion';
 
 interface NavProps {

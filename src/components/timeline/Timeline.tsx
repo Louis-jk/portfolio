@@ -3,17 +3,39 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { TimelineItem } from '@/types/timeline.type';
 import LiquidButton from '../button/LiquidButton';
 import { Check } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Lenis from 'lenis';
 import { cn } from '@/lib/utils';
+import type { ProjectWithTranslations } from '@/services/project-service';
+import type { ProjectTranslation } from '@/generated/prisma/client';
+import { format } from 'date-fns';
+import ProjectCategoryBadges from './ProjectCategoryBadges';
+
+function getTranslation(
+  project: ProjectWithTranslations,
+  locale: string
+) {
+  return (
+    project.translations.find((tr: ProjectTranslation) => tr.locale === locale) ??
+    project.translations.find((tr: ProjectTranslation) => tr.locale === 'ko') ??
+    project.translations[0]
+  );
+}
+
+function formatDateRange(project: ProjectWithTranslations, locale: string) {
+  const dateFormat = locale === 'en' ? 'MMM yyyy' : 'yyyy.MM';
+  const end = project.endDate
+    ? format(project.endDate, dateFormat)
+    : 'PRESENT';
+  return `${format(project.startDate, dateFormat)} ~ ${end}`;
+}
 
 interface TimelineProps {
-  items: TimelineItem[];
-  selectedItem: TimelineItem | null;
-  onItemClick: (item: TimelineItem) => void;
+  items: ProjectWithTranslations[];
+  selectedItem: ProjectWithTranslations | null;
+  onItemClick: (item: ProjectWithTranslations) => void;
 }
 
 export default function Timeline({
@@ -28,7 +50,7 @@ export default function Timeline({
   const lenisRef = useRef<Lenis | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
 
-  const [hoveredItem, setHoveredItem] = useState<TimelineItem | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<ProjectWithTranslations | null>(null);
   const [showThumbnail, setShowThumbnail] = useState(false);
   const [target, setTarget] = useState<{ x: number; y: number }>({
     x: 0,
@@ -45,7 +67,9 @@ export default function Timeline({
   const springX = useSpring(mouseX, { stiffness: 200, damping: 25 });
   const springY = useSpring(mouseY, { stiffness: 200, damping: 25 });
 
-  const selectedIndex = items.findIndex((item) => item.id === selectedItem?.id);
+  const selectedIndex = items.findIndex(
+    (item) => item.id.toString() === selectedItem?.id.toString(),
+  );
 
   // 마지막 항목 감지를 위한 ref
   const lastItemRef = useRef<HTMLDivElement | null>(null);
@@ -177,7 +201,7 @@ export default function Timeline({
     if (!selectedItem || isMobile || isTablet) return;
 
     const scrollContainer = scrollRef.current;
-    const itemEl = itemRefs.current.get(selectedItem.id);
+    const itemEl = itemRefs.current.get(selectedItem.id.toString());
     const lenis = lenisRef.current;
 
     if (!scrollContainer || !itemEl || !lenis) return;
@@ -218,7 +242,7 @@ export default function Timeline({
     if (!isKeyboardSelection || !selectedItem || isMobile || isTablet) return;
 
     const scrollContainer = scrollRef.current;
-    const itemEl = itemRefs.current.get(selectedItem.id);
+    const itemEl = itemRefs.current.get(selectedItem.id.toString());
     const lenis = lenisRef.current;
 
     if (!scrollContainer || !itemEl || !lenis) return;
@@ -238,8 +262,8 @@ export default function Timeline({
     }, 20);
   }, [selectedItem, isKeyboardSelection, isMobile, isTablet, isTabletDevice]);
 
-  const handleMouseEnter = (e: React.MouseEvent, item: TimelineItem) => {
-    if (selectedItem?.id === item.id) {
+  const handleMouseEnter = (e: React.MouseEvent, item: ProjectWithTranslations) => {
+    if (selectedItem?.id.toString() === item.id.toString()) {
       return;
     }
 
@@ -264,15 +288,15 @@ export default function Timeline({
   // 모든 디바이스에서 모든 아이템 렌더링
   const itemsToRender = items;
 
-  const handleItemClick = (item: TimelineItem) => {
+  const handleItemClick = (item: ProjectWithTranslations) => {
     onItemClick(item);
 
     // GTM 이벤트 전송
     if (typeof window !== 'undefined' && window.dataLayer) {
       window.dataLayer.push({
         event: 'timeline_item_click',
-        timeline_id: item.id,
-        timeline_title: item.title,
+        timeline_id: item.id.toString(),
+        timeline_title: getTranslation(item, locale).title,
       });
     }
   };
@@ -285,13 +309,13 @@ export default function Timeline({
         data-timeline-title
         className={cn(
           'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800 transition-all duration-200',
-          isMobile && 'sticky top-[55px] z-30'
+          isMobile && 'sticky top-[55px] z-30',
         )}
       >
         <h2
           className={cn(
             'text-2xl font-bold text-center text-gray-900 dark:text-gray-100',
-            locale === 'ja' && 'tracking-[.25em]'
+            locale === 'ja' && 'tracking-[.25em]',
           )}
         >
           {t('title')}
@@ -308,7 +332,7 @@ export default function Timeline({
             >
               <motion.div
                 ref={(el) => {
-                  itemRefs.current.set(item.id, el);
+                  itemRefs.current.set(item.id.toString(), el);
                 }}
                 initial={{ opacity: 0, y: 1 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -318,7 +342,7 @@ export default function Timeline({
                   ease: 'easeOut',
                 }}
                 className={`relative cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
-                  selectedItem?.id === item.id
+                  selectedItem?.id.toString() === item.id.toString()
                     ? 'bg-gray-100 dark:bg-gray-800/70'
                     : ''
                 }`}
@@ -327,32 +351,35 @@ export default function Timeline({
                 <div className='pr-0'>
                   <div className='flex items-start gap-3'>
                     <div className='flex-1 min-w-0'>
+                      <ProjectCategoryBadges project={item} className='mb-1.5' />
                       <div className='flex items-center gap-2 justify-between'>
                         <h3
                           className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
-                            selectedItem?.id === item.id
+                            selectedItem?.id.toString() === item.id.toString()
                               ? 'text-purple-700 dark:text-purple-500 font-bold'
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
-                          {t(item.title)}
+                          {getTranslation(item, locale).title}
                         </h3>
                         <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                          {t(item.region)}
+                          {getTranslation(item, locale).region}
                         </p>
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
                         <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                          {t(item.role)}
+                          {getTranslation(item, locale).role}
                         </p>
                         <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                          {t(item.date)}
+                          {formatDateRange(item, locale)}
                         </p>
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                        {item.description.map((line: string, i: number) => (
-                          <li key={i}>{t(line)}</li>
-                        ))}
+                        {getTranslation(item, locale).description.map(
+                          (line: string, i: number) => (
+                            <li key={i}>{line}</li>
+                          ),
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -371,7 +398,7 @@ export default function Timeline({
           data-timeline-container
           className={cn(
             'pr-2 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll',
-            isTablet && 'pr-0'
+            isTablet && 'pr-0',
           )}
           style={{
             WebkitOverflowScrolling: 'touch',
@@ -388,7 +415,7 @@ export default function Timeline({
             >
               <motion.div
                 ref={(el) => {
-                  itemRefs.current.set(item.id, el);
+                  itemRefs.current.set(item.id.toString(), el);
                 }}
                 initial={{ opacity: 0, y: 1 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -421,6 +448,7 @@ export default function Timeline({
                       </div>
                     )}
                     <div className='flex-1 min-w-0'>
+                      <ProjectCategoryBadges project={item} className='mb-1.5' />
                       <div className='flex items-center gap-2 justify-between'>
                         <h3
                           className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
@@ -429,24 +457,26 @@ export default function Timeline({
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
-                          {t(item.title)}
+                          {getTranslation(item, locale).title}
                         </h3>
                         <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                          {t(item.region)}
+                          {getTranslation(item, locale).region}
                         </p>
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
                         <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                          {t(item.role)}
+                          {getTranslation(item, locale).role}
                         </p>
                         <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                          {t(item.date)}
+                          {formatDateRange(item, locale)}
                         </p>
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                        {item.description.map((line: string, i: number) => (
-                          <li key={i}>{t(line)}</li>
-                        ))}
+                        {getTranslation(item, locale).description.map(
+                          (line: string, i: number) => (
+                            <li key={i}>{line}</li>
+                          ),
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -468,7 +498,7 @@ export default function Timeline({
           <LiquidButton x={springX} y={springY}>
             Click!
           </LiquidButton>,
-          document.body
+          document.body,
         )}
     </div>
   );

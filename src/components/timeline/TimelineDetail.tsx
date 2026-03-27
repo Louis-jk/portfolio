@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { type TimelineItem } from '@/types/timeline.type';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { format } from 'date-fns';
 import { FaBuilding } from 'react-icons/fa6';
 import { FaGooglePlay, FaDesktop } from 'react-icons/fa';
 import { IoLogoAppleAppstore } from 'react-icons/io5';
@@ -16,10 +16,26 @@ import { useMediaQuery } from 'react-responsive';
 import { Button } from '@/components/ui/button';
 import ShareButton from '@/components/button/share/ShareButton';
 import ShareModal from '@/components/modal/shareModal';
+import type { ProjectWithTranslations } from '@/services/project-service';
+import ProjectCategoryBadges from './ProjectCategoryBadges';
 
 interface TimelineDetailProps {
-  item: TimelineItem | null;
+  item: ProjectWithTranslations | null;
   isVisible: boolean;
+}
+
+function getTranslation(project: ProjectWithTranslations, locale: string) {
+  return (
+    project.translations.find((tr) => tr.locale === locale) ??
+    project.translations.find((tr) => tr.locale === 'ko') ??
+    project.translations[0]
+  );
+}
+
+function formatDateRange(project: ProjectWithTranslations, locale: string) {
+  const dateFormat = locale === 'en' ? 'MMM yyyy' : 'yyyy.MM';
+  const end = project.endDate ? format(project.endDate, dateFormat) : 'PRESENT';
+  return `${format(project.startDate, dateFormat)} ~ ${end}`;
 }
 
 export default function TimelineDetail({
@@ -28,6 +44,7 @@ export default function TimelineDetail({
 }: TimelineDetailProps) {
   const [openShareModal, setOpenShareModal] = useState(false);
   const { resolvedTheme } = useTheme();
+  const locale = useLocale();
   const t = useTranslations('timeline');
   const tD = useTranslations('details');
   const tL = useTranslations('loading');
@@ -50,7 +67,7 @@ export default function TimelineDetail({
   // 이미지가 변경될 때마다 로딩 상태를 리셋
   useEffect(() => {
     setImageLoaded(false);
-  }, [item?.details?.image]);
+  }, [item?.imageUrl]);
 
   // Lenis 초기화 (한 번만)
   useEffect(() => {
@@ -85,32 +102,12 @@ export default function TimelineDetail({
     }
   }, [item]);
 
-  const webLink =
-    item &&
-    !item.isNDA &&
-    item.isCommercial &&
-    item.commercialPlatforms.web &&
-    item.commercialLinks.web;
-  const iosLink =
-    item &&
-    !item.isNDA &&
-    item.isCommercial &&
-    item.commercialPlatforms.mobile &&
-    item.commercialLinks.ios;
-  const androidLink =
-    item &&
-    !item.isNDA &&
-    item.isCommercial &&
-    item.commercialPlatforms.mobile &&
-    item.commercialLinks.android;
-  const desktopLink =
-    item &&
-    !item.isNDA &&
-    item.isCommercial &&
-    item.commercialPlatforms.desktop &&
-    item.commercialLinks.desktop;
+  const webLink = item && item.isPublic && item.platforms?.webLink;
+  const iosLink = item && item.isPublic && item.platforms?.iosLink;
+  const androidLink = item && item.isPublic && item.platforms?.androidLink;
+  const desktopLink = item && item.isPublic && item.platforms?.desktopLink;
 
-  if (!item || !item.details) {
+  if (!item || !item.translations) {
     return (
       <div className='flex items-center justify-center h-full min-h-[500px]'>
         <div className='text-center'>
@@ -156,7 +153,7 @@ export default function TimelineDetail({
         className={cn(
           'h-[calc(100vh-135px)] overflow-y-auto overflow-x-hidden',
           isDesktopOrLaptop && 'h-[calc(100vh-275px)]',
-          isMobile && 'pb-36'
+          isMobile && 'pb-36',
         )}
       >
         <motion.div
@@ -165,7 +162,7 @@ export default function TimelineDetail({
           transition={{ duration: 0.5 }}
           className={cn(
             'flex flex-col gap-7 px-0 lg:px-4 overflow-hidden',
-            isDesktopOrLaptop && 'mb-5'
+            isDesktopOrLaptop && 'mb-5',
           )}
         >
           <div>
@@ -175,9 +172,10 @@ export default function TimelineDetail({
                 isTablet &&
                   'sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] py-3 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800',
                 isMobile &&
-                  'sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] py-3 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800'
+                  'sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] py-3 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800',
               )}
             >
+              <ProjectCategoryBadges project={item} className='mb-2' />
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 animate={
@@ -186,10 +184,10 @@ export default function TimelineDetail({
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className={cn(
                   'text-2xl font-bold mb-2',
-                  !isDesktopOrLaptop && 'mt-0'
+                  !isDesktopOrLaptop && 'mt-0',
                 )}
               >
-                {t(item.title)}
+                {getTranslation(item, locale).title}
               </motion.h3>
 
               <motion.div
@@ -201,30 +199,30 @@ export default function TimelineDetail({
                 className='flex flex-col gap-1'
               >
                 <div className='flex items-center gap-2 justify-between w-full'>
-                  {item.company && (
+                  {getTranslation(item, locale).company && (
                     <p className='text-sm text-gray-900 dark:text-gray-200 flex items-center flex-8'>
                       <FaBuilding className='inline-block w-3 h-3 mr-1' />
-                      {t(item.company)}&nbsp;&nbsp;&nbsp;
+                      {getTranslation(item, locale).company}&nbsp;&nbsp;&nbsp;
                     </p>
                   )}
                   <p
                     className={cn(
                       'text-sm text-gray-900 dark:text-gray-200 flex-4 text-right',
-                      !item.company && 'ml-auto'
+                      !getTranslation(item, locale).company && 'ml-auto',
                     )}
                   >
-                    {t(item.region)}
+                    {getTranslation(item, locale).region}
                   </p>
                 </div>
 
                 <div className='flex items-center gap-2 justify-between'>
-                  {item.role && (
+                  {getTranslation(item, locale).role && (
                     <p className='text-sm text-gray-600 dark:text-gray-400 flex items-center whitespace-pre-line flex-7'>
-                      {t(item.role)}
+                      {getTranslation(item, locale).role}
                     </p>
                   )}
                   <p className='text-sm text-gray-600 dark:text-gray-400 flex-5 text-right'>
-                    {t(item.date)}
+                    {formatDateRange(item, locale)}
                   </p>
                 </div>
               </motion.div>
@@ -232,7 +230,7 @@ export default function TimelineDetail({
           </div>
 
           {/* Image */}
-          {item.details.image && (
+          {item.imageUrl && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -244,7 +242,7 @@ export default function TimelineDetail({
                 <div
                   className={cn(
                     'w-full h-[150px] rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-900',
-                    isDesktopOrLaptop && 'h-[300px]'
+                    isDesktopOrLaptop && 'h-[300px]',
                   )}
                 >
                   <div className='flex flex-col items-center justify-center gap-4'>
@@ -272,19 +270,19 @@ export default function TimelineDetail({
               <div
                 className={cn(
                   'transition-opacity duration-300',
-                  imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                  imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0',
                 )}
               >
                 <Image
-                  key={item.details.image}
-                  src={item.details.image}
-                  alt={item.title}
+                  key={item.imageUrl}
+                  src={item.imageUrl}
+                  alt={getTranslation(item, locale).title}
                   className='object-contain rounded-sm select-none pointer-events-none w-full mx-auto'
                   width={1200}
                   height={579}
                   onLoad={() => setImageLoaded(true)}
                   priority={true} // 우선순위 로딩
-                  unoptimized={item.details.image?.endsWith('.gif')} // 애니메이션 GIF는 최적화 비활성화
+                  unoptimized={item.imageUrl?.endsWith('.gif')} // 애니메이션 GIF는 최적화 비활성화
                 />
               </div>
             </motion.div>
@@ -296,7 +294,7 @@ export default function TimelineDetail({
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >
-            {!item.isNDA && item.isCommercial && (
+            {item.isPublic && (
               <div className='mb-5 flex gap-2'>
                 {webLink && (
                   <Button
@@ -304,7 +302,7 @@ export default function TimelineDetail({
                     className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
                     size='sm'
                     onClick={() => {
-                      window.open(item.commercialLinks.web, '_blank');
+                      window.open(item.platforms?.webLink ?? '', '_blank');
                     }}
                   >
                     <div className='flex items-center gap-1'>
@@ -319,7 +317,7 @@ export default function TimelineDetail({
                     className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
                     size='sm'
                     onClick={() => {
-                      window.open(item.commercialLinks.ios, '_blank');
+                      window.open(item.platforms?.iosLink ?? '', '_blank');
                     }}
                   >
                     <div className='flex items-center gap-1'>
@@ -334,7 +332,7 @@ export default function TimelineDetail({
                     className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
                     size='sm'
                     onClick={() => {
-                      window.open(item.commercialLinks.android, '_blank');
+                      window.open(item.platforms?.androidLink ?? '', '_blank');
                     }}
                   >
                     <div className='flex items-center gap-1'>
@@ -349,7 +347,7 @@ export default function TimelineDetail({
                     className='px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200'
                     size='sm'
                     onClick={() => {
-                      window.open(item.commercialLinks.desktop, '_blank');
+                      window.open(item.platforms?.desktopLink ?? '', '_blank');
                     }}
                   >
                     <div className='flex items-center gap-1'>
@@ -366,7 +364,7 @@ export default function TimelineDetail({
               <ShareButton onShareClick={() => setOpenShareModal(true)} />
             </div>
             <p className='text-gray-700 dark:text-gray-300 leading-[1.5] whitespace-pre-line'>
-              {t(item.details.overview)}
+              {getTranslation(item, locale).overview}
             </p>
           </motion.div>
 
@@ -378,14 +376,14 @@ export default function TimelineDetail({
           >
             <h4 className='text-lg font-semibold mb-3'>{tD('technologies')}</h4>
             <div className='flex flex-wrap gap-2'>
-              {item.details.technologies.map((tech, index) => (
+              {item.technologies.map((tech, index) => (
                 <span
                   key={index}
                   className={cn(
                     'px-3 py-1 rounded-full text-sm font-medium',
                     resolvedTheme === 'dark'
                       ? 'bg-gray-700 text-gray-200'
-                      : 'bg-gray-100 text-gray-800'
+                      : 'bg-gray-100 text-gray-800',
                   )}
                 >
                   {tech}
@@ -395,7 +393,7 @@ export default function TimelineDetail({
           </motion.div>
 
           {/* Tools */}
-          {item.details.tools && Object.keys(item.details.tools).length > 0 && (
+          {item.tools && Object.keys(item.tools).length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -404,20 +402,20 @@ export default function TimelineDetail({
               <h4 className='text-lg font-semibold mb-3'>
                 {tD('toolsAndEnvironments')}
               </h4>
-              {item.details.tools.development.length > 0 && (
+              {item.tools.development.length > 0 && (
                 <div className='mb-5'>
                   <h5 className='text-sm font-medium mb-2'>
                     {tD('development')}
                   </h5>
                   <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.development.map((tool, index) => (
+                    {item.tools.development.map((tool, index) => (
                       <span
                         key={index}
                         className={cn(
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-100 text-gray-800'
+                            : 'bg-gray-100 text-gray-800',
                         )}
                       >
                         {tool}
@@ -427,20 +425,20 @@ export default function TimelineDetail({
                 </div>
               )}
 
-              {item.details.tools.debugging.length > 0 && (
+              {item.tools.debugging.length > 0 && (
                 <div className='mb-5'>
                   <h5 className='text-sm font-medium mb-2'>
                     {tD('debugging')}
                   </h5>
                   <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.debugging.map((tool, index) => (
+                    {item.tools.debugging.map((tool, index) => (
                       <span
                         key={index}
                         className={cn(
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-100 text-gray-800'
+                            : 'bg-gray-100 text-gray-800',
                         )}
                       >
                         {tool}
@@ -450,20 +448,20 @@ export default function TimelineDetail({
                 </div>
               )}
 
-              {item.details.tools.communication.length > 0 && (
+              {item.tools.communication.length > 0 && (
                 <div className='mb-5'>
                   <h5 className='text-sm font-medium mb-2'>
                     {tD('communication')}
                   </h5>
                   <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.communication.map((tool, index) => (
+                    {item.tools.communication.map((tool, index) => (
                       <span
                         key={index}
                         className={cn(
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-100 text-gray-800'
+                            : 'bg-gray-100 text-gray-800',
                         )}
                       >
                         {tool}
@@ -473,18 +471,18 @@ export default function TimelineDetail({
                 </div>
               )}
 
-              {item.details.tools.design.length > 0 && (
+              {item.tools.design.length > 0 && (
                 <div className='mb-5'>
                   <h5 className='text-sm font-medium mb-2'>{tD('design')}</h5>
                   <div className='flex flex-wrap gap-2'>
-                    {item.details.tools.design.map((tool, index) => (
+                    {item.tools.design.map((tool, index) => (
                       <span
                         key={index}
                         className={cn(
                           'px-3 py-1 rounded-full text-sm font-medium',
                           resolvedTheme === 'dark'
                             ? 'bg-gray-700 text-gray-200'
-                            : 'bg-gray-100 text-gray-800'
+                            : 'bg-gray-100 text-gray-800',
                         )}
                       >
                         {tool}
@@ -504,14 +502,16 @@ export default function TimelineDetail({
           >
             <h4 className='text-lg font-semibold mb-3'>{tD('challenges')}</h4>
             <ul className='space-y-2'>
-              {item.details.challenges.map((challenge, index) => (
-                <li key={index} className='flex items-start'>
-                  <span className='text-red-500 mr-2 mt-1'>•</span>
-                  <span className='text-gray-700 dark:text-gray-300'>
-                    {t(challenge)}
-                  </span>
-                </li>
-              ))}
+              {getTranslation(item, locale).challenges.map(
+                (challenge, index) => (
+                  <li key={index} className='flex items-start'>
+                    <span className='text-red-500 mr-2 mt-1'>•</span>
+                    <span className='text-gray-700 dark:text-gray-300'>
+                      {challenge}
+                    </span>
+                  </li>
+                ),
+              )}
             </ul>
           </motion.div>
 
@@ -523,14 +523,16 @@ export default function TimelineDetail({
           >
             <h4 className='text-lg font-semibold mb-3'>{tD('achievements')}</h4>
             <ul className='space-y-2'>
-              {item.details.achievements.map((achievement, index) => (
-                <li key={index} className='flex items-start'>
-                  <span className='text-green-500 mr-2 mt-1'>✓</span>
-                  <span className='text-gray-700 dark:text-gray-300'>
-                    {t(achievement)}
-                  </span>
-                </li>
-              ))}
+              {getTranslation(item, locale).achievements.map(
+                (achievement, index) => (
+                  <li key={index} className='flex items-start'>
+                    <span className='text-green-500 mr-2 mt-1'>✓</span>
+                    <span className='text-gray-700 dark:text-gray-300'>
+                      {achievement}
+                    </span>
+                  </li>
+                ),
+              )}
             </ul>
           </motion.div>
         </motion.div>

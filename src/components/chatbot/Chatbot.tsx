@@ -19,8 +19,18 @@ import type { ChatbotData, ChatbotChoice } from '@/types/chatbot';
 import { profanityWords, sexualWords } from '@/data/chatbot/prohibited-words';
 import { CiLink } from 'react-icons/ci';
 import Image from 'next/image';
-import { formatTime } from '@/util/time';
-import { getCurrentLocale } from '@/util/locale';
+import { formatTime } from '@/utils/time';
+import { getCurrentLocale } from '@/utils/locale';
+import { usePathname, useRouter } from 'next/navigation';
+import type { ProjectWithTranslations } from '@/services/project-service';
+
+function getProjectTitle(project: ProjectWithTranslations, locale: string) {
+  const tr =
+    project.translations.find((t) => t.locale === locale) ??
+    project.translations.find((t) => t.locale === 'ko') ??
+    project.translations[0];
+  return tr?.title ?? 'Untitled';
+}
 
 type Message = {
   from: 'user' | 'bot';
@@ -39,10 +49,16 @@ type Message = {
   }[];
 };
 
-export default function Chatbot() {
+interface ChatbotProps {
+  projects?: ProjectWithTranslations[];
+}
+
+export default function Chatbot({ projects = [] }: ChatbotProps) {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('modal.chatbot');
   const isKeyboardOpen = useDetectKeyboardOpen();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const currentLocale = getCurrentLocale();
   const chatbotData: ChatbotData =
@@ -176,7 +192,7 @@ export default function Chatbot() {
         document.body.classList.remove('chatbot-open');
         // backdrop 제거
         const existingBackdrop = document.querySelector(
-          '.chatbot-backdrop-overlay'
+          '.chatbot-backdrop-overlay',
         );
         if (existingBackdrop) {
           existingBackdrop.remove();
@@ -238,7 +254,7 @@ export default function Chatbot() {
       // 영어/숫자/한글이 아닌 문자로 시작하거나 끝나는 경우를 고려
       const regex = new RegExp(
         `(^|[^가-힣a-zA-Z0-9])${escapedWord}([^가-힣a-zA-Z0-9]|$)`,
-        'i'
+        'i',
       );
       return regex.test(trimmed);
     });
@@ -249,7 +265,7 @@ export default function Chatbot() {
       // 한국어의 경우 단어 경계가 다르게 작동하므로 정확한 매칭 사용
       const regex = new RegExp(
         `(^|[^가-힣a-zA-Z0-9])${escapedWord}([^가-힣a-zA-Z0-9]|$)`,
-        'i'
+        'i',
       );
       return regex.test(trimmed);
     });
@@ -296,7 +312,7 @@ export default function Chatbot() {
           from: 'bot',
           text: warningMessage,
           choices: chatbotData.welcome.choices.map(
-            (id) => chatbotData.choices[id]
+            (id) => chatbotData.choices[id],
           ),
           isChoiceMessage: true,
         },
@@ -306,7 +322,7 @@ export default function Chatbot() {
 
     // 선택지에서 답변 찾기
     const choice = Object.values(chatbotData.choices).find(
-      (choice) => choice.text === trimmed
+      (choice) => choice.text === trimmed,
     );
 
     let reply = '';
@@ -344,8 +360,36 @@ export default function Chatbot() {
         }));
       }
 
-      // 프로젝트 링크 처리
-      if (choice.goToProjectLink) {
+      // 프로젝트 링크 처리 (서버 데이터 기반)
+      const platformFilter =
+        typeof choice.goToProjectLink === 'string' &&
+        ['web', 'mobile', 'desktop'].includes(choice.goToProjectLink)
+          ? choice.goToProjectLink
+          : null;
+      const projectsToShow =
+        platformFilter && projects.length > 0
+          ? projects.filter((p) =>
+              (p.platformCategories ?? []).includes(platformFilter),
+            )
+          : projects;
+      if (
+        (choice.goToProjectLink === 'all' || platformFilter) &&
+        projectsToShow.length > 0
+      ) {
+        const basePath = pathname || `/${currentLocale}`;
+        goToProjectLink = projectsToShow.map((project) => ({
+          text: (
+            <p className='flex items-center gap-2'>
+              <CiLink size={16} />
+              <span>{getProjectTitle(project, currentLocale)}</span>
+            </p>
+          ),
+          url: `${basePath}?item=${project.id}`,
+        }));
+      } else if (
+        Array.isArray(choice.goToProjectLink) &&
+        choice.goToProjectLink.length > 0
+      ) {
         goToProjectLink = choice.goToProjectLink.map((link) => ({
           text: (
             <p className='flex items-center gap-2'>
@@ -361,7 +405,7 @@ export default function Chatbot() {
       reply = t('sorry');
       // 기본 선택지들 제공
       nextChoices = chatbotData.welcome.choices.map(
-        (id) => chatbotData.choices[id]
+        (id) => chatbotData.choices[id],
       );
     }
 
@@ -486,7 +530,7 @@ export default function Chatbot() {
           'fixed bottom-6 right-6 w-15 h-15 rounded-full text-white border-none cursor-pointer z-[10000] text-2xl flex items-center justify-center select-none transition-all duration-300 ease-in-out',
           resolvedTheme === 'dark'
             ? 'bg-purple-500 hover:bg-purple-500 shadow-[0_4px_8px_rgba(255,255,255,0.3)]'
-            : 'bg-purple-700 hover:bg-purple-700 shadow-[0_4px_8px_rgba(0,0,0,0.3)]'
+            : 'bg-purple-700 hover:bg-purple-700 shadow-[0_4px_8px_rgba(0,0,0,0.3)]',
         )}
       >
         {open ? <IoClose size={30} /> : <IoChatboxEllipses size={30} />}
@@ -504,7 +548,7 @@ export default function Chatbot() {
               onClick={() => setOpen(false)}
               className={cn(
                 'fixed inset-0 bg-[rgba(0,0,0,0.5)] z-[9999] chatbot-backdrop',
-                !isMobile && 'hidden' // PC에서는 숨김 (별도 backdrop 사용)
+                !isMobile && 'hidden', // PC에서는 숨김 (별도 backdrop 사용)
               )}
               style={{
                 touchAction: 'none',
@@ -548,7 +592,7 @@ export default function Chatbot() {
                 } flex flex-col z-[10000] font-sans`,
                 resolvedTheme === 'dark'
                   ? 'shadow-[0_8px_24px_rgba(255,255,255,0.15)]'
-                  : 'shadow-[0_8px_24px_rgba(0,0,0,0.15)]'
+                  : 'shadow-[0_8px_24px_rgba(0,0,0,0.15)]',
               )}
               style={{
                 ...(isMobile
@@ -570,7 +614,7 @@ export default function Chatbot() {
                   resolvedTheme === 'dark'
                     ? 'bg-purple-500 text-white border-gray-700'
                     : 'bg-purple-700 text-white border-gray-200',
-                  isMobile ? 'absolute top-0 left-0 right-0 rounded-none' : '' // 모바일에서만 absolute
+                  isMobile ? 'absolute top-0 left-0 right-0 rounded-none' : '', // 모바일에서만 absolute
                 )}
               >
                 <div className='flex items-center gap-3'>
@@ -701,7 +745,7 @@ export default function Chatbot() {
                                       >
                                         {button.text}
                                       </button>
-                                    )
+                                    ),
                                   )}
                                 </div>
                               )}
@@ -714,25 +758,22 @@ export default function Chatbot() {
                                     <button
                                       key={linkIndex}
                                       onClick={() => {
-                                        // 모바일에서는 새 탭, PC에서는 현재 페이지에서 push
+                                        // 내부 프로젝트 링크 (pathname + ?item=id 또는 ?item=id)
+                                        const isInternalProject =
+                                          link.url.includes('?item=') ||
+                                          link.url.startsWith('?');
                                         if (isMobile) {
-                                          // 모바일: 새 탭에서 열기
-                                          window.open(link.url, '_blank');
-                                        } else {
-                                          // PC: 현재 페이지에서 push
-                                          if (link.url.startsWith('?')) {
-                                            // 챗봇 닫기
+                                          if (isInternalProject) {
                                             setOpen(false);
-                                            // URL 업데이트 (페이지 이동 없이)
-                                            window.history.pushState(
-                                              {},
-                                              '',
-                                              link.url
-                                            );
-                                            // 페이지 새로고침 없이 URL만 변경
-                                            // 프로젝트 상세 페이지는 URL 변경을 감지하여 표시됨
+                                            router.push(link.url);
                                           } else {
-                                            // 외부 링크는 새 탭에서 열기
+                                            window.open(link.url, '_blank');
+                                          }
+                                        } else {
+                                          if (isInternalProject) {
+                                            setOpen(false);
+                                            router.replace(link.url);
+                                          } else {
                                             window.open(link.url, '_blank');
                                           }
                                         }
@@ -777,7 +818,7 @@ export default function Chatbot() {
                                           timestamp: new Date(),
                                           choices:
                                             chatbotData.welcome.choices.map(
-                                              (id) => chatbotData.choices[id]
+                                              (id) => chatbotData.choices[id],
                                             ),
                                           isChoiceMessage: true,
                                         },
@@ -848,8 +889,8 @@ export default function Chatbot() {
                           ? 'bg-purple-500 hover:bg-purple-600 active:scale-95'
                           : 'bg-gray-600 cursor-not-allowed'
                         : resolvedTheme === 'dark'
-                        ? 'bg-gray-600 cursor-not-allowed'
-                        : 'bg-gray-400 cursor-not-allowed'
+                          ? 'bg-gray-600 cursor-not-allowed'
+                          : 'bg-gray-400 cursor-not-allowed',
                     )}
                   >
                     <IoSend size={20} />

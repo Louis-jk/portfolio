@@ -5,21 +5,38 @@ import Timeline from '@/components/timeline/Timeline';
 import TimelineDetail from '@/components/timeline/TimelineDetail';
 import TimelineDrawer from '@/components/timeline/TimelineDrawer';
 import { motion } from 'framer-motion';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
-import { type TimelineItem } from '@/types/timeline.type';
-import { timelineData } from '@/data/timeline.data';
 import { useMediaQuery } from 'react-responsive';
+import type { ProjectWithTranslations } from '@/services/project-service';
 
-function MainContent() {
-  const [selectedItem, setSelectedItem] = useState<TimelineItem | null>(null);
+function MainContent({
+  projects,
+  platformFilter = null,
+  domainFilter = null,
+  isFilterOpen = false,
+  isDesktopLayout = true,
+}: {
+  projects: ProjectWithTranslations[];
+  platformFilter?: string | null;
+  domainFilter?: string | null;
+  isFilterOpen?: boolean;
+  isDesktopLayout?: boolean;
+}) {
+  const [selectedItem, setSelectedItem] = useState<ProjectWithTranslations | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((p) => {
+      const platforms = p.platformCategories ?? [];
+      const domains = p.domainTags ?? [];
+      if (platformFilter && !platforms.includes(platformFilter)) return false;
+      if (domainFilter && !domains.includes(domainFilter)) return false;
+      return true;
+    });
+  }, [projects, platformFilter, domainFilter]);
   const searchParams = useSearchParams();
   const pathname = usePathname();
-
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 1280px)',
-  });
 
   const isTablet = useMediaQuery({
     query: '(min-width: 1024px) and (max-width: 1279px)',
@@ -32,7 +49,8 @@ function MainContent() {
   useEffect(() => {
     const itemId = searchParams.get('item');
     if (itemId) {
-      const item = timelineData.find((item) => item.id === itemId);
+      const item = filteredProjects.find((item) => item.id.toString() === itemId) ??
+        projects.find((item) => item.id.toString() === itemId);
       if (item) {
         setSelectedItem(item);
         // 모바일과 태블릿에서는 drawer 열기
@@ -41,7 +59,7 @@ function MainContent() {
         }
       }
     }
-  }, [searchParams, setIsDrawerOpen]);
+  }, [searchParams, setIsDrawerOpen, projects, filteredProjects]);
 
   useEffect(() => {
     const itemId = searchParams.get('item');
@@ -56,12 +74,12 @@ function MainContent() {
       setSelectedItem(null);
       setIsDrawerOpen(false);
     }
-  }, [pathname, searchParams, setIsDrawerOpen]);
+  }, [pathname, searchParams, setIsDrawerOpen, projects]);
 
-  const handleItemClick = (item: TimelineItem) => {
+  const handleItemClick = (item: ProjectWithTranslations) => {
     setSelectedItem(item);
     const url = new URL(window.location.href);
-    url.searchParams.set('item', item.id);
+    url.searchParams.set('item', item.id.toString());
     window.history.replaceState({}, '', url.toString());
 
     // 모바일과 태블릿에서는 drawer 열기
@@ -85,9 +103,9 @@ function MainContent() {
     if (typeof window !== 'undefined' && dataLayer) {
       dataLayer.push({
         event: 'timeline_item_click',
-        item_id: item.id,
-        item_title: item.title,
-        item_region: item.region,
+        item_id: item.id.toString(),
+        item_title: item.translations?.[0]?.title ?? '',
+        item_region: item.translations?.[0]?.region ?? '',
       });
     }
 
@@ -97,15 +115,15 @@ function MainContent() {
         gtag?: (
           command: string,
           event: string,
-          params: { item_id: string; item_title: string; item_region: string }
+          params: { item_id: string; item_title: string; item_region: string },
         ) => void;
       }
     )?.gtag;
     if (gtag) {
       gtag('event', 'timeline_item_click', {
-        item_id: item.id,
-        item_title: item.title,
-        item_region: item.region,
+        item_id: item.id.toString(),
+        item_title: item.translations?.[0]?.title ?? '',
+        item_region: item.translations?.[0]?.region ?? '',
       });
     }
   };
@@ -118,9 +136,12 @@ function MainContent() {
     window.history.replaceState({}, '', url.toString());
   };
 
+  const headerPadding =
+    !isDesktopLayout && isFilterOpen ? 'pt-[140px]' : 'pt-[55px]';
+
   return (
     <>
-      <main className={`flex flex-col pt-[55px] ${isMobile ? '' : 'flex-1'}`}>
+      <main className={`flex flex-col ${headerPadding} ${isMobile ? '' : 'flex-1'}`}>
         <section className={isMobile ? '' : 'h-full'}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -129,7 +150,7 @@ function MainContent() {
             className={isMobile ? '' : 'h-full'}
           >
             {/* Desktop Layout (1280px+) */}
-            {isDesktop && (
+            {isDesktopLayout && (
               <div className='flex justify-center items-start h-full'>
                 <div className='grid grid-cols-12 gap-6 h-full'>
                   {/* Intro */}
@@ -150,7 +171,7 @@ function MainContent() {
                     className='col-span-4 h-full overflow-hidden'
                   >
                     <Timeline
-                      items={timelineData}
+                      items={filteredProjects}
                       selectedItem={selectedItem}
                       onItemClick={handleItemClick}
                     />
@@ -196,7 +217,7 @@ function MainContent() {
                     className='flex flex-col h-full'
                   >
                     <Timeline
-                      items={timelineData}
+                      items={filteredProjects}
                       selectedItem={selectedItem}
                       onItemClick={handleItemClick}
                     />
@@ -226,7 +247,7 @@ function MainContent() {
                   className='relative'
                 >
                   <Timeline
-                    items={timelineData}
+                    items={filteredProjects}
                     selectedItem={selectedItem}
                     onItemClick={handleItemClick}
                   />
@@ -247,10 +268,28 @@ function MainContent() {
   );
 }
 
-function Main() {
+function Main({
+  projects,
+  platformFilter = null,
+  domainFilter = null,
+  isFilterOpen = false,
+  isDesktop = true,
+}: {
+  projects: ProjectWithTranslations[];
+  platformFilter?: string | null;
+  domainFilter?: string | null;
+  isFilterOpen?: boolean;
+  isDesktop?: boolean;
+}) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <MainContent />
+      <MainContent
+        projects={projects}
+        platformFilter={platformFilter}
+        domainFilter={domainFilter}
+        isFilterOpen={isFilterOpen}
+        isDesktopLayout={isDesktop}
+      />
     </Suspense>
   );
 }
