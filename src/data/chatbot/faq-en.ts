@@ -49,32 +49,7 @@ export const chatbotDataEn: ChatbotData = {
       text: 'Next.js projects',
       response:
         'My Next.js project experience includes frontend development for a Korean dining information platform renewal project, frontend development for a Japanese Web3 project campaign site, and frontend development for a Japanese B2C site. I have experience using Next.js versions 12 through 15.',
-      goToProjectLink: [
-        {
-          text: 'Korean Dining Info Platform Renewal',
-          url: '?item=projects.dmonster_diningcode',
-        },
-        {
-          text: 'Web3-Wizardry',
-          url: '?item=projects.turingum_web03_wizardry_campaign',
-        },
-        {
-          text: 'Web3-Mystery Ticket',
-          url: '?item=projects.turingum_web03_tokyo_beast_mystery_ticket',
-        },
-        {
-          text: 'Web3-Tokyo Beast Base',
-          url: '?item=projects.turingum_web03_tokyo_beast_base',
-        },
-        {
-          text: 'New B2C Site',
-          url: '?item=projects.confidential_japanese_startup',
-        },
-        {
-          text: 'Personal Projects',
-          url: '?item=projects.personal',
-        },
-      ],
+      goToProjectLink: 'web',
       nextChoices: ['workStyle', 'contact'],
     },
     mobileApp: {
@@ -82,56 +57,7 @@ export const chatbotDataEn: ChatbotData = {
       text: 'What about mobile app development experience?',
       response:
         'My mobile app development experience includes frontend development using React Native for various projects.',
-      goToProjectLink: [
-        {
-          text: 'Gongjuro',
-          url: '?item=projects.dmonster_gongjuro',
-        },
-        {
-          text: 'Vanished Insadong',
-          url: '?item=projects.dmonster_insadong',
-        },
-        {
-          text: 'Paper Workshop - Customers',
-          url: '?item=projects.dmonster_paper_workshop_customers',
-        },
-        {
-          text: 'Paper Workshop - Partners',
-          url: '?item=projects.dmonster_paper_workshop_partners',
-        },
-        {
-          text: 'IDraw',
-          url: '?item=projects.dmonster_idraw',
-        },
-        {
-          text: "Today's Order",
-          url: '?item=projects.dmonster_todaysorder',
-        },
-        {
-          text: 'Vegastong',
-          url: '?item=projects.dmonster_vegastong',
-        },
-        {
-          text: 'MOZAIQ',
-          url: '?item=projects.dmonster_mozaiq',
-        },
-        {
-          text: 'MOLI',
-          url: '?item=projects.dmonster_moli',
-        },
-        {
-          text: 'Dongnaebook',
-          url: '?item=projects.dmonster_dongnaebook',
-        },
-        {
-          text: 'Tennis Reservation App',
-          url: '?item=projects.confidential_korean_startup',
-        },
-        {
-          text: 'AI (LLM) Mobile Application',
-          url: '?item=projects.crewinc_mobile_frontend',
-        },
-      ],
+      goToProjectLink: 'React Native',
       nextChoices: ['workStyle', 'contact'],
     },
     desktopApp: {
@@ -139,20 +65,7 @@ export const chatbotDataEn: ChatbotData = {
       text: 'What about desktop app development experience?',
       response:
         'My desktop app development experience includes projects using Electron + React. You can check the details through the links below.',
-      goToProjectLink: [
-        {
-          text: 'Dongnaebook Store Owner POS',
-          url: '?item=projects.dmonster_dongnaebook',
-        },
-        {
-          text: 'MOLI (Mori)',
-          url: '?item=projects.dmonster_moli',
-        },
-        {
-          text: "Today's Order Store Owner POS",
-          url: '?item=projects.dmonster_todaysorder',
-        },
-      ],
+      goToProjectLink: 'desktop',
       nextChoices: ['workStyle', 'contact'],
     },
     backend: {

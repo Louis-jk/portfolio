@@ -1,12 +1,19 @@
 'use client';
 
 import { useEffect, useRef, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { useLocale, useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { FaCommentDots } from 'react-icons/fa';
-import Renderer from '@/components/avatar/Renderer';
 import Links from '@/components/links/Links';
+
+const Renderer = dynamic(() => import('@/components/avatar/Renderer'), {
+  ssr: false,
+  loading: () => (
+    <div className='w-48 h-48 rounded-full bg-muted animate-pulse' />
+  ),
+});
 import { useIntroState } from '@/hooks/useIntroState';
 import { useMediaQuery } from 'react-responsive';
 import { cn } from '@/lib/utils';

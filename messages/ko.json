@@ -23,6 +23,27 @@
     "details": {
       "title": "프로젝트 상세"
     },
+    "categories": {
+      "platform": {
+        "web": "Web",
+        "web3": "Web3",
+        "mobile": "Mobile",
+        "desktop": "Desktop"
+      },
+      "domain": {
+        "blockchain": "Blockchain",
+        "ai": "AI",
+        "ecommerce": "E-commerce",
+        "booking": "예약",
+        "marketplace": "중개/견적",
+        "delivery": "배달",
+        "b2b": "B2B",
+        "conference": "회의/컨퍼런스",
+        "tourism": "관광",
+        "lifestyle": "라이프스타일"
+      },
+      "resetFilter": "초기화"
+    },
     "projects": {
       "crewinc_mobile_frontend": {
         "title": "AI(LLM) 모바일 애플리케이션 프론트엔드 개발 (React Native / 풀 리모트)",
@@ -845,5 +866,42 @@
   "loading": {
     "page": "로딩중...",
     "image": "이미지 로딩중..."
+  },
+  "admin": {
+    "projects": {
+      "backToList": "← 프로젝트 목록으로",
+      "edit": "수정하기",
+      "preview": "미리보기",
+      "previewLanguage": "미리보기 언어",
+      "listTitle": "PROJECTS LIST",
+      "projectCount": "총 {count}개의 프로젝트가 디지털 자산으로 등록되었습니다.",
+      "noProjects": "등록된 프로젝트가 없습니다. 첫 프로젝트를 등록해 보세요!",
+      "newProject": "+ NEW PROJECT",
+      "untitledProject": "제목 없음",
+      "overview": "Overview",
+      "technologies": "Technologies",
+      "toolsAndStack": "Tools & Stack",
+      "links": "Links",
+      "description": "Description",
+      "challenges": "Challenges",
+      "achievements": "Achievements",
+      "development": "Development",
+      "communication": "Communication",
+      "design": "Design",
+      "debugging": "Debugging",
+      "addAfterCommaOrEnter": "추가 입력 후 쉼표 또는 Enter",
+      "technologiesPlaceholder": "React, TypeScript, Node.js (쉼표 또는 Enter로 추가)",
+      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma (쉼표 또는 Enter로 추가)",
+      "toolsCommunicationPlaceholder": "Slack, Notion, Jira (쉼표 또는 Enter로 추가)",
+      "toolsDesignPlaceholder": "Figma, Photoshop (쉼표 또는 Enter로 추가)",
+      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry (쉼표 또는 Enter로 추가)",
+      "visibilityLabel": "공개 여부",
+      "publicProject": "공개 프로젝트",
+      "confidentialProject": "비밀유지 프로젝트",
+      "publicProjectDesc": "공개 프로젝트: 외부에 공개해도 되는 프로젝트입니다.",
+      "confidentialProjectDesc": "비밀유지 프로젝트: 기밀 유지가 필요한 프로젝트입니다.",
+      "orderChanged": "프로젝트 순서가 변경되었습니다.",
+      "orderChangeFailed": "순서 변경에 실패했습니다."
+    }
   }
 }

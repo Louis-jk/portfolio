@@ -23,6 +23,27 @@
     "details": {
       "title": "Project Details"
     },
+    "categories": {
+      "platform": {
+        "web": "Web",
+        "web3": "Web3",
+        "mobile": "Mobile",
+        "desktop": "Desktop"
+      },
+      "domain": {
+        "blockchain": "Blockchain",
+        "ai": "AI",
+        "ecommerce": "E-commerce",
+        "booking": "Booking",
+        "marketplace": "Marketplace",
+        "delivery": "Delivery",
+        "b2b": "B2B",
+        "conference": "Conference",
+        "tourism": "Tourism",
+        "lifestyle": "Lifestyle"
+      },
+      "resetFilter": "Reset"
+    },
     "projects": {
       "crewinc_mobile_frontend": {
         "title": "Frontend Development for an AI (LLM) Mobile Application (React Native / Full Remote)",
@@ -927,5 +948,42 @@
   "loading": {
     "page": "Loading...",
     "image": "Loading image..."
+  },
+  "admin": {
+    "projects": {
+      "backToList": "← Back to project list",
+      "edit": "Edit",
+      "preview": "Preview",
+      "previewLanguage": "Preview language",
+      "listTitle": "PROJECTS LIST",
+      "projectCount": "{count} projects registered as digital assets.",
+      "noProjects": "No projects yet. Register your first project!",
+      "newProject": "+ NEW PROJECT",
+      "untitledProject": "Untitled Project",
+      "overview": "Overview",
+      "technologies": "Technologies",
+      "toolsAndStack": "Tools & Stack",
+      "links": "Links",
+      "description": "Description",
+      "challenges": "Challenges",
+      "achievements": "Achievements",
+      "development": "Development",
+      "communication": "Communication",
+      "design": "Design",
+      "debugging": "Debugging",
+      "addAfterCommaOrEnter": "Add more, then comma or Enter",
+      "technologiesPlaceholder": "React, TypeScript, Node.js (add with comma or Enter)",
+      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma (add with comma or Enter)",
+      "toolsCommunicationPlaceholder": "Slack, Notion, Jira (add with comma or Enter)",
+      "toolsDesignPlaceholder": "Figma, Photoshop (add with comma or Enter)",
+      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry (add with comma or Enter)",
+      "visibilityLabel": "Public status",
+      "publicProject": "Public project",
+      "confidentialProject": "Confidential project",
+      "publicProjectDesc": "Public project: Can be shared externally.",
+      "confidentialProjectDesc": "Confidential project: Requires confidentiality.",
+      "orderChanged": "Project order has been updated.",
+      "orderChangeFailed": "Failed to update order."
+    }
   }
 }

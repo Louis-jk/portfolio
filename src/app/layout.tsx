@@ -9,6 +9,7 @@ import {
 import Script from 'next/script';
 
 import { ThemeProvider } from 'next-themes';
+import { Toaster } from 'sonner';
 import './globals.css';
 import GTMTracker from './gtm-tracker';
 
@@ -155,6 +156,8 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+
+        <Toaster richColors position='top-center' />
 
         {/* SPA 페이지뷰 & 이벤트 추적 */}
         <GTMTracker />

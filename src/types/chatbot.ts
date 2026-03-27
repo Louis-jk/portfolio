@@ -8,10 +8,16 @@ export interface ChatbotChoice {
     action: string;
     url: string;
   }[];
-  goToProjectLink?: {
-    text: string;
-    url: string;
-  }[];
+  /** 'all' = 전체, 'web'|'mobile'|'desktop' = 플랫폼별 필터, 배열 = 정적 링크 (레거시) */
+  goToProjectLink?:
+    | 'all'
+    | 'web'
+    | 'mobile'
+    | 'desktop'
+    | {
+        text: string;
+        url: string;
+      }[];
 }
 
 export interface ChatbotData {

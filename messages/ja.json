@@ -23,6 +23,27 @@
     "details": {
       "title": "プロジェクト詳細"
     },
+    "categories": {
+      "platform": {
+        "web": "Web",
+        "web3": "Web3",
+        "mobile": "Mobile",
+        "desktop": "Desktop"
+      },
+      "domain": {
+        "blockchain": "Blockchain",
+        "ai": "AI",
+        "ecommerce": "E-commerce",
+        "booking": "予約",
+        "marketplace": "マッチング/見積",
+        "delivery": "デリバリー",
+        "b2b": "B2B",
+        "conference": "会議/カンファレンス",
+        "tourism": "観光",
+        "lifestyle": "ライフスタイル"
+      },
+      "resetFilter": "リセット"
+    },
     "projects": {
       "crewinc_mobile_frontend": {
         "title": "AI（LLM）モバイルアプリのフロントエンド開発（React Native / フルリモート）",
@@ -901,5 +922,42 @@
   "loading": {
     "page": "読み込み中...",
     "image": "画像読み込み中..."
+  },
+  "admin": {
+    "projects": {
+      "backToList": "← プロジェクト一覧へ",
+      "edit": "編集",
+      "preview": "プレビュー",
+      "previewLanguage": "プレビュー言語",
+      "listTitle": "PROJECTS LIST",
+      "projectCount": "合計{count}件のプロジェクトがデジタル資産として登録されています。",
+      "noProjects": "登録されたプロジェクトがありません。最初のプロジェクトを登録しましょう！",
+      "newProject": "+ NEW PROJECT",
+      "untitledProject": "タイトルなし",
+      "overview": "Overview",
+      "technologies": "Technologies",
+      "toolsAndStack": "Tools & Stack",
+      "links": "Links",
+      "description": "Description",
+      "challenges": "Challenges",
+      "achievements": "Achievements",
+      "development": "Development",
+      "communication": "Communication",
+      "design": "Design",
+      "debugging": "Debugging",
+      "addAfterCommaOrEnter": "追加入力後、カンマまたはEnter",
+      "technologiesPlaceholder": "React, TypeScript, Node.js（カンマまたはEnterで追加）",
+      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma（カンマまたはEnterで追加）",
+      "toolsCommunicationPlaceholder": "Slack, Notion, Jira（カンマまたはEnterで追加）",
+      "toolsDesignPlaceholder": "Figma, Photoshop（カンマまたはEnterで追加）",
+      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry（カンマまたはEnterで追加）",
+      "visibilityLabel": "公開状況",
+      "publicProject": "公開プロジェクト",
+      "confidentialProject": "機密保持プロジェクト",
+      "publicProjectDesc": "公開プロジェクト：外部に公開しても問題ありません。",
+      "confidentialProjectDesc": "機密保持プロジェクト：機密保持が必要なプロジェクトです。",
+      "orderChanged": "プロジェクトの順序が変更されました。",
+      "orderChangeFailed": "順序の変更に失敗しました。"
+    }
   }
 }

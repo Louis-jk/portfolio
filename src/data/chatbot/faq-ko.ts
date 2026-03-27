@@ -49,32 +49,7 @@ export const chatbotDataKo: ChatbotData = {
       text: 'Next.js 프로젝트',
       response:
         'Next.js를 사용한 프로젝트 경험으로는 한국 외식 정보 플랫폼의 리뉴얼 프로젝트의 프론트엔드 개발 담당, 일본 Web3 프로젝트의 캠페인 사이트 프론트엔드 개발 담당, 일본 B2C 사이트 프론트엔드 개발 담당 의 프로젝트 경험이 있습니다. Next.js 버전은 12부터 15까지 사용한 경험이 있습니다.',
-      goToProjectLink: [
-        {
-          text: '한국 외식 정보 플랫폼 리뉴얼',
-          url: '?item=projects.dmonster_diningcode',
-        },
-        {
-          text: 'Web3-Wizardry',
-          url: '?item=projects.turingum_web03_wizardry_campaign',
-        },
-        {
-          text: 'Web3-Mystery Ticket',
-          url: '?item=projects.turingum_web03_tokyo_beast_mystery_ticket',
-        },
-        {
-          text: 'Web3-Tokyo Beast Base',
-          url: '?item=projects.turingum_web03_tokyo_beast_base',
-        },
-        {
-          text: '신규 B2C 사이트',
-          url: '?item=projects.confidential_japanese_startup',
-        },
-        {
-          text: '개인 프로젝트',
-          url: '?item=projects.personal',
-        },
-      ],
+      goToProjectLink: 'web',
       nextChoices: ['workStyle', 'contact'],
     },
     mobileApp: {
@@ -82,56 +57,7 @@ export const chatbotDataKo: ChatbotData = {
       text: '모바일 앱 개발 경험은?',
       response:
         '모바일 앱 개발 경험으로는 React Native를 사용한 프론트엔드 개발로 다양한 프로젝트에 참여한 경험이 있습니다.',
-      goToProjectLink: [
-        {
-          text: '공주로',
-          url: '?item=projects.dmonster_gongjuro',
-        },
-        {
-          text: '사라진 인사동',
-          url: '?item=projects.dmonster_insadong',
-        },
-        {
-          text: '페이퍼공작소-고객',
-          url: '?item=projects.dmonster_paper_workshop_customers',
-        },
-        {
-          text: '페이퍼공작소-파트너스',
-          url: '?item=projects.dmonster_paper_workshop_partners',
-        },
-        {
-          text: '아이드로우',
-          url: '?item=projects.dmonster_idraw',
-        },
-        {
-          text: '오늘의주문',
-          url: '?item=projects.dmonster_todaysorder',
-        },
-        {
-          text: '베가스통',
-          url: '?item=projects.dmonster_vegastong',
-        },
-        {
-          text: 'MOZAIQ',
-          url: '?item=projects.dmonster_mozaiq',
-        },
-        {
-          text: 'MOLI',
-          url: '?item=projects.dmonster_moli',
-        },
-        {
-          text: '동네북',
-          url: '?item=projects.dmonster_dongnaebook',
-        },
-        {
-          text: '테니스예약앱',
-          url: '?item=projects.confidential_korean_startup',
-        },
-        {
-          text: 'AI(LLM) 모바일 애플리케이션',
-          url: '?item=projects.crewinc_mobile_frontend',
-        },
-      ],
+      goToProjectLink: 'React Native',
       nextChoices: ['workStyle', 'contact'],
     },
     desktopApp: {
@@ -139,20 +65,7 @@ export const chatbotDataKo: ChatbotData = {
       text: '데스크탑 앱 개발 경험은?',
       response:
         '데스크탑 앱 개발 경험으로는 electron + React를 사용한 프로젝트 경험이 있습니다. 아래 링크로 확인하실 수 있습니다.',
-      goToProjectLink: [
-        {
-          text: '동네북 점주용 POS',
-          url: '?item=projects.dmonster_dongnaebook',
-        },
-        {
-          text: 'MOLI(모리)',
-          url: '?item=projects.dmonster_moli',
-        },
-        {
-          text: '오늘의 주문 점주용 POS',
-          url: '?item=projects.dmonster_todaysorder',
-        },
-      ],
+      goToProjectLink: 'desktop',
       nextChoices: ['workStyle', 'contact'],
     },
     backend: {

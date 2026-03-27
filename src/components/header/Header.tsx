@@ -1,17 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import Nav from '@/components/header/Nav';
 import ThemeToggle from '@/components/theme/ThemeToggle';
-import { motion } from 'framer-motion';
+import FilterPanel from '@/components/header/FilterPanel';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { SlidersHorizontal } from 'lucide-react';
+import { useMediaQuery } from 'react-responsive';
 
 interface HeaderProps {
   onHomeClick?: () => void;
+  platformFilter?: string | null;
+  domainFilter?: string | null;
+  onPlatformFilter?: (cat: string | null) => void;
+  onDomainFilter?: (tag: string | null) => void;
+  isFilterOpen?: boolean;
+  onFilterOpenChange?: (open: boolean) => void;
 }
 
-function Header({ onHomeClick }: HeaderProps) {
+function Header({
+  onHomeClick,
+  platformFilter = null,
+  domainFilter = null,
+  onPlatformFilter = () => {},
+  onDomainFilter = () => {},
+  isFilterOpen: controlledFilterOpen,
+  onFilterOpenChange,
+}: HeaderProps) {
   const [showHeaderName, setShowHeaderName] = useState(false);
   const [showTimelineTitle, setShowTimelineTitle] = useState(false);
+  const [internalFilterOpen, setInternalFilterOpen] = useState(false);
+  const isControlled = onFilterOpenChange !== undefined;
+  const isFilterOpen = isControlled ? (controlledFilterOpen ?? false) : internalFilterOpen;
+  const setIsFilterOpen = isControlled
+    ? (v: boolean | ((prev: boolean) => boolean)) =>
+        onFilterOpenChange(typeof v === 'function' ? v(isFilterOpen) : v)
+    : setInternalFilterOpen;
   const t = useTranslations('timeline');
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
   // 스크롤 감지하여 헤더 이름 애니메이션 (1024px 미만에서만)
   useEffect(() => {
@@ -49,13 +74,53 @@ function Header({ onHomeClick }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [showTimelineTitle]);
 
+  const handleResetFilter = () => {
+    onPlatformFilter(null);
+    onDomainFilter(null);
+  };
+
   return (
     <header className='fixed top-0 left-0 right-0 z-50'>
-      <div className='relative w-full flex flex-row items-center justify-between px-4 py-2 bg-background border-b border-border h-[55px]'>
-        <Nav onHomeClick={onHomeClick} />
+      <div className='relative w-full flex flex-row items-center justify-between px-4 py-2 bg-background border-b border-border min-h-[55px]'>
+        <div className='flex items-center gap-2 min-w-0 flex-1'>
+          <Nav onHomeClick={onHomeClick} />
+          <button
+            type='button'
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className='p-1.5 rounded-lg text-foreground hover:bg-muted transition-colors shrink-0'
+            aria-label='Filter'
+          >
+            <SlidersHorizontal className='w-5 h-5' />
+          </button>
+          {/* PC: Filter panel expands inline within header row */}
+          {isDesktop && (
+            <AnimatePresence>
+              {isFilterOpen && (
+                <motion.div
+                  initial={{ maxWidth: 0, opacity: 0 }}
+                  animate={{ maxWidth: '85vw', opacity: 1 }}
+                  exit={{ maxWidth: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className='overflow-hidden flex items-center ml-2'
+                >
+                  <div className='py-1 pr-2'>
+                    <FilterPanel
+                      platformFilter={platformFilter}
+                      domainFilter={domainFilter}
+                      onPlatformFilter={onPlatformFilter}
+                      onDomainFilter={onDomainFilter}
+                      onReset={handleResetFilter}
+                      inline
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </div>
         {showTimelineTitle && (
           <motion.p
-            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg text-foreground'
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg text-foreground pointer-events-none'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -66,7 +131,7 @@ function Header({ onHomeClick }: HeaderProps) {
         )}
         {showHeaderName && !showTimelineTitle && (
           <motion.p
-            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg'
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg pointer-events-none'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -77,6 +142,31 @@ function Header({ onHomeClick }: HeaderProps) {
         )}
         <ThemeToggle />
       </div>
+
+      {/* Mobile/Tablet: Accordion dropdown */}
+      {!isDesktop && (
+        <AnimatePresence>
+          {isFilterOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className='overflow-hidden bg-background border-b border-border'
+            >
+              <div className='py-3 px-4'>
+                <FilterPanel
+                  platformFilter={platformFilter}
+                  domainFilter={domainFilter}
+                  onPlatformFilter={onPlatformFilter}
+                  onDomainFilter={onDomainFilter}
+                  onReset={handleResetFilter}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
     </header>
   );
 }
