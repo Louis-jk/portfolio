@@ -73,7 +73,10 @@ const LanguageSelector = ({
                   <Link
                     href={
                       searchParams.toString()
-                        ? `${pathname}?${searchParams.toString()}`
+                        ? {
+                            pathname,
+                            query: Object.fromEntries(searchParams.entries()),
+                          }
                         : pathname
                     }
                     locale={lang.locale}

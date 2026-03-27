@@ -4,6 +4,14 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import * as fs from 'fs';
 import * as path from 'path';
 import { timelineData } from '../src/data/timeline.data';
+import type { TimelineItem } from '../src/types/timeline.type';
+
+const emptyTools: NonNullable<NonNullable<TimelineItem['details']>['tools']> = {
+  development: [],
+  communication: [],
+  design: [],
+  debugging: [],
+};
 
 // Load .env then .env.local (Next.js convention, .env.local overrides)
 config({ path: path.join(process.cwd(), '.env') });
@@ -117,7 +125,7 @@ async function main() {
     const technologies = item.details?.technologies ?? ['React', 'TypeScript'];
 
     // Tools: Development, Communication, Design, Debugging - from timeline.data
-    const toolsData = item.details?.tools ?? {};
+    const toolsData = item.details?.tools ?? emptyTools;
     const hasTools =
       (toolsData.development?.length ?? 0) > 0 ||
       (toolsData.communication?.length ?? 0) > 0 ||
