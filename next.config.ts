@@ -4,8 +4,30 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
+const adminPath = (process.env.NEXT_PUBLIC_ADMIN_SECRET_PATH ?? '').replace(
+  /^\//,
+  ''
+);
+const newProjectSlug =
+  process.env.ADMIN_PROJECT_NEW_SLUG ||
+  process.env.NEXT_PUBLIC_ADMIN_PROJECT_NEW_SLUG ||
+  'new';
+
 const nextConfig: NextConfig = {
   /* config options here */
+  async rewrites() {
+    if (!adminPath || newProjectSlug === 'new') return [];
+    return [
+      {
+        source: `/:locale/${adminPath}/projects/${newProjectSlug}`,
+        destination: `/:locale/${adminPath}/projects/new`,
+      },
+      {
+        source: `/:locale/${adminPath}/projects/${newProjectSlug}/:path*`,
+        destination: `/:locale/${adminPath}/projects/new/:path*`,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -15,6 +37,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'storage.googleapis.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'YOUR_PROJECT_REF.supabase.co',
       },
     ],
   },
