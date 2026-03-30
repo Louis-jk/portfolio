@@ -1,13 +1,6 @@
-남은 기간
 
-- [ ] 8/13(수)까지 무조건 포트폴리오 완성 및 이력서 전달
+<img width="2672" height="1522" alt="image" src="https://github.com/user-attachments/assets/c511919c-0d5f-4a1b-8725-d91e9bf3d4ab" />
 
-남은 작업
-
-- [x] 프로젝트 디테일이 태블릿에서 어설프게 상단에 고정되서 나오고 모바일에서 sticky 안되고 있는 현상
-- [ ] 일본어 체크 필요, 한국어도 마찬가지
-- [ ] 모바일에서 bottomSheet으로 프로젝트 상세 볼 때 하단 부분 ios safari브라우저의 address bar가 높이가 고정되서 나와서 짤리는 부분. address bar의 높이를 최소값으로 줄일 수는 없는건지 등 알아봐야 됨
-- [x] 챗봇 모바일에서 상단 헤더 고정 및 컨텐츠 스크롤 처리
 
 <img width="1792" height="1159" alt="스크린샷 2025-07-24 오후 5 06 05" src="https://github.com/user-attachments/assets/9dcfac3e-c090-4f96-a8f7-ec4ae155855c" />
 
