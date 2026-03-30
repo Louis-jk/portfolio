@@ -30,7 +30,9 @@ function Header({
   const [showTimelineTitle, setShowTimelineTitle] = useState(false);
   const [internalFilterOpen, setInternalFilterOpen] = useState(false);
   const isControlled = onFilterOpenChange !== undefined;
-  const isFilterOpen = isControlled ? (controlledFilterOpen ?? false) : internalFilterOpen;
+  const isFilterOpen = isControlled
+    ? (controlledFilterOpen ?? false)
+    : internalFilterOpen;
   const setIsFilterOpen = isControlled
     ? (v: boolean | ((prev: boolean) => boolean)) =>
         onFilterOpenChange(typeof v === 'function' ? v(isFilterOpen) : v)
@@ -137,7 +139,7 @@ function Header({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            Joonho Kim
+            Joonho
           </motion.p>
         )}
         <ThemeToggle />
