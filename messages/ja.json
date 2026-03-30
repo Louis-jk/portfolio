@@ -20,6 +20,7 @@
   },
   "timeline": {
     "title": "職務経歴",
+    "mobileHeaderTimelineTitle": "職務経歴",
     "details": {
       "title": "プロジェクト詳細"
     },
