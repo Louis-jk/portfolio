@@ -128,7 +128,7 @@ function Header({
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {t('title')}
+            {t('mobileHeaderTimelineTitle')}
           </motion.p>
         )}
         {showHeaderName && !showTimelineTitle && (
