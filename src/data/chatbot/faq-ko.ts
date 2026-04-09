@@ -249,12 +249,12 @@ export const chatbotDataKo: ChatbotData = {
         {
           text: '이메일로 연락하기',
           action: 'email',
-          url: 'mailto:lippoint.surf0622@gmail.com',
+          url: 'mailto:joonhokim.dev@gmail.com',
         },
         {
           text: 'LinkedIn으로 연락하기',
           action: 'linkedin',
-          url: 'https://www.linkedin.com/in/louis-jk',
+          url: 'https://www.linkedin.com/in/joonhokim0506',
         },
       ],
       nextChoices: ['skills'],
