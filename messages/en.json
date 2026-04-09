@@ -746,6 +746,7 @@
     "languageSelector": {
       "title": "Language Selection",
       "description": "Please select your preferred language.",
+      "switchingLanguage": "Switching language…",
       "languages": {
         "ko": "한국어",
         "ja": "日本語",
@@ -922,12 +923,12 @@
           {
             "text": "📧 Contact via Email",
             "action": "email",
-            "url": "mailto:junohoui.dev@gmail.com"
+            "url": "mailto:joonhokim.dev@gmail.com"
           },
           {
             "text": "💼 Contact via LinkedIn",
             "action": "linkedin",
-            "url": "https://www.linkedin.com/in/junohoui"
+            "url": "https://www.linkedin.com/in/joonhokim0506"
           }
         ]
       },

@@ -250,12 +250,12 @@ export const chatbotDataEn: ChatbotData = {
         {
           text: 'Contact by Email',
           action: 'email',
-          url: 'mailto:lippoint.surf0622@gmail.com',
+          url: 'mailto:joonhokim.dev@gmail.com',
         },
         {
           text: 'Contact via LinkedIn',
           action: 'linkedin',
-          url: 'https://www.linkedin.com/in/louis-jk',
+          url: 'https://www.linkedin.com/in/joonhokim0506',
         },
       ],
       nextChoices: ['skills'],

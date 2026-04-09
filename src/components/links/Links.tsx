@@ -16,7 +16,7 @@ const links = [
     name: 'linkedin',
     src: '/icons/linkedin.svg',
     alt: 'linkedin',
-    href: 'https://www.linkedin.com/in/louis-jk/',
+    href: 'https://www.linkedin.com/in/joonhokim0506/',
   },
   {
     name: 'stack overflow',
@@ -28,7 +28,7 @@ const links = [
     name: 'mail',
     src: '/icons/mail.svg',
     alt: 'mail',
-    href: 'mailto:lippoint.surf0622@gmail.com',
+    href: 'mailto:joonhokim.dev@gmail.com',
   },
 ];
 
