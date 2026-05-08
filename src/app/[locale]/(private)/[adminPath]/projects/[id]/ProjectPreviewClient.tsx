@@ -204,11 +204,13 @@ export default function ProjectPreviewClient({
           {/* 상세 이미지 (detailImage) */}
           {t.detailImage && (
             <div className='rounded-lg overflow-hidden border border-zinc-200 dark:border-slate-700 bg-zinc-50 dark:bg-slate-800'>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={t.detailImage}
-                alt={`${t.title} 상세`}
+                alt={`${t.title} detail image`}
                 className='w-full max-h-96 object-contain'
+                width={1200}
+                height={768}
+                unoptimized
               />
             </div>
           )}

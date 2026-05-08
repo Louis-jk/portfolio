@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { format } from 'date-fns';
@@ -99,12 +100,13 @@ export default async function AdminDashboardPage({
                   >
                     <div className='w-24 h-24 bg-zinc-100 dark:bg-zinc-800 rounded-xl overflow-hidden flex-shrink-0'>
                       {project.imageUrl ? (
-                        <img
+                        <Image
                           src={project.imageUrl}
-                          alt='Project'
+                          alt={`${title} thumbnail`}
                           className='w-full h-full object-cover'
                           width={96}
                           height={96}
+                          unoptimized
                         />
                       ) : (
                         <div className='w-full h-full flex items-center justify-center text-[10px] text-zinc-400 dark:text-zinc-500'>
@@ -182,6 +184,7 @@ export default async function AdminDashboardPage({
                       href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${project.id}`}
                       className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
                       title='미리보기'
+                      aria-label='Preview project'
                     >
                       <Eye size={18} />
                     </Link>
@@ -189,6 +192,7 @@ export default async function AdminDashboardPage({
                       href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${project.id}/edit`}
                       className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
                       title='편집'
+                      aria-label='Edit project'
                     >
                       <Pencil size={18} />
                     </Link>
