@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "title": "Joonho Kim | Senior Frontend Engineer",
+    "description": "I am Joonho Kim, a React, Next.js, and React Native specialist. With 15 years of experience, I build optimized architecture and polished user interfaces.",
+    "keywords": "Joonho Kim, Senior Frontend Engineer, Frontend Developer, React Expert, Next.js, React Native, Remote Developer",
+    "ogDescription": "Portfolio of a senior developer with 15 years of experience, combining engineering precision with strong design sense."
+  },
   "homePage": {
     "intro": {
       "hello": {

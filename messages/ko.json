@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "title": "김준호 | 시니어 프론트엔드 엔지니어",
+    "description": "React, Next.js, React Native 전문가 김준호입니다. 15년 경력의 노하우로 최적화된 아키텍처와 정교한 UI를 구현합니다.",
+    "keywords": "Joonho Kim, 김준호, 프론트엔드 개발자, Senior Frontend Engineer, React Expert, Next.js, React Native, 원격 근무 개발자",
+    "ogDescription": "15년차 시니어 개발자의 포트폴리오. 디자인 감각을 겸비한 정교한 프론트엔드 엔지니어링."
+  },
   "homePage": {
     "intro": {
       "hello": {

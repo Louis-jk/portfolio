@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "title": "金俊皓 | シニアフロントエンドエンジニア",
+    "description": "React、Next.js、React Nativeを得意とする金俊皓（キム・ジュノ）です。15年の経験を活かし、最適化されたアーキテクチャと洗練されたUIを実装します。",
+    "keywords": "Joonho Kim, 金俊皓, フロントエンドエンジニア, Senior Frontend Engineer, React Expert, Next.js, React Native, リモート開発",
+    "ogDescription": "15年の経験を持つシニア開発者のポートフォリオ。設計力とデザイン感覚を両立したフロントエンドエンジニアリング。"
+  },
   "homePage": {
     "intro": {
       "hello": {

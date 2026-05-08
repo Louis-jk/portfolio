@@ -49,29 +49,8 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: 'Joonho Kim',
-  description: 'Frontend Engineer Joonho Kim',
-  keywords: 'Joonho Kim, Frontend Engineer, Web Developer, Web3 Developer',
   authors: [{ name: 'Joonho Kim', url: 'https://joonhokim.dev' }],
   metadataBase: new URL('https://joonhokim.dev'),
-  openGraph: {
-    title: 'Joonho Kim',
-    description: 'Frontend Engineer Joonho Kim',
-    url: 'https://joonhokim.dev',
-    images: [
-      {
-        url: '/images/og_image.png',
-        width: 800,
-        height: 600,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Joonho Kim',
-    description: 'Frontend Engineer Joonho Kim',
-    images: ['/images/og_image.png'],
-  },
 };
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
