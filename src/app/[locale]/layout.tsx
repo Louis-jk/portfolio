@@ -77,10 +77,39 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  const t = await getTranslations({ locale, namespace: 'meta' });
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        name: 'Joonho Kim',
+        url: 'https://joonhokim.dev',
+        jobTitle: t('title'),
+        description: t('description'),
+        sameAs: [
+          'https://github.com/Louis-jk',
+          'https://www.linkedin.com/in/joonhokim0506',
+        ],
+      },
+      {
+        '@type': 'WebSite',
+        name: 'Joonho Kim Portfolio',
+        url: `https://joonhokim.dev/${locale}`,
+        inLanguage: locale,
+      },
+    ],
+  };
 
   return (
-    <NextIntlClientProvider locale={locale}>
-      <ThemeProvider>{children}</ThemeProvider>
-    </NextIntlClientProvider>
+    <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <NextIntlClientProvider locale={locale}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </NextIntlClientProvider>
+    </>
   );
 }

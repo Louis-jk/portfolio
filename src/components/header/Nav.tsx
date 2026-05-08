@@ -71,6 +71,7 @@ function Nav({ onHomeClick }: NavProps) {
             href='/'
             onClick={handleHomeClick}
             className='text-foreground hover:text-foreground/80 transition-colors'
+            aria-label='Go to home'
           >
             <motion.div
               className='flex flex-row justify-center items-center gap-2 cursor-pointer'
@@ -82,17 +83,21 @@ function Nav({ onHomeClick }: NavProps) {
           </Link>
         </li>
         <li>
-          <motion.div
+          <motion.button
+            type='button'
             className='flex flex-row justify-center items-center gap-2 cursor-pointer'
             onClick={() => {
               setOpen(true);
             }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            aria-label='Open language selector'
+            aria-haspopup='dialog'
+            aria-expanded={open}
           >
             <IoLanguage className='w-6 h-6' />
             <Flag code={code} className='w-8 h-5' />
-          </motion.div>
+          </motion.button>
         </li>
       </ul>
 
