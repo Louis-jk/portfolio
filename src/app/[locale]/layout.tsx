@@ -36,11 +36,12 @@ export async function generateMetadata({
     description: t('description'),
     keywords,
     alternates: {
-      canonical: '/',
+      canonical: `/${locale}`,
       languages: {
         en: '/en',
         ko: '/ko',
         ja: '/ja',
+        'x-default': '/en',
       },
     },
     openGraph: {

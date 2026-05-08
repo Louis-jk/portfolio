@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import {
   Geist,
   Geist_Mono,
@@ -56,13 +57,16 @@ export const metadata: Metadata = {
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID || '';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get('x-app-locale') ?? 'en';
+
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link
           rel='icon'

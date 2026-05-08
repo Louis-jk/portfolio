@@ -26,6 +26,11 @@ function isAdminAuthRoute(pathname: string): boolean {
 export async function middleware(request: NextRequest) {
   const handleI18nRouting = createMiddleware(routing);
   const response = await handleI18nRouting(request);
+  const requestedLocale = request.nextUrl.pathname.split('/')[1];
+  const locale = routing.locales.includes(requestedLocale as (typeof routing.locales)[number])
+    ? requestedLocale
+    : routing.defaultLocale;
+  response.headers.set('x-app-locale', locale);
 
   // Admin 경로 보호: Supabase Auth 세션 검증
   if (EXPECTED_ADMIN_PATH && isAdminRoute(request.nextUrl.pathname)) {
