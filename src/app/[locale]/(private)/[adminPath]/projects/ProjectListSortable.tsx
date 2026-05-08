@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -83,11 +84,13 @@ function SortableProjectCard({
         >
           <div className='w-24 h-24 bg-zinc-100 dark:bg-zinc-800 rounded-xl overflow-hidden flex-shrink-0'>
             {project.imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={project.imageUrl}
-                alt='Project'
+                alt='Project thumbnail'
                 className='w-full h-full object-cover'
+                width={96}
+                height={96}
+                unoptimized
               />
             ) : (
               <div className='w-full h-full flex items-center justify-center text-[10px] text-zinc-400 dark:text-zinc-500'>
@@ -163,6 +166,7 @@ function SortableProjectCard({
             href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${project.id}`}
             className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
             title='미리보기'
+          aria-label='Preview project'
           >
             <Eye size={18} />
           </Link>
@@ -170,6 +174,7 @@ function SortableProjectCard({
             href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${project.id}/edit`}
             className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
             title='편집'
+          aria-label='Edit project'
           >
             <Pencil size={18} />
           </Link>
@@ -178,6 +183,7 @@ function SortableProjectCard({
             onClick={() => onDelete(project.id)}
             className='p-2 rounded-lg text-zinc-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-500 transition-colors'
             title='삭제'
+          aria-label='Delete project'
           >
             <Trash2 size={18} />
           </button>
@@ -260,11 +266,13 @@ export default function ProjectListSortable({
             >
               <div className='w-24 h-24 bg-zinc-100 dark:bg-zinc-800 rounded-xl overflow-hidden flex-shrink-0'>
                 {project.imageUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={project.imageUrl}
-                    alt='Project'
+                    alt='Project thumbnail'
                     className='w-full h-full object-cover'
+                    width={96}
+                    height={96}
+                    unoptimized
                   />
                 ) : (
                   <div className='w-full h-full flex items-center justify-center text-[10px] text-zinc-400 dark:text-zinc-500'>

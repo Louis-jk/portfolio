@@ -59,7 +59,12 @@ function KakaoTalkShareButton({
   };
 
   return (
-    <div onClick={handleClick} className='cursor-pointer'>
+    <button
+      type='button'
+      onClick={handleClick}
+      className='cursor-pointer'
+      aria-label='Share via KakaoTalk'
+    >
       <Image
         src='/images/kakaotalk_brand_logo.png'
         alt='KakaoTalk'
@@ -67,7 +72,7 @@ function KakaoTalkShareButton({
         height={size}
         className={cn(round && 'rounded-full')}
       />
-    </div>
+    </button>
   );
 }
 
