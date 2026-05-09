@@ -164,6 +164,7 @@ function Intro() {
 
   return (
     <section
+      aria-labelledby='portfolio-name-heading'
       className={cn(
         'flex flex-col items-center justify-start',
         isDesktop && 'h-[calc(100vh-205px)] overflow-y-auto'
@@ -205,6 +206,7 @@ function Intro() {
         </motion.div>
 
         <motion.h1
+          id='portfolio-name-heading'
           className='text-4xl md:text-5xl font-bold text-center'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -237,13 +239,15 @@ function Intro() {
 
         <Links />
 
-        <motion.div
+        <motion.section
+          aria-labelledby='about-me-heading'
           className='flex flex-col items-center mt-5 px-4 2xl:px-10'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
         >
           <motion.h2
+            id='about-me-heading'
             className={`flex items-center justify-start text-xl lg:text-2xl font-bold mb-2 ${
               locale === 'ja' && 'tracking-[.15em]'
             }`}
@@ -262,7 +266,7 @@ function Intro() {
           >
             {t('homePage.intro.aboutMe')}
           </motion.p>
-        </motion.div>
+        </motion.section>
       </div>
     </section>
   );

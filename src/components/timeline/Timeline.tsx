@@ -46,7 +46,7 @@ export default function Timeline({
   const t = useTranslations('timeline');
   const locale = useLocale();
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const itemRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
+  const itemRefs = useRef<Map<string, HTMLElement | null>>(new Map());
   const lenisRef = useRef<Lenis | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
 
@@ -302,7 +302,11 @@ export default function Timeline({
   };
 
   return (
-    <div className='flex flex-col' data-timeline-section>
+    <section
+      className='flex flex-col'
+      data-timeline-section
+      aria-labelledby='timeline-heading'
+    >
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 Header 아래에 sticky */}
       <div
         ref={titleRef}
@@ -313,6 +317,7 @@ export default function Timeline({
         )}
       >
         <h2
+          id='timeline-heading'
           className={cn(
             'text-2xl font-bold text-center text-gray-900 dark:text-gray-100',
             locale === 'ja' && 'tracking-[.25em]',
@@ -324,13 +329,14 @@ export default function Timeline({
 
       {/* 모바일에서는 스크롤 컨테이너 없이 직접 렌더링 */}
       {isMobile ? (
-        <div>
+        <div role='list'>
           {itemsToRender.map((item, index) => (
             <div
               key={item.id}
               ref={index === itemsToRender.length - 1 ? lastItemRef : null}
+              role='listitem'
             >
-              <motion.div
+              <motion.article
                 ref={(el) => {
                   itemRefs.current.set(item.id.toString(), el);
                 }}
@@ -346,6 +352,11 @@ export default function Timeline({
                     ? 'bg-gray-100 dark:bg-gray-800/70'
                     : ''
                 }`}
+                aria-current={
+                  selectedItem?.id.toString() === item.id.toString()
+                    ? 'true'
+                    : undefined
+                }
                 onClick={() => handleItemClick(item)}
               >
                 <div className='pr-0'>
@@ -384,7 +395,7 @@ export default function Timeline({
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.article>
               {index < itemsToRender.length - 1 && (
                 <div className='h-px border-t border-dashed border-gray-200 dark:border-gray-700 mx-4' />
               )}
@@ -396,6 +407,8 @@ export default function Timeline({
         <div
           ref={scrollRef}
           data-timeline-container
+          role='list'
+          aria-labelledby='timeline-heading'
           className={cn(
             'pr-2 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll',
             isTablet && 'pr-0',
@@ -412,8 +425,9 @@ export default function Timeline({
             <div
               key={item.id}
               ref={index === itemsToRender.length - 1 ? lastItemRef : null}
+              role='listitem'
             >
-              <motion.div
+              <motion.article
                 ref={(el) => {
                   itemRefs.current.set(item.id.toString(), el);
                 }}
@@ -429,6 +443,7 @@ export default function Timeline({
                     ? 'bg-gray-100 dark:bg-gray-800/70'
                     : ''
                 }`}
+                aria-current={selectedItem?.id === item.id ? 'true' : undefined}
                 onClick={() => handleItemClick(item)}
                 onMouseEnter={
                   !isTabletDevice ? (e) => handleMouseEnter(e, item) : undefined
@@ -481,7 +496,7 @@ export default function Timeline({
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.article>
               {index < itemsToRender.length - 1 && (
                 <div className='h-px border-t border-dashed border-gray-200 dark:border-gray-700 mx-4' />
               )}
@@ -500,6 +515,6 @@ export default function Timeline({
           </LiquidButton>,
           document.body,
         )}
-    </div>
+    </section>
   );
 }

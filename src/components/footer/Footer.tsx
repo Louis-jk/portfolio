@@ -14,9 +14,11 @@ function Footer() {
         isMobile ? '' : 'mt-auto'
       }`}
     >
-      <div>Open to new opportunities.</div>
+      <p>Open to new opportunities.</p>
       <Links />
-      <div>© {new Date().getFullYear()} Joonho Kim · Frontend Developer</div>
+      <p>
+        © {new Date().getFullYear()} Joonho Kim · Frontend Developer
+      </p>
     </footer>
   );
 }

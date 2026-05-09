@@ -41,7 +41,8 @@ function Links() {
   }, []);
 
   return (
-    <motion.div
+    <motion.nav
+      aria-label='Social and contact links'
       className='flex flex-row items-center justify-center gap-4 text-gray-800'
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -72,7 +73,7 @@ function Links() {
           />
         </motion.a>
       ))}
-    </motion.div>
+    </motion.nav>
   );
 }
 
