@@ -61,6 +61,9 @@ export default function TimelineDrawer({
 
           {/* Drawer */}
           <motion.div
+            role='dialog'
+            aria-modal='true'
+            aria-labelledby='timeline-drawer-title'
             initial={{ y: '100%' }}
             animate={{ y: 55 }}
             exit={{ y: '100%' }}
@@ -69,11 +72,16 @@ export default function TimelineDrawer({
           >
             {/* Header */}
             <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black'>
-              <h3 className='text-xl font-bold text-gray-900 dark:text-gray-100'>
+              <h3
+                id='timeline-drawer-title'
+                className='text-xl font-bold text-gray-900 dark:text-gray-100'
+              >
                 {t('details.title')}
               </h3>
               <button
+                type='button'
                 onClick={onClose}
+                aria-label='Close project details'
                 className='p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
               >
                 <IoClose

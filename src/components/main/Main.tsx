@@ -7,6 +7,7 @@ import TimelineDrawer from '@/components/timeline/TimelineDrawer';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'react-responsive';
 import type { ProjectWithTranslations } from '@/services/project-service';
 
@@ -37,6 +38,7 @@ function MainContent({
   }, [projects, platformFilter, domainFilter]);
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const tTimeline = useTranslations('timeline');
 
   const isTablet = useMediaQuery({
     query: '(min-width: 1024px) and (max-width: 1279px)',
@@ -178,8 +180,9 @@ function MainContent({
                   </motion.div>
 
                   {/* Timeline Detail with scroll - Desktop only */}
-                  <motion.div
+                  <motion.aside
                     data-timeline-detail-container
+                    aria-label={tTimeline('details.title')}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
@@ -191,7 +194,7 @@ function MainContent({
                       item={selectedItem}
                       isVisible={!!selectedItem}
                     />
-                  </motion.div>
+                  </motion.aside>
                 </div>
               </div>
             )}

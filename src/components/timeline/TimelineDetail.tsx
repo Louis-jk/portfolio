@@ -109,8 +109,11 @@ export default function TimelineDetail({
 
   if (!item || !item.translations) {
     return (
-      <div className='flex items-center justify-center h-full min-h-[500px]'>
-        <div className='text-center'>
+      <section
+        className='flex items-center justify-center h-full min-h-[500px]'
+        aria-labelledby='detail-empty-state-title'
+      >
+        <div className='text-center' role='status'>
           <div className='w-16 h-16 mx-auto mb-4 rounded-full bg-gray-200 dark:bg-zinc-800 flex items-center justify-center'>
             <svg
               className='w-8 h-8 text-gray-400'
@@ -126,23 +129,32 @@ export default function TimelineDetail({
               />
             </svg>
           </div>
-          <p className='text-gray-500 dark:text-gray-400 text-lg font-medium'>
+          <p
+            id='detail-empty-state-title'
+            className='text-gray-500 dark:text-gray-400 text-lg font-medium'
+          >
             Select a project to view details
           </p>
           <p className='text-gray-400 dark:text-gray-500 text-sm mt-2'>
             Click on any timeline item to see more information
           </p>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className='flex flex-col h-full'>
+    <article
+      className='flex flex-col h-full'
+      aria-labelledby='detail-project-title'
+    >
       {/* PC에서만 보이는 제목 - 스크롤되지 않음 */}
       {isDesktopOrLaptop && (
         <div className='bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center'>
-          <h2 className='text-2xl font-bold text-center text-gray-900 dark:text-gray-100'>
+          <h2
+            id='detail-panel-heading'
+            className='text-2xl font-bold text-center text-gray-900 dark:text-gray-100'
+          >
             {t('details.title')}
           </h2>
         </div>
@@ -177,6 +189,7 @@ export default function TimelineDetail({
             >
               <ProjectCategoryBadges project={item} className='mb-2' />
               <motion.h3
+                id='detail-project-title'
                 initial={{ opacity: 0, y: 20 }}
                 animate={
                   isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
@@ -546,6 +559,6 @@ export default function TimelineDetail({
         title='Joonho Kim Portfolio'
         text='Frontend Developer Joonho Kim'
       />
-    </div>
+    </article>
   );
 }
