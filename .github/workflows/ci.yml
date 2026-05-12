@@ -89,3 +89,20 @@ jobs:
 
       - name: Run build
         run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    # 중요: 이 작업은 다른 작업이 성공해야 실행됩니다.
+    needs: [lint, unit-test, build]
+    # main 브랜치에 push 되었을 때만 실제 배포 작업을 실행합니다.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v2
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          production: true
