@@ -13,12 +13,11 @@ import type { ProjectTranslation } from '@/generated/prisma/client';
 import { format } from 'date-fns';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
 
-function getTranslation(
-  project: ProjectWithTranslations,
-  locale: string
-) {
+function getTranslation(project: ProjectWithTranslations, locale: string) {
   return (
-    project.translations.find((tr: ProjectTranslation) => tr.locale === locale) ??
+    project.translations.find(
+      (tr: ProjectTranslation) => tr.locale === locale,
+    ) ??
     project.translations.find((tr: ProjectTranslation) => tr.locale === 'ko') ??
     project.translations[0]
   );
@@ -26,9 +25,7 @@ function getTranslation(
 
 function formatDateRange(project: ProjectWithTranslations, locale: string) {
   const dateFormat = locale === 'en' ? 'MMM yyyy' : 'yyyy.MM';
-  const end = project.endDate
-    ? format(project.endDate, dateFormat)
-    : 'PRESENT';
+  const end = project.endDate ? format(project.endDate, dateFormat) : 'PRESENT';
   return `${format(project.startDate, dateFormat)} ~ ${end}`;
 }
 
@@ -50,7 +47,8 @@ export default function Timeline({
   const lenisRef = useRef<Lenis | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
 
-  const [hoveredItem, setHoveredItem] = useState<ProjectWithTranslations | null>(null);
+  const [hoveredItem, setHoveredItem] =
+    useState<ProjectWithTranslations | null>(null);
   const [showThumbnail, setShowThumbnail] = useState(false);
   const [target, setTarget] = useState<{ x: number; y: number }>({
     x: 0,
@@ -262,7 +260,10 @@ export default function Timeline({
     }, 20);
   }, [selectedItem, isKeyboardSelection, isMobile, isTablet, isTabletDevice]);
 
-  const handleMouseEnter = (e: React.MouseEvent, item: ProjectWithTranslations) => {
+  const handleMouseEnter = (
+    e: React.MouseEvent,
+    item: ProjectWithTranslations,
+  ) => {
     if (selectedItem?.id.toString() === item.id.toString()) {
       return;
     }
@@ -301,6 +302,14 @@ export default function Timeline({
     }
   };
 
+  if (itemsToRender.length === 0) {
+    return (
+      <section className='flex flex-col h-[calc(100vh-275px)] items-center justify-center'>
+        <p className='text-center'>{t('noItemsFound')}</p>
+      </section>
+    );
+  }
+
   return (
     <section
       className='flex flex-col'
@@ -312,7 +321,7 @@ export default function Timeline({
         ref={titleRef}
         data-timeline-title
         className={cn(
-          'bg-white dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800 transition-all duration-200',
+          'dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800 transition-all duration-200',
           isMobile && 'sticky top-[55px] z-30',
         )}
       >
@@ -362,7 +371,10 @@ export default function Timeline({
                 <div className='pr-0'>
                   <div className='flex items-start gap-3'>
                     <div className='flex-1 min-w-0'>
-                      <ProjectCategoryBadges project={item} className='mb-1.5' />
+                      <ProjectCategoryBadges
+                        project={item}
+                        className='mb-1.5'
+                      />
                       <div className='flex items-center gap-2 justify-between'>
                         <h3
                           className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
@@ -438,9 +450,9 @@ export default function Timeline({
                   delay: Math.min(index * 0.01, 0.1),
                   ease: 'easeOut',
                 }}
-                className={`relative cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
+                className={`relative cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-lg p-4  ${
                   selectedItem?.id === item.id
-                    ? 'bg-gray-100 dark:bg-gray-800/70'
+                    ? 'bg-gray-200 dark:bg-gray-800/70'
                     : ''
                 }`}
                 aria-current={selectedItem?.id === item.id ? 'true' : undefined}
@@ -463,7 +475,10 @@ export default function Timeline({
                       </div>
                     )}
                     <div className='flex-1 min-w-0'>
-                      <ProjectCategoryBadges project={item} className='mb-1.5' />
+                      <ProjectCategoryBadges
+                        project={item}
+                        className='mb-1.5'
+                      />
                       <div className='flex items-center gap-2 justify-between'>
                         <h3
                           className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
