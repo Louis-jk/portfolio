@@ -40,10 +40,10 @@ export default function FilterPanel({
             onClick={() =>
               onPlatformFilter(platformFilter === cat ? null : cat)
             }
-            className={`px-2.5 py-1 rounded text-xs font-medium transition shrink-0 ${
+            className={`px-2.5 py-1 rounded text-xs font-medium transition shrink-0 cursor-pointer ${
               platformFilter === cat
                 ? 'bg-purple-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                : 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
             }`}
           >
             {t(`platform.${cat}`)}
@@ -54,10 +54,10 @@ export default function FilterPanel({
             key={tag}
             type='button'
             onClick={() => onDomainFilter(domainFilter === tag ? null : tag)}
-            className={`px-2.5 py-1 rounded text-xs font-medium transition shrink-0 ${
+            className={`px-2.5 py-1 rounded text-xs font-medium transition shrink-0 cursor-pointer ${
               domainFilter === tag
                 ? 'bg-amber-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                : 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
             }`}
           >
             {t(`domain.${tag}`)}
@@ -67,7 +67,7 @@ export default function FilterPanel({
           <button
             type='button'
             onClick={onReset}
-            className='px-2.5 py-1 rounded text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 shrink-0'
+            className='px-2.5 py-1 rounded text-xs text-gray-700 dark:text-gray-300 shrink-0 cursor-pointer'
           >
             ✕ {t('resetFilter')}
           </button>
