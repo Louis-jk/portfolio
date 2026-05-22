@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const adminPath = (process.env.NEXT_PUBLIC_ADMIN_SECRET_PATH ?? '').replace(
   /^\//,
-  ''
+  '',
 );
 const newProjectSlug =
   process.env.ADMIN_PROJECT_NEW_SLUG ||
@@ -14,6 +14,8 @@ const newProjectSlug =
   'new';
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
+
   /* config options here */
   async rewrites() {
     if (!adminPath || newProjectSlug === 'new') return [];
