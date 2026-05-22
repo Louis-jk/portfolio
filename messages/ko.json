@@ -690,7 +690,8 @@
           ]
         }
       }
-    }
+    },
+    "noItemsFound": "해당하는 프로젝트가 없습니다."
   },
   "modal": {
     "languageSelector": {
