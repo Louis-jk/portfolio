@@ -746,7 +746,8 @@
           ]
         }
       }
-    }
+    },
+    "noItemsFound": "No projects found."
   },
   "modal": {
     "languageSelector": {
