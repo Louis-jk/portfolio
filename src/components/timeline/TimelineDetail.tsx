@@ -50,6 +50,7 @@ export default function TimelineDetail({
   const tL = useTranslations('loading');
   const [imageLoaded, setImageLoaded] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
 
   const isDesktopOrLaptop = useMediaQuery({
@@ -69,16 +70,18 @@ export default function TimelineDetail({
     setImageLoaded(false);
   }, [item?.imageUrl]);
 
-  // Lenis 초기화 (한 번만)
+  // Lenis 초기화 (데스크톱 상세 패널)
   useEffect(() => {
-    if (!scrollRef.current || window.innerWidth < 1024) return;
+    if (!scrollRef.current || !contentRef.current || !isDesktopOrLaptop) return;
 
-    lenisRef.current = new Lenis({
+    const lenis = new Lenis({
       wrapper: scrollRef.current,
+      content: contentRef.current,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
 
     function raf(time: number) {
       lenisRef.current?.raf(time);
@@ -87,19 +90,37 @@ export default function TimelineDetail({
     requestAnimationFrame(raf);
 
     return () => {
-      lenisRef.current?.destroy();
+      lenis.destroy();
       lenisRef.current = null;
     };
-  }, []); // 의존성 배열에서 item 제거
+  }, [isDesktopOrLaptop]);
 
-  // item 변경 시 Lenis로 스크롤 위치 초기화 (Lenis 초기화 후 실행)
+  // 콘텐츠 높이 변경 시 스크롤 한도 재계산 (이미지 로드·프로젝트 전환 등)
   useEffect(() => {
-    if (lenisRef.current) {
-      // 약간의 지연을 두고 스크롤 초기화
-      setTimeout(() => {
-        lenisRef.current?.scrollTo(0, { immediate: true });
-      }, 100);
-    }
+    const lenis = lenisRef.current;
+    const content = contentRef.current;
+    if (!lenis || !content || !isDesktopOrLaptop) return;
+
+    const syncScrollBounds = () => {
+      lenis.resize();
+    };
+
+    syncScrollBounds();
+
+    const observer = new ResizeObserver(syncScrollBounds);
+    observer.observe(content);
+
+    return () => observer.disconnect();
+  }, [item, imageLoaded, isDesktopOrLaptop]);
+
+  // item 변경 시 스크롤 위치 초기화
+  useEffect(() => {
+    if (!lenisRef.current) return;
+
+    requestAnimationFrame(() => {
+      lenisRef.current?.resize();
+      lenisRef.current?.scrollTo(0, { immediate: true });
+    });
   }, [item]);
 
   const webLink = item && item.isPublic && item.platforms?.webLink;
@@ -150,7 +171,7 @@ export default function TimelineDetail({
     >
       {/* PC에서만 보이는 제목 - 스크롤되지 않음 */}
       {isDesktopOrLaptop && (
-        <div className='dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center'>
+        <div className='dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800'>
           <h2
             id='detail-panel-heading'
             className='text-2xl font-bold text-center text-gray-900 dark:text-gray-100'
@@ -164,17 +185,18 @@ export default function TimelineDetail({
         ref={scrollRef}
         className={cn(
           'h-[calc(100vh-135px)] overflow-y-auto overflow-x-hidden',
-          isDesktopOrLaptop && 'h-[calc(100vh-275px)]',
+          isDesktopOrLaptop && 'h-[calc(100vh-275px)] pt-5',
           isMobile && 'pb-36',
         )}
       >
         <motion.div
+          ref={contentRef}
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.5 }}
           className={cn(
             'flex flex-col gap-7 px-0 lg:px-4 overflow-hidden',
-            isDesktopOrLaptop && 'mb-5',
+            isDesktopOrLaptop && 'mb-5 pb-8',
           )}
         >
           <div>
@@ -248,16 +270,11 @@ export default function TimelineDetail({
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className='relative w-full'
+              className='relative w-full aspect-[1200/579]'
             >
               {/* 로딩 스켈레톤 */}
               {!imageLoaded && (
-                <div
-                  className={cn(
-                    'w-full h-[150px] rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-900',
-                    isDesktopOrLaptop && 'h-[300px]',
-                  )}
-                >
+                <div className='absolute inset-0 rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-900'>
                   <div className='flex flex-col items-center justify-center gap-4'>
                     {/* 더블 링 스피너 */}
                     <div className='relative flex items-center justify-center'>
@@ -279,25 +296,23 @@ export default function TimelineDetail({
                 </div>
               )}
 
-              {/* 이미지 - 로드되면 스피너 위에 표시 */}
-              <div
+              <Image
+                key={item.imageUrl}
+                src={item.imageUrl}
+                alt={getTranslation(item, locale).title}
                 className={cn(
-                  'transition-opacity duration-300',
-                  imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0',
+                  'object-contain rounded-sm select-none pointer-events-none w-full h-full mx-auto transition-opacity duration-300',
+                  imageLoaded ? 'opacity-100' : 'opacity-0',
                 )}
-              >
-                <Image
-                  key={item.imageUrl}
-                  src={item.imageUrl}
-                  alt={getTranslation(item, locale).title}
-                  className='object-contain rounded-sm select-none pointer-events-none w-full mx-auto'
-                  width={1200}
-                  height={579}
-                  onLoad={() => setImageLoaded(true)}
-                  priority={true} // 우선순위 로딩
-                  unoptimized={item.imageUrl?.endsWith('.gif')} // 애니메이션 GIF는 최적화 비활성화
-                />
-              </div>
+                width={1200}
+                height={579}
+                onLoad={() => {
+                  setImageLoaded(true);
+                  requestAnimationFrame(() => lenisRef.current?.resize());
+                }}
+                priority={true}
+                unoptimized={item.imageUrl?.endsWith('.gif')}
+              />
             </motion.div>
           )}
 
