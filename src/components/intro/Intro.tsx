@@ -19,6 +19,11 @@ import { useMediaQuery } from 'react-responsive';
 import { cn } from '@/lib/utils';
 import Resume from './Resume';
 
+const THEME_TRANSITION_TIMING =
+  'background-color 1.4s cubic-bezier(0.4, 0, 0.2, 1), color 1.4s cubic-bezier(0.4, 0, 0.2, 1)';
+const BORDER_TRANSITION_TIMING =
+  'border-top-color 1.4s cubic-bezier(0.4, 0, 0.2, 1)';
+
 function Intro() {
   const t = useTranslations();
   const locale = useLocale();
@@ -159,6 +164,7 @@ function Intro() {
       minWidth: '120px',
       backgroundColor: resolvedTheme === 'dark' ? '#fff' : '#101010',
       color: resolvedTheme === 'dark' ? '#000' : '#fff',
+      transition: THEME_TRANSITION_TIMING,
       wordBreak: 'break-word',
     });
   }, [currentMessage, isGreetingVisible, resolvedTheme, setBubbleStyle]);
@@ -200,6 +206,7 @@ function Intro() {
                 className='absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent'
                 style={{
                   borderTopColor: resolvedTheme === 'dark' ? '#fff' : '#000',
+                  transition: BORDER_TRANSITION_TIMING,
                 }}
               />
             </motion.div>
