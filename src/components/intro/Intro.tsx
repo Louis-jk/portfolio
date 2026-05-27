@@ -17,6 +17,7 @@ const Renderer = dynamic(() => import('@/components/avatar/Renderer'), {
 import { useIntroState } from '@/hooks/useIntroState';
 import { useMediaQuery } from 'react-responsive';
 import { cn } from '@/lib/utils';
+import Resume from './Resume';
 
 function Intro() {
   const t = useTranslations();
@@ -54,10 +55,10 @@ function Intro() {
       hour < 12
         ? t('homePage.intro.hello.morning')
         : hour < 17
-        ? t('homePage.intro.hello.afternoon')
-        : hour < 21
-        ? t('homePage.intro.hello.evening')
-        : t('homePage.intro.hello.night');
+          ? t('homePage.intro.hello.afternoon')
+          : hour < 21
+            ? t('homePage.intro.hello.evening')
+            : t('homePage.intro.hello.night');
 
     const randoms = [
       t('homePage.intro.randomGreetings.0'),
@@ -167,7 +168,7 @@ function Intro() {
       aria-labelledby='portfolio-name-heading'
       className={cn(
         'flex flex-col items-center justify-start',
-        isDesktop && 'h-[calc(100vh-205px)] overflow-y-auto'
+        isDesktop && 'h-[calc(100vh-205px)] overflow-y-auto',
       )}
     >
       <div className='flex flex-col items-center gap-5 py-10'>
@@ -238,6 +239,8 @@ function Intro() {
         )}
 
         <Links />
+
+        <Resume locale={locale} />
 
         <motion.section
           aria-labelledby='about-me-heading'

@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "Joonho Kim | Senior Frontend Engineer",
-    "description": "I am Joonho Kim, a React, Next.js, and React Native specialist. With 15 years of experience, I build optimized architecture and polished user interfaces.",
-    "keywords": "Joonho Kim, Senior Frontend Engineer, Frontend Developer, React Expert, Next.js, React Native, Remote Developer",
-    "ogDescription": "Portfolio of a senior developer with 15 years of experience, combining engineering precision with strong design sense."
+    "description": "Senior Frontend Engineer with 15 years of extensive experience spanning the React ecosystem (Next.js/React Native), Electron, and Web3. Driven by strong technical ownership to deliver optimized architecture and high-performance UI/UX.",
+    "keywords": "Joonho Kim, Senior Frontend Engineer, Frontend Developer, React Expert, Next.js, React Native, Electron, Web3, Dapp, Remote Developer, Technical Ownership",
+    "ogDescription": "Portfolio of Joonho Kim, a Senior Frontend Engineer with 15 years of experience in global remote work. Combining technical ownership with design precision to build scalable Web, Mobile, and Web3 solutions."
   },
   "homePage": {
     "intro": {
@@ -21,7 +21,12 @@
         "Hope you have a great day! ☀️"
       ],
       "aboutMeTitle": "About Me",
-      "aboutMe": "As a frontend engineer, I have been working primarily with React and Next.js to develop web services and mobile applications across various real-world projects.\nWith an early background in web design and markup, I developed a strong understanding of user experience, and later expanded into the React ecosystem, focusing on building scalable and maintainable frontend architectures.\nIn recent years, I have participated in diverse projects including Web3 dApps, AI-driven interfaces, and platform services, continuously expanding my technical stack while delivering stable frontend solutions in production environments.\nThrough collaboration with development teams in Japan and other countries, I have strengthened my ability to communicate clearly and solve problems proactively in fully remote and asynchronous work environments."
+      "aboutMe": "Senior Frontend Engineer with extensive production experience spanning the React ecosystem (Next.js/React Native), Desktop apps (Electron), and Web3 (Dapp).\nLeveraging a strong background in web design and publishing to bridge the gap between design and engineering, with a proven track record of delivering refined, user-centric UI/UX.\nOperating with strong \"technical ownership\" in both domestic and global remote environments—proactively identifying system bottlenecks, sharing technical insights, and driving collaboration based on mutual trust.",
+      "resume": {
+        "title": "Resume PDF",
+        "open": "Open",
+        "download": "Download"
+      }
     }
   },
   "timeline": {
