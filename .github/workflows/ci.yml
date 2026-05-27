@@ -89,6 +89,8 @@ jobs:
 
       - name: Run build
         run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
 
   # deploy:
   #   runs-on: ubuntu-latest
