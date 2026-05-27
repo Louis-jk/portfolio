@@ -3,9 +3,11 @@
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { GiStripedSun } from 'react-icons/gi';
 import { FaMoon } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
+import { withThemeTransition } from '@/lib/theme-transition';
 
 export default function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -25,14 +27,17 @@ export default function ThemeToggle() {
   }
 
   const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('light');
-    } else {
-      // system theme인 경우
-      setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
-    }
+    withThemeTransition(() => {
+      flushSync(() => {
+        if (theme === 'light') {
+          setTheme('dark');
+        } else if (theme === 'dark') {
+          setTheme('light');
+        } else {
+          setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
+        }
+      });
+    });
   };
 
   return (
