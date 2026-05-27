@@ -1,4 +1,4 @@
-export function withThemeTransition(update: () => void) {
+export function withThemeTransition(update: () => void): ViewTransition | void {
   if (typeof document === 'undefined') {
     update();
     return;
@@ -12,5 +12,5 @@ export function withThemeTransition(update: () => void) {
     return;
   }
 
-  document.startViewTransition(update);
+  return document.startViewTransition(update);
 }
