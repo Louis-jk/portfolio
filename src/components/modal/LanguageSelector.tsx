@@ -41,10 +41,15 @@ const LanguageSelector = ({
   const [isPending, startTransition] = useTransition();
   const [selectedTarget, setSelectedTarget] = useState<string | null>(null);
 
-  const buildLocalizedHref = useCallback(() => {
-    const queryString = searchParams.toString();
-    return queryString ? `${pathname}?${queryString}` : pathname;
-  }, [pathname, searchParams]);
+  const buildLocalizedRoute = useCallback(
+    () => ({
+      pathname,
+      query: searchParams.toString()
+        ? Object.fromEntries(searchParams.entries())
+        : undefined,
+    }),
+    [pathname, searchParams],
+  );
 
   const sortedLanguages = [
     ...LANGUAGES.filter((l) => l.locale === currentLocale),
@@ -56,10 +61,10 @@ const LanguageSelector = ({
 
     setSelectedTarget(targetLocale);
 
-    const href = buildLocalizedHref();
+    const route = buildLocalizedRoute();
 
     startTransition(() => {
-      router.replace(href, { locale: targetLocale });
+      router.replace(route, { locale: targetLocale });
     });
   };
 
@@ -71,15 +76,15 @@ const LanguageSelector = ({
 
   useEffect(() => {
     if (open) {
-      const href = buildLocalizedHref();
+      const route = buildLocalizedRoute();
 
       LANGUAGES.forEach((lang) => {
         if (lang.locale !== currentLocale) {
-          router.prefetch(href, { locale: lang.locale });
+          router.prefetch(route, { locale: lang.locale });
         }
       });
     }
-  }, [open, currentLocale, router, buildLocalizedHref]);
+  }, [open, currentLocale, router, buildLocalizedRoute]);
 
   return (
     <Dialog open={open} onOpenChange={isPending ? () => {} : setOpen}>

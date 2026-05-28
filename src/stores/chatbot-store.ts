@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import type { ReactNode } from 'react';
 import type { ChatbotChoice } from '@/types/chatbot';
 
 export type ChatMessage = {
@@ -10,12 +11,12 @@ export type ChatMessage = {
   choices?: ChatbotChoice[];
   isChoiceMessage?: boolean;
   contactButtons?: {
-    text: unknown;
+    text: ReactNode;
     action: string;
     url: string;
   }[];
   goToProjectLink?: {
-    text: unknown;
+    text: ReactNode;
     url: string;
     projectId?: number;
     imageUrl?: string | null;
