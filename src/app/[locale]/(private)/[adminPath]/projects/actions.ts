@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
+import { deleteProjectDocuments } from '@/lib/rag/portfolio-documents';
 
 export async function updateProjectOrder(projectIds: number[]) {
   const auth = await requireAuth();
@@ -42,6 +43,14 @@ export async function deleteProject(projectId: number) {
     await prisma.project.delete({
       where: { id: projectId },
     });
+    try {
+      await deleteProjectDocuments(projectId);
+    } catch (indexError) {
+      console.error('⚠️ Project deleted but document cleanup failed:', {
+        projectId,
+        error: indexError,
+      });
+    }
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
     revalidatePath('/[locale]', 'layout');
     return { success: true };

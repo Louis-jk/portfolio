@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "Joonho Kim | Senior Frontend Engineer",
-    "description": "Senior Frontend Engineer with 15 years of extensive experience spanning the React ecosystem (Next.js/React Native), Electron, and Web3. Driven by strong technical ownership to deliver optimized architecture and high-performance UI/UX.",
+    "description": "Joonho Kim is a frontend engineer who has worked in web design and publishing since 2011, and has participated in many React-based production projects since 2020. He focuses on user-centered UI/UX and reliable frontend architecture with strong technical ownership.",
     "keywords": "Joonho Kim, Senior Frontend Engineer, Frontend Developer, React Expert, Next.js, React Native, Electron, Web3, Dapp, Remote Developer, Technical Ownership",
-    "ogDescription": "Portfolio of Joonho Kim, a Senior Frontend Engineer with 15 years of experience in global remote work. Combining technical ownership with design precision to build scalable Web, Mobile, and Web3 solutions."
+    "ogDescription": "Portfolio of Joonho Kim, who has worked in web design/publishing since 2011 and React-based development since 2020. Combining design precision with technical ownership to deliver user-centered frontend solutions."
   },
   "homePage": {
     "intro": {
@@ -21,7 +21,7 @@
         "Hope you have a great day! ☀️"
       ],
       "aboutMeTitle": "About Me",
-      "aboutMe": "Senior Frontend Engineer with extensive production experience spanning the React ecosystem (Next.js/React Native), Desktop apps (Electron), and Web3 (Dapp).\nLeveraging a strong background in web design and publishing to bridge the gap between design and engineering, with a proven track record of delivering refined, user-centric UI/UX.\nOperating with strong \"technical ownership\" in both domestic and global remote environments—proactively identifying system bottlenecks, sharing technical insights, and driving collaboration based on mutual trust.",
+      "aboutMe": "I have built my career in web design and publishing since 2011, and since 2020 I have participated in many React/Next.js-based production projects.\nI have also worked across React Native, Electron, and Web3 (Dapp), and I leverage my design background to bridge design and engineering while delivering user-centered UI/UX.\nWith strong \"technical ownership\" in both domestic and global remote environments, I proactively improve bottlenecks, share technical insights, and drive trust-based collaboration.",
       "resume": {
         "title": "Resume PDF",
         "open": "Open",

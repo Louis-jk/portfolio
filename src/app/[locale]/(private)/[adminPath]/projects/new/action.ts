@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
+import { upsertProjectDocuments } from '@/lib/rag/portfolio-documents';
 
 type TranslationInput = {
   title?: string;
@@ -128,6 +129,26 @@ export async function saveProject(data: ProjectFormData) {
         },
       });
     });
+
+    try {
+      await upsertProjectDocuments({
+        projectId: result.id,
+        isPublic: data.isPublic ?? false,
+        technologies: data.technologies || [],
+        platformCategories: data.platformCategories || [],
+        domainTags: data.domainTags || [],
+        translations: [
+          mapTranslation('ko', data.translations?.ko),
+          mapTranslation('ja', data.translations?.ja),
+          mapTranslation('en', data.translations?.en),
+        ],
+      });
+    } catch (indexError) {
+      console.error('⚠️ Project saved but indexing failed:', {
+        projectId: result.id,
+        error: indexError,
+      });
+    }
 
     // 모든 처리가 성공적으로 DB에 반영된 후 캐시 갱신
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
