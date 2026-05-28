@@ -23,6 +23,7 @@ import { formatTime } from '@/utils/time';
 import { getCurrentLocale } from '@/utils/locale';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ProjectWithTranslations } from '@/services/project-service';
+import { useChatbotStore } from '@/stores/chatbot-store';
 
 function getProjectTitle(project: ProjectWithTranslations, locale: string) {
   const tr =
@@ -32,10 +33,39 @@ function getProjectTitle(project: ProjectWithTranslations, locale: string) {
   return tr?.title ?? 'Untitled';
 }
 
+function renderProjectLinkLabel(
+  project: ProjectWithTranslations,
+  locale: string,
+) {
+  return (
+    <p className='flex items-center gap-3 w-full min-w-0'>
+      <span className='relative size-10 rounded-md overflow-hidden border border-white/20 flex-shrink-0 bg-black/10'>
+        {project.imageUrl ? (
+          <Image
+            src={project.imageUrl}
+            alt={getProjectTitle(project, locale)}
+            fill
+            sizes='40px'
+            className='object-cover'
+          />
+        ) : (
+          <span className='absolute inset-0 flex items-center justify-center'>
+            <CiLink size={18} />
+          </span>
+        )}
+      </span>
+      <span className='flex-1 min-w-0 whitespace-normal break-words leading-snug text-left'>
+        {getProjectTitle(project, locale)}
+      </span>
+    </p>
+  );
+}
+
 type Message = {
+  id: string;
   from: 'user' | 'bot';
   text: string;
-  timestamp?: Date;
+  timestamp?: Date | string;
   choices?: ChatbotChoice[];
   isChoiceMessage?: boolean;
   contactButtons?: {
@@ -53,6 +83,36 @@ interface ChatbotProps {
   projects?: ProjectWithTranslations[];
 }
 
+function toDateSafe(value?: Date | string) {
+  if (!value) return undefined;
+  if (value instanceof Date) return value;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+}
+
+function normalizeProjectLinkForLocale(
+  link: { text: React.ReactNode; url: string },
+  projects: ProjectWithTranslations[],
+  locale: string,
+  pathname: string,
+) {
+  try {
+    const itemId = new URL(link.url, window.location.origin).searchParams.get('item');
+    const projectId = itemId ? Number(itemId) : undefined;
+    if (!projectId || !Number.isInteger(projectId)) return link;
+
+    const project = projects.find((p) => p.id === projectId);
+    if (!project) return link;
+
+    return {
+      text: renderProjectLinkLabel(project, locale),
+      url: `${pathname}?item=${projectId}`,
+    };
+  } catch {
+    return link;
+  }
+}
+
 export default function Chatbot({ projects = [] }: ChatbotProps) {
   const { resolvedTheme } = useTheme();
   const t = useTranslations('modal.chatbot');
@@ -64,17 +124,22 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
   const chatbotData: ChatbotData =
     chatbotDataByLocale[currentLocale] || chatbotDataByLocale.ko;
 
-  const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      from: 'bot',
-      text: chatbotData.welcome.message,
-      timestamp: new Date(),
-      choices: chatbotData.welcome.choices.map((id) => chatbotData.choices[id]),
-      isChoiceMessage: true,
-    },
-  ]);
-  const [input, setInput] = useState('');
+  const open = useChatbotStore((state) => state.open);
+  const setOpen = useChatbotStore((state) => state.setOpen);
+  const messages = useChatbotStore((state) => state.messages as Message[]);
+  const setMessages = useChatbotStore((state) => state.setMessages);
+  const input = useChatbotStore((state) => state.input);
+  const setInput = useChatbotStore((state) => state.setInput);
+  const isStreamingReply = useChatbotStore((state) => state.isStreamingReply);
+  const setIsStreamingReply = useChatbotStore(
+    (state) => state.setIsStreamingReply,
+  );
+  const isNavigatingProject = useChatbotStore(
+    (state) => state.isNavigatingProject,
+  );
+  const setIsNavigatingProject = useChatbotStore(
+    (state) => state.setIsNavigatingProject,
+  );
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -82,6 +147,57 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const inputAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          id: `msg-${Date.now()}-welcome`,
+          from: 'bot',
+          text: chatbotData.welcome.message,
+          timestamp: new Date(),
+          choices: chatbotData.welcome.choices.map((id) => chatbotData.choices[id]),
+          isChoiceMessage: true,
+        },
+      ]);
+    }
+  }, [chatbotData, messages.length, setMessages]);
+
+  useEffect(() => {
+    const localizedPathname = pathname || `/${currentLocale}`;
+
+    setMessages((prevMessages) =>
+      prevMessages.map((message) => {
+        const nextMessage: Message = { ...message };
+
+        if (message.choices?.length) {
+          nextMessage.choices = message.choices.map(
+            (choice) => chatbotData.choices[choice.id] ?? choice,
+          );
+        }
+
+        if (message.id.includes('welcome') || message.id.includes('reset')) {
+          nextMessage.text = chatbotData.welcome.message;
+          nextMessage.choices = chatbotData.welcome.choices.map(
+            (id) => chatbotData.choices[id],
+          );
+        }
+
+        if (message.goToProjectLink?.length) {
+          nextMessage.goToProjectLink = message.goToProjectLink.map((link) =>
+            normalizeProjectLinkForLocale(
+              link,
+              projects,
+              currentLocale,
+              localizedPathname,
+            ),
+          );
+        }
+
+        return nextMessage;
+      }),
+    );
+  }, [chatbotData, currentLocale, pathname, projects, setMessages]);
 
   // 모바일 감지
   useEffect(() => {
@@ -164,7 +280,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
         }
       };
     }
-  }, [open, isMobile]);
+  }, [open, isMobile, setOpen]);
 
   // PC에서 스크롤 방지 없이 챗봇만 모달로 처리
   useEffect(() => {
@@ -199,7 +315,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
         }
       };
     }
-  }, [open, isMobile]);
+  }, [open, isMobile, setOpen]);
 
   useEffect(() => {
     if (open) {
@@ -235,14 +351,14 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
     }, 200);
   };
 
-  const sendMessage = (userMsg: string) => {
+  const sendMessage = async (userMsg: string) => {
     const trimmed = userMsg.trim();
     if (!trimmed) return;
 
     // 사용자 메시지를 채팅창에 추가
     setMessages((msgs) => [
       ...msgs,
-      { from: 'user', text: trimmed, timestamp: new Date() },
+      { id: `msg-${Date.now()}-user`, from: 'user', text: trimmed, timestamp: new Date() },
     ]);
 
     // 욕설 및 성적 표현 감지 (한국어 단어 경계 고려)
@@ -309,6 +425,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
       setMessages((msgs) => [
         ...msgs,
         {
+          id: `msg-${Date.now()}-warning`,
           from: 'bot',
           text: warningMessage,
           choices: chatbotData.welcome.choices.map(
@@ -378,12 +495,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
       ) {
         const basePath = pathname || `/${currentLocale}`;
         goToProjectLink = projectsToShow.map((project) => ({
-          text: (
-            <p className='flex items-center gap-2'>
-              <CiLink size={16} />
-              <span>{getProjectTitle(project, currentLocale)}</span>
-            </p>
-          ),
+          text: renderProjectLinkLabel(project, currentLocale),
           url: `${basePath}?item=${project.id}`,
         }));
       } else if (
@@ -401,18 +513,101 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
         }));
       }
     } else {
-      // 입력된 메시지가 선택지에 없는 경우
-      reply = t('sorry');
-      // 기본 선택지들 제공
-      nextChoices = chatbotData.welcome.choices.map(
-        (id) => chatbotData.choices[id],
-      );
+      const botMessageId = `msg-${Date.now()}-rag`;
+      setMessages((msgs) => [
+        ...msgs,
+        {
+          id: botMessageId,
+          from: 'bot',
+          text: '',
+          timestamp: new Date(),
+        },
+      ]);
+
+      try {
+        setIsStreamingReply(true);
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: trimmed, locale: currentLocale }),
+        });
+
+        if (!response.ok || !response.body) {
+          throw new Error(`Failed to fetch chat response: ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = '';
+        const relatedProjectIds = (response.headers.get('x-rag-project-ids') ?? '')
+          .split(',')
+          .map((id) => Number(id.trim()))
+          .filter((id) => Number.isInteger(id) && id > 0);
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          fullText += decoder.decode(value, { stream: true });
+          setMessages((msgs) =>
+            msgs.map((msg) =>
+              msg.id === botMessageId ? { ...msg, text: fullText } : msg,
+            ),
+          );
+        }
+
+        if (relatedProjectIds.length > 0 && projects.length > 0) {
+          const basePath = pathname || `/${currentLocale}`;
+          const projectLinks = relatedProjectIds
+            .map((projectId) => projects.find((project) => project.id === projectId))
+            .filter((project): project is ProjectWithTranslations => Boolean(project))
+            .map((project) => ({
+              text: renderProjectLinkLabel(project, currentLocale),
+              url: `${basePath}?item=${project.id}`,
+            }));
+
+          if (projectLinks.length > 0) {
+            setMessages((msgs) =>
+              msgs.map((msg) =>
+                msg.id === botMessageId
+                  ? {
+                      ...msg,
+                      isChoiceMessage: true,
+                      goToProjectLink: projectLinks,
+                    }
+                  : msg,
+              ),
+            );
+          }
+        }
+      } catch (error) {
+        console.error('RAG chat error:', error);
+        setMessages((msgs) =>
+          msgs.map((msg) =>
+            msg.id === botMessageId
+              ? {
+                  ...msg,
+                  text: t('sorry'),
+                  choices: chatbotData.welcome.choices.map(
+                    (id) => chatbotData.choices[id],
+                  ),
+                  isChoiceMessage: true,
+                }
+              : msg,
+          ),
+        );
+      } finally {
+        setIsStreamingReply(false);
+      }
+
+      setInput('');
+      return;
     }
 
     setTimeout(() => {
       setMessages((msgs) => [
         ...msgs,
         {
+          id: `msg-${Date.now()}-choice`,
           from: 'bot',
           text: reply,
           timestamp: new Date(),
@@ -434,7 +629,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
 
   const handleSendMessage = () => {
     if (input.trim()) {
-      sendMessage(input);
+      void sendMessage(input);
       setInput(''); // 간단하게 input 비우기
     }
   };
@@ -681,7 +876,18 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                               <div
                                 className={`font-semibold bg-gray-100 text-black px-4 py-3 rounded-2xl break-words relative shadow-sm`}
                               >
-                                {m.text}
+                                {m.text.trim().length > 0 ? (
+                                  m.text
+                                ) : (
+                                  <span
+                                    className='inline-flex items-center gap-1 text-gray-500'
+                                    aria-label='AI is typing'
+                                  >
+                                    <span className='size-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:0ms]' />
+                                    <span className='size-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:150ms]' />
+                                    <span className='size-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:300ms]' />
+                                  </span>
+                                )}
                                 {/* 말풍선 꼬리 */}
                                 <div
                                   className='absolute left-1 top-4 w-3 h-3 transform -translate-x-1/2 -translate-y-1/2 rotate-45'
@@ -693,7 +899,10 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                               {/* 시간 표시 */}
                               {m.timestamp && (
                                 <div className='text-xs text-gray-500 mt-1 ml-2'>
-                                  {formatTime(m.timestamp, currentLocale)}
+                                  {formatTime(
+                                    toDateSafe(m.timestamp) ?? new Date(),
+                                    currentLocale,
+                                  )}
                                 </div>
                               )}
                             </div>
@@ -716,7 +925,10 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                               {/* 시간 표시 */}
                               {m.timestamp && (
                                 <div className='text-xs text-gray-500 mt-1 mr-2'>
-                                  {formatTime(m.timestamp, currentLocale)}
+                                  {formatTime(
+                                    toDateSafe(m.timestamp) ?? new Date(),
+                                    currentLocale,
+                                  )}
                                 </div>
                               )}
                             </div>
@@ -753,7 +965,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                             {/* 프로젝트 링크 버튼들 */}
                             {m.goToProjectLink &&
                               m.goToProjectLink.length > 0 && (
-                                <div className='mt-4 flex flex-wrap gap-2'>
+                                <div className='mt-4 flex flex-col gap-2 w-full'>
                                   {m.goToProjectLink.map((link, linkIndex) => (
                                     <button
                                       key={linkIndex}
@@ -762,23 +974,60 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                                         const isInternalProject =
                                           link.url.includes('?item=') ||
                                           link.url.startsWith('?');
+                                        const targetItemId = new URL(
+                                          link.url,
+                                          window.location.origin,
+                                        ).searchParams.get('item');
+
+                                        const closeAfterItemNavigation = () => {
+                                          // 실제 URL이 바뀐 뒤 닫아서 "이동 먼저, 닫기 나중" 체감을 보장
+                                          if (!targetItemId) {
+                                            setIsNavigatingProject(false);
+                                            setOpen(false);
+                                            return;
+                                          }
+
+                                          const startedAt = Date.now();
+                                          const waitForNavigation = () => {
+                                            const currentItem = new URL(
+                                              window.location.href,
+                                            ).searchParams.get('item');
+                                            if (currentItem === targetItemId) {
+                                              setIsNavigatingProject(false);
+                                              setOpen(false);
+                                              return;
+                                            }
+                                            if (Date.now() - startedAt > 2000) {
+                                              // 안전장치: 네비게이션 확인 실패 시에도 닫힘 보장
+                                              setIsNavigatingProject(false);
+                                              setOpen(false);
+                                              return;
+                                            }
+                                            requestAnimationFrame(waitForNavigation);
+                                          };
+                                          requestAnimationFrame(waitForNavigation);
+                                        };
+
                                         if (isMobile) {
                                           if (isInternalProject) {
-                                            setOpen(false);
+                                            setIsNavigatingProject(true);
                                             router.push(link.url);
+                                            closeAfterItemNavigation();
                                           } else {
                                             window.open(link.url, '_blank');
                                           }
                                         } else {
                                           if (isInternalProject) {
-                                            setOpen(false);
+                                            setIsNavigatingProject(true);
                                             router.replace(link.url);
+                                            closeAfterItemNavigation();
                                           } else {
                                             window.open(link.url, '_blank');
                                           }
                                         }
                                       }}
-                                      className={`rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 flex items-center gap-2 transition-all duration-200 ${
+                                      disabled={isNavigatingProject}
+                                      className={`rounded-sm px-3 py-2 cursor-pointer text-sm select-none w-full max-w-full flex items-start transition-all duration-200 ${
                                         resolvedTheme === 'dark'
                                           ? 'bg-purple-500 hover:bg-purple-400 text-white'
                                           : 'bg-purple-700 hover:bg-purple-600 text-white'
@@ -796,7 +1045,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                                 {m.choices.map((choice, choiceIndex) => (
                                   <button
                                     key={choiceIndex}
-                                    onClick={() => sendMessage(choice.text)}
+                                    onClick={() => void sendMessage(choice.text)}
                                     className={`border border-dashed rounded-sm px-2 py-2 cursor-pointer text-sm select-none flex-shrink-0 transition-all duration-200 hover:scale-105 ${
                                       resolvedTheme === 'dark'
                                         ? 'bg-[#1a1a1a] border-gray-500 text-white hover:bg-purple-500 hover:border-purple-400 hover:text-white'
@@ -813,6 +1062,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                                       // welcome 메시지로 초기화
                                       setMessages([
                                         {
+                                          id: `msg-${Date.now()}-reset`,
                                           from: 'bot',
                                           text: chatbotData.welcome.message,
                                           timestamp: new Date(),
@@ -881,7 +1131,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                   </div>
                   <button
                     type='submit'
-                    disabled={!input.trim()}
+                    disabled={!input.trim() || isStreamingReply || isNavigatingProject}
                     className={cn(
                       'size-[50px] rounded-lg text-white transition-all duration-200 flex items-center justify-center cursor-pointer',
                       input.trim()
@@ -897,6 +1147,21 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
                   </button>
                 </form>
               </div>
+
+              {isNavigatingProject && (
+                <div className='absolute inset-0 z-40 bg-black/55 backdrop-blur-[1px] flex items-center justify-center px-6'>
+                  <div className='rounded-xl bg-white/95 text-black px-4 py-3 flex items-center gap-3 shadow-lg'>
+                    <span className='size-4 rounded-full border-2 border-gray-300 border-t-purple-600 animate-spin' />
+                    <span className='text-sm font-semibold'>
+                      {currentLocale === 'ja'
+                        ? 'プロジェクトに移動中...'
+                        : currentLocale === 'en'
+                          ? 'Opening project...'
+                          : '프로젝트로 이동 중...'}
+                    </span>
+                  </div>
+                </div>
+              )}
             </motion.div>
           </>
         )}

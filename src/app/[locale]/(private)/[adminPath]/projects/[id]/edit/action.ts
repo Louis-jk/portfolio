@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
+import { upsertProjectDocuments } from '@/lib/rag/portfolio-documents';
 
 type TranslationInput = {
   title?: string;
@@ -167,6 +168,43 @@ export async function updateProject(projectId: number, data: ProjectFormData) {
         });
       }
     });
+
+    const projectForIndex = await prisma.project.findUnique({
+      where: { id },
+      include: {
+        translations: true,
+      },
+    });
+
+    if (!projectForIndex) {
+      throw new Error('Project not found after update');
+    }
+
+    try {
+      await upsertProjectDocuments({
+        projectId: projectForIndex.id,
+        isPublic: projectForIndex.isPublic,
+        technologies: projectForIndex.technologies,
+        platformCategories: projectForIndex.platformCategories,
+        domainTags: projectForIndex.domainTags,
+        translations: projectForIndex.translations.map((translation) => ({
+          locale: translation.locale,
+          title: translation.title,
+          company: translation.company,
+          region: translation.region,
+          role: translation.role,
+          overview: translation.overview,
+          description: translation.description,
+          challenges: translation.challenges,
+          achievements: translation.achievements,
+        })),
+      });
+    } catch (indexError) {
+      console.error('⚠️ Project updated but indexing failed:', {
+        projectId: id,
+        error: indexError,
+      });
+    }
 
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
     revalidatePath('/[locale]', 'layout');

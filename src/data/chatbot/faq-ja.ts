@@ -4,7 +4,7 @@ import { ChatbotData } from '@/types/chatbot';
 export const chatbotDataJa: ChatbotData = {
   welcome: {
     message:
-      'こんにちは。キムです。ポートフォリオをご覧いただき、誠にありがとうございます。ご質問がございましたら、簡単ではございますが、少しでもお答えできれば幸いです。',
+      'こんにちは。私はキム・ジュノのAIアシスタントです。ポートフォリオをご覧いただきありがとうございます。ご質問をいただければ、経歴やプロジェクト情報をもとにご案内します。',
     choices: [
       'skills',
       'experience',
