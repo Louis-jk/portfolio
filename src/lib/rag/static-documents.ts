@@ -54,6 +54,7 @@ export async function upsertStaticPortfolioDocuments() {
         sourceId: 1,
         locale,
         section: 'aboutMe',
+        isPublic: true,
       },
     });
   }

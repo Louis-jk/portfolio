@@ -99,7 +99,7 @@ model PortfolioDocument {
   metadata   Json                   @default("{}")
   embedding  Unsupported("vector(1536)")
   createdAt  DateTime               @default(now()) @map("created_at")
-  updatedAt  DateTime               @default(now()) @map("updated_at")
+  updatedAt  DateTime               @default(now()) @updatedAt @map("updated_at")
 
   @@unique([sourceType, sourceId, locale], map: "portfolio_documents_source_unique")
   @@index([sourceType, sourceId, locale], map: "portfolio_documents_source_idx")

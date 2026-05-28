@@ -8,6 +8,9 @@ config();
 
 async function main() {
   const projects = await prisma.project.findMany({
+    where: {
+      isPublic: true,
+    },
     include: {
       translations: true,
     },
@@ -17,6 +20,7 @@ async function main() {
   for (const project of projects) {
     await upsertProjectDocuments({
       projectId: project.id,
+      isPublic: project.isPublic,
       technologies: project.technologies,
       platformCategories: project.platformCategories,
       domainTags: project.domainTags,

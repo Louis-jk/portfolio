@@ -59,6 +59,7 @@ function toVectorLiteral(vector: number[]) {
 
 export async function upsertProjectDocuments(args: {
   projectId: number;
+  isPublic?: boolean;
   technologies?: string[];
   platformCategories?: string[];
   domainTags?: string[];
@@ -69,6 +70,27 @@ export async function upsertProjectDocuments(args: {
   }
 
   const embeddings = getEmbeddingsClient();
+  const translationLocales = args.translations.map((translation) => translation.locale);
+
+  if (translationLocales.length === 0) {
+    await prisma.portfolioDocument.deleteMany({
+      where: {
+        sourceType: SOURCE_TYPE_PROJECT,
+        sourceId: args.projectId,
+      },
+    });
+    return;
+  }
+
+  await prisma.portfolioDocument.deleteMany({
+    where: {
+      sourceType: SOURCE_TYPE_PROJECT,
+      sourceId: args.projectId,
+      locale: {
+        notIn: translationLocales,
+      },
+    },
+  });
 
   for (const translation of args.translations) {
     const content = buildDocumentContent(translation);
@@ -84,6 +106,7 @@ export async function upsertProjectDocuments(args: {
       title: translation.title,
       company: translation.company,
       role: translation.role,
+      isPublic: args.isPublic ?? false,
       technologies: args.technologies ?? [],
       platformCategories: args.platformCategories ?? [],
       domainTags: args.domainTags ?? [],

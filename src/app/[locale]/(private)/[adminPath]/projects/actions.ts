@@ -43,7 +43,14 @@ export async function deleteProject(projectId: number) {
     await prisma.project.delete({
       where: { id: projectId },
     });
-    await deleteProjectDocuments(projectId);
+    try {
+      await deleteProjectDocuments(projectId);
+    } catch (indexError) {
+      console.error('⚠️ Project deleted but document cleanup failed:', {
+        projectId,
+        error: indexError,
+      });
+    }
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
     revalidatePath('/[locale]', 'layout');
     return { success: true };

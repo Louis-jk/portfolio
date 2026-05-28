@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS vector;
 
-CREATE TABLE IF NOT EXISTS portfolio_documents (
+CREATE TABLE portfolio_documents (
   id BIGSERIAL PRIMARY KEY,
   source_type TEXT NOT NULL,
   source_id INTEGER NOT NULL,

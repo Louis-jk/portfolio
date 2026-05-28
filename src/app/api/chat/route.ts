@@ -113,7 +113,7 @@ export async function POST(req: Request) {
       openAIApiKey: process.env.OPENAI_API_KEY,
     });
     const requestedStacks = detectRequestedStacks(message);
-    const metadataFilter: Record<string, unknown> = { locale };
+    const metadataFilter: Record<string, unknown> = { locale, isPublic: true };
     if (requestedStacks.length > 0) {
       metadataFilter.sourceType = 'project';
     }
@@ -133,7 +133,7 @@ export async function POST(req: Request) {
     // and apply stack matching in-memory for better recall.
     if (docs.length === 0 && requestedStacks.length > 0) {
       docs = (
-        await vectorStore.similaritySearch(message, 20, { locale })
+        await vectorStore.similaritySearch(message, 20, { locale, isPublic: true })
       ).filter((doc) => docMatchesStacks(doc, requestedStacks));
     }
 
@@ -144,6 +144,7 @@ export async function POST(req: Request) {
       docsForLinks = (
         await vectorStore.similaritySearch(message, 64, {
           locale,
+          isPublic: true,
           sourceType: 'project',
         })
       ).filter((doc) => docMatchesStacks(doc, requestedStacks));
@@ -168,6 +169,7 @@ export async function POST(req: Request) {
       // Otherwise, include all locale projects.
       const allLocaleProjects = await prisma.project.findMany({
         where: {
+          isPublic: true,
           translations: {
             some: { locale },
           },
