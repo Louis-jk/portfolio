@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useCallback, useEffect, useState, useTransition } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -41,6 +41,11 @@ const LanguageSelector = ({
   const [isPending, startTransition] = useTransition();
   const [selectedTarget, setSelectedTarget] = useState<string | null>(null);
 
+  const buildLocalizedHref = useCallback(() => {
+    const queryString = searchParams.toString();
+    return queryString ? `${pathname}?${queryString}` : pathname;
+  }, [pathname, searchParams]);
+
   const sortedLanguages = [
     ...LANGUAGES.filter((l) => l.locale === currentLocale),
     ...LANGUAGES.filter((l) => l.locale !== currentLocale),
@@ -51,12 +56,10 @@ const LanguageSelector = ({
 
     setSelectedTarget(targetLocale);
 
-    const query = searchParams.toString()
-      ? Object.fromEntries(searchParams.entries())
-      : undefined;
+    const href = buildLocalizedHref();
 
     startTransition(() => {
-      router.replace({ pathname, query }, { locale: targetLocale });
+      router.replace(href, { locale: targetLocale });
     });
   };
 
@@ -68,17 +71,15 @@ const LanguageSelector = ({
 
   useEffect(() => {
     if (open) {
-      const query = searchParams.toString()
-        ? Object.fromEntries(searchParams.entries())
-        : undefined;
+      const href = buildLocalizedHref();
 
       LANGUAGES.forEach((lang) => {
         if (lang.locale !== currentLocale) {
-          router.prefetch({ pathname, query }, { locale: lang.locale });
+          router.prefetch(href, { locale: lang.locale });
         }
       });
     }
-  }, [open, currentLocale, pathname, searchParams, router]);
+  }, [open, currentLocale, router, buildLocalizedHref]);
 
   return (
     <Dialog open={open} onOpenChange={isPending ? () => {} : setOpen}>
