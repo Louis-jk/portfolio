@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
+import { upsertProjectDocuments } from '@/lib/rag/portfolio-documents';
 
 type TranslationInput = {
   title?: string;
@@ -166,6 +167,16 @@ export async function updateProject(projectId: number, data: ProjectFormData) {
           update: mapTranslation(locale, t),
         });
       }
+    });
+
+    await upsertProjectDocuments({
+      projectId: id,
+      technologies: data.technologies || [],
+      platformCategories: data.platformCategories || [],
+      domainTags: data.domainTags || [],
+      translations: (['ko', 'ja', 'en'] as const).map((locale) =>
+        mapTranslation(locale, data.translations?.[locale]),
+      ),
     });
 
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');

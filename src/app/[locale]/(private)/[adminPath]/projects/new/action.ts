@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
+import { upsertProjectDocuments } from '@/lib/rag/portfolio-documents';
 
 type TranslationInput = {
   title?: string;
@@ -127,6 +128,18 @@ export async function saveProject(data: ProjectFormData) {
           },
         },
       });
+    });
+
+    await upsertProjectDocuments({
+      projectId: result.id,
+      technologies: data.technologies || [],
+      platformCategories: data.platformCategories || [],
+      domainTags: data.domainTags || [],
+      translations: [
+        mapTranslation('ko', data.translations?.ko),
+        mapTranslation('ja', data.translations?.ja),
+        mapTranslation('en', data.translations?.en),
+      ],
     });
 
     // 모든 처리가 성공적으로 DB에 반영된 후 캐시 갱신

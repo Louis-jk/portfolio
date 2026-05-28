@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { useSearchParams } from 'next/navigation';
 import Header from '@/components/header/Header';
 import Main from '@/components/main/Main';
 import Footer from '@/components/footer/Footer';
@@ -18,6 +19,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
   const [platformFilter, setPlatformFilter] = useState<string | null>(null);
   const [domainFilter, setDomainFilter] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const searchParams = useSearchParams();
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
@@ -39,6 +41,59 @@ export default function HomeClient({ projects }: HomeClientProps) {
     document.head.appendChild(script);
   }, []);
 
+  useEffect(() => {
+    const nextPlatform = searchParams.get('platform');
+    const nextDomain = searchParams.get('domain');
+    const nextFilterOpen = searchParams.get('filter') === 'open';
+
+    setPlatformFilter((prev) => (prev === nextPlatform ? prev : nextPlatform));
+    setDomainFilter((prev) => (prev === nextDomain ? prev : nextDomain));
+    setIsFilterOpen((prev) => (prev === nextFilterOpen ? prev : nextFilterOpen));
+  }, [searchParams]);
+
+  const updateFilterQuery = (next: {
+    platform?: string | null;
+    domain?: string | null;
+    isFilterOpen?: boolean;
+  }) => {
+    const url = new URL(window.location.href);
+    const currentPlatform = url.searchParams.get('platform');
+    const currentDomain = url.searchParams.get('domain');
+    const currentOpen = url.searchParams.get('filter') === 'open';
+
+    const nextPlatform =
+      next.platform === undefined ? currentPlatform : next.platform;
+    const nextDomain = next.domain === undefined ? currentDomain : next.domain;
+    const nextOpen =
+      next.isFilterOpen === undefined ? currentOpen : next.isFilterOpen;
+
+    if (nextPlatform) url.searchParams.set('platform', nextPlatform);
+    else url.searchParams.delete('platform');
+
+    if (nextDomain) url.searchParams.set('domain', nextDomain);
+    else url.searchParams.delete('domain');
+
+    if (nextOpen) url.searchParams.set('filter', 'open');
+    else url.searchParams.delete('filter');
+
+    window.history.replaceState({}, '', url.toString());
+  };
+
+  const handlePlatformFilter = (value: string | null) => {
+    setPlatformFilter(value);
+    updateFilterQuery({ platform: value });
+  };
+
+  const handleDomainFilter = (value: string | null) => {
+    setDomainFilter(value);
+    updateFilterQuery({ domain: value });
+  };
+
+  const handleFilterOpenChange = (open: boolean) => {
+    setIsFilterOpen(open);
+    updateFilterQuery({ isFilterOpen: open });
+  };
+
   if (isLoading) {
     return (
       <LoadingScreen
@@ -56,10 +111,10 @@ export default function HomeClient({ projects }: HomeClientProps) {
         <Header
           platformFilter={platformFilter}
           domainFilter={domainFilter}
-          onPlatformFilter={setPlatformFilter}
-          onDomainFilter={setDomainFilter}
+          onPlatformFilter={handlePlatformFilter}
+          onDomainFilter={handleDomainFilter}
           isFilterOpen={isFilterOpen}
-          onFilterOpenChange={setIsFilterOpen}
+          onFilterOpenChange={handleFilterOpenChange}
         />
         <Main
           projects={projects}
