@@ -12,6 +12,7 @@ import type { ProjectWithTranslations } from '@/services/project-service';
 import type { ProjectTranslation } from '@/generated/prisma/client';
 import { format } from 'date-fns';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
+import { FaUserAlt } from 'react-icons/fa';
 
 function getTranslation(project: ProjectWithTranslations, locale: string) {
   return (
@@ -481,7 +482,7 @@ export default function Timeline({
                       />
                       <div className='flex items-center gap-2 justify-between'>
                         <h3
-                          className={`font-bold text-lg max-w-4/6 truncate transition-colors duration-200 flex-8 ${
+                          className={`font-bold text-lg transition-colors duration-200 flex-8 ${
                             selectedItem?.id === item.id
                               ? 'text-purple-700 dark:text-purple-500 font-bold'
                               : 'text-gray-900 dark:text-gray-100'
@@ -489,17 +490,20 @@ export default function Timeline({
                         >
                           {getTranslation(item, locale).title}
                         </h3>
-                        <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
+                        {/* <p className='text-sm font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
                           {getTranslation(item, locale).region}
-                        </p>
+                        </p> */}
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
-                        <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                          {getTranslation(item, locale).role}
-                        </p>
-                        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
+                        <div className='flex justify-start items-center gap-1 flex-7'>
+                          <FaUserAlt className='size-3 text-gray-400 dark:text-gray-100 mt-1' />
+                          <p className='text-sm font-medium text-gray-500 dark:text-gray-100 mt-1 whitespace-pre-line'>
+                            {getTranslation(item, locale).role}
+                          </p>
+                        </div>
+                        {/* <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
                           {formatDateRange(item, locale)}
-                        </p>
+                        </p> */}
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
                         {getTranslation(item, locale).description.map(

@@ -34,7 +34,8 @@ export default async function AdminLayout({
       {/* 사이드바 */}
       <aside className='w-64 bg-slate-900 dark:bg-slate-950 text-white flex flex-col border-r border-slate-800'>
         <div className='p-6 text-xl font-bold border-b border-slate-800'>
-          🚀 Success Gate
+          {/* 🚀 Success Gate */}
+          🚀 Dashboard
         </div>
         <nav className='flex-1 p-4 space-y-2'>
           <Link

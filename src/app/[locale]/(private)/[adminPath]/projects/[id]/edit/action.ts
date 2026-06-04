@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
-import { upsertProjectDocuments } from '@/lib/rag/portfolio-documents';
+import { scheduleProjectIndexing } from '@/lib/rag/schedule-project-indexing';
 
 type TranslationInput = {
   title?: string;
@@ -180,8 +180,8 @@ export async function updateProject(projectId: number, data: ProjectFormData) {
       throw new Error('Project not found after update');
     }
 
-    try {
-      await upsertProjectDocuments({
+    scheduleProjectIndexing(
+      {
         projectId: projectForIndex.id,
         isPublic: projectForIndex.isPublic,
         technologies: projectForIndex.technologies,
@@ -198,13 +198,9 @@ export async function updateProject(projectId: number, data: ProjectFormData) {
           challenges: translation.challenges,
           achievements: translation.achievements,
         })),
-      });
-    } catch (indexError) {
-      console.error('⚠️ Project updated but indexing failed:', {
-        projectId: id,
-        error: indexError,
-      });
-    }
+      },
+      'Project update',
+    );
 
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
     revalidatePath('/[locale]', 'layout');

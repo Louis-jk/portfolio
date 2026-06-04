@@ -1,20 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { ADMIN_ROUTES } from '@/lib/constants';
 
+function SignupFormSkeleton() {
+  return (
+    <div className='min-h-[60vh] flex items-center justify-center'>
+      <div className='w-full max-w-md'>
+        <h2 className='text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6'>
+          Admin 회원가입
+        </h2>
+        <div className='space-y-4' aria-hidden='true'>
+          <div className='h-[68px] rounded-lg bg-slate-100 dark:bg-slate-800/80 animate-pulse' />
+          <div className='h-[68px] rounded-lg bg-slate-100 dark:bg-slate-800/80 animate-pulse' />
+          <div className='h-10 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse' />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminSignupPage() {
   const params = useParams();
   const locale = (params?.locale as string) ?? 'en';
+  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <SignupFormSkeleton />;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -77,7 +103,13 @@ export default function AdminSignupPage() {
         <h2 className='text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6'>
           Admin 회원가입
         </h2>
-        <form onSubmit={handleSubmit} className='space-y-4'>
+        <form
+          onSubmit={handleSubmit}
+          className='space-y-4'
+          data-lpignore='true'
+          data-1p-ignore
+          data-bwignore
+        >
           <div>
             <label
               htmlFor='email'
