@@ -15,6 +15,11 @@ const newProjectSlug =
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '6mb',
+    },
+  },
 
   /* config options here */
   async rewrites() {

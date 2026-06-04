@@ -180,31 +180,29 @@ export async function updateProject(projectId: number, data: ProjectFormData) {
       throw new Error('Project not found after update');
     }
 
-    try {
-      await upsertProjectDocuments({
-        projectId: projectForIndex.id,
-        isPublic: projectForIndex.isPublic,
-        technologies: projectForIndex.technologies,
-        platformCategories: projectForIndex.platformCategories,
-        domainTags: projectForIndex.domainTags,
-        translations: projectForIndex.translations.map((translation) => ({
-          locale: translation.locale,
-          title: translation.title,
-          company: translation.company,
-          region: translation.region,
-          role: translation.role,
-          overview: translation.overview,
-          description: translation.description,
-          challenges: translation.challenges,
-          achievements: translation.achievements,
-        })),
-      });
-    } catch (indexError) {
-      console.error('⚠️ Project updated but indexing failed:', {
+    void upsertProjectDocuments({
+      projectId: projectForIndex.id,
+      isPublic: projectForIndex.isPublic,
+      technologies: projectForIndex.technologies,
+      platformCategories: projectForIndex.platformCategories,
+      domainTags: projectForIndex.domainTags,
+      translations: projectForIndex.translations.map((translation) => ({
+        locale: translation.locale,
+        title: translation.title,
+        company: translation.company,
+        region: translation.region,
+        role: translation.role,
+        overview: translation.overview,
+        description: translation.description,
+        challenges: translation.challenges,
+        achievements: translation.achievements,
+      })),
+    }).catch((indexError) => {
+      console.error('⚠️ Project updated but background indexing failed:', {
         projectId: id,
         error: indexError,
       });
-    }
+    });
 
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
     revalidatePath('/[locale]', 'layout');

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
@@ -13,7 +13,7 @@ import {
 } from 'react-hook-form';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
-import { createClient } from '@/utils/supabase/client';
+import { uploadProjectImage } from './upload-image';
 import {
   ImagePlus,
   Loader2,
@@ -51,45 +51,19 @@ import {
   PLATFORM_CATEGORIES,
   DOMAIN_TAGS,
 } from '@/lib/project-categories';
+import {
+  clearProjectFormDraft,
+  loadProjectFormDraft,
+  saveProjectFormDraft,
+} from '@/lib/project-form-draft';
+import { withTimeout } from '@/lib/with-timeout';
+import { toast } from 'sonner';
+import type {
+  ProjectFormValues,
+  TranslationFormValues,
+} from '@/types/project-form.type';
 
-export interface ProjectFormValues {
-  imageUrl: string;
-  startDate: string;
-  endDate?: string;
-  isPublic: boolean;
-  technologies: string;
-  tools: {
-    development: string;
-    communication: string;
-    design: string;
-    debugging: string;
-  };
-  platformCategories: string[];
-  domainTags: string[];
-  platforms: {
-    webLink: string;
-    iosLink: string;
-    androidLink: string;
-    desktopLink: string;
-  };
-  translations: {
-    ko: TranslationFormValues;
-    ja: TranslationFormValues;
-    en: TranslationFormValues;
-  };
-}
-
-interface TranslationFormValues {
-  title: string;
-  role: string;
-  overview: string;
-  region: string;
-  company: string;
-  description: { value: string }[];
-  challenges: { value: string }[];
-  achievements: { value: string }[];
-  detailImage: string;
-}
+export type { ProjectFormValues, TranslationFormValues };
 
 type ArrayFieldKey = 'description' | 'challenges' | 'achievements';
 
@@ -494,8 +468,15 @@ export default function ProjectForm({
     initialData?.imageUrl ?? '',
   );
   const [isDragging, setIsDragging] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const supabase = createClient();
+  const [submitPhase, setSubmitPhase] = useState<'idle' | 'uploading' | 'saving'>(
+    'idle',
+  );
+  const [draftRestored, setDraftRestored] = useState(false);
+
+  const isProcessing = submitPhase !== 'idle';
+  const UPLOAD_TIMEOUT_MS = 45_000;
+  const SAVE_TIMEOUT_MS = 20_000;
+  const MAX_DATA_URL_LENGTH = 4_500_000;
 
   const emptyTranslation = (): TranslationFormValues => ({
     title: '',
@@ -546,6 +527,48 @@ export default function ProjectForm({
     },
   });
 
+  const saveDraftTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scheduleDraftSave = useCallback(() => {
+    if (saveDraftTimerRef.current) {
+      clearTimeout(saveDraftTimerRef.current);
+    }
+    saveDraftTimerRef.current = setTimeout(() => {
+      saveProjectFormDraft(projectId, getValues(), previewUrl);
+    }, 600);
+  }, [projectId, getValues, previewUrl]);
+
+  useEffect(() => {
+    const draft = loadProjectFormDraft(projectId);
+    if (!draft) return;
+
+    reset(draft.formValues);
+    if (draft.previewUrl) {
+      setPreviewUrl(draft.previewUrl);
+    }
+    setDraftRestored(true);
+  }, [projectId, reset]);
+
+  useEffect(() => {
+    scheduleDraftSave();
+    const subscription = watch(() => scheduleDraftSave());
+    return () => {
+      if (saveDraftTimerRef.current) {
+        clearTimeout(saveDraftTimerRef.current);
+      }
+      subscription.unsubscribe();
+    };
+  }, [watch, scheduleDraftSave]);
+
+  const dataUrlToFile = async (dataUrl: string): Promise<File> => {
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+    const extension = blob.type.split('/')[1] || 'jpg';
+    return new File([blob], `draft-${Date.now()}.${extension}`, {
+      type: blob.type || 'image/jpeg',
+    });
+  };
+
   // 공통 파일 처리 로직 (미리보기 생성)
   const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -560,7 +583,9 @@ export default function ProjectForm({
     setSelectedFile(file);
     const reader = new FileReader();
     reader.onloadend = () => {
-      setPreviewUrl(reader.result as string);
+      const result = reader.result as string;
+      setPreviewUrl(result);
+      saveProjectFormDraft(projectId, getValues(), result);
     };
     reader.readAsDataURL(file);
   };
@@ -595,30 +620,76 @@ export default function ProjectForm({
       .map((v) => v.trim())
       .filter(Boolean);
 
+  const getSubmitValidationError = (data: ProjectFormValues): string | null => {
+    if (!data.startDate?.trim()) {
+      return '시작일(Start Date)을 선택해 주세요.';
+    }
+    const hasImage =
+      Boolean(selectedFile) ||
+      Boolean(previewUrl) ||
+      Boolean(projectId && initialData?.imageUrl);
+    if (!hasImage) {
+      return '프로젝트 이미지를 업로드해 주세요.';
+    }
+    return null;
+  };
+
   // 최종 제출 (실제 업로드 + DB 저장)
   const onSubmit = async (data: ProjectFormValues) => {
+    const validationError = getSubmitValidationError(data);
+    if (validationError) {
+      toast.error(validationError);
+      return;
+    }
+
     try {
-      setIsProcessing(true);
       let finalImageUrl = '';
+      let fileToUpload = selectedFile;
 
-      if (selectedFile) {
-        const fileExt = selectedFile.name.split('.').pop();
-        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-        const filePath = `${fileName}`;
+      if (previewUrl.startsWith('http://') || previewUrl.startsWith('https://')) {
+        finalImageUrl = previewUrl;
+      }
 
-        const { error: uploadError } = await supabase.storage
-          .from('project-images')
-          .upload(filePath, selectedFile, { upsert: true });
+      if (!finalImageUrl) {
+        if (!fileToUpload && previewUrl.startsWith('data:')) {
+          if (previewUrl.length > MAX_DATA_URL_LENGTH) {
+            toast.error(
+              '복구된 이미지가 너무 큽니다. 5MB 이하 이미지를 다시 선택해 주세요.',
+            );
+            return;
+          }
+          setSubmitPhase('uploading');
+          fileToUpload = await withTimeout(
+            dataUrlToFile(previewUrl),
+            15_000,
+            '이미지 준비',
+          );
+        }
 
-        if (uploadError) throw uploadError;
+        if (fileToUpload) {
+          setSubmitPhase('uploading');
+          const formData = new FormData();
+          formData.append('file', fileToUpload);
 
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from('project-images').getPublicUrl(filePath);
+          const uploadResult = await withTimeout(
+            uploadProjectImage(formData),
+            UPLOAD_TIMEOUT_MS,
+            '이미지 업로드',
+          );
+          if (!uploadResult.success) {
+            toast.error(uploadResult.error ?? '이미지 업로드에 실패했습니다.');
+            return;
+          }
 
-        finalImageUrl = publicUrl;
-      } else if (projectId && initialData?.imageUrl) {
-        finalImageUrl = initialData.imageUrl;
+          finalImageUrl = uploadResult.url;
+        } else if (projectId && initialData?.imageUrl) {
+          finalImageUrl = initialData.imageUrl;
+        }
+      }
+
+      if (!finalImageUrl) {
+        toast.error('프로젝트 이미지를 업로드해 주세요.');
+        return;
       }
 
       const payload = {
@@ -673,35 +744,99 @@ export default function ProjectForm({
         },
       };
 
-      const res = projectId
-        ? await updateProject(projectId, payload)
-        : await saveProject(payload);
+      setSubmitPhase('saving');
+      const res = await withTimeout(
+        projectId
+          ? updateProject(projectId, payload)
+          : saveProject(payload),
+        SAVE_TIMEOUT_MS,
+        '프로젝트 저장',
+      );
 
       if (res.success) {
+        clearProjectFormDraft(projectId);
         if (projectId) {
+          toast.success('프로젝트가 수정되었습니다.');
           router.back();
         } else {
-          alert('성공적으로 배포되었습니다!');
+          toast.success(
+            '프로젝트가 저장되었습니다. AI 검색 인덱스는 백그라운드에서 반영됩니다.',
+          );
           setSelectedFile(null);
           setPreviewUrl('');
+          setDraftRestored(false);
           reset();
         }
       } else {
-        alert(res.error ?? '저장에 실패했습니다.');
+        toast.error(res.error ?? '저장에 실패했습니다.');
       }
     } catch (error) {
       console.error('Submit error:', error);
-      alert('저장 중 오류가 발생했습니다. RLS 정책을 확인하세요.');
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : '저장 중 오류가 발생했습니다.',
+      );
     } finally {
-      setIsProcessing(false);
+      setSubmitPhase('idle');
     }
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, () => setSubmitPhase('idle'))}
       className='max-w-7xl mx-auto p-8 space-y-10'
     >
+      {draftRestored && (
+        <div className='flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-purple-200 bg-purple-50 px-5 py-4 text-sm text-purple-900 dark:border-purple-900/50 dark:bg-purple-950/40 dark:text-purple-100'>
+          <p>
+            작성 중이던 내용을 복구했습니다. 이미지 미리보기가 없으면 다시
+            업로드해 주세요.
+          </p>
+          <button
+            type='button'
+            onClick={() => {
+              clearProjectFormDraft(projectId);
+              setDraftRestored(false);
+              setSelectedFile(null);
+              if (initialData) {
+                reset(initialData);
+                setPreviewUrl(initialData.imageUrl ?? '');
+              } else {
+                reset({
+                  imageUrl: '',
+                  startDate: '',
+                  isPublic: true,
+                  technologies: '',
+                  tools: {
+                    development: '',
+                    communication: '',
+                    design: '',
+                    debugging: '',
+                  },
+                  platformCategories: [],
+                  domainTags: [],
+                  platforms: {
+                    webLink: '',
+                    iosLink: '',
+                    androidLink: '',
+                    desktopLink: '',
+                  },
+                  translations: {
+                    ko: emptyTranslation(),
+                    ja: emptyTranslation(),
+                    en: emptyTranslation(),
+                  },
+                });
+                setPreviewUrl('');
+              }
+            }}
+            className='shrink-0 rounded-lg border border-purple-300 px-3 py-1.5 text-xs font-bold hover:bg-purple-100 dark:border-purple-700 dark:hover:bg-purple-900/60'
+          >
+            초안 삭제
+          </button>
+        </div>
+      )}
       <header className='flex justify-between items-end border-b border-zinc-100 dark:border-slate-800 pb-8'>
         <div>
           <h1 className='text-5xl font-black tracking-tighter text-zinc-900 dark:text-slate-100 uppercase'>
@@ -712,19 +847,22 @@ export default function ProjectForm({
           </h1>
         </div>
         <button
+          type='submit'
           disabled={isSubmitting || isProcessing}
           className='bg-purple-600 text-white px-12 py-5 rounded-full font-black text-lg hover:bg-purple-600 disabled:bg-zinc-300 dark:disabled:bg-slate-600 transition-all shadow-2xl flex items-center gap-3 active:scale-95 cursor-pointer'
         >
-          {isProcessing ? (
+          {isProcessing || isSubmitting ? (
             <Loader2 className='animate-spin' />
           ) : (
             <Send size={20} />
           )}
-          {isProcessing
+          {submitPhase === 'uploading'
             ? 'UPLOADING...'
-            : projectId
-              ? 'UPDATE PROJECT'
-              : 'DEPLOY PROJECT'}
+            : submitPhase === 'saving' || isSubmitting
+              ? 'SAVING...'
+              : projectId
+                ? 'UPDATE PROJECT'
+                : 'DEPLOY PROJECT'}
         </button>
       </header>
 
@@ -739,7 +877,8 @@ export default function ProjectForm({
                 </label>
                 <input
                   type='date'
-                  {...register('startDate')}
+                  required
+                  {...register('startDate', { required: true })}
                   className='w-full p-3 bg-zinc-50 dark:bg-slate-800 border-none rounded-xl text-xs font-bold text-slate-900 dark:text-slate-100'
                 />
               </div>
