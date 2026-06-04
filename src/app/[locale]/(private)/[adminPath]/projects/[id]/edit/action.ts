@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
-import { upsertProjectDocuments } from '@/lib/rag/portfolio-documents';
+import { scheduleProjectIndexing } from '@/lib/rag/schedule-project-indexing';
 
 type TranslationInput = {
   title?: string;
@@ -180,29 +180,27 @@ export async function updateProject(projectId: number, data: ProjectFormData) {
       throw new Error('Project not found after update');
     }
 
-    void upsertProjectDocuments({
-      projectId: projectForIndex.id,
-      isPublic: projectForIndex.isPublic,
-      technologies: projectForIndex.technologies,
-      platformCategories: projectForIndex.platformCategories,
-      domainTags: projectForIndex.domainTags,
-      translations: projectForIndex.translations.map((translation) => ({
-        locale: translation.locale,
-        title: translation.title,
-        company: translation.company,
-        region: translation.region,
-        role: translation.role,
-        overview: translation.overview,
-        description: translation.description,
-        challenges: translation.challenges,
-        achievements: translation.achievements,
-      })),
-    }).catch((indexError) => {
-      console.error('⚠️ Project updated but background indexing failed:', {
-        projectId: id,
-        error: indexError,
-      });
-    });
+    scheduleProjectIndexing(
+      {
+        projectId: projectForIndex.id,
+        isPublic: projectForIndex.isPublic,
+        technologies: projectForIndex.technologies,
+        platformCategories: projectForIndex.platformCategories,
+        domainTags: projectForIndex.domainTags,
+        translations: projectForIndex.translations.map((translation) => ({
+          locale: translation.locale,
+          title: translation.title,
+          company: translation.company,
+          region: translation.region,
+          role: translation.role,
+          overview: translation.overview,
+          description: translation.description,
+          challenges: translation.challenges,
+          achievements: translation.achievements,
+        })),
+      },
+      'Project update',
+    );
 
     revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
     revalidatePath('/[locale]', 'layout');
