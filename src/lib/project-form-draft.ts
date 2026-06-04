@@ -14,15 +14,36 @@ function getStorageKey(projectId?: number) {
     : 'portfolio-project-draft-new';
 }
 
+function hasNonEmptyLines(items: { value: string }[]) {
+  return items.some((item) => item.value?.trim());
+}
+
 function hasMeaningfulContent(values: ProjectFormValues): boolean {
-  if (values.startDate?.trim()) return true;
+  if (values.startDate?.trim() || values.endDate?.trim()) return true;
   if (values.technologies?.trim()) return true;
-  if (values.platformCategories?.length) return true;
-  if (values.domainTags?.length) return true;
+  if (values.platformCategories?.length || values.domainTags?.length) return true;
+
+  const toolFields = Object.values(values.tools ?? {});
+  if (toolFields.some((field) => field?.trim())) return true;
+
+  const platformLinks = Object.values(values.platforms ?? {});
+  if (platformLinks.some((link) => link?.trim())) return true;
 
   for (const locale of ['ko', 'ja', 'en'] as const) {
     const t = values.translations[locale];
-    if (t.title?.trim() || t.overview?.trim() || t.role?.trim()) return true;
+    if (
+      t.title?.trim() ||
+      t.overview?.trim() ||
+      t.role?.trim() ||
+      t.company?.trim() ||
+      t.region?.trim() ||
+      t.detailImage?.trim() ||
+      hasNonEmptyLines(t.description) ||
+      hasNonEmptyLines(t.challenges) ||
+      hasNonEmptyLines(t.achievements)
+    ) {
+      return true;
+    }
   }
 
   return false;

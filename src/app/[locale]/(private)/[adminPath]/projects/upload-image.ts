@@ -5,6 +5,13 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 
 const BUCKET = 'project-images';
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+]);
+const ALLOWED_IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif']);
 
 export async function uploadProjectImage(
   formData: FormData,
@@ -27,9 +34,22 @@ export async function uploadProjectImage(
     };
   }
 
+  const fileExt = file.name.split('.').pop()?.toLowerCase();
+  if (!fileExt || !ALLOWED_IMAGE_EXTENSIONS.has(fileExt)) {
+    return {
+      success: false,
+      error: 'jpg, png, webp, gif 이미지만 업로드할 수 있습니다.',
+    };
+  }
+  if (file.type && !ALLOWED_IMAGE_TYPES.has(file.type)) {
+    return {
+      success: false,
+      error: '허용되지 않은 이미지 형식입니다.',
+    };
+  }
+
   try {
     const supabase = createSupabaseAdminClient();
-    const fileExt = file.name.split('.').pop() || 'jpg';
     const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage

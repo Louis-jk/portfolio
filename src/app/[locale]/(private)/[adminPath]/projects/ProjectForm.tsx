@@ -464,6 +464,7 @@ export default function ProjectForm({
   const t = useTranslations('admin.projects');
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageRemoved, setImageRemoved] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>(
     initialData?.imageUrl ?? '',
   );
@@ -581,6 +582,7 @@ export default function ProjectForm({
     }
 
     setSelectedFile(file);
+    setImageRemoved(false);
     const reader = new FileReader();
     reader.onloadend = () => {
       const result = reader.result as string;
@@ -627,7 +629,7 @@ export default function ProjectForm({
     const hasImage =
       Boolean(selectedFile) ||
       Boolean(previewUrl) ||
-      Boolean(projectId && initialData?.imageUrl);
+      Boolean(projectId && initialData?.imageUrl && !imageRemoved);
     if (!hasImage) {
       return '프로젝트 이미지를 업로드해 주세요.';
     }
@@ -682,7 +684,7 @@ export default function ProjectForm({
           }
 
           finalImageUrl = uploadResult.url;
-        } else if (projectId && initialData?.imageUrl) {
+        } else if (projectId && initialData?.imageUrl && !imageRemoved) {
           finalImageUrl = initialData.imageUrl;
         }
       }
@@ -799,6 +801,7 @@ export default function ProjectForm({
               clearProjectFormDraft(projectId);
               setDraftRestored(false);
               setSelectedFile(null);
+              setImageRemoved(false);
               if (initialData) {
                 reset(initialData);
                 setPreviewUrl(initialData.imageUrl ?? '');
@@ -922,6 +925,7 @@ export default function ProjectForm({
                     onClick={() => {
                       setSelectedFile(null);
                       setPreviewUrl('');
+                      setImageRemoved(true);
                     }}
                     className='absolute top-2 right-2 bg-black/70 backdrop-blur-md p-2 rounded-full text-white shadow-xl hover:scale-110 transition-transform z-10 cursor-pointer'
                   >
