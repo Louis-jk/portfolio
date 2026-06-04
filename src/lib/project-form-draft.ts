@@ -57,10 +57,12 @@ export function saveProjectFormDraft(
   } catch (error) {
     console.warn('Project draft save failed (storage full?):', error);
     try {
-      const { previewUrl: _p, ...withoutPreview } = draft;
       localStorage.setItem(
         getStorageKey(projectId),
-        JSON.stringify(withoutPreview),
+        JSON.stringify({
+          formValues: draft.formValues,
+          savedAt: draft.savedAt,
+        }),
       );
     } catch {
       // ignore
