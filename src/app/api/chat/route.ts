@@ -5,8 +5,12 @@ import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { prisma } from '@/lib/prisma';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
+
+const CHAT_RATE_LIMIT = { limit: 15, windowMs: 60_000 };
+const MAX_MESSAGE_LENGTH = 2_000;
 
 type ChatBody = {
   message?: string;
@@ -96,6 +100,22 @@ ${languageInstruction}
 
 export async function POST(req: Request) {
   try {
+    const clientIp = getClientIp(req);
+    const rateLimit = checkRateLimit(`chat:${clientIp}`, CHAT_RATE_LIMIT);
+    if (!rateLimit.ok) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again shortly.' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSec),
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': String(rateLimit.resetAt),
+          },
+        },
+      );
+    }
+
     const body = (await req.json()) as ChatBody;
     const message = body.message?.trim();
     const locale = body.locale?.trim() || 'ko';
@@ -103,6 +123,13 @@ export async function POST(req: Request) {
     if (!message) {
       return NextResponse.json(
         { error: 'message is required' },
+        { status: 400 },
+      );
+    }
+
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json(
+        { error: `message must be at most ${MAX_MESSAGE_LENGTH} characters` },
         { status: 400 },
       );
     }

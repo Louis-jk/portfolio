@@ -1,6 +1,6 @@
 'use server';
 
-import { getProjectsByLocale } from '@/services/project-service';
+import { getProjectsByLocale } from '@/lib/projects';
 import HomeClient from './HomeClient';
 
 export default async function HomePage({

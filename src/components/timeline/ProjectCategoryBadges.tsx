@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Globe, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { ProjectWithTranslations } from '@/services/project-service';
+import type { ProjectWithTranslations } from '@/lib/projects';
 
 interface ProjectCategoryBadgesProps {
   project: ProjectWithTranslations;

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import type { ProjectWithTranslations } from '@/services/project-service';
+import type { ProjectWithTranslations } from '@/lib/projects';
 import { IoClose } from 'react-icons/io5';
 import TimelineDetail from './TimelineDetail';
 import { useEffect } from 'react';

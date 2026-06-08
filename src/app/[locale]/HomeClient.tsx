@@ -6,9 +6,9 @@ import { useSearchParams } from 'next/navigation';
 import Header from '@/components/header/Header';
 import Main from '@/components/main/Main';
 import Footer from '@/components/footer/Footer';
-import Chatbot from '@/components/chatbot/Chatbot';
+import Chatbot from '@/features/chatbot';
 import LoadingScreen from '@/components/loading/Loading';
-import type { ProjectWithTranslations } from '@/services/project-service';
+import type { ProjectWithTranslations } from '@/lib/projects';
 
 interface HomeClientProps {
   projects: ProjectWithTranslations[];

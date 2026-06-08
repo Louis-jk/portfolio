@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useMounted } from '@/hooks/useMounted';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
@@ -26,16 +27,12 @@ function LoginFormSkeleton() {
 export default function AdminLoginPage() {
   const params = useParams();
   const locale = (params?.locale as string) ?? 'en';
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) {
     return <LoginFormSkeleton />;
@@ -126,15 +123,17 @@ export default function AdminLoginPage() {
             {loading ? '로그인 중...' : '로그인'}
           </button>
         </form>
-        <p className='mt-4 text-center text-sm text-slate-500 dark:text-slate-400'>
-          계정이 없으신가요?{' '}
-          <Link
-            href={`/${locale}${ADMIN_ROUTES.SIGNUP}`}
-            className='text-slate-700 dark:text-slate-300 hover:underline'
-          >
-            회원가입
-          </Link>
-        </p>
+        {process.env.NEXT_PUBLIC_ADMIN_SIGNUP_ENABLED === 'true' && (
+          <p className='mt-4 text-center text-sm text-slate-500 dark:text-slate-400'>
+            계정이 없으신가요?{' '}
+            <Link
+              href={`/${locale}${ADMIN_ROUTES.SIGNUP}`}
+              className='text-slate-700 dark:text-slate-300 hover:underline'
+            >
+              회원가입
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   );

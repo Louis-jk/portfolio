@@ -3,8 +3,8 @@ import { PrismaClient } from '../src/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as fs from 'fs';
 import * as path from 'path';
-import { timelineData } from '../src/data/timeline.data';
-import type { TimelineItem } from '../src/types/timeline.type';
+import { timelineData } from './seed-data/timeline.data';
+import type { TimelineItem } from './seed-data/timeline.type';
 
 const emptyTools: NonNullable<NonNullable<TimelineItem['details']>['tools']> = {
   development: [],

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { prisma } from '@/lib/prisma';
+import { listAdminProjects } from '@/lib/projects/queries';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
@@ -16,10 +16,7 @@ export default async function AdminDashboardPage({
 }) {
   const { locale } = await params;
 
-  const projects = await prisma.project.findMany({
-    include: { translations: true },
-    orderBy: { sortOrder: 'asc' },
-  });
+  const projects = await listAdminProjects();
 
   const t = await getTranslations('admin.projects');
 

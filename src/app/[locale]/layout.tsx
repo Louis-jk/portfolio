@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { routing } from '@/i18n/routing';
-import { ThemeProvider } from '@/components/theme/ThemeProvider';
 
 const ogLocales: Record<string, string> = {
   ko: 'ko_KR',
@@ -108,9 +107,7 @@ export default async function LocaleLayout({
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <NextIntlClientProvider locale={locale}>
-        <ThemeProvider>{children}</ThemeProvider>
-      </NextIntlClientProvider>
+      <NextIntlClientProvider locale={locale}>{children}</NextIntlClientProvider>
     </>
   );
 }

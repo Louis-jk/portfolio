@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { listAdminProjects } from '@/lib/projects/queries';
 import Link from 'next/link';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { getTranslations } from 'next-intl/server';
@@ -12,12 +12,7 @@ export default async function ProjectListPage({
   const { locale } = await params;
   const t = await getTranslations('admin.projects');
 
-  const projects = await prisma.project.findMany({
-    include: {
-      translations: true,
-    },
-    orderBy: { sortOrder: 'asc' },
-  });
+  const projects = await listAdminProjects();
 
   return (
     <div className='max-w-6xl mx-auto p-6 space-y-8'>

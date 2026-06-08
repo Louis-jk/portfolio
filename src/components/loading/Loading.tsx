@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useMounted } from '@/hooks/useMounted';
 import { useTranslations } from 'next-intl';
 
 interface LoadingScreenProps {
@@ -14,12 +15,8 @@ export default function LoadingScreen({
   duration = 800, // 0.8초로 단축
   isLoading = true, // 실제 로딩 상태를 받아옴
 }: LoadingScreenProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const t = useTranslations('loading');
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!isLoading) {

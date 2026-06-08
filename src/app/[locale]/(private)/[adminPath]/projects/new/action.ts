@@ -4,61 +4,10 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { requireAuth } from '@/utils/supabase/auth';
+import { mapAllFormTranslations } from '@/lib/projects/form-mapper';
+import type { ProjectFormData } from '@/lib/projects/types';
+import { validateProjectServerPayload } from '@/lib/projects/validate-server-payload';
 import { scheduleProjectIndexing } from '@/lib/rag/schedule-project-indexing';
-
-type TranslationInput = {
-  title?: string;
-  company?: string;
-  region?: string;
-  role?: string;
-  overview?: string;
-  description?: string[];
-  challenges?: string[];
-  achievements?: string[];
-  detailImage?: string | null;
-};
-
-function mapTranslation(locale: string, t: TranslationInput | undefined) {
-  return {
-    locale,
-    title: t?.title || '',
-    company: t?.company || '',
-    region: t?.region || '',
-    role: t?.role || '',
-    overview: t?.overview || '',
-    description: Array.isArray(t?.description) ? t.description : [],
-    challenges: Array.isArray(t?.challenges) ? t.challenges : [],
-    achievements: Array.isArray(t?.achievements) ? t.achievements : [],
-    detailImage: t?.detailImage || null,
-  };
-}
-
-type ProjectFormData = {
-  imageUrl?: string;
-  startDate?: string;
-  endDate?: string | null;
-  isPublic?: boolean;
-  technologies?: string[];
-  platformCategories?: string[];
-  domainTags?: string[];
-  platforms?: {
-    webLink?: string | null;
-    iosLink?: string | null;
-    androidLink?: string | null;
-    desktopLink?: string | null;
-  };
-  tools?: {
-    development?: string[];
-    communication?: string[];
-    design?: string[];
-    debugging?: string[];
-  };
-  translations?: {
-    ko?: TranslationInput;
-    ja?: TranslationInput;
-    en?: TranslationInput;
-  };
-};
 
 export async function saveProject(data: ProjectFormData) {
   const auth = await requireAuth();
@@ -66,15 +15,16 @@ export async function saveProject(data: ProjectFormData) {
     return { success: false, error: 'Unauthorized' };
   }
 
+  const parsed = validateProjectServerPayload(data);
+  if (!parsed.success) {
+    return { success: false, error: parsed.error };
+  }
+
   try {
-    if (!data.imageUrl || !data.startDate) {
-      return {
-        success: false,
-        error: 'imageUrl and startDate are required',
-      };
-    }
 
     // ⭐ 트랜잭션 시작
+    const validData = parsed.data;
+
     const result = await prisma.$transaction(async (tx) => {
       // 1. 현재 트랜잭션 내에서 가장 큰 sortOrder를 찾음
       const maxOrder = await tx.project.aggregate({
@@ -86,45 +36,45 @@ export async function saveProject(data: ProjectFormData) {
       return await tx.project.create({
         data: {
           sortOrder,
-          imageUrl: data.imageUrl || '',
-          startDate: new Date(data.startDate || ''),
-          endDate: data.endDate ? new Date(data.endDate) : null,
-          isPublic: data.isPublic ?? false,
-          technologies: data.technologies || [],
-          platformCategories: data.platformCategories || [],
-          domainTags: data.domainTags || [],
+          imageUrl: validData.imageUrl,
+          startDate: new Date(validData.startDate),
+          endDate: validData.endDate ? new Date(validData.endDate) : null,
+          isPublic: validData.isPublic,
+          technologies: validData.technologies,
+          platformCategories: validData.platformCategories,
+          domainTags: validData.domainTags,
 
           platforms: {
             create: {
-              webLink: data.platforms?.webLink || null,
-              iosLink: data.platforms?.iosLink || null,
-              androidLink: data.platforms?.androidLink || null,
-              desktopLink: data.platforms?.desktopLink || null,
+              webLink: validData.platforms?.webLink ?? null,
+              iosLink: validData.platforms?.iosLink ?? null,
+              androidLink: validData.platforms?.androidLink ?? null,
+              desktopLink: validData.platforms?.desktopLink ?? null,
             },
           },
 
-          tools:
-            data.tools &&
-            (data.tools.development?.length ||
-              data.tools.communication?.length ||
-              data.tools.design?.length ||
-              data.tools.debugging?.length)
+          tools: (() => {
+            const tools = validData.tools;
+            if (!tools) return undefined;
+            const hasTools =
+              (tools.development?.length ?? 0) > 0 ||
+              (tools.communication?.length ?? 0) > 0 ||
+              (tools.design?.length ?? 0) > 0 ||
+              (tools.debugging?.length ?? 0) > 0;
+            return hasTools
               ? {
                   create: {
-                    development: data.tools.development || [],
-                    communication: data.tools.communication || [],
-                    design: data.tools.design || [],
-                    debugging: data.tools.debugging || [],
+                    development: tools.development ?? [],
+                    communication: tools.communication ?? [],
+                    design: tools.design ?? [],
+                    debugging: tools.debugging ?? [],
                   },
                 }
-              : undefined,
+              : undefined;
+          })(),
 
           translations: {
-            create: [
-              mapTranslation('ko', data.translations?.ko),
-              mapTranslation('ja', data.translations?.ja),
-              mapTranslation('en', data.translations?.en),
-            ],
+            create: mapAllFormTranslations(validData.translations),
           },
         },
       });
@@ -133,15 +83,11 @@ export async function saveProject(data: ProjectFormData) {
     scheduleProjectIndexing(
       {
         projectId: result.id,
-        isPublic: data.isPublic ?? false,
-        technologies: data.technologies || [],
-        platformCategories: data.platformCategories || [],
-        domainTags: data.domainTags || [],
-        translations: [
-          mapTranslation('ko', data.translations?.ko),
-          mapTranslation('ja', data.translations?.ja),
-          mapTranslation('en', data.translations?.en),
-        ],
+        isPublic: validData.isPublic,
+        technologies: validData.technologies,
+        platformCategories: validData.platformCategories,
+        domainTags: validData.domainTags,
+        translations: mapAllFormTranslations(validData.translations),
       },
       'Project save',
     );

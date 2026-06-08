@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 import { createClient } from '@/utils/supabase/middleware';
+import { isAdminSignupEnabled } from '@/lib/admin-signup';
 import { ADMIN_ROUTES } from '@/lib/constants';
 
 const EXPECTED_ADMIN_PATH = (
@@ -13,14 +14,26 @@ function isAdminRoute(pathname: string): boolean {
   return segments[1] === EXPECTED_ADMIN_PATH && EXPECTED_ADMIN_PATH.length > 0;
 }
 
-function isAdminAuthRoute(pathname: string): boolean {
+function isAdminLoginRoute(pathname: string): boolean {
   const segments = pathname.split('/').filter(Boolean);
-  const authPages = ['login', 'signup'];
   return (
     segments[1] === EXPECTED_ADMIN_PATH &&
-    authPages.includes(segments[2] ?? '') &&
+    segments[2] === 'login' &&
     EXPECTED_ADMIN_PATH.length > 0
   );
+}
+
+function isAdminSignupRoute(pathname: string): boolean {
+  const segments = pathname.split('/').filter(Boolean);
+  return (
+    segments[1] === EXPECTED_ADMIN_PATH &&
+    segments[2] === 'signup' &&
+    EXPECTED_ADMIN_PATH.length > 0
+  );
+}
+
+function isAdminAuthRoute(pathname: string): boolean {
+  return isAdminLoginRoute(pathname) || isAdminSignupRoute(pathname);
 }
 
 export async function middleware(request: NextRequest) {
@@ -34,6 +47,15 @@ export async function middleware(request: NextRequest) {
 
   // Admin 경로 보호: Supabase Auth 세션 검증
   if (EXPECTED_ADMIN_PATH && isAdminRoute(request.nextUrl.pathname)) {
+    if (isAdminSignupRoute(request.nextUrl.pathname) && !isAdminSignupEnabled()) {
+      const locale = request.nextUrl.pathname.split('/')[1] ?? 'en';
+      const loginUrl = new URL(
+        `/${locale}${ADMIN_ROUTES.LOGIN}`,
+        request.url,
+      );
+      return NextResponse.redirect(loginUrl);
+    }
+
     const supabase = createClient(request, response as NextResponse);
     const { data } = await supabase.auth.getClaims();
     const claims = data?.claims ?? null;

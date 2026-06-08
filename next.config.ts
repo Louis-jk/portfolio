@@ -1,6 +1,7 @@
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { getSupabaseStorageHostname } from './src/lib/supabase-hostname';
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -12,6 +13,8 @@ const newProjectSlug =
   process.env.ADMIN_PROJECT_NEW_SLUG ||
   process.env.NEXT_PUBLIC_ADMIN_PROJECT_NEW_SLUG ||
   'new';
+
+const supabaseHostname = getSupabaseStorageHostname();
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -45,20 +48,22 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'storage.googleapis.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'YOUR_PROJECT_REF.supabase.co',
-      },
+      ...(supabaseHostname
+        ? [{ protocol: 'https' as const, hostname: supabaseHostname }]
+        : []),
     ],
   },
 };
+
+const sentryOrg = process.env.SENTRY_ORG;
+const sentryProject = process.env.SENTRY_PROJECT;
 
 export default withSentryConfig(withNextIntl(nextConfig), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: 'lippoint',
-  project: 'sentry-portfolio',
+  org: sentryOrg ?? '',
+  project: sentryProject ?? '',
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,

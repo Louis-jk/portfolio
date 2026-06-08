@@ -4,9 +4,14 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
+import { getSentryDsn } from "./src/lib/sentry-dsn";
 
+const dsn = getSentryDsn();
+if (!dsn) {
+  console.warn("[sentry] SENTRY_DSN is not set; edge error reporting is disabled.");
+} else {
 Sentry.init({
-  dsn: "https://YOUR_KEY@oORG_ID.ingest.us.sentry.io/PROJECT_ID",
+  dsn,
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
@@ -17,3 +22,4 @@ Sentry.init({
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 });
+}

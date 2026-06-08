@@ -8,27 +8,13 @@ import { Check } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Lenis from 'lenis';
 import { cn } from '@/lib/utils';
-import type { ProjectWithTranslations } from '@/services/project-service';
-import type { ProjectTranslation } from '@/generated/prisma/client';
-import { format } from 'date-fns';
+import type { ProjectWithTranslations } from '@/lib/projects';
+import {
+  formatProjectDateRange,
+  getProjectTranslation,
+} from '@/lib/projects/translation';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
 import { FaUserAlt } from 'react-icons/fa';
-
-function getTranslation(project: ProjectWithTranslations, locale: string) {
-  return (
-    project.translations.find(
-      (tr: ProjectTranslation) => tr.locale === locale,
-    ) ??
-    project.translations.find((tr: ProjectTranslation) => tr.locale === 'ko') ??
-    project.translations[0]
-  );
-}
-
-function formatDateRange(project: ProjectWithTranslations, locale: string) {
-  const dateFormat = locale === 'en' ? 'MMM yyyy' : 'yyyy.MM';
-  const end = project.endDate ? format(project.endDate, dateFormat) : 'PRESENT';
-  return `${format(project.startDate, dateFormat)} ~ ${end}`;
-}
 
 interface TimelineProps {
   items: ProjectWithTranslations[];
@@ -298,7 +284,7 @@ export default function Timeline({
       window.dataLayer.push({
         event: 'timeline_item_click',
         timeline_id: item.id.toString(),
-        timeline_title: getTranslation(item, locale).title,
+        timeline_title: getProjectTranslation(item, locale).title,
       });
     }
   };
@@ -384,22 +370,22 @@ export default function Timeline({
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
-                          {getTranslation(item, locale).title}
+                          {getProjectTranslation(item, locale).title}
                         </h3>
                         <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                          {getTranslation(item, locale).region}
+                          {getProjectTranslation(item, locale).region}
                         </p>
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
                         <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                          {getTranslation(item, locale).role}
+                          {getProjectTranslation(item, locale).role}
                         </p>
                         <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                          {formatDateRange(item, locale)}
+                          {formatProjectDateRange(item, locale)}
                         </p>
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                        {getTranslation(item, locale).description.map(
+                        {getProjectTranslation(item, locale).description.map(
                           (line: string, i: number) => (
                             <li key={i}>{line}</li>
                           ),
@@ -488,25 +474,25 @@ export default function Timeline({
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
-                          {getTranslation(item, locale).title}
+                          {getProjectTranslation(item, locale).title}
                         </h3>
                         {/* <p className='text-sm font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                          {getTranslation(item, locale).region}
+                          {getProjectTranslation(item, locale).region}
                         </p> */}
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
                         <div className='flex justify-start items-center gap-1 flex-7'>
                           <FaUserAlt className='size-3 text-gray-400 dark:text-gray-100 mt-1' />
                           <p className='text-sm font-medium text-gray-500 dark:text-gray-100 mt-1 whitespace-pre-line'>
-                            {getTranslation(item, locale).role}
+                            {getProjectTranslation(item, locale).role}
                           </p>
                         </div>
                         {/* <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                          {formatDateRange(item, locale)}
+                          {formatProjectDateRange(item, locale)}
                         </p> */}
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                        {getTranslation(item, locale).description.map(
+                        {getProjectTranslation(item, locale).description.map(
                           (line: string, i: number) => (
                             <li key={i}>{line}</li>
                           ),

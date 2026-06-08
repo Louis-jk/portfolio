@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useMounted } from '@/hooks/useMounted';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
@@ -26,17 +27,13 @@ function SignupFormSkeleton() {
 export default function AdminSignupPage() {
   const params = useParams();
   const locale = (params?.locale as string) ?? 'en';
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) {
     return <SignupFormSkeleton />;

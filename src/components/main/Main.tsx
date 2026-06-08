@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'react-responsive';
-import type { ProjectWithTranslations } from '@/services/project-service';
+import type { ProjectWithTranslations } from '@/lib/projects';
 
 function MainContent({
   projects,

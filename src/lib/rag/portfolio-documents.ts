@@ -1,3 +1,12 @@
+/**
+ * RAG document pipeline (project indexing)
+ *
+ * Flow: Admin save/update → scheduleProjectIndexing (after()) → upsertProjectDocuments
+ *   → build per-locale text → OpenAI embeddings → portfolioDocument (pgvector)
+ *
+ * Retrieval: /api/chat loads similar docs by locale, streams LLM reply, and returns
+ * x-rag-project-ids so the chatbot can render timeline deep-links.
+ */
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { prisma } from '@/lib/prisma';
 

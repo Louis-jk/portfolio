@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useMounted } from '@/hooks/useMounted';
 
 const links = [
   {
@@ -34,11 +34,7 @@ const links = [
 
 function Links() {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   return (
     <motion.nav

@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { getProjectById } from '@/lib/projects/queries';
 import { notFound } from 'next/navigation';
 import ProjectPreviewClient from './ProjectPreviewClient';
 import { ADMIN_ROUTES } from '@/lib/constants';
@@ -12,14 +12,7 @@ export default async function ProjectPreviewPage({
   const projectId = parseInt(id, 10);
   if (isNaN(projectId)) notFound();
 
-  const project = await prisma.project.findUnique({
-    where: { id: projectId },
-    include: {
-      platforms: true,
-      tools: true,
-      translations: true,
-    },
-  });
+  const project = await getProjectById(projectId);
 
   if (!project) notFound();
 

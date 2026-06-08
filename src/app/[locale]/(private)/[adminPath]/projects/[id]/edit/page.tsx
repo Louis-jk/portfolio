@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { getProjectById } from '@/lib/projects/queries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
@@ -15,14 +15,7 @@ export default async function ProjectEditPage({
   const projectId = parseInt(id, 10);
   if (isNaN(projectId)) notFound();
 
-  const project = await prisma.project.findUnique({
-    where: { id: projectId },
-    include: {
-      platforms: true,
-      tools: true,
-      translations: true,
-    },
-  });
+  const project = await getProjectById(projectId);
 
   if (!project) notFound();
 

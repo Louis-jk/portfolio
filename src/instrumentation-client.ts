@@ -3,9 +3,12 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/browser';
+import { getSentryDsn } from '@/lib/sentry-dsn';
 
+const dsn = getSentryDsn();
+if (dsn) {
 Sentry.init({
-  dsn: "https://YOUR_KEY@oORG_ID.ingest.us.sentry.io/PROJECT_ID",
+  dsn,
 
   // Add optional integrations for additional features
   integrations: [
@@ -28,5 +31,6 @@ Sentry.init({
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 });
+}
 
 export const onRouterTransitionStart = () => {};

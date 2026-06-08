@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useMounted } from '@/hooks/useMounted';
 import { flushSync } from 'react-dom';
 import { GiStripedSun } from 'react-icons/gi';
 import { FaMoon } from 'react-icons/fa6';
@@ -11,12 +11,7 @@ import { withThemeTransition } from '@/lib/theme-transition';
 
 export default function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Hydration mismatch 방지를 위해 마운트 후에만 렌더링
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   if (!mounted) {
     return (
