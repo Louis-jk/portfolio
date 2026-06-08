@@ -119,6 +119,7 @@ export default async function RootLayout({
         />
       </head>
       <body
+        suppressHydrationWarning
         className={`${notoSansJP.variable} ${notoSansKR.variable} ${geist.variable} ${geistMono.variable} ${hanaleiFill.variable} antialiased`}
       >
         {/* GTM Body */}
@@ -131,11 +132,7 @@ export default async function RootLayout({
           />
         </noscript>
 
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-        >
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           {children}
         </ThemeProvider>
 
