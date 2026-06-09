@@ -13,14 +13,14 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
   <a href="#highlights-ja">🇯🇵 日本語要約</a>
 </p>
 
-#### <span id="highlights-en">🇺🇸 English</span>
+### <span id="highlights-en">🇺🇸 English</span>
 
 - **Multilingual public site** (ko / en / ja) with timeline, 3D avatar, filters, and project detail drawer
 - **RAG chatbot** — OpenAI + pgvector (Supabase) retrieval over portfolio content, with FAQ flows and project deep-links
 - **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
 - **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + e2e + build), env-based secrets, chat API rate limiting
 
-#### <span id="highlights-ko">🇰🇷 한국어 요약</span>
+### <span id="highlights-ko">🇰🇷 한국어 요약</span>
 
 <details>
 <summary><b>💡 핵심 하이라이트 보기 (클릭하여 펼치기)</b></summary>
@@ -32,7 +32,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + E2E + Build), 환경 변수 기반 암호화, 챗봇 API 요청 제한(Rate Limiting) 반영
 </details>
 
-#### <span id="highlights-ja">🇯🇵 日本語要約</span>
+### <span id="highlights-ja">🇯🇵 日本語要約</span>
 
 <details>
 <summary><b>💡 主なハイライトを表示 (クリックして展開)</b></summary>
@@ -99,7 +99,7 @@ src/
 
 - **`lib/projects/`**: 모놀리식한 폼/서비스 구조에서 도메인 모듈을 깔끔하게 분리해냈으며, Prisma 데이터베이스 쓰기 작업 전 단계에서 Zod를 통해 서버 페이로드를 검증합니다.
 - **`features/chatbot/`**: UI, 스트리밍, FAQ, 모더레이션 등 챗봇 관련 요구사항이 확장됨에 따라, 단순 flat 폴더 구조가 아닌 독립된 기능(Feature) 모듈 단위로 그룹화하여 관리합니다.
-- **Admin routes**: 관리자 관련 Server Actions는 전역 파일로 분리하지 않고 해당 라우트 폴더 내(`.actions.ts`, `upload-image.ts`)에 결합(Colocation)해 두었으며, 공유 규칙만 `lib/projects/`에서 관리합니다.
+- **Admin routes**: 관리자 관련 Server Actions는 전역 파일로 분리하지 않고 해당 라우트 폴더 내(`actions.ts`, `upload-image.ts`)에 결합(Colocation)해 두었으며, 공유 규칙만 `lib/projects/`에서 관리합니다.
 - **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
 </details>
 
