@@ -5,8 +5,6 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 
 ![Portfolio preview](https://github.com/user-attachments/assets/c511919c-0d5f-4a1b-8725-d91e9bf3d4ab)
 
-## Highlights
-
 ## 🌟 Highlights
 
 <p align="left">
@@ -22,8 +20,6 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
 - **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + e2e + build), env-based secrets, chat API rate limiting
 
----
-
 #### <span id="highlights-ko">🇰🇷 한국어 요약</span>
 
 <details>
@@ -36,8 +32,6 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + E2E + Build), 환경 변수 기반 암호화, 챗봇 API 요청 제한(Rate Limiting) 반영
 </details>
 
----
-
 #### <span id="highlights-ja">🇯🇵 日本語要約</span>
 
 <details>
@@ -49,10 +43,6 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **非公開の管理者用CMS**: Supabase Auth、Prisma/PostgreSQL、ドラッグ＆ドロップによる並び替え、画像アップロード、Zodによるバリデーションを経た Server Actions を実装
 - **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + E2E + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
 </details>
-
----
-
----
 
 ## Tech stack
 
@@ -86,7 +76,7 @@ src/
 └── stores/                 # Zustand (chatbot UI state)
 ```
 
-### 🎯 Design choices
+## 🎯 Design choices
 
 <p align="left">
   <a href="#design-en">🇺🇸 English</a> | 
@@ -101,8 +91,6 @@ src/
 - **Admin routes** — server actions live next to routes (`actions.ts`, `upload-image.ts`); shared rules stay in `lib/projects/`.
 - **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP.
 
----
-
 #### <span id="design-ko">🇰🇷 한국어 기술 결정</span>
 
 <details>
@@ -115,8 +103,6 @@ src/
 - **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
 </details>
 
----
-
 #### <span id="design-ja">🇯🇵 日本語の設計選択</span>
 
 <details>
@@ -128,8 +114,6 @@ src/
 - **Admin Routes**: 管理者関連の Server Actions は該当するルートフォルダ内（`actions.ts`, `upload-image.ts`）に配置し、共通ルールは `lib/projects/` で管理しています。
 - **セキュリティ(Security)**: 各種シークレットは環境変数で厳格に管理され、管理者登録は環境変数によって制限されています。ミドルウェアによるセッションチェック、および `/api/chat` パスに対するIPごとのレート制限が実装されています。
 </details>
-
----
 
 ```mermaid
 flowchart LR
