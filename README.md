@@ -7,22 +7,64 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 
 ## Highlights
 
+## 🌟 Highlights
+
+<p align="left">
+  <a href="#highlights-en">🇺🇸 English</a> | 
+  <a href="#highlights-ko">🇰🇷 한국어 요약</a> | 
+  <a href="#highlights-ja">🇯🇵 日本語要約</a>
+</p>
+
+#### <span id="highlights-en">🇺🇸 English</span>
+
 - **Multilingual public site** (ko / en / ja) with timeline, 3D avatar, filters, and project detail drawer
 - **RAG chatbot** — OpenAI + pgvector (Supabase) retrieval over portfolio content, with FAQ flows and project deep-links
 - **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
 - **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + e2e + build), env-based secrets, chat API rate limiting
 
+---
+
+#### <span id="highlights-ko">🇰🇷 한국어 요약</span>
+
+<details>
+<summary><b>💡 핵심 하이라이트 보기 (클릭하여 펼치기)</b></summary>
+<br>
+
+- **다국어 지원 퍼블릭 사이트** (ko / en / ja): 인터랙티브 타임라인, 3D 아바타, 프로젝트 필터링 및 상세 보기 드로어(Drawer) 구현
+- **RAG 기반 챗봇**: OpenAI API와 pgvector(Supabase)를 연동하여 포트폴리오 콘텐츠 내 문서 검색, FAQ 시나리오 및 프로젝트 딥링크 기능 지원
+- **비공개 관리자 CMS**: Supabase Auth와 Prisma/PostgreSQL 기반의 CRUD, 드래그 앤 드롭 정렬, 이미지 업로드 및 Zod 스키마로 검증된 Server Actions 적용
+- **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + E2E + Build), 환경 변수 기반 암호화, 챗봇 API 요청 제한(Rate Limiting) 반영
+</details>
+
+---
+
+#### <span id="highlights-ja">🇯🇵 日本語要約</span>
+
+<details>
+<summary><b>💡 主なハイライトを表示 (クリックして展開)</b></summary>
+<br>
+
+- **多言語対応パブリックサイト** (ko / en / ja): タイムライン、3Dアバター、プロジェクトのフィルタリング、詳細表示ドロワー（Drawer）機能を搭載
+- **RAGベースのチャットボット**: OpenAI + pgvector (Supabase) を活用し、ポートフォリオ内のコンテンツに基づくドキュメント検索、FAQフロー、プロジェクトへのディープリンクをサポート
+- **非公開の管理者用CMS**: Supabase Auth、Prisma/PostgreSQL、ドラッグ＆ドロップによる並び替え、画像アップロード、Zodによるバリデーションを経た Server Actions を実装
+- **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + E2E + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
+</details>
+
+---
+
+---
+
 ## Tech stack
 
-| Layer | Choices |
-|-------|---------|
-| Framework | Next.js 15, React 19, TypeScript |
-| Styling | Tailwind CSS 4, Framer Motion, next-themes |
-| i18n | next-intl |
-| Data | Prisma 7, PostgreSQL, Supabase (Auth, Storage, pgvector) |
-| AI / RAG | LangChain, OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
-| 3D | React Three Fiber, drei |
-| Quality | Vitest, Playwright, ESLint, GitHub Actions |
+| Layer     | Choices                                                     |
+| --------- | ----------------------------------------------------------- |
+| Framework | Next.js 15, React 19, TypeScript                            |
+| Styling   | Tailwind CSS 4, Framer Motion, next-themes                  |
+| i18n      | next-intl                                                   |
+| Data      | Prisma 7, PostgreSQL, Supabase (Auth, Storage, pgvector)    |
+| AI / RAG  | LangChain, OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
+| 3D        | React Three Fiber, drei                                     |
+| Quality   | Vitest, Playwright, ESLint, GitHub Actions                  |
 
 ## Architecture
 
@@ -44,12 +86,50 @@ src/
 └── stores/                 # Zustand (chatbot UI state)
 ```
 
-**Design choices**
+### 🎯 Design choices
+
+<p align="left">
+  <a href="#design-en">🇺🇸 English</a> | 
+  <a href="#design-ko">🇰🇷 한국어 기술 결정</a> | 
+  <a href="#design-ja">🇯🇵 日本語の設計選択</a>
+</p>
+
+#### <span id="design-en">🇺🇸 English</span>
 
 - **`lib/projects/`** — domain module extracted from a monolithic form/service; server payloads validated with Zod before Prisma writes.
 - **`features/chatbot/`** — chatbot grew across UI, streaming, FAQ, and moderation; grouped as a feature module instead of a flat `components/` folder.
 - **Admin routes** — server actions live next to routes (`actions.ts`, `upload-image.ts`); shared rules stay in `lib/projects/`.
 - **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP.
+
+---
+
+#### <span id="design-ko">🇰🇷 한국어 기술 결정</span>
+
+<details>
+<summary><b>🛠️ 설계 및 아키텍처 초이스 보기 (클릭하여 펼치기)</b></summary>
+<br>
+
+- **`lib/projects/`**: 모놀리식한 폼/서비스 구조에서 도메인 모듈을 깔끔하게 분리해냈으며, Prisma 데이터베이스 쓰기 작업 전 단계에서 Zod를 통해 서버 페이로드를 검증합니다.
+- **`features/chatbot/`**: UI, 스트리밍, FAQ, 모더레이션 등 챗봇 관련 요구사항이 확장됨에 따라, 단순 flat 폴더 구조가 아닌 독립된 기능(Feature) 모듈 단위로 그룹화하여 관리합니다.
+- **Admin routes**: 관리자 관련 Server Actions는 전역 파일로 분리하지 않고 해당 라우트 폴더 내(`.actions.ts`, `upload-image.ts`)에 결합(Colocation)해 두었으며, 공유 규칙만 `lib/projects/`에서 관리합니다.
+- **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
+</details>
+
+---
+
+#### <span id="design-ja">🇯🇵 日本語の設計選択</span>
+
+<details>
+<summary><b>🛠️ アーキテクチャ設計における選択を表示 (クリックして展開)</b></summary>
+<br>
+
+- **`lib/projects/`**: モノリシックなフォーム/サービス構造からドメインモジュールを分離し、Prismaへの書き込み前にZodを用いてサーバーペイロードを検証します。
+- **`features/chatbot/`**: UI、ストリーミング、FAQ、モデレーションなどチャットボット機能の拡張に伴い、単なるコンポーネントフォルダではなく独立した機能（Feature）モジュールとしてグループ化しました。
+- **Admin Routes**: 管理者関連の Server Actions は該当するルートフォルダ内（`actions.ts`, `upload-image.ts`）に配置し、共通ルールは `lib/projects/` で管理しています。
+- **セキュリティ(Security)**: 各種シークレットは環境変数で厳格に管理され、管理者登録は環境変数によって制限されています。ミドルウェアによるセッションチェック、および `/api/chat` パスに対するIPごとのレート制限が実装されています。
+</details>
+
+---
 
 ```mermaid
 flowchart LR
@@ -100,15 +180,15 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm run lint` | ESLint |
-| `npm run test` | Vitest unit tests |
-| `npm run test:e2e` | Playwright (requires `DATABASE_URL` for home spec) |
-| `npm run db:seed` | Seed database |
-| `npm run db:embed-existing` | Re-index existing projects for RAG |
+| Command                     | Description                                        |
+| --------------------------- | -------------------------------------------------- |
+| `npm run dev`               | Development server                                 |
+| `npm run build`             | Production build                                   |
+| `npm run lint`              | ESLint                                             |
+| `npm run test`              | Vitest unit tests                                  |
+| `npm run test:e2e`          | Playwright (requires `DATABASE_URL` for home spec) |
+| `npm run db:seed`           | Seed database                                      |
+| `npm run db:embed-existing` | Re-index existing projects for RAG                 |
 
 ## Environment variables
 
