@@ -2,16 +2,20 @@
 
 import Image from 'next/image';
 import { CiLink } from 'react-icons/ci';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectWithTranslations } from '@/lib/projects';
+import { getProjectTitle } from '@/lib/projects/translation';
 
-export function renderProjectLinkLabel(project: ProjectView) {
+export function renderProjectLinkLabel(
+  project: ProjectWithTranslations,
+  locale: string,
+) {
   return (
     <p className='flex items-center gap-3 w-full min-w-0'>
       <span className='relative size-10 rounded-md overflow-hidden border border-white/20 flex-shrink-0 bg-black/10'>
         {project.imageUrl ? (
           <Image
             src={project.imageUrl}
-            alt={project.title}
+            alt={getProjectTitle(project, locale)}
             fill
             sizes='40px'
             className='object-cover'
@@ -23,7 +27,7 @@ export function renderProjectLinkLabel(project: ProjectView) {
         )}
       </span>
       <span className='flex-1 min-w-0 whitespace-normal break-words leading-snug text-left'>
-        {project.title}
+        {getProjectTitle(project, locale)}
       </span>
     </p>
   );
@@ -31,7 +35,8 @@ export function renderProjectLinkLabel(project: ProjectView) {
 
 export function normalizeProjectLinkForLocale(
   link: { text: React.ReactNode; url: string },
-  projects: ProjectView[],
+  projects: ProjectWithTranslations[],
+  locale: string,
   pathname: string,
 ) {
   try {
@@ -45,7 +50,7 @@ export function normalizeProjectLinkForLocale(
     if (!project) return link;
 
     return {
-      text: renderProjectLinkLabel(project),
+      text: renderProjectLinkLabel(project, locale),
       url: `${pathname}?item=${projectId}`,
     };
   } catch {
@@ -55,14 +60,15 @@ export function normalizeProjectLinkForLocale(
 
 export function buildProjectLinksFromIds(
   projectIds: number[],
-  projects: ProjectView[],
+  projects: ProjectWithTranslations[],
+  locale: string,
   basePath: string,
 ) {
   return projectIds
     .map((projectId) => projects.find((project) => project.id === projectId))
-    .filter((project): project is ProjectView => Boolean(project))
+    .filter((project): project is ProjectWithTranslations => Boolean(project))
     .map((project) => ({
-      text: renderProjectLinkLabel(project),
+      text: renderProjectLinkLabel(project, locale),
       url: `${basePath}?item=${project.id}`,
     }));
 }

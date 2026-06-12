@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { listAllProjects, readI18n } from '@/modules/projects';
+import { listAdminProjects } from '@/lib/projects/queries';
 import { ADMIN_ROUTES } from '@/lib/constants';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
@@ -16,15 +16,21 @@ export default async function AdminDashboardPage({
 }) {
   const { locale } = await params;
 
-  const projects = await listAllProjects();
+  const projects = await listAdminProjects();
 
   const t = await getTranslations('admin.projects');
 
   const recentProjects = projects.slice(0, 5);
   const publicCount = projects.filter((p) => p.isPublic).length;
-  const koCount = projects.filter((p) => p.title.ko).length;
-  const jaCount = projects.filter((p) => p.title.ja).length;
-  const enCount = projects.filter((p) => p.title.en).length;
+  const koCount = projects.filter((p) =>
+    p.translations.some((t) => t.locale === 'ko' && t.title),
+  ).length;
+  const jaCount = projects.filter((p) =>
+    p.translations.some((t) => t.locale === 'ja' && t.title),
+  ).length;
+  const enCount = projects.filter((p) =>
+    p.translations.some((t) => t.locale === 'en' && t.title),
+  ).length;
 
   return (
     <div className='space-y-6'>
@@ -75,7 +81,11 @@ export default async function AdminDashboardPage({
         ) : (
           <div className='space-y-4'>
             {recentProjects.map((project) => {
-              const title = readI18n(project.title, locale) || t('untitledLabel');
+              const title =
+                project.translations.find((tr) => tr.locale === locale)?.title ??
+                project.translations.find((tr) => tr.locale === 'ko')?.title ??
+                project.translations[0]?.title ??
+                t('untitledLabel');
               return (
                 <Card
                   key={project.id}
@@ -152,7 +162,9 @@ export default async function AdminDashboardPage({
                             <span
                               key={lang}
                               className={`px-1 rounded ${
-                                project.title[lang as 'ko' | 'ja' | 'en']
+                                project.translations.some(
+                                  (tr) => tr.locale === lang && tr.title,
+                                )
                                   ? 'text-purple-600 dark:text-purple-400 font-bold'
                                   : 'text-zinc-300 dark:text-zinc-600'
                               }`}

@@ -15,12 +15,15 @@ import { useMediaQuery } from 'react-responsive';
 import { Button } from '@/components/ui/button';
 import ShareButton from '@/components/button/share/ShareButton';
 import ShareModal from '@/components/modal/shareModal';
-import type { ProjectView } from '@/modules/projects';
-import { formatProjectDateRange } from '@/modules/projects';
+import type { ProjectWithTranslations } from '@/lib/projects';
+import {
+  formatProjectDateRange,
+  getProjectTranslation,
+} from '@/lib/projects/translation';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
 
 interface TimelineDetailProps {
-  item: ProjectView | null;
+  item: ProjectWithTranslations | null;
   isVisible: boolean;
 }
 
@@ -114,7 +117,7 @@ export default function TimelineDetail({
   const androidLink = item && item.isPublic && item.platforms?.androidLink;
   const desktopLink = item && item.isPublic && item.platforms?.desktopLink;
 
-  if (!item) {
+  if (!item || !item.translations) {
     return (
       <section
         className='flex items-center justify-center h-full min-h-[500px]'
@@ -208,7 +211,7 @@ export default function TimelineDetail({
                   !isDesktopOrLaptop && 'mt-0',
                 )}
               >
-                {item.title}
+                {getProjectTranslation(item, locale).title}
               </motion.h3>
 
               <motion.div
@@ -220,26 +223,26 @@ export default function TimelineDetail({
                 className='flex flex-col gap-1'
               >
                 <div className='flex items-center gap-2 justify-between w-full'>
-                  {item.company && (
+                  {getProjectTranslation(item, locale).company && (
                     <p className='text-sm text-gray-900 dark:text-gray-200 flex items-center flex-8'>
                       <FaBuilding className='inline-block w-3 h-3 mr-1' />
-                      {item.company}&nbsp;&nbsp;&nbsp;
+                      {getProjectTranslation(item, locale).company}&nbsp;&nbsp;&nbsp;
                     </p>
                   )}
                   <p
                     className={cn(
                       'text-sm text-gray-900 dark:text-gray-200 flex-4 text-right',
-                      !item.company && 'ml-auto',
+                      !getProjectTranslation(item, locale).company && 'ml-auto',
                     )}
                   >
-                    {item.region}
+                    {getProjectTranslation(item, locale).region}
                   </p>
                 </div>
 
                 <div className='flex items-center gap-2 justify-between'>
-                  {item.role && (
+                  {getProjectTranslation(item, locale).role && (
                     <p className='text-sm text-gray-600 dark:text-gray-400 flex items-center whitespace-pre-line flex-7'>
-                      {item.role}
+                      {getProjectTranslation(item, locale).role}
                     </p>
                   )}
                   <p className='text-sm text-gray-600 dark:text-gray-400 flex-5 text-right'>
@@ -285,7 +288,7 @@ export default function TimelineDetail({
               <Image
                 key={item.imageUrl}
                 src={item.imageUrl}
-                alt={item.title}
+                alt={getProjectTranslation(item, locale).title}
                 className={cn(
                   'object-contain rounded-sm select-none pointer-events-none w-full h-full mx-auto transition-opacity duration-300',
                   imageLoaded ? 'opacity-100' : 'opacity-0',
@@ -378,7 +381,7 @@ export default function TimelineDetail({
               <ShareButton onShareClick={() => setOpenShareModal(true)} />
             </div>
             <p className='text-gray-700 dark:text-gray-300 leading-[1.5] whitespace-pre-line'>
-              {item.overview}
+              {getProjectTranslation(item, locale).overview}
             </p>
           </motion.div>
 
@@ -516,7 +519,7 @@ export default function TimelineDetail({
           >
             <h4 className='text-lg font-semibold mb-3'>{tD('challenges')}</h4>
             <ul className='space-y-2'>
-              {item.challenges.map(
+              {getProjectTranslation(item, locale).challenges.map(
                 (challenge, index) => (
                   <li key={index} className='flex items-start'>
                     <span className='text-red-500 mr-2 mt-1'>•</span>
@@ -537,7 +540,7 @@ export default function TimelineDetail({
           >
             <h4 className='text-lg font-semibold mb-3'>{tD('achievements')}</h4>
             <ul className='space-y-2'>
-              {item.achievements.map(
+              {getProjectTranslation(item, locale).achievements.map(
                 (achievement, index) => (
                   <li key={index} className='flex items-start'>
                     <span className='text-green-500 mr-2 mt-1'>✓</span>

@@ -8,14 +8,18 @@ import { Check } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Lenis from 'lenis';
 import { cn } from '@/lib/utils';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectWithTranslations } from '@/lib/projects';
+import {
+  formatProjectDateRange,
+  getProjectTranslation,
+} from '@/lib/projects/translation';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
 import { FaUserAlt } from 'react-icons/fa';
 
 interface TimelineProps {
-  items: ProjectView[];
-  selectedItem: ProjectView | null;
-  onItemClick: (item: ProjectView) => void;
+  items: ProjectWithTranslations[];
+  selectedItem: ProjectWithTranslations | null;
+  onItemClick: (item: ProjectWithTranslations) => void;
 }
 
 export default function Timeline({
@@ -30,7 +34,8 @@ export default function Timeline({
   const lenisRef = useRef<Lenis | null>(null);
   const titleRef = useRef<HTMLDivElement | null>(null);
 
-  const [hoveredItem, setHoveredItem] = useState<ProjectView | null>(null);
+  const [hoveredItem, setHoveredItem] =
+    useState<ProjectWithTranslations | null>(null);
   const [showThumbnail, setShowThumbnail] = useState(false);
   const [target, setTarget] = useState<{ x: number; y: number }>({
     x: 0,
@@ -242,7 +247,10 @@ export default function Timeline({
     }, 20);
   }, [selectedItem, isKeyboardSelection, isMobile, isTablet, isTabletDevice]);
 
-  const handleMouseEnter = (e: React.MouseEvent, item: ProjectView) => {
+  const handleMouseEnter = (
+    e: React.MouseEvent,
+    item: ProjectWithTranslations,
+  ) => {
     if (selectedItem?.id.toString() === item.id.toString()) {
       return;
     }
@@ -268,7 +276,7 @@ export default function Timeline({
   // 모든 디바이스에서 모든 아이템 렌더링
   const itemsToRender = items;
 
-  const handleItemClick = (item: ProjectView) => {
+  const handleItemClick = (item: ProjectWithTranslations) => {
     onItemClick(item);
 
     // GTM 이벤트 전송
@@ -276,7 +284,7 @@ export default function Timeline({
       window.dataLayer.push({
         event: 'timeline_item_click',
         timeline_id: item.id.toString(),
-        timeline_title: item.title,
+        timeline_title: getProjectTranslation(item, locale).title,
       });
     }
   };
@@ -362,25 +370,26 @@ export default function Timeline({
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
-                          {item.title}
+                          {getProjectTranslation(item, locale).title}
                         </h3>
                         <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                          {item.region}
+                          {getProjectTranslation(item, locale).region}
                         </p>
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
                         <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                          {item.role}
+                          {getProjectTranslation(item, locale).role}
                         </p>
                         <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                          {item.startDate.toLocaleDateString(locale)} -{' '}
-                          {item.endDate?.toLocaleDateString(locale)}
+                          {formatProjectDateRange(item, locale)}
                         </p>
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                        {item.description.map((line, i) => (
+                        {getProjectTranslation(item, locale).description.map(
+                          (line: string, i: number) => (
                             <li key={i}>{line}</li>
-                          ))}
+                          ),
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -465,17 +474,17 @@ export default function Timeline({
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
-                          {item.title}
+                          {getProjectTranslation(item, locale).title}
                         </h3>
                         {/* <p className='text-sm font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                          {item.region}
+                          {getProjectTranslation(item, locale).region}
                         </p> */}
                       </div>
                       <div className='flex items-center gap-2 justify-between'>
                         <div className='flex justify-start items-center gap-1 flex-7'>
                           <FaUserAlt className='size-3 text-gray-400 dark:text-gray-100 mt-1' />
                           <p className='text-sm font-medium text-gray-500 dark:text-gray-100 mt-1 whitespace-pre-line'>
-                            {item.role}
+                            {getProjectTranslation(item, locale).role}
                           </p>
                         </div>
                         {/* <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
@@ -483,9 +492,11 @@ export default function Timeline({
                         </p> */}
                       </div>
                       <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
-                        {item.description.map((line, i) => (
+                        {getProjectTranslation(item, locale).description.map(
+                          (line: string, i: number) => (
                             <li key={i}>{line}</li>
-                          ))}
+                          ),
+                        )}
                       </ul>
                     </div>
                   </div>

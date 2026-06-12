@@ -63,16 +63,12 @@ The codebase favors **colocation by responsibility** rather than a generic `serv
 ```
 src/
 ├── app/                    # Routes, API handlers, server actions (admin CMS)
-├── modules/
-│   └── projects/           # Project domain — repository → service → mapper
-│       ├── index.ts        # Public API (import only from here)
-│       ├── projects.repository.ts
-│       ├── projects.service.ts
-│       ├── projects.mapper.ts      # Nest DTO → ProjectView / ProjectAdminView
-│       └── projects-payload.mapper.ts
-├── features/chatbot/       # Chatbot UI, hooks, feature-specific lib
+├── features/chatbot/       # Chatbot UI, hooks, and domain helpers
+│   ├── components/
+│   ├── hooks/
+│   └── lib/
 ├── lib/
-│   ├── http/               # nest-client, api-error
+│   ├── projects/           # Project domain — queries, mappers, Zod validation
 │   ├── rag/                # Embedding + portfolio document indexing
 │   └── supabase/           # Admin client, hostname helpers
 ├── components/             # Shared public UI (timeline, header, intro, …)
@@ -90,9 +86,9 @@ src/
 
 #### <span id="design-en">🇺🇸 English</span>
 
-- **`modules/projects/`** — layered domain module (repository → service → mapper); Nest API is the single source of truth; `ProjectView` is locale-resolved for public UI, `ProjectAdminView` keeps i18n for CMS.
-- **`features/chatbot/`** — user-facing feature module; depends on `modules/projects`, not the other way around.
-- **Admin routes** — server actions colocated with routes; mutations go through `modules/projects` service, not direct DB/API calls in components.
+- **`lib/projects/`** — domain module extracted from a monolithic form/service; server payloads validated with Zod before Prisma writes.
+- **`features/chatbot/`** — chatbot grew across UI, streaming, FAQ, and moderation; grouped as a feature module instead of a flat `components/` folder.
+- **Admin routes** — server actions live next to routes (`actions.ts`, `upload-image.ts`); shared rules stay in `lib/projects/`.
 - **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP.
 
 #### <span id="design-ko">🇰🇷 한국어 기술 결정</span>
@@ -101,9 +97,9 @@ src/
 <summary><b>🛠️ 설계 및 아키텍처 초이스 보기 (클릭하여 펼치기)</b></summary>
 <br>
 
-- **`modules/projects/`**: repository → service → mapper 레이어로 Nest API와 UI를 분리했으며, 공개 UI용 `ProjectView`는 locale 기준으로 펼친 모델, 어드민용 `ProjectAdminView`는 i18n JSON을 유지합니다.
-- **`features/chatbot/`**: UI·스트리밍·FAQ 등 사용자 기능은 feature 모듈로, 데이터 접근은 `modules/projects`에 위임합니다.
-- **Admin routes**: Server Actions는 라우트 폴더에 colocation하고, 프로젝트 CRUD는 `modules/projects` service를 통해서만 수행합니다.
+- **`lib/projects/`**: 모놀리식한 폼/서비스 구조에서 도메인 모듈을 깔끔하게 분리해냈으며, Prisma 데이터베이스 쓰기 작업 전 단계에서 Zod를 통해 서버 페이로드를 검증합니다.
+- **`features/chatbot/`**: UI, 스트리밍, FAQ, 모더레이션 등 챗봇 관련 요구사항이 확장됨에 따라, 단순 flat 폴더 구조가 아닌 독립된 기능(Feature) 모듈 단위로 그룹화하여 관리합니다.
+- **Admin routes**: 관리자 관련 Server Actions는 전역 파일로 분리하지 않고 해당 라우트 폴더 내(`actions.ts`, `upload-image.ts`)에 결합(Colocation)해 두었으며, 공유 규칙만 `lib/projects/`에서 관리합니다.
 - **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
 </details>
 
@@ -113,9 +109,9 @@ src/
 <summary><b>🛠️ アーキテクチャ設計における選択を表示 (クリックして展開)</b></summary>
 <br>
 
-- **`modules/projects/`**: repository → service → mapper のレイヤーで Nest API と UI を分離。公開 UI 向け `ProjectView` は locale 解決済み、管理画面向け `ProjectAdminView` は i18n JSON を保持します。
-- **`features/chatbot/`**: ユーザー向け機能は feature モジュールに、データアクセスは `modules/projects` に委譲します。
-- **Admin Routes**: Server Actions はルートフォルダに colocation し、プロジェクト CRUD は `modules/projects` service 経由のみです。
+- **`lib/projects/`**: モノリシックなフォーム/サービス構造からドメインモジュールを分離し、Prismaへの書き込み前にZodを用いてサーバーペイロードを検証します。
+- **`features/chatbot/`**: UI、ストリーミング、FAQ、モデレーションなどチャットボット機能の拡張に伴い、単なるコンポーネントフォルダではなく独立した機能（Feature）モジュールとしてグループ化しました。
+- **Admin Routes**: 管理者関連の Server Actions は該当するルートフォルダ内（`actions.ts`, `upload-image.ts`）に配置し、共通ルールは `lib/projects/` で管理しています。
 - **セキュリティ(Security)**: 各種シークレットは環境変数で厳格に管理され、管理者登録は環境変数によって制限されています。ミドルウェアによるセッションチェック、および `/api/chat` パスに対するIPごとのレート制限が実装されています。
 </details>
 

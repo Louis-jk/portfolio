@@ -1,14 +1,14 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectWithTranslations } from '@/lib/projects';
 import { IoClose } from 'react-icons/io5';
 import TimelineDetail from './TimelineDetail';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 interface TimelineDrawerProps {
-  item: ProjectView | null;
+  item: ProjectWithTranslations | null;
   isOpen: boolean;
   onClose: () => void;
 }

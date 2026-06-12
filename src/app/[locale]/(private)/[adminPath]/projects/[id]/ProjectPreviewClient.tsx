@@ -10,12 +10,18 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Pencil, Globe, Smartphone, Laptop, Lock } from 'lucide-react';
 import Image from 'next/image';
 
-import { readI18n, readI18nArray } from '@/modules/projects';
-import type {
-  I18nStringArrayDto,
-  I18nStringDto,
-  ProjectLocale,
-} from '@/modules/projects';
+type Translation = {
+  locale: string;
+  title: string;
+  company: string;
+  region: string;
+  role: string;
+  overview: string;
+  description: string[];
+  challenges: string[];
+  achievements: string[];
+  detailImage: string | null;
+};
 
 type Project = {
   id: number;
@@ -26,14 +32,6 @@ type Project = {
   technologies: string[];
   platformCategories?: string[];
   domainTags?: string[];
-  title: I18nStringDto;
-  company: I18nStringDto;
-  region: I18nStringDto;
-  role: I18nStringDto;
-  overview: I18nStringDto;
-  description: I18nStringArrayDto;
-  challenges: I18nStringArrayDto;
-  achievements: I18nStringArrayDto;
   platforms: {
     webLink: string | null;
     iosLink: string | null;
@@ -46,6 +44,7 @@ type Project = {
     design: string[];
     debugging: string[];
   } | null;
+  translations: Translation[];
 };
 
 const LOCALES = [
@@ -63,25 +62,19 @@ export default function ProjectPreviewClient({
   basePath: string;
   locale: string;
 }) {
-  const availableLocales = LOCALES.filter(
-    (l) => (project.title[l.value as ProjectLocale]?.length ?? 0) > 0,
+  const availableLocales = LOCALES.filter((l) =>
+    project.translations.some((t) => t.locale === l.value),
   );
   const defaultLocale = availableLocales.some((l) => l.value === locale)
     ? locale
-    : (availableLocales[0]?.value ?? 'ko');
+    : (availableLocales[0]?.value ?? project.translations[0]?.locale ?? 'ko');
   const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
   const tAdmin = useTranslations('admin.projects');
 
-  const content = {
-    title: readI18n(project.title, selectedLocale),
-    company: readI18n(project.company, selectedLocale),
-    region: readI18n(project.region, selectedLocale),
-    role: readI18n(project.role, selectedLocale),
-    overview: readI18n(project.overview, selectedLocale),
-    description: readI18nArray(project.description, selectedLocale),
-    challenges: readI18nArray(project.challenges, selectedLocale),
-    achievements: readI18nArray(project.achievements, selectedLocale),
-  };
+  const t =
+    project.translations.find((tr) => tr.locale === selectedLocale) ||
+    project.translations.find((tr) => tr.locale === 'ko') ||
+    project.translations[0];
 
   return (
     <div className='max-w-7xl mx-auto px-8 py-6 space-y-8'>
@@ -109,7 +102,7 @@ export default function ProjectPreviewClient({
           {project.imageUrl ? (
             <Image
               src={project.imageUrl}
-              alt={content.title}
+              alt={t.title}
               width={1000}
               height={200}
               className='object-cover w-full h-full'
@@ -191,14 +184,14 @@ export default function ProjectPreviewClient({
           {/* 제목 & 메타 */}
           <div>
             <h1 className='text-2xl font-bold mb-2 break-words text-slate-900 dark:text-slate-100'>
-              {content.title}
+              {t.title}
             </h1>
             <div className='flex flex-wrap gap-4 text-sm text-zinc-500 dark:text-zinc-400'>
-              <span>{content.company}</span>
+              <span>{t.company}</span>
               <span>•</span>
-              <span>{content.region}</span>
+              <span>{t.region}</span>
               <span>•</span>
-              <span>{content.role}</span>
+              <span>{t.role}</span>
             </div>
             <div className='mt-2 text-sm text-zinc-500 dark:text-zinc-400'>
               📅 {format(new Date(project.startDate), 'yyyy.MM')} ~{' '}
@@ -208,14 +201,28 @@ export default function ProjectPreviewClient({
             </div>
           </div>
 
+          {/* 상세 이미지 (detailImage) */}
+          {t.detailImage && (
+            <div className='rounded-lg overflow-hidden border border-zinc-200 dark:border-slate-700 bg-zinc-50 dark:bg-slate-800'>
+              <Image
+                src={t.detailImage}
+                alt={`${t.title} detail image`}
+                className='w-full max-h-96 object-contain'
+                width={1200}
+                height={768}
+                unoptimized
+              />
+            </div>
+          )}
+
           {/* Overview */}
-          {content.overview && (
+          {t.overview && (
             <div>
               <h3 className='text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2'>
                 {tAdmin('overview')}
               </h3>
               <p className='text-slate-900 dark:text-slate-100 whitespace-pre-wrap'>
-                {content.overview}
+                {t.overview}
               </p>
             </div>
           )}
@@ -383,13 +390,13 @@ export default function ProjectPreviewClient({
             )}
 
           {/* Description */}
-          {content.description.length > 0 && (
+          {t.description.length > 0 && (
             <div>
               <h3 className='text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2'>
                 {tAdmin('description')}
               </h3>
               <ul className='list-disc list-outside ml-4 pl-2 space-y-2 text-slate-900 dark:text-slate-100 text-sm'>
-                {content.description.map((item, i) => (
+                {t.description.map((item, i) => (
                   <li key={i} className='pl-1'>
                     {item}
                   </li>
@@ -399,13 +406,13 @@ export default function ProjectPreviewClient({
           )}
 
           {/* Challenges */}
-          {content.challenges.length > 0 && (
+          {t.challenges.length > 0 && (
             <div>
               <h3 className='text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2'>
                 {tAdmin('challenges')}
               </h3>
               <ul className='list-disc list-outside ml-4 pl-2 space-y-2 text-slate-900 dark:text-slate-100 text-sm'>
-                {content.challenges.map((item, i) => (
+                {t.challenges.map((item, i) => (
                   <li key={i} className='pl-1'>
                     {item}
                   </li>
@@ -415,13 +422,13 @@ export default function ProjectPreviewClient({
           )}
 
           {/* Achievements */}
-          {content.achievements.length > 0 && (
+          {t.achievements.length > 0 && (
             <div>
               <h3 className='text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2'>
                 {tAdmin('achievements')}
               </h3>
               <ul className='list-disc list-outside ml-4 pl-2 space-y-2 text-slate-900 dark:text-slate-100 text-sm'>
-                {content.achievements.map((item, i) => (
+                {t.achievements.map((item, i) => (
                   <li key={i} className='pl-1'>
                     {item}
                   </li>

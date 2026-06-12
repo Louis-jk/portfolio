@@ -27,20 +27,17 @@ import { CSS } from '@dnd-kit/utilities';
 import { toast } from 'sonner';
 import { updateProjectOrder, deleteProject } from './actions';
 import { useTranslations } from 'next-intl';
-import { readI18n } from '@/modules/projects';
-import type { ProjectAdminView } from '@/modules/projects';
 
-type Project = Pick<
-  ProjectAdminView,
-  | 'id'
-  | 'imageUrl'
-  | 'startDate'
-  | 'endDate'
-  | 'isPublic'
-  | 'platformCategories'
-  | 'domainTags'
-  | 'title'
->;
+type Project = {
+  id: number;
+  imageUrl: string;
+  startDate: Date;
+  endDate: Date | null;
+  isPublic: boolean;
+  platformCategories?: string[];
+  domainTags?: string[];
+  translations: { locale: string; title: string }[];
+};
 
 function SortableProjectCard({
   project,
@@ -125,7 +122,11 @@ function SortableProjectCard({
             )}
             <div className='flex items-center gap-2 mb-1'>
               <h3 className='font-bold text-lg break-words min-w-0 text-slate-900 dark:text-slate-100'>
-                {readI18n(project.title, locale) || t('untitledLabel')}
+                {project.translations.find((tr) => tr.locale === locale)
+                  ?.title ||
+                  project.translations.find((tr) => tr.locale === 'ko')
+                    ?.title ||
+                  t('untitledLabel')}
               </h3>
               {project.isPublic ? (
                 <Badge className='bg-indigo-600 text-white border-none'>
@@ -151,7 +152,7 @@ function SortableProjectCard({
                 {['ko', 'ja', 'en'].map((lang) => (
                   <span
                     key={lang}
-                    className={`px-1 rounded ${project.title[lang as 'ko' | 'ja' | 'en'] ? 'text-purple-600 dark:text-purple-400 font-bold' : 'text-zinc-300 dark:text-zinc-600'}`}
+                    className={`px-1 rounded ${project.translations.some((t) => t.locale === lang && t.title) ? 'text-purple-600 dark:text-purple-400 font-bold' : 'text-zinc-300 dark:text-zinc-600'}`}
                   >
                     {lang.toUpperCase()}
                   </span>
@@ -302,7 +303,9 @@ export default function ProjectListSortable({
                   </div>
                 )}
                 <h3 className='font-bold text-lg text-slate-900 dark:text-slate-100'>
-                  {readI18n(project.title, locale) || 'Untitled'}
+                  {project.translations.find((tr) => tr.locale === locale)?.title ||
+                    project.translations.find((tr) => tr.locale === 'ko')?.title ||
+                    'Untitled'}
                 </h3>
               </div>
             </Link>

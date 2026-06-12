@@ -2,7 +2,7 @@ import {
   PROJECT_LOCALES,
   type ProjectFormData,
   type TranslationInput,
-} from './projects.types';
+} from '@/lib/projects/types';
 
 export function mapTranslation(
   locale: string,

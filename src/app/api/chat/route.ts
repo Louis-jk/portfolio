@@ -4,7 +4,7 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
-import { listProjects } from '@/modules/projects/projects.service';
+import { prisma } from '@/lib/prisma';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import {
   buildSystemPrompt,
@@ -178,15 +178,23 @@ export async function POST(req: Request) {
       // Show all matching projects for the current locale.
       // If a specific stack is requested, include all projects that match that stack only.
       // Otherwise, include all locale projects.
-      const allLocaleProjects = (await listProjects(locale))
-        .filter((project) => project.isPublic)
-        .map((project) => ({
-          id: project.id,
-          technologies: project.technologies,
-          tools: project.tools
-            ? { development: project.tools.development }
-            : null,
-        }));
+      const allLocaleProjects = await prisma.project.findMany({
+        where: {
+          isPublic: true,
+          translations: {
+            some: { locale },
+          },
+        },
+        select: {
+          id: true,
+          technologies: true,
+          tools: {
+            select: {
+              development: true,
+            },
+          },
+        },
+      });
 
       if (requestedStacks.length > 0) {
         relatedProjectIds = allLocaleProjects

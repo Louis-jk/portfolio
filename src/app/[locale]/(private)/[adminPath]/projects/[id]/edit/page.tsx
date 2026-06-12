@@ -1,9 +1,8 @@
-import { getProjectById } from '@/modules/projects';
+import { getProjectById } from '@/lib/projects/queries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { ADMIN_ROUTES } from '@/lib/constants';
-import type { ProjectLocale } from '@/modules/projects';
 import ProjectEditForm from './ProjectEditForm';
 
 export default async function ProjectEditPage({
@@ -20,20 +19,24 @@ export default async function ProjectEditPage({
 
   if (!project) notFound();
 
-  const toFormTranslation = (loc: ProjectLocale) => {
-    const desc = (project.description[loc] ?? []).map((v) => ({ value: v }));
-    const chall = (project.challenges[loc] ?? []).map((v) => ({ value: v }));
-    const achiev = (project.achievements[loc] ?? []).map((v) => ({ value: v }));
+  const getTranslation = (locale: string) =>
+    project.translations.find((t) => t.locale === locale);
+
+  const toFormTranslation = (locale: string) => {
+    const t = getTranslation(locale);
+    const desc = (t?.description ?? []).map((v) => ({ value: v }));
+    const chall = (t?.challenges ?? []).map((v) => ({ value: v }));
+    const achiev = (t?.achievements ?? []).map((v) => ({ value: v }));
     return {
-      title: project.title[loc] ?? '',
-      role: project.role[loc] ?? '',
-      overview: project.overview[loc] ?? '',
-      region: project.region[loc] ?? '',
-      company: project.company[loc] ?? '',
+      title: t?.title ?? '',
+      role: t?.role ?? '',
+      overview: t?.overview ?? '',
+      region: t?.region ?? '',
+      company: t?.company ?? '',
       description: desc.length ? desc : [{ value: '' }],
       challenges: chall.length ? chall : [{ value: '' }],
       achievements: achiev.length ? achiev : [{ value: '' }],
-      detailImage: '',
+      detailImage: t?.detailImage ?? '',
     };
   };
 

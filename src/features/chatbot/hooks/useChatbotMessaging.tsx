@@ -5,7 +5,7 @@ import { FaLinkedin } from 'react-icons/fa6';
 import { SiMinutemailer } from 'react-icons/si';
 import { CiLink } from 'react-icons/ci';
 import type { ChatbotData } from '@/types/chatbot';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectWithTranslations } from '@/lib/projects';
 import type { ChatMessage } from '@/stores/chatbot-store';
 import { getModerationWarning } from '@/features/chatbot/lib/chatbot-moderation';
 import { buildProjectLinksFromIds } from '@/features/chatbot/components/chatbot-project-links';
@@ -16,7 +16,7 @@ type UseChatbotMessagingArgs = {
   chatbotData: ChatbotData;
   currentLocale: string;
   pathname: string;
-  projects: ProjectView[];
+  projects: ProjectWithTranslations[];
   setMessages: (
     value: ChatMessage[] | ((prev: ChatMessage[]) => ChatMessage[]),
   ) => void;
@@ -76,6 +76,7 @@ export function useChatbotMessaging({
           choice,
           chatbotData,
           projects,
+          locale: currentLocale,
           basePath: pathname || `/${currentLocale}`,
         });
 
@@ -140,7 +141,9 @@ export function useChatbotMessaging({
         locale: currentLocale,
         onChunk: (messageId, text) => {
           setMessages((msgs) =>
-            msgs.map((msg) => (msg.id === messageId ? { ...msg, text } : msg)),
+            msgs.map((msg) =>
+              msg.id === messageId ? { ...msg, text } : msg,
+            ),
           );
         },
         onComplete: (messageId, relatedProjectIds) => {
@@ -150,6 +153,7 @@ export function useChatbotMessaging({
           const projectLinks = buildProjectLinksFromIds(
             relatedProjectIds,
             projects,
+            currentLocale,
             basePath,
           );
 
