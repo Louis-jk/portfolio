@@ -18,7 +18,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **Multilingual public site** (ko / en / ja) with project list, 3D avatar, filters, and project detail drawer
 - **RAG chatbot** — OpenAI + pgvector (Supabase) retrieval over portfolio content, with FAQ flows and project deep-links
 - **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
-- **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + e2e + build), env-based secrets, chat API rate limiting
+- **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + build), env-based secrets, chat API rate limiting
 
 ### <span id="highlights-ko">🇰🇷 한국어 요약</span>
 
@@ -29,7 +29,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **다국어 지원 퍼블릭 사이트** (ko / en / ja): 프로젝트 목록·상세, 3D 아바타, 필터링 및 드로어(Drawer) 구현
 - **RAG 기반 챗봇**: OpenAI API와 pgvector(Supabase)를 연동하여 포트폴리오 콘텐츠 내 문서 검색, FAQ 시나리오 및 프로젝트 딥링크 기능 지원
 - **비공개 관리자 CMS**: Supabase Auth와 Prisma/PostgreSQL 기반의 CRUD, 드래그 앤 드롭 정렬, 이미지 업로드 및 Zod 스키마로 검증된 Server Actions 적용
-- **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + E2E + Build), 환경 변수 기반 암호화, 챗봇 API 요청 제한(Rate Limiting) 반영
+- **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + Build), 환경 변수 기반 시크릿 관리, 챗봇 API 요청 제한(Rate Limiting) 반영
 </details>
 
 ### <span id="highlights-ja">🇯🇵 日本語要約</span>
@@ -41,7 +41,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 - **多言語対応パブリックサイト** (ko / en / ja): プロジェクト一覧・詳細、3Dアバター、フィルタリング、詳細表示ドロワー（Drawer）機能を搭載
 - **RAGベースのチャットボット**: OpenAI + pgvector (Supabase) を活用し、ポートフォリオ内のコンテンツに基づくドキュメント検索、FAQフロー、プロジェクトへのディープリンクをサポート
 - **非公開の管理者用CMS**: Supabase Auth、Prisma/PostgreSQL、ドラッグ＆ドロップによる並び替え、画像アップロード、Zodによるバリデーションを経た Server Actions を実装
-- **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + E2E + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
+- **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
 </details>
 
 ## Tech stack
@@ -243,14 +243,14 @@ pnpm test          # domain + schema unit tests (Vitest)
 pnpm test:e2e      # Playwright — home, api, chatbot specs
 ```
 
-CI runs **lint**, **unit-test**, **build**, and **e2e** on push and PR (see `.github/workflows/ci.yml`).
+CI runs **lint**, **unit-test**, and **build** on push and PR (`e2e` job is currently commented out in `.github/workflows/ci.yml`).
 
 ## Branch workflow
 
 | Branch | Purpose |
 |--------|---------|
 | `develop` | Integration — features merge here first |
-| `main` | Production (Vercel) — merge from `develop` when verified |
+| `main` | Production target (Vercel) — merge from `develop` when ready; automated deploy in `ci.yml` is commented out |
 
 ## Deployment
 
