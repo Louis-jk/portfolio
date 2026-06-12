@@ -3,10 +3,10 @@ import { PrismaClient } from '../src/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as fs from 'fs';
 import * as path from 'path';
-import { timelineData } from './seed-data/timeline.data';
-import type { TimelineItem } from './seed-data/timeline.type';
+import { projectsData } from './seed-data/projects.data';
+import type { ProjectSeedItem } from './seed-data/projects.type';
 
-const emptyTools: NonNullable<NonNullable<TimelineItem['details']>['tools']> = {
+const emptyTools: NonNullable<NonNullable<ProjectSeedItem['details']>['tools']> = {
   development: [],
   communication: [],
   design: [],
@@ -105,8 +105,8 @@ async function main() {
   await prisma.project.deleteMany({});
   console.log('Cleared existing projects.\n');
 
-  for (let i = 0; i < timelineData.length; i++) {
-    const item = timelineData[i];
+  for (let i = 0; i < projectsData.length; i++) {
+    const item = projectsData[i];
     const projectKey = item.id.replace(/^projects\./, '');
     const msgPath = `projects.items.${projectKey}`;
 
@@ -121,10 +121,10 @@ async function main() {
 
     const { startDate, endDate } = parseDate(koProj.date);
 
-    // Technologies: from timeline.data only (not mixed with tools)
+    // Technologies: from projects.data only (not mixed with tools)
     const technologies = item.details?.technologies ?? ['React', 'TypeScript'];
 
-    // Tools: Development, Communication, Design, Debugging - from timeline.data
+    // Tools: Development, Communication, Design, Debugging - from projects.data
     const toolsData = item.details?.tools ?? emptyTools;
     const hasTools =
       (toolsData.development?.length ?? 0) > 0 ||
@@ -191,7 +191,7 @@ async function main() {
     console.log(`✓ Created: ${koProj.title}`);
   }
 
-  console.log(`\n✅ Seeded ${timelineData.length} projects successfully.`);
+  console.log(`\n✅ Seeded ${projectsData.length} projects successfully.`);
 }
 
 main()

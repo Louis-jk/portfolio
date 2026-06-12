@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 
 export default function AdminLogoutButton({ locale }: { locale: string }) {
   const router = useRouter();

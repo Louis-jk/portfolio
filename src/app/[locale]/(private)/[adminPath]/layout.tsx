@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import AdminLogoutButton from './AdminLogoutButton';
 import { createClient } from '@/utils/supabase/server';

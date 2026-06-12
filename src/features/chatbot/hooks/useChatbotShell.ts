@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 import type { ChatbotData } from '@/types/chatbot';
 import type { ProjectView } from '@/modules/projects';
 import type { ChatMessage } from '@/stores/chatbot-store';
@@ -31,7 +32,7 @@ export function useChatbotShell({
   projects,
   isKeyboardOpen,
 }: UseChatbotShellArgs) {
-  const [isMobile, setIsMobile] = useState(false);
+  const { isLayoutMobile: isMobile } = useLayoutBreakpoints();
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -79,13 +80,6 @@ export function useChatbotShell({
       }),
     );
   }, [chatbotData, currentLocale, pathname, projects, setMessages]);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     if (messages.length > 1) {

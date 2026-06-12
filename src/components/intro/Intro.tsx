@@ -15,7 +15,7 @@ const Renderer = dynamic(() => import('@/components/avatar/Renderer'), {
   ),
 });
 import { useIntroState } from '@/hooks/useIntroState';
-import { useMediaQuery } from 'react-responsive';
+import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 import { cn } from '@/lib/utils';
 import Resume from './Resume';
 
@@ -28,9 +28,7 @@ function Intro() {
   const t = useTranslations();
   const locale = useLocale();
 
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 1280px)',
-  });
+  const { isLayoutDesktop } = useLayoutBreakpoints();
 
   // 커스텀 훅으로 상태 관리
   const {
@@ -174,7 +172,7 @@ function Intro() {
       aria-labelledby='portfolio-name-heading'
       className={cn(
         'flex flex-col items-center justify-start',
-        isDesktop && 'h-[calc(100vh-205px)] overflow-y-auto',
+        isLayoutDesktop && 'h-[calc(100vh-205px)] overflow-y-auto',
       )}
     >
       <div className='flex flex-col items-center gap-5 py-10'>

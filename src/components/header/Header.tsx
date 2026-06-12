@@ -5,7 +5,8 @@ import FilterPanel from '@/components/header/FilterPanel';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { SlidersHorizontal } from 'lucide-react';
-import { useMediaQuery } from 'react-responsive';
+import { isAtLeastLayoutWideWidth } from '@/constants/breakpoints';
+import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 
 interface HeaderProps {
   onHomeClick?: () => void;
@@ -38,13 +39,13 @@ function Header({
         onFilterOpenChange(typeof v === 'function' ? v(isFilterOpen) : v)
     : setInternalFilterOpen;
   const t = useTranslations('projects');
-  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+  const { isLayoutDesktop } = useLayoutBreakpoints();
 
   // 스크롤 감지하여 헤더 이름 애니메이션 (1024px 미만에서만)
   useEffect(() => {
     const handleScroll = () => {
       // 모바일/태블릿에서만 동작
-      if (window.innerWidth >= 1024) {
+      if (isAtLeastLayoutWideWidth(window.innerWidth)) {
         setShowHeaderName(false);
         setShowProjectListTitle(false);
         return;
@@ -97,7 +98,7 @@ function Header({
             <SlidersHorizontal className='w-5 h-5' />
           </button>
           {/* PC: Filter panel expands inline within header row */}
-          {isDesktop && (
+          {isLayoutDesktop && (
             <AnimatePresence>
               {isFilterOpen && (
                 <motion.div
@@ -148,7 +149,7 @@ function Header({
       </div>
 
       {/* Mobile/Tablet: Accordion dropdown */}
-      {!isDesktop && (
+      {!isLayoutDesktop && (
         <AnimatePresence>
           {isFilterOpen && (
             <motion.div

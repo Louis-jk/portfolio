@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 import { useSearchParams } from 'next/navigation';
 import Header from '@/components/header/Header';
 import Main from '@/components/main/Main';
@@ -21,8 +21,8 @@ export default function HomeClient({ projects }: HomeClientProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const searchParams = useSearchParams();
 
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+  const { isLayoutDesktop, isLayoutTablet } = useLayoutBreakpoints();
+  const isViewportLocked = isLayoutDesktop || isLayoutTablet;
 
   useEffect(() => {
     const minLoadingTime = setTimeout(() => setIsLoading(false), 500);
@@ -108,7 +108,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
   return (
     <Suspense fallback={<LoadingScreen isLoading={true} />}>
       <div
-        className={`${isMobile ? 'block' : 'flex flex-col h-screen'} w-full`}
+        className={`${isViewportLocked ? 'flex flex-col h-screen' : 'block'} w-full`}
       >
         <Header
           platformFilter={platformFilter}
@@ -123,7 +123,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
           platformFilter={platformFilter}
           domainFilter={domainFilter}
           isFilterOpen={isFilterOpen}
-          isDesktop={isDesktop}
+          isDesktop={isLayoutDesktop}
         />
         <Footer />
         <Chatbot projects={projects} />

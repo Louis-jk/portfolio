@@ -1,7 +1,7 @@
 import { getProjectById } from '@/modules/projects';
 import { notFound } from 'next/navigation';
 import ProjectPreviewClient from './ProjectPreviewClient';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 
 export default async function ProjectPreviewPage({
   params,

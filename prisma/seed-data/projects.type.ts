@@ -1,4 +1,4 @@
-export type TimelineItem = {
+export type ProjectSeedItem = {
   id: string;
   date: string;
   title: string;

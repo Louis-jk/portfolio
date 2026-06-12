@@ -2,7 +2,7 @@ import { getProjectById } from '@/modules/projects';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import type { ProjectLocale } from '@/modules/projects';
 import ProjectEditForm from './ProjectEditForm';
 

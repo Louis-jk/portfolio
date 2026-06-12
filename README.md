@@ -26,7 +26,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 <summary><b>💡 핵심 하이라이트 보기 (클릭하여 펼치기)</b></summary>
 <br>
 
-- **다국어 지원 퍼블릭 사이트** (ko / en / ja): 인터랙티브 타임라인, 3D 아바타, 프로젝트 필터링 및 상세 보기 드로어(Drawer) 구현
+- **다국어 지원 퍼블릭 사이트** (ko / en / ja): 프로젝트 목록·상세, 3D 아바타, 필터링 및 드로어(Drawer) 구현
 - **RAG 기반 챗봇**: OpenAI API와 pgvector(Supabase)를 연동하여 포트폴리오 콘텐츠 내 문서 검색, FAQ 시나리오 및 프로젝트 딥링크 기능 지원
 - **비공개 관리자 CMS**: Supabase Auth와 Prisma/PostgreSQL 기반의 CRUD, 드래그 앤 드롭 정렬, 이미지 업로드 및 Zod 스키마로 검증된 Server Actions 적용
 - **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + E2E + Build), 환경 변수 기반 암호화, 챗봇 API 요청 제한(Rate Limiting) 반영
@@ -38,7 +38,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 <summary><b>💡 主なハイライトを表示 (クリックして展開)</b></summary>
 <br>
 
-- **多言語対応パブリックサイト** (ko / en / ja): タイムライン、3Dアバター、プロジェクトのフィルタリング、詳細表示ドロワー（Drawer）機能を搭載
+- **多言語対応パブリックサイト** (ko / en / ja): プロジェクト一覧・詳細、3Dアバター、フィルタリング、詳細表示ドロワー（Drawer）機能を搭載
 - **RAGベースのチャットボット**: OpenAI + pgvector (Supabase) を活用し、ポートフォリオ内のコンテンツに基づくドキュメント検索、FAQフロー、プロジェクトへのディープリンクをサポート
 - **非公開の管理者用CMS**: Supabase Auth、Prisma/PostgreSQL、ドラッグ＆ドロップによる並び替え、画像アップロード、Zodによるバリデーションを経た Server Actions を実装
 - **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + E2E + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
@@ -64,21 +64,32 @@ The codebase favors **colocation by responsibility** rather than a generic `serv
 src/
 ├── app/                    # Routes, API handlers, server actions (admin CMS)
 ├── modules/
-│   └── projects/           # Project domain — repository → service → mapper
-│       ├── index.ts        # Public API (import only from here)
-│       ├── projects.repository.ts
-│       ├── projects.service.ts
-│       ├── projects.mapper.ts      # Nest DTO → ProjectView / ProjectAdminView
-│       └── projects-payload.mapper.ts
-├── features/chatbot/       # Chatbot UI, hooks, feature-specific lib
+│   └── projects/           # Project domain — repository → service → mapper (server)
+├── features/chatbot/       # Chatbot feature slice (components + hooks + lib)
+├── constants/              # Shared constants (breakpoints, admin routes)
 ├── lib/
+│   ├── analytics/          # GTM / GA4 helpers
+│   ├── projects/           # Public project UI helpers (scroll math, motion presets)
 │   ├── http/               # nest-client, api-error
 │   ├── rag/                # Embedding + portfolio document indexing
 │   └── supabase/           # Admin client, hostname helpers
-├── components/             # Shared public UI (projects, header, intro, …)
-├── hooks/                  # Cross-feature hooks (e.g. useMounted)
+├── components/             # UI components only (no hooks or lib utils here)
+│   ├── main/               # Home shell layouts
+│   └── projects/           # ProjectList, ProjectDetail + subcomponents
+├── hooks/                  # Shared React hooks (breakpoints, selection, Lenis, …)
 └── stores/                 # Zustand (chatbot UI state)
 ```
+
+**Where things go**
+
+| Kind | Location | Example |
+|------|----------|---------|
+| Server/domain logic | `modules/` | `modules/projects/projects.service.ts` |
+| Feature slice (UI + hooks) | `features/` | `features/chatbot/hooks/` |
+| Shared React hooks | `hooks/` | `useProjectSelection`, `useBreakpoints` |
+| Pure UI helpers (no React) | `lib/` | `lib/projects/project-list-scroll.ts` |
+| UI components | `components/` | `ProjectListItem.tsx` |
+| Route-specific admin hooks | `app/.../project-form/` | `useProjectFormSubmit` (colocated with form) |
 
 ## 🎯 Design choices
 
@@ -122,7 +133,7 @@ src/
 ```mermaid
 flowchart LR
   subgraph public [Public]
-    Home[Timeline + Avatar]
+    Home[Projects + Avatar]
     Bot[Chatbot]
   end
   subgraph admin [Admin CMS]
