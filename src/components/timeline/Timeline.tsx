@@ -162,8 +162,8 @@ export default function Timeline({
 
   useEffect(() => {
     if (hoveredItem) {
-      mouseX.set(target.x, false);
-      mouseY.set(target.y, false);
+      mouseX.set(target.x);
+      mouseY.set(target.y);
 
       if (!showThumbnail) {
         const timer = setTimeout(() => {
