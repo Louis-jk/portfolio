@@ -62,34 +62,65 @@ The codebase favors **colocation by responsibility** rather than a generic `serv
 
 ```
 src/
-├── app/                    # Routes, API handlers, server actions (admin CMS)
-├── modules/
-│   └── projects/           # Project domain — repository → service → mapper (server)
-├── features/chatbot/       # Chatbot feature slice (components + hooks + lib)
-├── constants/              # Shared constants (breakpoints, admin routes)
+├── app/                         # App Router, API routes, admin server actions
+├── modules/projects/            # Server domain — repository → service → mapper (Nest API)
+├── features/chatbot/            # Chatbot feature slice (UI + hooks + lib)
+├── constants/
+│   ├── admin-routes.ts          # ADMIN_PATH, ADMIN_ROUTES
+│   └── breakpoints.ts           # Responsive layout + media-query helpers
 ├── lib/
-│   ├── analytics/          # GTM / GA4 helpers
-│   ├── projects/           # Public project UI helpers (scroll math, motion presets)
-│   ├── http/               # nest-client, api-error
-│   ├── rag/                # Embedding + portfolio document indexing
-│   └── supabase/           # Admin client, hostname helpers
-├── components/             # UI components only (no hooks or lib utils here)
-│   ├── main/               # Home shell layouts
-│   └── projects/           # ProjectList, ProjectDetail + subcomponents
-├── hooks/                  # Shared React hooks (breakpoints, selection, Lenis, …)
-└── stores/                 # Zustand (chatbot UI state)
+│   ├── analytics/               # GTM / GA4 (e.g. trackProjectItemClick)
+│   ├── projects/                # Public project UI helpers (scroll math, motion presets)
+│   ├── http/                    # nest-client, api-error
+│   ├── rag/                     # Embedding + portfolio document indexing
+│   └── supabase/                # Admin client, hostname helpers
+├── components/
+│   ├── main/                    # Home shell — Main + desktop/tablet/mobile layouts
+│   ├── projects/                # ProjectList, ProjectDetail, ProjectDrawer
+│   │   ├── project-list/        # List item, title, hover preview
+│   │   └── project-detail/      # Detail sections (hero, meta, tools, …)
+│   ├── intro/                   # Avatar, about-me, resume link
+│   └── header/                  # Nav, filters, theme toggle
+├── hooks/                       # Shared React hooks (see table below)
+└── stores/                      # Zustand (chatbot UI state)
 ```
 
 **Where things go**
 
 | Kind | Location | Example |
 |------|----------|---------|
-| Server/domain logic | `modules/` | `modules/projects/projects.service.ts` |
-| Feature slice (UI + hooks) | `features/` | `features/chatbot/hooks/` |
+| Server/domain logic | `modules/` | `projects.service.ts`, import via `modules/projects` |
+| Feature slice (UI + hooks) | `features/` | `features/chatbot/hooks/useChatbotMessaging` |
 | Shared React hooks | `hooks/` | `useProjectSelection`, `useBreakpoints` |
 | Pure UI helpers (no React) | `lib/` | `lib/projects/project-list-scroll.ts` |
-| UI components | `components/` | `ProjectListItem.tsx` |
+| App-wide constants | `constants/` | `breakpoints.ts`, `admin-routes.ts` |
+| UI components | `components/` | `ProjectListItem.tsx` — no hooks or lib utils here |
 | Route-specific admin hooks | `app/.../project-form/` | `useProjectFormSubmit` (colocated with form) |
+
+**Shared hooks (`src/hooks/`)**
+
+| Hook | Role |
+|------|------|
+| `useBreakpoints` | Project detail panel — mobile / tablet / desktop (≤767 / 768–1223 / ≥1224) |
+| `useLayoutBreakpoints` | Home shell — mobile / 2-column / desktop (≤768 / 769–1279 / ≥1280) |
+| `useProjectSelection` | URL `?item=`, drawer open/close, analytics on click |
+| `useProjectListInteractions` | List keyboard nav, Lenis scroll-to-item, hover preview |
+| `useLenisPanelScroll` / `useLenisWrapperScroll` | Smooth scroll (intro, detail, list columns) |
+| `useTabletDevice` | Touch/coarse-pointer tablet detection (hover preview off) |
+
+**Public home layout**
+
+| Viewport | Layout |
+|----------|--------|
+| ≥1280px | 3 columns — Intro · Project list · Project detail |
+| 769–1279px | 2 columns — Intro · list (each column scrolls; detail in drawer) |
+| ≤768px | Stacked — Intro then list (detail in drawer) |
+
+Constants live in `constants/breakpoints.ts`; prefer hooks over inline `window.innerWidth` checks.
+
+**Data flow (public projects)**
+
+When `API_URL` is set, `modules/projects` reads from the Nest API (`lib/http/nest-client.ts`). Otherwise Prisma is used locally. Public pages consume `ProjectView` (locale-flattened); admin CMS uses `ProjectAdminView` with full i18n JSON.
 
 ## 🎯 Design choices
 
@@ -101,8 +132,10 @@ src/
 
 #### <span id="design-en">🇺🇸 English</span>
 
-- **`modules/projects/`** — layered domain module (repository → service → mapper); Nest API is the single source of truth; `ProjectView` is locale-resolved for public UI, `ProjectAdminView` keeps i18n for CMS.
+- **`modules/projects/`** — layered domain module (repository → service → mapper); Nest API via `API_URL` when set; `ProjectView` is locale-resolved for public UI, `ProjectAdminView` keeps i18n for CMS.
 - **`features/chatbot/`** — user-facing feature module; depends on `modules/projects`, not the other way around.
+- **Public UI** — `components/main/` layout shells + `components/projects/`; shared behavior in `hooks/`; Lenis smooth scroll on intro/list/detail desktop columns.
+- **i18n** — public copy uses the `projects` namespace (`messages/*.json`); seed data in `prisma/seed-data/projects.data.ts`.
 - **Admin routes** — server actions colocated with routes; mutations go through `modules/projects` service, not direct DB/API calls in components.
 - **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP.
 
@@ -112,8 +145,10 @@ src/
 <summary><b>🛠️ 설계 및 아키텍처 초이스 보기 (클릭하여 펼치기)</b></summary>
 <br>
 
-- **`modules/projects/`**: repository → service → mapper 레이어로 Nest API와 UI를 분리했으며, 공개 UI용 `ProjectView`는 locale 기준으로 펼친 모델, 어드민용 `ProjectAdminView`는 i18n JSON을 유지합니다.
+- **`modules/projects/`**: repository → service → mapper 레이어로 Nest API(`API_URL`)와 UI를 분리했으며, 공개 UI용 `ProjectView`는 locale 기준으로 펼친 모델, 어드민용 `ProjectAdminView`는 i18n JSON을 유지합니다.
 - **`features/chatbot/`**: UI·스트리밍·FAQ 등 사용자 기능은 feature 모듈로, 데이터 접근은 `modules/projects`에 위임합니다.
+- **Public UI**: `components/main/` 레이아웃 + `components/projects/`; 공유 로직은 `hooks/`; intro/list/detail 컬럼은 Lenis 스무스 스크롤.
+- **i18n**: 퍼블릭 카피는 `projects` 네임스페이스; 시드는 `prisma/seed-data/projects.data.ts`.
 - **Admin routes**: Server Actions는 라우트 폴더에 colocation하고, 프로젝트 CRUD는 `modules/projects` service를 통해서만 수행합니다.
 - **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
 </details>
@@ -195,6 +230,8 @@ Copy `.env.example` to `.env.local`. Never commit real secrets.
 
 **Required for core features:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`.
 
+**Optional:** `API_URL` — Nest project API base URL (public list/detail use `modules/projects` → nest-client when set).
+
 **Production recommendations:** `NEXT_PUBLIC_ADMIN_SIGNUP_ENABLED=false`, Sentry DSN/org/project, analytics IDs as needed.
 
 Admin UI is served under `/{locale}{NEXT_PUBLIC_ADMIN_SECRET_PATH}` (path is obscured, not secret — rely on Supabase Auth + RLS).
@@ -202,11 +239,18 @@ Admin UI is served under `/{locale}{NEXT_PUBLIC_ADMIN_SECRET_PATH}` (path is obs
 ## Testing
 
 ```bash
-pnpm test          # domain + schema unit tests
-pnpm test:e2e      # smoke / health checks
+pnpm test          # domain + schema unit tests (Vitest)
+pnpm test:e2e      # Playwright — home, api, chatbot specs
 ```
 
-CI runs lint, unit tests, e2e, and production build on push and PR.
+CI runs **lint**, **unit-test**, **build**, and **e2e** on push and PR (see `.github/workflows/ci.yml`).
+
+## Branch workflow
+
+| Branch | Purpose |
+|--------|---------|
+| `develop` | Integration — features merge here first |
+| `main` | Production (Vercel) — merge from `develop` when verified |
 
 ## Deployment
 
