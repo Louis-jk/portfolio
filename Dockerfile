@@ -1,11 +1,13 @@
 FROM node:22-alpine AS deps
 RUN apk add --no-cache libc6-compat
+RUN corepack enable
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 FROM node:22-alpine AS builder
+RUN corepack enable
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -27,7 +29,7 @@ ENV NEXT_PUBLIC_KAKAO_APP_KEY=$NEXT_PUBLIC_KAKAO_APP_KEY
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 
-RUN npm run build
+RUN pnpm build
 
 FROM node:22-alpine AS runner
 WORKDIR /app

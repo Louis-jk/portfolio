@@ -156,12 +156,12 @@ flowchart LR
 ```bash
 git clone https://github.com/Louis-jk/portfolio.git
 cd portfolio
-npm ci
+pnpm install
 cp .env.example .env.local
 # Fill in .env.local (see file for all variables)
-npx prisma migrate deploy   # or db push for local dev
-npm run db:seed             # optional sample data
-npm run dev
+pnpm exec prisma migrate deploy   # or db push for local dev
+pnpm db:seed             # optional sample data
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
@@ -170,13 +170,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Command                     | Description                                        |
 | --------------------------- | -------------------------------------------------- |
-| `npm run dev`               | Development server                                 |
-| `npm run build`             | Production build                                   |
-| `npm run lint`              | ESLint                                             |
-| `npm run test`              | Vitest unit tests                                  |
-| `npm run test:e2e`          | Playwright (requires `DATABASE_URL` for home spec) |
-| `npm run db:seed`           | Seed database                                      |
-| `npm run db:embed-existing` | Re-index existing projects for RAG                 |
+| `pnpm dev`               | Development server                                 |
+| `pnpm build`             | Production build                                   |
+| `pnpm lint`              | ESLint                                             |
+| `pnpm test`              | Vitest unit tests                                  |
+| `pnpm test:e2e`          | Playwright (requires `DATABASE_URL` for home spec) |
+| `pnpm db:seed`           | Seed database                                      |
+| `pnpm db:embed-existing` | Re-index existing projects for RAG                 |
 
 ## Environment variables
 
@@ -191,8 +191,8 @@ Admin UI is served under `/{locale}{NEXT_PUBLIC_ADMIN_SECRET_PATH}` (path is obs
 ## Testing
 
 ```bash
-npm run test          # domain + schema unit tests
-npm run test:e2e      # smoke / health checks
+pnpm test          # domain + schema unit tests
+pnpm test:e2e      # smoke / health checks
 ```
 
 CI runs lint, unit tests, e2e, and production build on push and PR.
