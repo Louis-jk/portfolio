@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type MotionValue } from 'framer-motion';
+import type { MotionValue } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import LiquidButton from '@/components/button/LiquidButton';
 
