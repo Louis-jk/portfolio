@@ -19,19 +19,19 @@ import type { ProjectView } from '@/modules/projects';
 import { formatProjectDateRange } from '@/modules/projects';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
 
-interface TimelineDetailProps {
+interface ProjectDetailProps {
   item: ProjectView | null;
   isVisible: boolean;
 }
 
-export default function TimelineDetail({
+export default function ProjectDetail({
   item,
   isVisible,
-}: TimelineDetailProps) {
+}: ProjectDetailProps) {
   const [openShareModal, setOpenShareModal] = useState(false);
   const { resolvedTheme } = useTheme();
   const locale = useLocale();
-  const t = useTranslations('timeline');
+  const t = useTranslations('projects');
   const tD = useTranslations('details');
   const tL = useTranslations('loading');
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -140,10 +140,10 @@ export default function TimelineDetail({
             id='detail-empty-state-title'
             className='text-gray-500 dark:text-gray-400 text-lg font-medium'
           >
-            Select a project to view details
+            {t('emptyState.title')}
           </p>
           <p className='text-gray-400 dark:text-gray-500 text-sm mt-2'>
-            Click on any timeline item to see more information
+            {t('emptyState.hint')}
           </p>
         </div>
       </section>

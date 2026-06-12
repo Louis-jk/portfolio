@@ -12,18 +12,18 @@ import type { ProjectView } from '@/modules/projects';
 import ProjectCategoryBadges from './ProjectCategoryBadges';
 import { FaUserAlt } from 'react-icons/fa';
 
-interface TimelineProps {
+interface ProjectListProps {
   items: ProjectView[];
   selectedItem: ProjectView | null;
   onItemClick: (item: ProjectView) => void;
 }
 
-export default function Timeline({
+export default function ProjectList({
   items,
   selectedItem,
   onItemClick,
-}: TimelineProps) {
-  const t = useTranslations('timeline');
+}: ProjectListProps) {
+  const t = useTranslations('projects');
   const locale = useLocale();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Map<string, HTMLElement | null>>(new Map());
@@ -274,9 +274,9 @@ export default function Timeline({
     // GTM 이벤트 전송
     if (typeof window !== 'undefined' && window.dataLayer) {
       window.dataLayer.push({
-        event: 'timeline_item_click',
-        timeline_id: item.id.toString(),
-        timeline_title: item.title,
+        event: 'project_item_click',
+        project_id: item.id.toString(),
+        project_title: item.title,
       });
     }
   };
@@ -292,20 +292,20 @@ export default function Timeline({
   return (
     <section
       className='flex flex-col'
-      data-timeline-section
-      aria-labelledby='timeline-heading'
+      data-project-list-section
+      aria-labelledby='project-list-heading'
     >
       {/* 제목 - 모든 화면에서 표시, 모바일에서는 Header 아래에 sticky */}
       <div
         ref={titleRef}
-        data-timeline-title
+        data-project-list-title
         className={cn(
           'dark:bg-[#0a0a0a] h-[70px] flex items-center justify-center border-b border-gray-200 dark:border-gray-800 transition-all duration-200',
           isMobile && 'sticky top-[55px] z-30',
         )}
       >
         <h2
-          id='timeline-heading'
+          id='project-list-heading'
           className={cn(
             'text-2xl font-bold text-center text-gray-900 dark:text-gray-100',
             locale === 'ja' && 'tracking-[.25em]',
@@ -396,9 +396,9 @@ export default function Timeline({
         /* PC/태블릿에서는 스크롤 컨테이너 사용 */
         <div
           ref={scrollRef}
-          data-timeline-container
+          data-project-list-container
           role='list'
-          aria-labelledby='timeline-heading'
+          aria-labelledby='project-list-heading'
           className={cn(
             'pr-2 h-[calc(100vh-275px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent will-change-scroll',
             isTablet && 'pr-0',

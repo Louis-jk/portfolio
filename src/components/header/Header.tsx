@@ -27,7 +27,7 @@ function Header({
   onFilterOpenChange,
 }: HeaderProps) {
   const [showHeaderName, setShowHeaderName] = useState(false);
-  const [showTimelineTitle, setShowTimelineTitle] = useState(false);
+  const [showProjectListTitle, setShowProjectListTitle] = useState(false);
   const [internalFilterOpen, setInternalFilterOpen] = useState(false);
   const isControlled = onFilterOpenChange !== undefined;
   const isFilterOpen = isControlled
@@ -37,7 +37,7 @@ function Header({
     ? (v: boolean | ((prev: boolean) => boolean)) =>
         onFilterOpenChange(typeof v === 'function' ? v(isFilterOpen) : v)
     : setInternalFilterOpen;
-  const t = useTranslations('timeline');
+  const t = useTranslations('projects');
   const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
   // 스크롤 감지하여 헤더 이름 애니메이션 (1024px 미만에서만)
@@ -46,27 +46,29 @@ function Header({
       // 모바일/태블릿에서만 동작
       if (window.innerWidth >= 1024) {
         setShowHeaderName(false);
-        setShowTimelineTitle(false);
+        setShowProjectListTitle(false);
         return;
       }
 
       // 타임라인 제목이 헤더를 지나갈 때부터 타임라인 섹션이 끝날 때까지
-      const timelineTitle = document.querySelector('[data-timeline-title]');
-      const timelineSection = document.querySelector('[data-timeline-section]');
+      const projectListTitle = document.querySelector(
+        '[data-project-list-title]',
+      );
+      const projectListSection = document.querySelector(
+        '[data-project-list-section]',
+      );
 
-      if (timelineTitle && timelineSection) {
-        const titleRect = timelineTitle.getBoundingClientRect();
-        const sectionRect = timelineSection.getBoundingClientRect();
+      if (projectListTitle && projectListSection) {
+        const titleRect = projectListTitle.getBoundingClientRect();
+        const sectionRect = projectListSection.getBoundingClientRect();
 
-        // 타임라인 제목이 헤더를 지나갔고, 타임라인 섹션이 아직 화면에 있을 때
         const isTitlePassedHeader = titleRect.top <= 0;
         const isSectionStillVisible = sectionRect.bottom > 55;
 
-        setShowTimelineTitle(isTitlePassedHeader && isSectionStillVisible);
+        setShowProjectListTitle(isTitlePassedHeader && isSectionStillVisible);
       }
 
-      // 타임라인 제목이 표시되지 않을 때만 이름 표시
-      if (window.scrollY > 400 && !showTimelineTitle) {
+      if (window.scrollY > 400 && !showProjectListTitle) {
         setShowHeaderName(true);
       } else {
         setShowHeaderName(false);
@@ -74,7 +76,7 @@ function Header({
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [showTimelineTitle]);
+  }, [showProjectListTitle]);
 
   const handleResetFilter = () => {
     onPlatformFilter(null);
@@ -120,7 +122,7 @@ function Header({
             </AnimatePresence>
           )}
         </div>
-        {showTimelineTitle && (
+        {showProjectListTitle && (
           <motion.p
             className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg text-foreground pointer-events-none'
             initial={{ opacity: 0, y: -10 }}
@@ -128,10 +130,10 @@ function Header({
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {t('mobileHeaderTimelineTitle')}
+            {t('mobileHeaderTitle')}
           </motion.p>
         )}
-        {showHeaderName && !showTimelineTitle && (
+        {showHeaderName && !showProjectListTitle && (
           <motion.p
             className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg pointer-events-none'
             initial={{ opacity: 0 }}

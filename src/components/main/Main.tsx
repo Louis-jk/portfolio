@@ -1,9 +1,9 @@
 'use client';
 
 import Intro from '@/components/intro/Intro';
-import Timeline from '@/components/timeline/Timeline';
-import TimelineDetail from '@/components/timeline/TimelineDetail';
-import TimelineDrawer from '@/components/timeline/TimelineDrawer';
+import ProjectList from '@/components/projects/ProjectList';
+import ProjectDetail from '@/components/projects/ProjectDetail';
+import ProjectDrawer from '@/components/projects/ProjectDrawer';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
@@ -38,7 +38,7 @@ function MainContent({
   }, [projects, platformFilter, domainFilter]);
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const tTimeline = useTranslations('timeline');
+  const tProjects = useTranslations('projects');
 
   const isTablet = useMediaQuery({
     query: '(min-width: 1024px) and (max-width: 1279px)',
@@ -105,7 +105,7 @@ function MainContent({
     )?.dataLayer;
     if (typeof window !== 'undefined' && dataLayer) {
       dataLayer.push({
-        event: 'timeline_item_click',
+        event: 'project_item_click',
         item_id: item.id.toString(),
         item_title: item.title,
         item_region: item.region,
@@ -123,7 +123,7 @@ function MainContent({
       }
     )?.gtag;
     if (gtag) {
-      gtag('event', 'timeline_item_click', {
+      gtag('event', 'project_item_click', {
         item_id: item.id.toString(),
         item_title: item.title,
         item_region: item.region,
@@ -175,7 +175,7 @@ function MainContent({
                     transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                     className='col-span-4 h-full overflow-hidden'
                   >
-                    <Timeline
+                    <ProjectList
                       items={filteredProjects}
                       selectedItem={selectedItem}
                       onItemClick={handleItemClick}
@@ -184,15 +184,15 @@ function MainContent({
 
                   {/* Timeline Detail with scroll - Desktop only */}
                   <motion.aside
-                    data-timeline-detail-container
-                    aria-label={tTimeline('details.title')}
+                    data-project-detail-container
+                    aria-label={tProjects('details.title')}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
                     className='col-span-5 h-full overflow-hidden'
                     style={{ overflowX: 'hidden' }}
                   >
-                    <TimelineDetail
+                    <ProjectDetail
                       key={selectedItem?.id || 'empty'}
                       item={selectedItem}
                       isVisible={!!selectedItem}
@@ -222,7 +222,7 @@ function MainContent({
                     transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                     className='flex flex-col h-full'
                   >
-                    <Timeline
+                    <ProjectList
                       items={filteredProjects}
                       selectedItem={selectedItem}
                       onItemClick={handleItemClick}
@@ -252,7 +252,7 @@ function MainContent({
                   transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                   className='relative'
                 >
-                  <Timeline
+                  <ProjectList
                     items={filteredProjects}
                     selectedItem={selectedItem}
                     onItemClick={handleItemClick}
@@ -265,7 +265,7 @@ function MainContent({
       </main>
 
       {/* Mobile/Tablet Drawer */}
-      <TimelineDrawer
+      <ProjectDrawer
         item={selectedItem}
         isOpen={isDrawerOpen}
         onClose={handleDrawerClose}

@@ -15,7 +15,7 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 
 ### <span id="highlights-en">🇺🇸 English</span>
 
-- **Multilingual public site** (ko / en / ja) with timeline, 3D avatar, filters, and project detail drawer
+- **Multilingual public site** (ko / en / ja) with project list, 3D avatar, filters, and project detail drawer
 - **RAG chatbot** — OpenAI + pgvector (Supabase) retrieval over portfolio content, with FAQ flows and project deep-links
 - **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
 - **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + e2e + build), env-based secrets, chat API rate limiting
@@ -75,7 +75,7 @@ src/
 │   ├── http/               # nest-client, api-error
 │   ├── rag/                # Embedding + portfolio document indexing
 │   └── supabase/           # Admin client, hostname helpers
-├── components/             # Shared public UI (timeline, header, intro, …)
+├── components/             # Shared public UI (projects, header, intro, …)
 ├── hooks/                  # Cross-feature hooks (e.g. useMounted)
 └── stores/                 # Zustand (chatbot UI state)
 ```

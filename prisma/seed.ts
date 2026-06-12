@@ -108,7 +108,7 @@ async function main() {
   for (let i = 0; i < timelineData.length; i++) {
     const item = timelineData[i];
     const projectKey = item.id.replace(/^projects\./, '');
-    const msgPath = `timeline.projects.${projectKey}`;
+    const msgPath = `projects.items.${projectKey}`;
 
     const koProj = getByPath(ko, msgPath) as MessageProject | undefined;
     const enProj = getByPath(en, msgPath) as MessageProject | undefined;
