@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { ChatbotChoice, ChatbotData } from '@/types/chatbot';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 import { renderProjectLinkLabel } from '@/features/chatbot/components/chatbot-project-links';
 
 export type FaqContactButton = {
@@ -24,11 +24,10 @@ export type FaqReplyPayload = {
 export function resolveFaqReply(args: {
   choice: ChatbotChoice;
   chatbotData: ChatbotData;
-  projects: ProjectWithTranslations[];
-  locale: string;
+  projects: ProjectView[];
   basePath: string;
 }): FaqReplyPayload {
-  const { choice, chatbotData, projects, locale, basePath } = args;
+  const { choice, chatbotData, projects, basePath } = args;
 
   const nextChoices = (choice.nextChoices ?? [])
     .map((id) => chatbotData.choices[id])
@@ -60,7 +59,7 @@ export function resolveFaqReply(args: {
     projectsToShow.length > 0
   ) {
     goToProjectLink = projectsToShow.map((project) => ({
-      text: renderProjectLinkLabel(project, locale),
+      text: renderProjectLinkLabel(project),
       url: `${basePath}?item=${project.id}`,
     }));
   } else if (

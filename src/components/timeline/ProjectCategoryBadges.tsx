@@ -3,10 +3,13 @@
 import { useTranslations } from 'next-intl';
 import { Globe, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 
 interface ProjectCategoryBadgesProps {
-  project: ProjectWithTranslations;
+  project: Pick<
+    ProjectView,
+    'isPublic' | 'platformCategories' | 'domainTags'
+  >;
   className?: string;
 }
 

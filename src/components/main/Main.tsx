@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'react-responsive';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 
 function MainContent({
   projects,
@@ -18,13 +18,13 @@ function MainContent({
   isFilterOpen = false,
   isDesktopLayout = true,
 }: {
-  projects: ProjectWithTranslations[];
+  projects: ProjectView[];
   platformFilter?: string | null;
   domainFilter?: string | null;
   isFilterOpen?: boolean;
   isDesktopLayout?: boolean;
 }) {
-  const [selectedItem, setSelectedItem] = useState<ProjectWithTranslations | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ProjectView | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const filteredProjects = useMemo(() => {
@@ -51,7 +51,8 @@ function MainContent({
   useEffect(() => {
     const itemId = searchParams.get('item');
     if (itemId) {
-      const item = filteredProjects.find((item) => item.id.toString() === itemId) ??
+      const item =
+        filteredProjects.find((item) => item.id.toString() === itemId) ??
         projects.find((item) => item.id.toString() === itemId);
       if (item) {
         setSelectedItem(item);
@@ -78,7 +79,7 @@ function MainContent({
     }
   }, [pathname, searchParams, setIsDrawerOpen, projects]);
 
-  const handleItemClick = (item: ProjectWithTranslations) => {
+  const handleItemClick = (item: ProjectView) => {
     setSelectedItem(item);
     const url = new URL(window.location.href);
     url.searchParams.set('item', item.id.toString());
@@ -106,8 +107,8 @@ function MainContent({
       dataLayer.push({
         event: 'timeline_item_click',
         item_id: item.id.toString(),
-        item_title: item.translations?.[0]?.title ?? '',
-        item_region: item.translations?.[0]?.region ?? '',
+        item_title: item.title,
+        item_region: item.region,
       });
     }
 
@@ -124,8 +125,8 @@ function MainContent({
     if (gtag) {
       gtag('event', 'timeline_item_click', {
         item_id: item.id.toString(),
-        item_title: item.translations?.[0]?.title ?? '',
-        item_region: item.translations?.[0]?.region ?? '',
+        item_title: item.title,
+        item_region: item.region,
       });
     }
   };
@@ -143,7 +144,9 @@ function MainContent({
 
   return (
     <>
-      <main className={`flex flex-col ${headerPadding} ${isMobile ? '' : 'flex-1'}`}>
+      <main
+        className={`flex flex-col ${headerPadding} ${isMobile ? '' : 'flex-1'}`}
+      >
         <section className={isMobile ? '' : 'h-full'}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -278,7 +281,7 @@ function Main({
   isFilterOpen = false,
   isDesktop = true,
 }: {
-  projects: ProjectWithTranslations[];
+  projects: ProjectView[];
   platformFilter?: string | null;
   domainFilter?: string | null;
   isFilterOpen?: boolean;

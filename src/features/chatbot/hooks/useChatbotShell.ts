@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { ChatbotData } from '@/types/chatbot';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 import type { ChatMessage } from '@/stores/chatbot-store';
 import { normalizeProjectLinkForLocale } from '@/features/chatbot/components/chatbot-project-links';
 
@@ -16,7 +16,7 @@ type UseChatbotShellArgs = {
   chatbotData: ChatbotData;
   currentLocale: string;
   pathname: string;
-  projects: ProjectWithTranslations[];
+  projects: ProjectView[];
   isKeyboardOpen: boolean;
 };
 
@@ -45,7 +45,9 @@ export function useChatbotShell({
           from: 'bot',
           text: chatbotData.welcome.message,
           timestamp: new Date(),
-          choices: chatbotData.welcome.choices.map((id) => chatbotData.choices[id]),
+          choices: chatbotData.welcome.choices.map(
+            (id) => chatbotData.choices[id],
+          ),
           isChoiceMessage: true,
         },
       ]);
@@ -70,12 +72,7 @@ export function useChatbotShell({
         }
         if (message.goToProjectLink?.length) {
           nextMessage.goToProjectLink = message.goToProjectLink.map((link) =>
-            normalizeProjectLinkForLocale(
-              link,
-              projects,
-              currentLocale,
-              localizedPathname,
-            ),
+            normalizeProjectLinkForLocale(link, projects, localizedPathname),
           );
         }
         return nextMessage;
