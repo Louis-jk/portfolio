@@ -10,11 +10,11 @@ import Chatbot from '@/features/chatbot';
 import LoadingScreen from '@/components/loading/Loading';
 import type { ProjectView } from '@/modules/projects';
 
-interface HomeClientProps {
+interface HomePageProps {
   projects: ProjectView[];
 }
 
-export default function HomeClient({ projects }: HomeClientProps) {
+export default function HomePage({ projects }: HomePageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [platformFilter, setPlatformFilter] = useState<string | null>(null);
   const [domainFilter, setDomainFilter] = useState<string | null>(null);

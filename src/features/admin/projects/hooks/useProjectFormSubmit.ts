@@ -6,15 +6,15 @@ import type { UseFormReset } from 'react-hook-form';
 import { toast } from 'sonner';
 import { buildProjectServerPayload } from '@/schemas/projectSchema';
 import { withTimeout } from '@/lib/with-timeout';
-import { uploadProjectImage } from '../upload-image';
-import { saveProject } from '../new/action';
-import { updateProject } from '../[id]/edit/action';
+import { uploadProjectImage } from '@/app/[locale]/(private)/[adminPath]/projects/upload-image';
+import { saveProject } from '@/app/[locale]/(private)/[adminPath]/projects/new/action';
+import { updateProject } from '@/app/[locale]/(private)/[adminPath]/projects/[id]/edit/action';
 import type { ProjectFormValues } from '@/types/project-form.type';
 import {
   MAX_DATA_URL_LENGTH,
   SAVE_TIMEOUT_MS,
   UPLOAD_TIMEOUT_MS,
-} from './constants';
+} from '@/features/admin/projects/lib/constants';
 
 type SubmitPhase = 'idle' | 'uploading' | 'saving';
 

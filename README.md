@@ -64,7 +64,11 @@ The codebase favors **colocation by responsibility** rather than a generic `serv
 src/
 ├── app/                         # App Router, API routes, admin server actions
 ├── modules/projects/            # Server domain — repository → service → mapper (Nest API)
-├── features/chatbot/            # Chatbot feature slice (UI + hooks + lib)
+├── features/
+│   ├── chatbot/                 # Chatbot feature slice (UI + hooks + lib)
+│   └── admin/                   # Admin CMS feature slice
+│       ├── components/          # Shell UI (logout, …)
+│       └── projects/            # Projects list, form, preview, hooks, lib
 ├── constants/
 │   ├── admin-routes.ts          # ADMIN_PATH, ADMIN_ROUTES
 │   └── breakpoints.ts           # Responsive layout + media-query helpers
@@ -79,6 +83,7 @@ src/
 │   ├── projects/                # ProjectList, ProjectDetail, ProjectDrawer
 │   │   ├── project-list/        # List item, title, hover preview
 │   │   └── project-detail/      # Detail sections (hero, meta, tools, …)
+│   ├── home/                    # Public home page shell (HomePage)
 │   ├── intro/                   # Avatar, about-me, resume link
 │   └── header/                  # Nav, filters, theme toggle
 ├── hooks/                       # Shared React hooks (see table below)
@@ -90,12 +95,13 @@ src/
 | Kind | Location | Example |
 |------|----------|---------|
 | Server/domain logic | `modules/` | `projects.service.ts`, import via `modules/projects` |
-| Feature slice (UI + hooks) | `features/` | `features/chatbot/hooks/useChatbotMessaging` |
+| Feature slice (UI + hooks + lib) | `features/` | `features/chatbot/`, `features/admin/projects/` |
 | Shared React hooks | `hooks/` | `useProjectSelection`, `useBreakpoints` |
 | Pure UI helpers (no React) | `lib/` | `lib/projects/project-list-scroll.ts` |
 | App-wide constants | `constants/` | `breakpoints.ts`, `admin-routes.ts` |
 | UI components | `components/` | `ProjectListItem.tsx` — no hooks or lib utils here |
-| Route-specific admin hooks | `app/.../project-form/` | `useProjectFormSubmit` (colocated with form) |
+| Admin CMS UI + client logic | `features/admin/projects/` | `ProjectForm`, `useProjectFormSubmit`, `sortable-sensors` |
+| Admin server actions | `app/.../projects/` | `actions.ts`, `new/action.ts`, `upload-image.ts` |
 
 **Shared hooks (`src/hooks/`)**
 
@@ -136,7 +142,7 @@ When `API_URL` is set, `modules/projects` reads from the Nest API (`lib/http/nes
 - **`features/chatbot/`** — user-facing feature module; depends on `modules/projects`, not the other way around.
 - **Public UI** — `components/main/` layout shells + `components/projects/`; shared behavior in `hooks/`; Lenis smooth scroll on intro/list/detail desktop columns.
 - **i18n** — public copy uses the `projects` namespace (`messages/*.json`); seed data in `prisma/seed-data/projects.data.ts`.
-- **Admin routes** — server actions colocated with routes; mutations go through `modules/projects` service, not direct DB/API calls in components.
+- **Admin CMS** — `features/admin/projects/` (list, form, hooks, lib); server actions stay in `app/.../projects/`; mutations go through `modules/projects` service.
 - **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP.
 
 #### <span id="design-ko">🇰🇷 한국어 기술 결정</span>
@@ -149,7 +155,7 @@ When `API_URL` is set, `modules/projects` reads from the Nest API (`lib/http/nes
 - **`features/chatbot/`**: UI·스트리밍·FAQ 등 사용자 기능은 feature 모듈로, 데이터 접근은 `modules/projects`에 위임합니다.
 - **Public UI**: `components/main/` 레이아웃 + `components/projects/`; 공유 로직은 `hooks/`; intro/list/detail 컬럼은 Lenis 스무스 스크롤.
 - **i18n**: 퍼블릭 카피는 `projects` 네임스페이스; 시드는 `prisma/seed-data/projects.data.ts`.
-- **Admin routes**: Server Actions는 라우트 폴더에 colocation하고, 프로젝트 CRUD는 `modules/projects` service를 통해서만 수행합니다.
+- **Admin CMS**: UI·클라이언트 로직은 `features/admin/projects/`, Server Actions는 `app/.../projects/`에 colocation; CRUD는 `modules/projects` service를 통해서만 수행합니다.
 - **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
 </details>
 

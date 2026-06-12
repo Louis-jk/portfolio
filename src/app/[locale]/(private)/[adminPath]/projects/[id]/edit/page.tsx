@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import type { ProjectLocale } from '@/modules/projects';
-import ProjectEditForm from './ProjectEditForm';
+import { ProjectEditForm } from '@/features/admin';
 
 export default async function ProjectEditPage({
   params,
