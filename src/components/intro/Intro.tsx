@@ -16,6 +16,7 @@ const Renderer = dynamic(() => import('@/components/avatar/Renderer'), {
 });
 import { useIntroState } from '@/hooks/useIntroState';
 import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
+import { useLenisPanelScroll } from '@/hooks/useLenisPanelScroll';
 import { cn } from '@/lib/utils';
 import Resume from './Resume';
 
@@ -28,7 +29,13 @@ function Intro() {
   const t = useTranslations();
   const locale = useLocale();
 
-  const { isLayoutDesktop } = useLayoutBreakpoints();
+  const { isLayoutDesktop, isLayoutTablet } = useLayoutBreakpoints();
+  const smoothScrollEnabled = isLayoutDesktop || isLayoutTablet;
+  const { scrollRef, contentRef } = useLenisPanelScroll({
+    enabled: smoothScrollEnabled,
+    resetKey: 'intro',
+    resizeKey: locale,
+  });
 
   // 커스텀 훅으로 상태 관리
   const {
@@ -169,13 +176,18 @@ function Intro() {
 
   return (
     <section
+      ref={scrollRef}
       aria-labelledby='portfolio-name-heading'
       className={cn(
         'flex flex-col items-center justify-start',
         isLayoutDesktop && 'h-[calc(100vh-205px)] overflow-y-auto',
+        isLayoutTablet && 'h-full min-h-0 overflow-y-auto',
       )}
     >
-      <div className='flex flex-col items-center gap-5 py-10'>
+      <div
+        ref={contentRef}
+        className='flex flex-col items-center gap-5 py-10'
+      >
         <motion.div
           className='relative'
           initial={{ opacity: 0, y: 20 }}

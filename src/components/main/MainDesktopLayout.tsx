@@ -28,7 +28,7 @@ export default function MainDesktopLayout({
   return (
     <div className='flex justify-center items-start h-full'>
       <div className='grid grid-cols-12 gap-6 h-full'>
-        <motion.div {...fadeUp(0.3)} className='col-span-3'>
+        <motion.div {...fadeUp(0.3)} className='col-span-3 h-full overflow-hidden'>
           <Intro />
         </motion.div>
 

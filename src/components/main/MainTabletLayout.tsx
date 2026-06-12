@@ -25,7 +25,7 @@ export default function MainTabletLayout({
   return (
     <div className='h-full min-h-0'>
       <div className='grid h-full min-h-0 grid-cols-2 gap-6 w-full'>
-        <motion.div {...fadeUp(0.3)} className='min-h-0 overflow-y-auto'>
+        <motion.div {...fadeUp(0.3)} className='min-h-0 h-full overflow-hidden'>
           <Intro />
         </motion.div>
 
