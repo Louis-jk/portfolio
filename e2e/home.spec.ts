@@ -1,17 +1,18 @@
 import { expect, test } from '@playwright/test';
+import { gotoHome, hasDatabase, HOME_LOCALES } from './helpers';
 
 test.describe('Localized home', () => {
-  test('renders the main heading on /en when the database is available', async ({
-    page,
-  }) => {
-    test.skip(
-      !process.env.DATABASE_URL,
-      'Home uses Prisma on the server; set DATABASE_URL to run this test.',
-    );
+  for (const locale of HOME_LOCALES) {
+    test(`renders the hero on /${locale} when the database is available`, async ({
+      page,
+    }) => {
+      test.skip(
+        !hasDatabase,
+        'Home uses Prisma on the server; set DATABASE_URL to run this test.',
+      );
 
-    await page.goto('/en');
-    await expect(
-      page.getByRole('heading', { level: 1, name: 'Joonho Kim' }),
-    ).toBeVisible({ timeout: 30_000 });
-  });
+      await gotoHome(page, locale);
+      await expect(page).toHaveURL(new RegExp(`/${locale}`));
+    });
+  }
 });
