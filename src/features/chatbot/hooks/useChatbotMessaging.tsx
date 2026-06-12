@@ -76,7 +76,6 @@ export function useChatbotMessaging({
           choice,
           chatbotData,
           projects,
-          locale: currentLocale,
           basePath: pathname || `/${currentLocale}`,
         });
 

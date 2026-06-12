@@ -25,10 +25,9 @@ export function resolveFaqReply(args: {
   choice: ChatbotChoice;
   chatbotData: ChatbotData;
   projects: ProjectView[];
-  locale: string;
   basePath: string;
 }): FaqReplyPayload {
-  const { choice, chatbotData, projects, locale, basePath } = args;
+  const { choice, chatbotData, projects, basePath } = args;
 
   const nextChoices = (choice.nextChoices ?? [])
     .map((id) => chatbotData.choices[id])
