@@ -40,22 +40,25 @@ export default defineConfig({
     trace: 'retry-with-trace',
   },
 
-  projects: [
-    {
-      name: 'Desktop Chrome',
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
-    {
-      name: 'Mobile Chrome',
-      use: {
-        ...devices['Pixel 5'],
-      },
-    },
-    {
-      name: 'Mobile Safari',
-      use: devices['iPhone 12'],
-    },
-  ],
+  projects: process.env.CI
+    ? [
+        {
+          name: 'Desktop Chrome',
+          use: { ...devices['Desktop Chrome'] },
+        },
+      ]
+    : [
+        {
+          name: 'Desktop Chrome',
+          use: { ...devices['Desktop Chrome'] },
+        },
+        {
+          name: 'Mobile Chrome',
+          use: { ...devices['Pixel 5'] },
+        },
+        {
+          name: 'Mobile Safari',
+          use: devices['iPhone 12'],
+        },
+      ],
 });
