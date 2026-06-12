@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { listAllProjects, readI18n } from '@/modules/projects';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/ui/card';

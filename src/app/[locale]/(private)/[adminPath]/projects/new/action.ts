@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { requireAuth } from '@/utils/supabase/auth';
 import type { ProjectFormData } from '@/modules/projects';
 import { validateProjectServerPayload } from '@/modules/projects';

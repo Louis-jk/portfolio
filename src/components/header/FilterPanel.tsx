@@ -23,7 +23,7 @@ export default function FilterPanel({
   className = '',
   inline = false,
 }: FilterPanelProps) {
-  const t = useTranslations('timeline.categories');
+  const t = useTranslations('projects.categories');
 
   return (
     <div

@@ -1,6 +1,6 @@
-import { TimelineItem } from './timeline.type';
+import { ProjectSeedItem } from './projects.type';
 
-export const timelineData: TimelineItem[] = [
+export const projectsData: ProjectSeedItem[] = [
   {
     id: 'projects.crewinc_mobile_frontend',
     date: 'projects.crewinc_mobile_frontend.date',

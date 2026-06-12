@@ -17,7 +17,7 @@ export default function ProjectCategoryBadges({
   project,
   className,
 }: ProjectCategoryBadgesProps) {
-  const t = useTranslations('timeline.categories');
+  const t = useTranslations('projects.categories');
   const platformCategories = project.platformCategories ?? [];
   const domainTags = project.domainTags ?? [];
 

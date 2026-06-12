@@ -1,6 +1,6 @@
 import { listAllProjects } from '@/modules/projects';
 import Link from 'next/link';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { getTranslations } from 'next-intl/server';
 import ProjectListSortable from './ProjectListSortable';
 
