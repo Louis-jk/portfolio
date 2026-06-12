@@ -9,7 +9,7 @@ import { chatbotDataByLocale } from '@/data/chatbot';
 import type { ChatbotData } from '@/types/chatbot';
 import { getCurrentLocale } from '@/utils/locale';
 import { usePathname, useRouter } from 'next/navigation';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 import { useChatbotStore } from '@/stores/chatbot-store';
 import { useChatbotMessaging } from '@/features/chatbot/hooks/useChatbotMessaging';
 import { useChatbotShell } from '@/features/chatbot/hooks/useChatbotShell';
@@ -17,7 +17,7 @@ import { ChatbotToggleButton } from '@/features/chatbot/components/ChatbotToggle
 import { ChatbotWindow } from '@/features/chatbot/components/ChatbotWindow';
 
 interface ChatbotProps {
-  projects?: ProjectWithTranslations[];
+  projects?: ProjectView[];
 }
 
 function getNavigatingLabel(locale: string) {

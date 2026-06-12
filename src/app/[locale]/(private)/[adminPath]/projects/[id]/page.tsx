@@ -1,4 +1,4 @@
-import { getProjectById } from '@/lib/projects/queries';
+import { getProjectById } from '@/modules/projects';
 import { notFound } from 'next/navigation';
 import ProjectPreviewClient from './ProjectPreviewClient';
 import { ADMIN_ROUTES } from '@/lib/constants';
@@ -18,7 +18,6 @@ export default async function ProjectPreviewPage({
 
   const basePath = `/${locale}${ADMIN_ROUTES.PROJECTS}`;
 
-  // Serialize for client component (Date -> ISO string)
   const serializedProject = {
     id: project.id,
     imageUrl: project.imageUrl,
@@ -28,6 +27,14 @@ export default async function ProjectPreviewPage({
     technologies: project.technologies,
     platformCategories: project.platformCategories ?? [],
     domainTags: project.domainTags ?? [],
+    title: project.title,
+    company: project.company,
+    region: project.region,
+    role: project.role,
+    overview: project.overview,
+    description: project.description,
+    challenges: project.challenges,
+    achievements: project.achievements,
     platforms: project.platforms
       ? {
           webLink: project.platforms.webLink,
@@ -44,18 +51,6 @@ export default async function ProjectPreviewPage({
           debugging: project.tools.debugging,
         }
       : null,
-    translations: project.translations.map((t) => ({
-      locale: t.locale,
-      title: t.title,
-      company: t.company,
-      region: t.region,
-      role: t.role,
-      overview: t.overview,
-      description: t.description,
-      challenges: t.challenges,
-      achievements: t.achievements,
-      detailImage: t.detailImage,
-    })),
   };
 
   return (

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapAllFormTranslations, mapTranslation } from '@/lib/projects/form-mapper';
+import { mapAllFormTranslations, mapTranslation } from './form-mapper';
 
 describe('form-mapper', () => {
   it('maps translation fields with defaults', () => {

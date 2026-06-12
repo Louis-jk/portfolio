@@ -8,10 +8,10 @@ import Main from '@/components/main/Main';
 import Footer from '@/components/footer/Footer';
 import Chatbot from '@/features/chatbot';
 import LoadingScreen from '@/components/loading/Loading';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 
 interface HomeClientProps {
-  projects: ProjectWithTranslations[];
+  projects: ProjectView[];
 }
 
 export default function HomeClient({ projects }: HomeClientProps) {
@@ -48,7 +48,9 @@ export default function HomeClient({ projects }: HomeClientProps) {
 
     setPlatformFilter((prev) => (prev === nextPlatform ? prev : nextPlatform));
     setDomainFilter((prev) => (prev === nextDomain ? prev : nextDomain));
-    setIsFilterOpen((prev) => (prev === nextFilterOpen ? prev : nextFilterOpen));
+    setIsFilterOpen((prev) =>
+      prev === nextFilterOpen ? prev : nextFilterOpen,
+    );
   }, [searchParams]);
 
   const updateFilterQuery = (next: {

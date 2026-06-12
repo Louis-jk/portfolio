@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateProjectServerPayload } from '@/lib/projects/validate-server-payload';
+import { validateProjectServerPayload } from './validate-server-payload';
 
 const validPayload = {
   imageUrl: 'https://example.com/image.png',
