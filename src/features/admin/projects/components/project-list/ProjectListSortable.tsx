@@ -36,7 +36,7 @@ export default function ProjectListSortable({
             key={project.id}
             project={project}
             locale={locale}
-            untitledLabel={t('untitledLabel')}
+            untitledLabel={t('untitledProject')}
             onDelete={handleDelete}
             dragHandle={staticDragHandle}
             interactive={false}
@@ -59,7 +59,7 @@ export default function ProjectListSortable({
               key={project.id}
               project={project}
               locale={locale}
-              untitledLabel={t('untitledLabel')}
+              untitledLabel={t('untitledProject')}
               onDelete={handleDelete}
             />
           ))}

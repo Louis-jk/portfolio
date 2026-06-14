@@ -233,6 +233,16 @@
   },
   "admin": {
     "projects": {
+      "project": "Project",
+      "yourRole": "Your Role",
+      "fullStackDev": "Full-Stack Dev",
+      "clientCompany": "Client/Company",
+      "clientName": "Client Name",
+      "region": "Region",
+      "cityCountry": "City, Country",
+      "overviewPlaceholder": "Enter project overview.",
+      "projectTitle": "Project Title",
+      "projectTitlePlaceholder": "Enter project title.",
       "backToList": "← Back to project list",
       "edit": "Edit",
       "preview": "Preview",
@@ -265,7 +275,23 @@
       "publicProjectDesc": "Public project: Can be shared externally.",
       "confidentialProjectDesc": "Confidential project: Requires confidentiality.",
       "orderChanged": "Project order has been updated.",
-      "orderChangeFailed": "Failed to update order."
+      "orderChangeFailed": "Failed to update order.",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "externalLinks": "External Links",
+      "uploading": "Uploading...",
+      "saving": "Saving...",
+      "deploying": "Deploying...",
+      "updateProject": "Update Project",
+      "deployProject": "Deploy Project",
+      "registerProject": "Register Project",
+      "imageUploadError": "Only image files can be uploaded.",
+      "imageUploadSizeError": "The file size must be less than 5MB.",
+      "deleteProjectConfirm": "Are you sure you want to delete this project?",
+      "deleteProjectFailed": "Failed to delete project.",
+      "deleteProjectDeleted": "Project has been deleted.",
+      "deleteProjectCancelled": "Delete project cancelled.",
+      "deleteProjectCancel": "Are you sure you want to delete this project?"
     }
   },
   "projects": {
