@@ -11,42 +11,8 @@ import { Pencil, Globe, Smartphone, Laptop, Lock } from 'lucide-react';
 import Image from 'next/image';
 
 import { readI18n, readI18nArray } from '@/modules/projects';
-import type {
-  I18nStringArrayDto,
-  I18nStringDto,
-  ProjectLocale,
-} from '@/modules/projects';
-
-type Project = {
-  id: number;
-  imageUrl: string;
-  startDate: string;
-  endDate: string | null;
-  isPublic: boolean;
-  technologies: string[];
-  platformCategories?: string[];
-  domainTags?: string[];
-  title: I18nStringDto;
-  company: I18nStringDto;
-  region: I18nStringDto;
-  role: I18nStringDto;
-  overview: I18nStringDto;
-  description: I18nStringArrayDto;
-  challenges: I18nStringArrayDto;
-  achievements: I18nStringArrayDto;
-  platforms: {
-    webLink: string | null;
-    iosLink: string | null;
-    androidLink: string | null;
-    desktopLink: string | null;
-  } | null;
-  tools: {
-    development: string[];
-    communication: string[];
-    design: string[];
-    debugging: string[];
-  } | null;
-};
+import type { ProjectLocale } from '@/modules/projects';
+import type { AdminProjectPreview } from '@/features/admin/projects/types';
 
 const LOCALES = [
   { value: 'ko', label: '한국어' },
@@ -59,7 +25,7 @@ export default function ProjectPreviewClient({
   basePath,
   locale,
 }: {
-  project: Project;
+  project: AdminProjectPreview;
   basePath: string;
   locale: string;
 }) {

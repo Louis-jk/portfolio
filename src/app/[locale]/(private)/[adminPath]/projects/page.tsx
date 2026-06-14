@@ -2,7 +2,7 @@ import { listAllProjects } from '@/modules/projects';
 import Link from 'next/link';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { getTranslations } from 'next-intl/server';
-import ProjectListSortable from './ProjectListSortable';
+import { ProjectListSortable } from '@/features/admin/projects';
 
 export default async function ProjectListPage({
   params,

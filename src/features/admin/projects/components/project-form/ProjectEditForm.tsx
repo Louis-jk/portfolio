@@ -1,7 +1,7 @@
 'use client';
 
-import ProjectForm from '../../ProjectForm';
-import type { ProjectFormValues } from '../../ProjectForm';
+import ProjectForm from './ProjectForm';
+import type { ProjectFormValues } from '@/types/project-form.type';
 
 export default function ProjectEditForm({
   projectId,
@@ -14,6 +14,7 @@ export default function ProjectEditForm({
 }) {
   const defaultLocale =
     locale === 'ko' || locale === 'ja' || locale === 'en' ? locale : 'ko';
+
   return (
     <ProjectForm
       projectId={projectId}

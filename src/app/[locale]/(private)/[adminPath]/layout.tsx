@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import ThemeToggle from '@/components/theme/ThemeToggle';
-import AdminLogoutButton from './AdminLogoutButton';
+import { AdminLogoutButton } from '@/features/admin';
 import { createClient } from '@/utils/supabase/server';
 
 const EXPECTED_ADMIN_PATH = (

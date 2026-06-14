@@ -1,6 +1,9 @@
 import { getProjectById } from '@/modules/projects';
 import { notFound } from 'next/navigation';
-import ProjectPreviewClient from './ProjectPreviewClient';
+import {
+  ProjectPreviewClient,
+  type AdminProjectPreview,
+} from '@/features/admin/projects';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 
 export default async function ProjectPreviewPage({
@@ -18,7 +21,7 @@ export default async function ProjectPreviewPage({
 
   const basePath = `/${locale}${ADMIN_ROUTES.PROJECTS}`;
 
-  const serializedProject = {
+  const serializedProject: AdminProjectPreview = {
     id: project.id,
     imageUrl: project.imageUrl,
     startDate: project.startDate.toISOString(),
