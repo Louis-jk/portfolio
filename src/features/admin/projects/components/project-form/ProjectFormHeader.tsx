@@ -5,19 +5,21 @@ export function ProjectFormHeader({
   isSubmitting,
   isProcessing,
   submitPhase,
+  t,
 }: {
   projectId?: number;
   isSubmitting: boolean;
   isProcessing: boolean;
   submitPhase: 'idle' | 'uploading' | 'saving';
+  t: (key: string) => string;
 }) {
   return (
     <header className='flex justify-between items-end border-b border-zinc-100 dark:border-slate-800 pb-8'>
       <div>
         <h1 className='text-5xl font-black tracking-tighter text-zinc-900 dark:text-slate-100 uppercase'>
-          Project{' '}
+          {t('project')}{' '}
           <span className='text-purple-600'>
-            {projectId ? 'Edit' : 'Registration'}
+            {projectId ? t('edit') : t('registerProject')}
           </span>
         </h1>
       </div>
@@ -32,12 +34,12 @@ export function ProjectFormHeader({
           <Send size={20} />
         )}
         {submitPhase === 'uploading'
-          ? 'UPLOADING...'
+          ? t('uploading')
           : submitPhase === 'saving' || isSubmitting
-            ? 'SAVING...'
+            ? t('saving')
             : projectId
-              ? 'UPDATE PROJECT'
-              : 'DEPLOY PROJECT'}
+              ? t('updateProject')
+              : t('deployProject')}
       </button>
     </header>
   );
