@@ -1,7 +1,5 @@
-'use server';
-
 import { listProjects } from '@/modules/projects';
-import HomePage from '@/components/home/HomePage';
+import Home from '@/components/home/Home';
 
 export default async function HomePage({
   params,
@@ -11,5 +9,5 @@ export default async function HomePage({
   const { locale } = await params;
   const projects = await listProjects(locale);
 
-  return <HomePage projects={projects} />;
+  return <Home projects={projects} />;
 }
