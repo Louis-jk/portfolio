@@ -48,9 +48,10 @@ export function ProjectFormSidebar({
         <div className='grid grid-cols-2 gap-4'>
           <div className='space-y-1'>
             <label className='text-[10px] font-black text-purple-600 uppercase ml-1'>
-              Start Date
+              {t('startDate')}
             </label>
             <input
+              aria-label='Start Date'
               type='date'
               required
               {...register('startDate', { required: true })}
@@ -59,9 +60,10 @@ export function ProjectFormSidebar({
           </div>
           <div className='space-y-1'>
             <label className='text-[10px] font-black text-purple-600 uppercase ml-1'>
-              End Date
+              {t('endDate')}
             </label>
             <input
+              aria-label='End Date'
               type='date'
               {...register('endDate')}
               className='w-full p-3 bg-zinc-50 dark:bg-slate-800 border-none rounded-xl text-xs font-bold text-slate-900 dark:text-slate-100'
@@ -84,7 +86,7 @@ export function ProjectFormSidebar({
 
         <div className='space-y-1'>
           <label className='text-[10px] font-black text-purple-600 uppercase ml-1'>
-            Technologies
+            {t('technologies')}
           </label>
           <Controller
             name='technologies'
@@ -102,7 +104,7 @@ export function ProjectFormSidebar({
       </Card>
 
       <ProjectFormToolsSection control={control} t={t} />
-      <ProjectFormLinksSection register={register} />
+      <ProjectFormLinksSection register={register} t={t} />
     </div>
   );
 }

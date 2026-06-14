@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { UseFormGetValues } from 'react-hook-form';
 import { saveProjectFormDraft } from '@/lib/project-form-draft';
 import type { ProjectFormValues } from '@/types/project-form.type';
+import { useTranslations } from 'next-intl';
 
 export function useProjectImageUpload({
   projectId,
@@ -14,6 +15,7 @@ export function useProjectImageUpload({
   initialImageUrl?: string;
   getValues: UseFormGetValues<ProjectFormValues>;
 }) {
+  const t = useTranslations('admin.projects');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imageRemoved, setImageRemoved] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(initialImageUrl ?? '');
@@ -21,11 +23,11 @@ export function useProjectImageUpload({
 
   const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
-      alert('이미지 파일만 업로드 가능합니다.');
+      alert(t('imageUploadError'));
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      alert('파일 크기는 5MB 이하여야 합니다.');
+      alert(t('imageUploadSizeError'));
       return;
     }
 

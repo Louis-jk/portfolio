@@ -99,6 +99,7 @@ export default function ProjectForm({
         isSubmitting={isSubmitting}
         isProcessing={isProcessing}
         submitPhase={submitPhase}
+        t={t}
       />
 
       <div className='grid grid-cols-12 gap-10'>
@@ -121,6 +122,7 @@ export default function ProjectForm({
           control={control}
           setValue={setValue}
           getValues={getValues}
+          t={t}
         />
       </div>
     </form>
