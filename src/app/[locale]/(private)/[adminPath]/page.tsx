@@ -75,7 +75,7 @@ export default async function AdminDashboardPage({
         ) : (
           <div className='space-y-4'>
             {recentProjects.map((project) => {
-              const title = readI18n(project.title, locale) || t('untitledLabel');
+              const title = readI18n(project.title, locale) || t('untitledProject');
               return (
                 <Card
                   key={project.id}

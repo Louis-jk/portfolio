@@ -46,13 +46,18 @@ export function useProjectListSortable(projects: AdminProjectListItem[]) {
   };
 
   const handleDelete = async (projectId: number) => {
-    if (!confirm('이 프로젝트를 삭제하시겠습니까?')) return;
-    const res = await deleteProject(projectId);
-    if (res?.success) {
-      setItems((prev) => prev.filter((p) => p.id !== projectId));
-    } else {
-      alert(res?.error ?? '삭제에 실패했습니다.');
+    if (!window.confirm(t('deleteProjectConfirm'))) {
+      return;
     }
+
+    const res = await deleteProject(projectId);
+    if (!res?.success) {
+      toast.error(res?.error ?? t('deleteProjectFailed'));
+      return;
+    }
+
+    setItems((prev) => prev.filter((p) => p.id !== projectId));
+    toast.success(t('deleteProjectDeleted'));
   };
 
   return { items, isMounted, handleDragEnd, handleDelete };
