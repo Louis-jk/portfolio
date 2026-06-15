@@ -17,6 +17,7 @@ type ProjectFormTranslationsProps = {
   control: Control<ProjectFormValues>;
   setValue: UseFormSetValue<ProjectFormValues>;
   getValues: UseFormGetValues<ProjectFormValues>;
+  t: (key: string) => string;
 };
 
 export function ProjectFormTranslations({
@@ -25,6 +26,7 @@ export function ProjectFormTranslations({
   control,
   setValue,
   getValues,
+  t,
 }: ProjectFormTranslationsProps) {
   return (
     <div className='col-span-12 lg:col-span-8'>
@@ -56,12 +58,12 @@ export function ProjectFormTranslations({
             <Card className='p-12 space-y-10 border-none shadow-2xl shadow-zinc-100/80 dark:shadow-slate-900/50 rounded-xs bg-white dark:bg-slate-900'>
               <div className='space-y-2'>
                 <label className='text-[10px] font-black text-purple-600 uppercase tracking-widest'>
-                  Project Title
+                  {t('projectTitle')}
                 </label>
                 <div className='mt-2'>
                   <textarea
                     {...register(`translations.${lang}.title`)}
-                    placeholder='Amazing Project Name'
+                    placeholder={t('projectTitlePlaceholder')}
                     rows={2}
                     className='w-full text-2xl leading-4xl font-black border-none outline-none focus:ring-0 placeholder:text-zinc-100 dark:placeholder:text-zinc-500 tracking-tighter bg-transparent resize-none overflow-y-auto break-words text-slate-900 dark:text-slate-100'
                   />
@@ -71,9 +73,9 @@ export function ProjectFormTranslations({
               <div className='grid grid-cols-3 gap-6 border-t border-zinc-300 dark:border-slate-700 pt-5'>
                 {(
                   [
-                    ['company', 'Client/Company', 'Client Name'],
-                    ['role', 'Your Role', 'Full-Stack Dev'],
-                    ['region', 'Region', 'Seoul, Korea'],
+                    ['company', t('clientCompany'), t('clientName')],
+                    ['role', t('yourRole'), t('fullStackDev')],
+                    ['region', t('region'), t('cityCountry')],
                   ] as const
                 ).map(([field, label, placeholder]) => (
                   <div key={field} className='space-y-2'>
@@ -91,20 +93,20 @@ export function ProjectFormTranslations({
 
               <div className='space-y-2'>
                 <label className='text-[10px] font-black text-purple-600 uppercase tracking-widest'>
-                  Overview
+                  {t('overview')}
                 </label>
                 <textarea
                   {...register(`translations.${lang}.overview`)}
                   className='w-full h-48 p-6 bg-zinc-50 dark:bg-slate-800 rounded-xs border-none resize-none focus:ring-2 ring-blue-50/50 dark:ring-blue-900/30 transition-all text-black dark:text-slate-100 leading-relaxed'
-                  placeholder='프로젝트 개요를 작성해 주세요.'
+                  placeholder={t('overviewPlaceholder')}
                 />
               </div>
 
               {(
                 [
-                  ['description', 'Description'],
-                  ['challenges', 'Challenges'],
-                  ['achievements', 'Achievements'],
+                  ['description', t('description')],
+                  ['challenges', t('challenges')],
+                  ['achievements', t('achievements')],
                 ] as const
               ).map(([fieldKey, label]) => (
                 <ArrayField
@@ -117,17 +119,6 @@ export function ProjectFormTranslations({
                   getValues={getValues}
                 />
               ))}
-
-              <div className='space-y-2'>
-                <label className='text-[10px] font-black text-purple-600 uppercase tracking-widest mb-1'>
-                  Detail Image URL (선택)
-                </label>
-                <input
-                  {...register(`translations.${lang}.detailImage`)}
-                  placeholder='https://...'
-                  className='w-full p-4 bg-zinc-50 dark:bg-slate-800 border-none rounded-xl text-sm text-slate-900 dark:text-slate-100'
-                />
-              </div>
             </Card>
           </TabsContent>
         ))}

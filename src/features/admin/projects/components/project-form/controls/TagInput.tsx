@@ -12,17 +12,19 @@ import { useSortableSensors } from '@/features/admin/projects/lib/sortable-senso
 import { StaticTag } from './StaticTag';
 import { SortableTag } from './SortableTag';
 
+type TagInputProps = {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  addMorePlaceholder?: string;
+};
+
 export function TagInput({
   value,
   onChange,
   placeholder,
   addMorePlaceholder,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
-  addMorePlaceholder?: string;
-}) {
+}: TagInputProps) {
   const parseToTags = useCallback(
     (s: string) =>
       s

@@ -46,6 +46,7 @@ export function ProjectFormImageUpload({
               type='button'
               onClick={onRemoveImage}
               className='absolute top-2 right-2 bg-black/70 backdrop-blur-md p-2 rounded-full text-white shadow-xl hover:scale-110 transition-transform z-10 cursor-pointer'
+              aria-label='Remove Image'
             >
               <X size={20} />
             </button>
