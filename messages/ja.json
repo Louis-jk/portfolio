@@ -283,6 +283,15 @@
       "detailEditorLoading": "エディターを読み込み中..."
     }
   },
+  "projectStory": {
+    "backToPortfolio": "← ポートフォリオへ",
+    "backToProject": "プロジェクトに戻る",
+    "viewStory": "詳細を見る",
+    "storyLabel": "Project Story",
+    "loading": "ストーリーを読み込み中…",
+    "empty": "詳細ストーリーはまだ登録されていません。",
+    "untitled": "タイトルなし"
+  },
   "projects": {
     "title": "職務経歴",
     "details": {

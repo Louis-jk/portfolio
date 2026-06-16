@@ -283,6 +283,15 @@
       "detailEditorLoading": "에디터를 불러오는 중..."
     }
   },
+  "projectStory": {
+    "backToPortfolio": "← 포트폴리오로",
+    "backToProject": "프로젝트로 돌아가기",
+    "viewStory": "상세 보기",
+    "storyLabel": "Project Story",
+    "loading": "스토리를 불러오는 중…",
+    "empty": "아직 등록된 상세 스토리가 없습니다.",
+    "untitled": "제목 없음"
+  },
   "projects": {
     "title": "업무 경력 사항",
     "details": {
