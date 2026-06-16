@@ -303,6 +303,15 @@
       "detailEditorLoading": "Loading editor..."
     }
   },
+  "projectStory": {
+    "backToPortfolio": "← Back to portfolio",
+    "backToProject": "Back to project",
+    "viewStory": "View full story",
+    "storyLabel": "Project Story",
+    "loading": "Loading story…",
+    "empty": "No detail story has been published yet.",
+    "untitled": "Untitled"
+  },
   "projects": {
     "title": "Projects",
     "details": {

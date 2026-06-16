@@ -17,16 +17,19 @@ import ProjectDetailPanelTitle from './project-detail/ProjectDetailPanelTitle';
 import ProjectDetailPlatformLinks from './project-detail/ProjectDetailPlatformLinks';
 import ProjectDetailTagList from './project-detail/ProjectDetailTagList';
 import ProjectDetailToolsSection from './project-detail/ProjectDetailToolsSection';
+import { ProjectStoryViewLink } from './project-story/ProjectStoryViewLink';
 import { detailSectionMotion } from '@/lib/projects/detail-motion';
 
 interface ProjectDetailProps {
   item: ProjectView | null;
   isVisible: boolean;
+  showStoryLink?: boolean;
 }
 
 export default function ProjectDetail({
   item,
   isVisible,
+  showStoryLink = true,
 }: ProjectDetailProps) {
   const [openShareModal, setOpenShareModal] = useState(false);
   const tD = useTranslations('details');
@@ -97,6 +100,11 @@ export default function ProjectDetail({
             <p className='text-gray-700 dark:text-gray-300 leading-[1.5] whitespace-pre-line'>
               {item.overview}
             </p>
+            {showStoryLink && (
+              <div className='mt-6'>
+                <ProjectStoryViewLink projectId={item.id} />
+              </div>
+            )}
           </motion.div>
 
           <motion.div {...detailSectionMotion(isVisible, 1)}>

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { ProjectView } from '@/modules/projects';
 import { IoClose } from 'react-icons/io5';
 import ProjectDetail from './ProjectDetail';
+import { ProjectStoryViewLink } from './project-story/ProjectStoryViewLink';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
@@ -42,7 +43,7 @@ export default function ProjectDrawer({
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isOpen && item && (
         <>
           <motion.div
             initial={{ opacity: 0 }}
@@ -83,8 +84,17 @@ export default function ProjectDrawer({
             </div>
 
             <div className='overflow-y-auto bg-white dark:bg-black h-full'>
-              <div className='px-4 py-0 h-full'>
-                <ProjectDetail item={item} isVisible={!!item} />
+              <div className='px-4 py-0 h-full flex flex-col'>
+                <div className='shrink-0 py-4'>
+                  <ProjectStoryViewLink projectId={item.id} className='w-full justify-center' />
+                </div>
+                <div className='flex-1 min-h-0'>
+                  <ProjectDetail
+                    item={item}
+                    isVisible={!!item}
+                    showStoryLink={false}
+                  />
+                </div>
               </div>
             </div>
           </motion.div>

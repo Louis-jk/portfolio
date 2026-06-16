@@ -9,6 +9,7 @@ import Footer from '@/components/footer/Footer';
 import Chatbot from '@/features/chatbot';
 import LoadingScreen from '@/components/loading/Loading';
 import type { ProjectView } from '@/modules/projects';
+import { ProjectStoryProvider } from '@/components/projects/project-story/ProjectStoryContext';
 
 interface HomeProps {
   projects: ProjectView[];
@@ -107,27 +108,29 @@ export default function Home({ projects }: HomeProps) {
 
   return (
     <Suspense fallback={<LoadingScreen isLoading={true} />}>
-      <div
-        className={`${isViewportLocked ? 'flex flex-col h-screen' : 'block'} w-full`}
-      >
-        <Header
-          platformFilter={platformFilter}
-          domainFilter={domainFilter}
-          onPlatformFilter={handlePlatformFilter}
-          onDomainFilter={handleDomainFilter}
-          isFilterOpen={isFilterOpen}
-          onFilterOpenChange={handleFilterOpenChange}
-        />
-        <Main
-          projects={projects}
-          platformFilter={platformFilter}
-          domainFilter={domainFilter}
-          isFilterOpen={isFilterOpen}
-          isDesktop={isLayoutDesktop}
-        />
-        <Footer />
-        <Chatbot projects={projects} />
-      </div>
+      <ProjectStoryProvider projects={projects}>
+        <div
+          className={`${isViewportLocked ? 'flex flex-col h-screen' : 'block'} w-full`}
+        >
+          <Header
+            platformFilter={platformFilter}
+            domainFilter={domainFilter}
+            onPlatformFilter={handlePlatformFilter}
+            onDomainFilter={handleDomainFilter}
+            isFilterOpen={isFilterOpen}
+            onFilterOpenChange={handleFilterOpenChange}
+          />
+          <Main
+            projects={projects}
+            platformFilter={platformFilter}
+            domainFilter={domainFilter}
+            isFilterOpen={isFilterOpen}
+            isDesktop={isLayoutDesktop}
+          />
+          <Footer />
+          <Chatbot projects={projects} />
+        </div>
+      </ProjectStoryProvider>
     </Suspense>
   );
 }
