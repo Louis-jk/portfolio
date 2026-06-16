@@ -127,9 +127,9 @@ src/
 | Kind | Location | Example |
 | ---- | -------- | ------- |
 | Server/domain logic | `modules/` | `getProjectDetailPage`, `listProjects` |
-| Domain block helpers | `lib/<module-name>/` | `getBlockText`, `isMermaidSource` |
+| Domain block helpers | `lib/project-detail-page/` | `getBlockText`, `getBlockI18n` (`block-utils.ts`); `isMermaidSource` (`embed-utils.ts`) |
 | Feature slice | `features/` | `features/admin/projects/editor/` |
-| Public story UI | `components/projects/project-story/` | `ProjectStoryShell`, `editor/EditorJsRenderer` |
+| Public story UI | `components/projects/project-story/editor/` | `EditorJsRenderer`, `renderBlock`; shell in `../ProjectStoryShell` |
 | Shared React hooks | `hooks/` | `useProjectStory`, `useProjectSelection` |
 | BFF API routes | `app/api/` | `/api/projects/[id]/story` |
 | Admin server actions | `app/.../projects/` | `detail/action.ts`, `upload-image.ts` |
@@ -303,6 +303,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `pnpm build` | Production build |
 | `pnpm lint` | ESLint |
 | `pnpm test` | Vitest unit tests |
+| `pnpm test:watch` | Vitest watch mode |
 | `pnpm test:e2e` | Playwright (requires `DATABASE_URL` for home spec) |
 | `pnpm storybook` | Storybook dev server (port 6006) |
 | `pnpm build-storybook` | Static Storybook build → `storybook-static/` |
