@@ -4,8 +4,8 @@ import type {
   I18nLocale,
   I18nTextBlockType,
   PartialI18n,
-} from '../types';
-import { I18N_TEXT_BLOCK_TYPES } from '../types';
+} from '@/modules/project-detail-page/types';
+import { I18N_TEXT_BLOCK_TYPES } from '@/modules/project-detail-page/types';
 
 export function isI18nTextBlock(type: string): type is I18nTextBlockType {
   return (I18N_TEXT_BLOCK_TYPES as readonly string[]).includes(type);
@@ -24,6 +24,8 @@ export function getBlockText(block: EditorBlock, locale: I18nLocale): string {
   return i18n[locale] ?? i18n.ko ?? i18n.en ?? i18n.ja ?? '';
 }
 
-export function hasRenderableBlocks(content: EditorOutput | null | undefined): boolean {
+export function hasRenderableBlocks(
+  content: EditorOutput | null | undefined,
+): boolean {
   return (content?.blocks?.length ?? 0) > 0;
 }

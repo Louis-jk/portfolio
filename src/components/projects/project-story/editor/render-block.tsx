@@ -1,8 +1,8 @@
 import { createElement, type ReactNode } from 'react';
 import Image from 'next/image';
 import { sanitizeHtml } from '@/lib/sanitize-html';
-import type { EditorBlock, I18nLocale } from '../types';
-import { getBlockText } from '../lib/block-utils';
+import { getBlockText } from '@/lib/project-detail-page';
+import type { EditorBlock, I18nLocale } from '@/modules/project-detail-page';
 import { CodeBlock } from './CodeBlock';
 import { EmbedBlock } from './EmbedBlock';
 

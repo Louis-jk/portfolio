@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
+import type { EditorBlock, EditorOutput } from '@/modules/project-detail-page/types';
 import {
   getBlockText,
   hasRenderableBlocks,
   isI18nTextBlock,
 } from './block-utils';
-import type { EditorBlock, EditorOutput } from '../types';
 
 describe('block-utils', () => {
   const paragraphBlock: EditorBlock = {

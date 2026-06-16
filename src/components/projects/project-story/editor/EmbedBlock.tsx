@@ -1,6 +1,6 @@
 'use client';
 
-import { getYouTubeEmbedUrl } from '../lib/embed-utils';
+import { getYouTubeEmbedUrl } from '@/lib/project-detail-page';
 
 type EmbedBlockProps = {
   service?: string;

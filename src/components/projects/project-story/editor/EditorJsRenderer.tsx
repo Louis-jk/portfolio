@@ -1,6 +1,6 @@
 'use client';
 
-import type { EditorOutput, I18nLocale } from '../types';
+import type { EditorOutput, I18nLocale } from '@/modules/project-detail-page';
 import { renderBlock } from './render-block';
 
 type EditorJsRendererProps = {
