@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { Eye, FileText, Pencil, Trash2 } from 'lucide-react';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 
 export function ProjectListItemActions({
@@ -28,6 +28,14 @@ export function ProjectListItemActions({
         aria-label='Edit project'
       >
         <Pencil size={18} />
+      </Link>
+      <Link
+        href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${projectId}/detail`}
+        className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
+        title='스토리 보기'
+        aria-label='Edit project story'
+      >
+        <FileText size={18} />
       </Link>
       <button
         type='button'

@@ -36,7 +36,9 @@ export default async function ProjectListPage({
       <div className='grid grid-cols-1 gap-4'>
         {projects.length === 0 ? (
           <div className='text-center py-20 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800'>
-            <p className='text-zinc-400 dark:text-zinc-500'>{t('noProjects')}</p>
+            <p className='text-zinc-400 dark:text-zinc-500'>
+              {t('noProjects')}
+            </p>
           </div>
         ) : (
           <ProjectListSortable projects={projects} locale={locale} />

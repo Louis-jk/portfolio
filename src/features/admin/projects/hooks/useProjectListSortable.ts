@@ -10,15 +10,12 @@ import {
   deleteProject,
 } from '@/app/[locale]/(private)/[adminPath]/projects/actions';
 import type { AdminProjectListItem } from '@/features/admin/projects/types';
+import { useMounted } from '@/hooks/useMounted';
 
 export function useProjectListSortable(projects: AdminProjectListItem[]) {
   const t = useTranslations('admin.projects');
   const [items, setItems] = useState(projects);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   useEffect(() => {
     setItems(projects);
@@ -60,5 +57,5 @@ export function useProjectListSortable(projects: AdminProjectListItem[]) {
     toast.success(t('deleteProjectDeleted'));
   };
 
-  return { items, isMounted, handleDragEnd, handleDelete };
+  return { items, isMounted: mounted, handleDragEnd, handleDelete };
 }
