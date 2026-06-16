@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { readI18n } from '@/modules/projects';
-import { AdminVisibilityBadge } from '../shared/AdminVisibilityBadge';
 import { AdminProjectCategoryBadges } from './AdminProjectCategoryBadges';
 import type { AdminProjectListItem } from '@/features/admin/projects/types';
 
@@ -17,12 +16,11 @@ export function ProjectListItemMeta({
 }) {
   return (
     <div className='flex-grow'>
-      <AdminProjectCategoryBadges project={project} />
+      <AdminProjectCategoryBadges project={project} showDetails={showDetails} />
       <div className='flex items-center gap-2 mb-1'>
         <h3 className='font-bold text-lg break-words min-w-0 text-slate-900 dark:text-slate-100'>
           {readI18n(project.title, locale) || untitledLabel}
         </h3>
-        {showDetails && <AdminVisibilityBadge isPublic={project.isPublic} />}
       </div>
       {showDetails && (
         <div className='text-xs text-zinc-500 flex gap-4'>

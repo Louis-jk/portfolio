@@ -83,6 +83,10 @@ export const nestClient = {
     return request<T>('POST', path, { ...options, body });
   },
 
+  put<T>(path: string, body: unknown, options?: Omit<RequestOptions, 'body'>) {
+    return request<T>('PUT', path, { ...options, body });
+  },
+
   patch<T>(
     path: string,
     body: unknown,

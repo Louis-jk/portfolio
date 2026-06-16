@@ -271,7 +271,16 @@
       "deleteProjectFailed": "プロジェクトの削除に失敗しました。",
       "deleteProjectDeleted": "プロジェクトが削除されました。",
       "deleteProjectCancelled": "プロジェクトの削除がキャンセルされました。",
-      "deleteProjectCancel": "このプロジェクトを削除してもよろしいですか？"
+      "deleteProjectCancel": "削除をキャンセル",
+      "platformCategories": "プラットフォーム カテゴリ",
+      "domainTags": "ドメイン/技術 タグ",
+      "detailEditorTitle": "詳細ストーリー",
+      "detailEditorHint": "ブロックレイアウトは全言語で共有されます。テキストブロックのみ選択中の言語タブで編集してください。",
+      "detailSave": "ストーリー保存",
+      "detailSaved": "詳細ストーリーを保存しました。",
+      "detailSaveFailed": "詳細ストーリーの保存に失敗しました。",
+      "detailPreviewStory": "公開ストーリーをプレビュー ↗",
+      "detailEditorLoading": "エディターを読み込み中..."
     }
   },
   "projects": {

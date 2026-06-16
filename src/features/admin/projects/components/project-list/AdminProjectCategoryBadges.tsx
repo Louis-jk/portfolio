@@ -1,9 +1,15 @@
 import type { AdminProjectListItem } from '@/features/admin/projects/types';
+import { AdminVisibilityBadge } from '../shared/AdminVisibilityBadge';
 
 export function AdminProjectCategoryBadges({
   project,
+  showDetails = true,
 }: {
-  project: Pick<AdminProjectListItem, 'platformCategories' | 'domainTags'>;
+  project: Pick<
+    AdminProjectListItem,
+    'platformCategories' | 'domainTags' | 'isPublic'
+  >;
+  showDetails?: boolean;
 }) {
   const hasCategories =
     (project.platformCategories?.length ?? 0) > 0 ||
@@ -13,6 +19,7 @@ export function AdminProjectCategoryBadges({
 
   return (
     <div className='flex flex-wrap gap-1.5 mb-1.5'>
+      {showDetails && <AdminVisibilityBadge isPublic={project.isPublic} />}
       {(project.platformCategories ?? []).map((cat) => (
         <span
           key={cat}

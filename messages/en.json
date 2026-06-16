@@ -291,7 +291,16 @@
       "deleteProjectFailed": "Failed to delete project.",
       "deleteProjectDeleted": "Project has been deleted.",
       "deleteProjectCancelled": "Delete project cancelled.",
-      "deleteProjectCancel": "Are you sure you want to delete this project?"
+      "deleteProjectCancel": "Cancel delete",
+      "platformCategories": "Platform Categories",
+      "domainTags": "Domain/Technology Tags",
+      "detailEditorTitle": "Detail Story",
+      "detailEditorHint": "Block layout is shared across all locales. Edit text blocks only in the active locale tab.",
+      "detailSave": "Save story",
+      "detailSaved": "Detail story saved.",
+      "detailSaveFailed": "Failed to save detail story.",
+      "detailPreviewStory": "Preview public story ↗",
+      "detailEditorLoading": "Loading editor..."
     }
   },
   "projects": {

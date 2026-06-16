@@ -82,7 +82,7 @@ export function ProjectFormSidebar({
         />
 
         <ProjectFormVisibilityToggle control={control} watch={watch} t={t} />
-        <ProjectFormCategoryPicker control={control} />
+        <ProjectFormCategoryPicker control={control} t={t} />
 
         <div className='space-y-1'>
           <label className='text-[10px] font-black text-purple-600 uppercase ml-1'>

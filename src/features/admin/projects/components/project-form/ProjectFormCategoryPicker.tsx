@@ -1,10 +1,7 @@
 'use client';
 
 import { Controller, type Control } from 'react-hook-form';
-import {
-  PLATFORM_CATEGORIES,
-  DOMAIN_TAGS,
-} from '@/lib/project-categories';
+import { PLATFORM_CATEGORIES, DOMAIN_TAGS } from '@/lib/project-categories';
 import type { ProjectFormValues } from '@/types/project-form.type';
 
 function CategoryToggleGroup({
@@ -47,14 +44,16 @@ function CategoryToggleGroup({
 
 export function ProjectFormCategoryPicker({
   control,
+  t,
 }: {
   control: Control<ProjectFormValues>;
+  t: (key: string) => string;
 }) {
   return (
     <div className='space-y-4'>
       <div>
         <label className='text-[10px] font-black text-purple-600 uppercase ml-1 block mb-2'>
-          플랫폼 (Web / Mobile / Desktop)
+          {t('platformCategories')}
         </label>
         <Controller
           name='platformCategories'
@@ -70,7 +69,7 @@ export function ProjectFormCategoryPicker({
       </div>
       <div>
         <label className='text-[10px] font-black text-purple-600 uppercase ml-1 block mb-2'>
-          도메인/기술 태그 (Web3, Blockchain, AI)
+          {t('domainTags')}
         </label>
         <Controller
           name='domainTags'
