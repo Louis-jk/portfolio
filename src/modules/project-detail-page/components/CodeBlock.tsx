@@ -23,7 +23,10 @@ export function CodeBlock({ code }: CodeBlockProps) {
         const mermaid = (await import('mermaid')).default;
         mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
         const { svg: rendered } = await mermaid.render(`mermaid-${id}`, code);
-        if (!cancelled) setSvg(rendered);
+        if (!cancelled) {
+          setError(null);
+          setSvg(rendered);
+        }
       } catch (err) {
         if (!cancelled) {
           setError(err instanceof Error ? err.message : 'Mermaid render failed');

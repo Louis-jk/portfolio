@@ -271,7 +271,7 @@
       "deleteProjectFailed": "프로젝트 삭제에 실패했습니다.",
       "deleteProjectDeleted": "프로젝트가 삭제되었습니다.",
       "deleteProjectCancelled": "프로젝트 삭제가 취소되었습니다.",
-      "deleteProjectCancel": "프로젝트 삭제를 취소하시겠습니까?",
+      "deleteProjectCancel": "삭제 취소",
       "platformCategories": "플랫폼 카테고리",
       "domainTags": "도메인/기술 태그",
       "detailEditorTitle": "상세 스토리",

@@ -271,7 +271,7 @@
       "deleteProjectFailed": "プロジェクトの削除に失敗しました。",
       "deleteProjectDeleted": "プロジェクトが削除されました。",
       "deleteProjectCancelled": "プロジェクトの削除がキャンセルされました。",
-      "deleteProjectCancel": "このプロジェクトを削除してもよろしいですか？",
+      "deleteProjectCancel": "削除をキャンセル",
       "platformCategories": "プラットフォーム カテゴリ",
       "domainTags": "ドメイン/技術 タグ",
       "detailEditorTitle": "詳細ストーリー",

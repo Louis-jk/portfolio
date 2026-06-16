@@ -82,12 +82,13 @@ export function createEditorImageTool(
     }
 
     private rerender() {
-      if (!this.wrapper) return;
-      const parent = this.wrapper.parentElement;
+      const current = this.wrapper;
+      if (!current) return;
+      const parent = current.parentElement;
       if (!parent) return;
       const next = this.render();
-      parent.replaceChild(next, this.wrapper);
-      this.wrapper = next as HTMLDivElement;
+      parent.replaceChild(next, current);
+      this.wrapper = next;
     }
   };
 }

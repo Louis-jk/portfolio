@@ -34,11 +34,16 @@ export function EditorJsAdmin({
   initialContent,
   initialIsPublic,
 }: EditorJsAdminProps) {
+  const normalizeLocale = (value: string): I18nLocale =>
+    value === 'ko' || value === 'ja' || value === 'en' ? value : 'ko';
+
+  const initialLocale = normalizeLocale(locale);
   const t = useTranslations('admin.projects');
   const holderRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<EditorJS | null>(null);
   const initialContentRef = useRef(initialContent);
-  const [activeLocale, setActiveLocaleState] = useState<I18nLocale>('ko');
+  const [activeLocale, setActiveLocaleState] =
+    useState<I18nLocale>(initialLocale);
   const [isPublic, setIsPublic] = useState(initialIsPublic);
   const [isSaving, setIsSaving] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -100,10 +105,13 @@ export function EditorJsAdmin({
     };
   }, [t, uploadByFile]);
 
-  const handleLocaleChange = (nextLocale: I18nLocale) => {
-    setActiveLocale(nextLocale);
-    setActiveLocaleState(nextLocale);
+  useEffect(() => {
+    setActiveLocale(activeLocale);
     refreshAllI18nTools();
+  }, [activeLocale]);
+
+  const handleLocaleChange = (nextLocale: I18nLocale) => {
+    setActiveLocaleState(nextLocale);
   };
 
   const handleSave = async () => {

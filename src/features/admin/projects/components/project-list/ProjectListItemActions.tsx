@@ -32,7 +32,7 @@ export function ProjectListItemActions({
       <Link
         href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${projectId}/detail`}
         className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
-        title='스토리 보기'
+        title='스토리 편집'
         aria-label='Edit project story'
       >
         <FileText size={18} />

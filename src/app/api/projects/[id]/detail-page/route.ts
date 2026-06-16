@@ -7,6 +7,7 @@ import {
   deleteProjectDetailPage,
 } from '@/modules/project-detail-page';
 import { toApiErrorResponse } from '@/lib/http/api-error';
+import { parseProjectId } from '@/lib/http/parse-project-id';
 
 export const runtime = 'nodejs';
 
@@ -19,8 +20,8 @@ export async function GET(_request: Request, context: RouteContext) {
   }
 
   const { id } = await context.params;
-  const projectId = parseInt(id, 10);
-  if (Number.isNaN(projectId)) {
+  const projectId = parseProjectId(id);
+  if (projectId === null) {
     return NextResponse.json({ error: 'Invalid project id' }, { status: 400 });
   }
 
@@ -42,8 +43,8 @@ export async function PUT(request: Request, context: RouteContext) {
   }
 
   const { id } = await context.params;
-  const projectId = parseInt(id, 10);
-  if (Number.isNaN(projectId)) {
+  const projectId = parseProjectId(id);
+  if (projectId === null) {
     return NextResponse.json({ error: 'Invalid project id' }, { status: 400 });
   }
 
@@ -63,8 +64,8 @@ export async function PATCH(request: Request, context: RouteContext) {
   }
 
   const { id } = await context.params;
-  const projectId = parseInt(id, 10);
-  if (Number.isNaN(projectId)) {
+  const projectId = parseProjectId(id);
+  if (projectId === null) {
     return NextResponse.json({ error: 'Invalid project id' }, { status: 400 });
   }
 
@@ -84,8 +85,8 @@ export async function DELETE(_request: Request, context: RouteContext) {
   }
 
   const { id } = await context.params;
-  const projectId = parseInt(id, 10);
-  if (Number.isNaN(projectId)) {
+  const projectId = parseProjectId(id);
+  if (projectId === null) {
     return NextResponse.json({ error: 'Invalid project id' }, { status: 400 });
   }
 

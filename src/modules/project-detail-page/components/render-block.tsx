@@ -1,5 +1,6 @@
 import { createElement, type ReactNode } from 'react';
 import Image from 'next/image';
+import { sanitizeHtml } from '@/lib/sanitize-html';
 import type { EditorBlock, I18nLocale } from '../types';
 import { getBlockText } from '../lib/block-utils';
 import { CodeBlock } from './CodeBlock';
@@ -18,6 +19,7 @@ function getImageUrl(data: Record<string, unknown>): string | null {
 function renderHeader(block: EditorBlock, locale: I18nLocale): ReactNode {
   const text = getBlockText(block, locale);
   if (!text) return null;
+  const safeText = sanitizeHtml(text);
   const level = Math.min(Math.max(Number(block.data.level) || 2, 1), 6);
   return createElement(
     `h${level}`,
@@ -25,17 +27,18 @@ function renderHeader(block: EditorBlock, locale: I18nLocale): ReactNode {
       className:
         'font-black tracking-tight text-slate-900 dark:text-slate-100',
     },
-    createElement('span', { dangerouslySetInnerHTML: { __html: text } }),
+    createElement('span', { dangerouslySetInnerHTML: { __html: safeText } }),
   );
 }
 
 function renderParagraph(block: EditorBlock, locale: I18nLocale): ReactNode {
   const text = getBlockText(block, locale);
   if (!text) return null;
+  const safeText = sanitizeHtml(text);
   return (
     <p
       className='leading-relaxed text-slate-700 dark:text-slate-300'
-      dangerouslySetInnerHTML={{ __html: text }}
+      dangerouslySetInnerHTML={{ __html: safeText }}
     />
   );
 }
@@ -43,9 +46,10 @@ function renderParagraph(block: EditorBlock, locale: I18nLocale): ReactNode {
 function renderQuote(block: EditorBlock, locale: I18nLocale): ReactNode {
   const text = getBlockText(block, locale);
   if (!text) return null;
+  const safeText = sanitizeHtml(text);
   return (
     <blockquote className='border-l-4 border-purple-500 pl-4 italic text-slate-600 dark:text-slate-400'>
-      <span dangerouslySetInnerHTML={{ __html: text }} />
+      <span dangerouslySetInnerHTML={{ __html: safeText }} />
     </blockquote>
   );
 }
@@ -53,11 +57,12 @@ function renderQuote(block: EditorBlock, locale: I18nLocale): ReactNode {
 function renderList(block: EditorBlock, locale: I18nLocale): ReactNode {
   const text = getBlockText(block, locale);
   if (!text) return null;
+  const safeText = sanitizeHtml(text);
   const style = block.data.style === 'ordered' ? 'ol' : 'ul';
   return (
     <div
       className='prose prose-zinc dark:prose-invert max-w-none [&_li]:my-1'
-      dangerouslySetInnerHTML={{ __html: `<${style}>${text}</${style}>` }}
+      dangerouslySetInnerHTML={{ __html: `<${style}>${safeText}</${style}>` }}
     />
   );
 }

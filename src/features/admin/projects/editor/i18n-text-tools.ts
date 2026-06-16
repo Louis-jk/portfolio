@@ -1,4 +1,5 @@
 import type { PartialI18n } from '@/modules/project-detail-page';
+import { sanitizeHtml } from '@/lib/sanitize-html';
 import {
   getActiveLocale,
   registerI18nTool,
@@ -56,14 +57,14 @@ export function createI18nTextTool({
         .filter(Boolean)
         .join(' ');
       if (placeholder) el.dataset.placeholder = placeholder;
-      el.innerHTML = this.getCurrentText();
+      el.innerHTML = sanitizeHtml(this.getCurrentText());
 
       if (!this.readOnly) {
         el.addEventListener('input', () => {
           const locale = getActiveLocale();
           this.data.i18n = {
             ...this.data.i18n,
-            [locale]: el.innerHTML,
+            [locale]: sanitizeHtml(el.innerHTML),
           };
         });
       }
@@ -75,7 +76,7 @@ export function createI18nTextTool({
 
     updateLocale() {
       if (!this.element) return;
-      this.element.innerHTML = this.getCurrentText();
+      this.element.innerHTML = sanitizeHtml(this.getCurrentText());
     }
 
     save() {
@@ -143,13 +144,13 @@ export function createI18nHeaderTool() {
       input.contentEditable = this.readOnly ? 'false' : 'true';
       input.className =
         'min-h-[2rem] text-2xl font-black outline-none tracking-tight';
-      input.innerHTML = this.getCurrentText();
+      input.innerHTML = sanitizeHtml(this.getCurrentText());
       if (!this.readOnly) {
         input.addEventListener('input', () => {
           const locale = getActiveLocale();
           this.data.i18n = {
             ...this.data.i18n,
-            [locale]: input.innerHTML,
+            [locale]: sanitizeHtml(input.innerHTML),
           };
         });
       }
@@ -164,7 +165,7 @@ export function createI18nHeaderTool() {
     }
 
     updateLocale() {
-      if (this.input) this.input.innerHTML = this.getCurrentText();
+      if (this.input) this.input.innerHTML = sanitizeHtml(this.getCurrentText());
     }
 
     save() {

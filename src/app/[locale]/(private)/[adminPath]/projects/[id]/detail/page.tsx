@@ -5,6 +5,7 @@ import {
   EMPTY_EDITOR_OUTPUT,
   getProjectDetailPage,
 } from '@/modules/project-detail-page';
+import { parseProjectId } from '@/lib/http/parse-project-id';
 import { ProjectDetailEditorClient } from '@/features/admin/projects/components/project-detail/ProjectDetailEditorClient';
 
 export default async function ProjectDetailEditorPage({
@@ -13,8 +14,8 @@ export default async function ProjectDetailEditorPage({
   params: Promise<{ id: string; locale: string; adminPath: string }>;
 }) {
   const { id, locale } = await params;
-  const projectId = parseInt(id, 10);
-  if (Number.isNaN(projectId)) notFound();
+  const projectId = parseProjectId(id);
+  if (projectId === null) notFound();
 
   const project = await getProjectById(projectId);
   if (!project) notFound();
