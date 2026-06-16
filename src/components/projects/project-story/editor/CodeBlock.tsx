@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useState } from 'react';
-import { isMermaidSource } from '../lib/embed-utils';
+import { isMermaidSource } from '@/lib/project-detail-page';
 
 type CodeBlockProps = {
   code: string;

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
-import { EditorJsRenderer } from '@/modules/project-detail-page/components/EditorJsRenderer';
+import { EditorJsRenderer } from '@/components/projects/project-story/editor';
 import type { EditorOutput, I18nLocale } from '@/modules/project-detail-page';
 
 type ProjectStoryShellProps = {

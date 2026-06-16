@@ -21,13 +21,3 @@ export {
   patchProjectDetailPage,
   upsertProjectDetailPage,
 } from './detail-page.service';
-
-export {
-  getBlockI18n,
-  getBlockText,
-  hasRenderableBlocks,
-  isI18nTextBlock,
-} from './lib/block-utils';
-
-export { EditorJsRenderer } from './components/EditorJsRenderer';
-export { renderBlock } from './components/render-block';
