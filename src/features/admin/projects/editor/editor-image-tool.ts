@@ -1,4 +1,9 @@
-import type { BlockTool, BlockToolConstructorOptions } from '@editorjs/editorjs';
+import type {
+  BlockTool,
+  BlockToolConstructorOptions,
+  PasteEvent,
+} from '@editorjs/editorjs';
+import { editorImagePasteMimeTypes } from './editor-image-paste';
 
 type UploadResult = {
   success: boolean;
@@ -24,6 +29,17 @@ export function createEditorImageTool(
       };
     }
 
+    static get pasteConfig() {
+      return {
+        files: {
+          mimeTypes: [...editorImagePasteMimeTypes],
+        },
+        patterns: {
+          image: /https?:\/\/\S+\.(?:gif|jpe?g|png|webp)(?:\?\S*)?$/i,
+        },
+      };
+    }
+
     private data: ImageData;
     private wrapper: HTMLElement | null = null;
 
@@ -38,7 +54,7 @@ export function createEditorImageTool(
       if (this.data.file?.url) {
         const img = document.createElement('img');
         img.src = this.data.file.url;
-        img.className = 'max-h-80 w-full rounded-xl object-cover';
+        img.className = 'h-auto w-full rounded-xl object-contain';
         wrapper.appendChild(img);
       } else {
         const input = document.createElement('input');
@@ -69,6 +85,24 @@ export function createEditorImageTool(
       this.wrapper = wrapper;
       wrapper.appendChild(caption);
       return wrapper;
+    }
+
+    onPaste(event: PasteEvent) {
+      if (event.type === 'file' && 'file' in event.detail) {
+        const file = event.detail.file as File;
+        void uploadByFile(file).then((result) => {
+          if (!result.success || !result.file?.url) return;
+          this.data.file = { url: result.file.url };
+          this.rerender();
+        });
+        return;
+      }
+
+      if (event.type === 'pattern' && 'data' in event.detail) {
+        const url = String(event.detail.data);
+        this.data.file = { url };
+        this.rerender();
+      }
     }
 
     save() {
