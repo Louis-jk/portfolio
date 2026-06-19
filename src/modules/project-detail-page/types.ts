@@ -7,6 +7,7 @@ export const I18N_TEXT_BLOCK_TYPES = [
   'header',
   'list',
   'quote',
+  'details',
 ] as const;
 
 export const SHARED_BLOCK_TYPES = [

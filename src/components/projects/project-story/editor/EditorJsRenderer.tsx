@@ -1,7 +1,7 @@
 'use client';
 
 import type { EditorOutput, I18nLocale } from '@/modules/project-detail-page';
-import { renderBlock } from './render-block';
+import { renderStoryBlocks } from './render-story-blocks';
 
 type EditorJsRendererProps = {
   content: EditorOutput;
@@ -12,16 +12,8 @@ export function EditorJsRenderer({ content, locale }: EditorJsRendererProps) {
   if (!content.blocks.length) return null;
 
   return (
-    <article className='space-y-8'>
-      {content.blocks.map((block, index) => {
-        const node = renderBlock(block, locale);
-        if (!node) return null;
-        return (
-          <div key={block.id ?? `${block.type}-${index}`} className='editor-block'>
-            {node}
-          </div>
-        );
-      })}
+    <article className='story-prose'>
+      {renderStoryBlocks(content.blocks, locale)}
     </article>
   );
 }
