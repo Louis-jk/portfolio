@@ -12,6 +12,7 @@ export function getActiveLocale(): I18nLocale {
 
 export type I18nToolInstance = {
   updateLocale: () => void;
+  syncActiveLocaleToData: () => void;
 };
 
 const i18nToolInstances = new Set<I18nToolInstance>();
@@ -23,4 +24,8 @@ export function registerI18nTool(instance: I18nToolInstance): () => void {
 
 export function refreshAllI18nTools(): void {
   i18nToolInstances.forEach((instance) => instance.updateLocale());
+}
+
+export function syncAllI18nToolsToActiveLocale(): void {
+  i18nToolInstances.forEach((instance) => instance.syncActiveLocaleToData());
 }

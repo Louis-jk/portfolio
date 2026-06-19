@@ -5,6 +5,8 @@ import { getTranslations } from 'next-intl/server';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import type { ProjectLocale } from '@/modules/projects';
 import { ProjectEditForm } from '@/features/admin';
+import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
+import { ADMIN_EDIT_SURFACE_CLASS } from '@/constants/admin-layout';
 
 export default async function ProjectEditPage({
   params,
@@ -65,21 +67,28 @@ export default async function ProjectEditPage({
   };
 
   return (
-    <div className='py-10 bg-zinc-50 dark:bg-slate-950 min-h-screen'>
-      <div className='max-w-7xl mx-auto px-8 mb-6 flex items-center gap-3'>
-        <Link
-          href={`/${locale}${ADMIN_ROUTES.PROJECTS}`}
-          className='text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition'
-        >
-          {t('backToList')}
-        </Link>
-        <span className='text-zinc-300 dark:text-zinc-600'>|</span>
-        <Link
-          href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${projectId}`}
-          className='text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 font-medium transition'
-        >
-          {t('preview')}
-        </Link>
+    <div className='min-h-screen bg-zinc-50 py-6 dark:bg-slate-950'>
+      <div className={`${ADMIN_EDIT_SURFACE_CLASS} mb-6 flex flex-wrap items-center justify-between gap-4`}>
+        <div className='flex flex-wrap items-center gap-3'>
+          <Link
+            href={`/${locale}${ADMIN_ROUTES.PROJECTS}`}
+            className='text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition'
+          >
+            {t('backToList')}
+          </Link>
+          <span className='text-zinc-300 dark:text-zinc-600'>|</span>
+          <Link
+            href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${projectId}`}
+            className='text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 font-medium transition'
+          >
+            {t('preview')}
+          </Link>
+        </div>
+        <ProjectStoryAdminLinks
+          projectId={projectId}
+          locale={locale}
+          variant='button'
+        />
       </div>
       <ProjectEditForm
         projectId={projectId}

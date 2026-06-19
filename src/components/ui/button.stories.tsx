@@ -4,6 +4,8 @@ import { Button } from './button';
 
 const variants = [
   'default',
+  'soft',
+  'point',
   'outline',
   'secondary',
   'ghost',
@@ -41,6 +43,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const Soft: Story = {
+  args: { variant: 'soft', children: 'View story' },
+};
+
+export const Point: Story = {
+  args: { variant: 'point', children: 'View story', className: 'rounded-full' },
+};
 
 export const Outline: Story = {
   args: { variant: 'outline' },

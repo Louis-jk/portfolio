@@ -5,17 +5,34 @@ import type EditorJS from '@editorjs/editorjs';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { getPublicStoryUrl } from '@/lib/projects/public-story-url';
 import {
   type EditorOutput,
   type I18nLocale,
 } from '@/modules/project-detail-page';
+import {
+  flattenDetailsBlocks,
+  findEmptyDetailsSections,
+  nestDetailsBlocks,
+} from '@/lib/project-detail-page/details-blocks';
 import { uploadProjectImage } from '@/app/[locale]/(private)/[adminPath]/projects/upload-image';
+import { uploadProjectVideo } from '@/app/[locale]/(private)/[adminPath]/projects/upload-video';
+import { prepareVideoForUpload } from '@/lib/media/compress-video.client';
 import { saveProjectDetailPageAction } from '@/app/[locale]/(private)/[adminPath]/projects/[id]/detail/action';
+import { translateStoryContentAction } from '@/app/[locale]/(private)/[adminPath]/projects/[id]/detail/translate-action';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import {
   refreshAllI18nTools,
   setActiveLocale,
+  syncAllI18nToolsToActiveLocale,
 } from '@/features/admin/projects/editor/locale-context';
+import { attachEditorImagePaste } from '@/features/admin/projects/editor/editor-image-paste';
+import { attachEditorCodePaste } from '@/features/admin/projects/editor/editor-code-paste';
+import { attachEditorI18nEnterSplit } from '@/features/admin/projects/editor/editor-i18n-enter-split';
+import { attachEditorMarkdownShortcuts } from '@/features/admin/projects/editor/editor-markdown-shortcuts';
+import { attachEditorInlineCode } from '@/features/admin/projects/editor/editor-inline-code';
+import { attachEditorUndo } from '@/features/admin/projects/editor/editor-undo';
+import { STORY_CONTENT_SHELL_CLASS } from '@/constants/story-layout';
 import { LocaleTabSwitcher } from './LocaleTabSwitcher';
 import { AdminVisibilityBadge } from '@/features/admin/projects/components/shared/AdminVisibilityBadge';
 
@@ -41,11 +58,12 @@ export function EditorJsAdmin({
   const t = useTranslations('admin.projects');
   const holderRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<EditorJS | null>(null);
-  const initialContentRef = useRef(initialContent);
+  const initialContentRef = useRef(flattenDetailsBlocks(initialContent));
   const [activeLocale, setActiveLocaleState] =
     useState<I18nLocale>(initialLocale);
   const [isPublic, setIsPublic] = useState(initialIsPublic);
   const [isSaving, setIsSaving] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isLoadingEditor, setIsLoadingEditor] = useState(true);
 
@@ -60,26 +78,71 @@ export function EditorJsAdmin({
     return { success: true, file: { url: result.url } };
   }, []);
 
+  const uploadVideoByFile = useCallback(
+    async (file: File, onProgress?: (message: string) => void) => {
+      try {
+        const prepared = await prepareVideoForUpload(file, onProgress);
+        const formData = new FormData();
+        formData.append('file', prepared);
+        const result = await uploadProjectVideo(formData);
+        if (!result.success) {
+          toast.error(result.error);
+          return { success: false, error: result.error };
+        }
+        return { success: true, file: { url: result.url } };
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : '영상 업로드에 실패했습니다.';
+        toast.error(message);
+        return { success: false, error: message };
+      }
+    },
+    [],
+  );
+
   useEffect(() => {
     if (!holderRef.current || editorRef.current) return;
 
     let cancelled = false;
+    let detachImagePaste: (() => void) | null = null;
+    let detachCodePaste: (() => void) | null = null;
+    let detachMarkdownShortcuts: (() => void) | null = null;
+    let detachInlineCode: (() => void) | null = null;
+    let detachI18nEnterSplit: (() => void) | null = null;
 
     void (async () => {
       try {
-        const [{ default: EditorJs }, { createEditorTools }] = await Promise.all([
-          import('@editorjs/editorjs'),
-          import('@/features/admin/projects/editor/editor-config'),
-        ]);
+        const [{ default: EditorJs }, { createEditorTools }] =
+          await Promise.all([
+            import('@editorjs/editorjs'),
+            import('@/features/admin/projects/editor/editor-config'),
+          ]);
 
         if (cancelled || !holderRef.current) return;
 
         const editor = new EditorJs({
           holder: holderRef.current,
           data: initialContentRef.current,
-          tools: createEditorTools(uploadByFile),
+          tools: createEditorTools(uploadByFile, uploadVideoByFile),
           onReady: () => {
-            if (!cancelled) setIsReady(true);
+            if (cancelled || !holderRef.current) return;
+            detachImagePaste = attachEditorImagePaste(
+              holderRef.current,
+              editor,
+              uploadByFile,
+            );
+            detachCodePaste = attachEditorCodePaste(holderRef.current, editor);
+            detachMarkdownShortcuts = attachEditorMarkdownShortcuts(
+              holderRef.current,
+              editor,
+            );
+            detachInlineCode = attachEditorInlineCode(holderRef.current, editor);
+            detachI18nEnterSplit = attachEditorI18nEnterSplit(
+              holderRef.current,
+              editor,
+            );
+            void attachEditorUndo(editor, initialContentRef.current);
+            setIsReady(true);
           },
         });
 
@@ -95,6 +158,16 @@ export function EditorJsAdmin({
 
     return () => {
       cancelled = true;
+      detachImagePaste?.();
+      detachImagePaste = null;
+      detachCodePaste?.();
+      detachCodePaste = null;
+      detachMarkdownShortcuts?.();
+      detachMarkdownShortcuts = null;
+      detachInlineCode?.();
+      detachInlineCode = null;
+      detachI18nEnterSplit?.();
+      detachI18nEnterSplit = null;
       const editor = editorRef.current;
       editorRef.current = null;
       if (editor) {
@@ -103,7 +176,9 @@ export function EditorJsAdmin({
         });
       }
     };
-  }, [t, uploadByFile]);
+    // `t` is intentionally omitted: an unstable reference would destroy and
+    // re-create the editor after save, resetting visible content.
+  }, [uploadByFile, uploadVideoByFile]);
 
   useEffect(() => {
     setActiveLocale(activeLocale);
@@ -111,23 +186,60 @@ export function EditorJsAdmin({
   }, [activeLocale]);
 
   const handleLocaleChange = (nextLocale: I18nLocale) => {
+    if (nextLocale === activeLocale) return;
+    syncAllI18nToolsToActiveLocale();
     setActiveLocaleState(nextLocale);
+  };
+
+  const handleAutoTranslate = async () => {
+    if (!editorRef.current || activeLocale === 'ko') return;
+
+    setIsTranslating(true);
+    try {
+      const current = (await editorRef.current.save()) as EditorOutput;
+      const result = await translateStoryContentAction({
+        content: current,
+        targetLocale: activeLocale,
+      });
+      if (!result.success) {
+        toast.error(result.error);
+        return;
+      }
+
+      await editorRef.current.render(result.content);
+      initialContentRef.current = result.content;
+      refreshAllI18nTools();
+      toast.success(t('detailAutoTranslateDone'));
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : t('detailAutoTranslateFailed'),
+      );
+    } finally {
+      setIsTranslating(false);
+    }
   };
 
   const handleSave = async () => {
     if (!editorRef.current) return;
     setIsSaving(true);
     try {
-      const output = (await editorRef.current.save()) as EditorOutput;
+      const flatOutput = (await editorRef.current.save()) as EditorOutput;
+      const nestedOutput = nestDetailsBlocks(flatOutput);
+      const emptyDetails = findEmptyDetailsSections(nestedOutput);
+
       const result = await saveProjectDetailPageAction({
         projectId,
         locale,
-        content: output,
+        content: nestedOutput,
         isPublic,
       });
       if (!result.success) {
         toast.error(result.error ?? t('detailSaveFailed'));
         return;
+      }
+      initialContentRef.current = flatOutput;
+      if (emptyDetails.length > 0) {
+        toast.warning(t('detailEmptyToggleSections'));
       }
       toast.success(t('detailSaved'));
     } catch (error) {
@@ -142,16 +254,32 @@ export function EditorJsAdmin({
   const projectsBase = `/${locale}${ADMIN_ROUTES.PROJECTS}`;
 
   return (
-    <div className='mx-auto max-w-4xl space-y-6 p-6'>
+    <div className={`${STORY_CONTENT_SHELL_CLASS} space-y-6 py-4`}>
       <header className='space-y-4 border-b border-zinc-200 pb-6 dark:border-zinc-800'>
         <div className='flex flex-wrap items-center justify-between gap-4'>
           <div className='space-y-1'>
-            <Link
-              href={`${projectsBase}/${projectId}/edit`}
-              className='text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'
-            >
-              {t('backToList')}
-            </Link>
+            <div className='flex flex-wrap items-center gap-2 text-sm text-zinc-500'>
+              <Link
+                href={projectsBase}
+                className='hover:text-zinc-900 dark:hover:text-zinc-100'
+              >
+                {t('backToList')}
+              </Link>
+              <span className='text-zinc-300 dark:text-zinc-600'>|</span>
+              <Link
+                href={`${projectsBase}/${projectId}`}
+                className='hover:text-zinc-900 dark:hover:text-zinc-100'
+              >
+                {t('preview')}
+              </Link>
+              <span className='text-zinc-300 dark:text-zinc-600'>|</span>
+              <Link
+                href={`${projectsBase}/${projectId}/edit`}
+                className='hover:text-zinc-900 dark:hover:text-zinc-100'
+              >
+                {t('edit')}
+              </Link>
+            </div>
             <h1 className='text-3xl font-black tracking-tighter text-slate-900 dark:text-slate-100'>
               {t('detailEditorTitle')}: {projectTitle}
             </h1>
@@ -161,6 +289,20 @@ export function EditorJsAdmin({
               activeLocale={activeLocale}
               onChange={handleLocaleChange}
             />
+            {activeLocale !== 'ko' ? (
+              <button
+                type='button'
+                onClick={() => {
+                  void handleAutoTranslate();
+                }}
+                disabled={!isReady || isTranslating || isSaving}
+                className='rounded-full border border-purple-200 px-4 py-2 text-sm font-bold text-purple-700 transition hover:bg-purple-50 disabled:opacity-50 dark:border-purple-900 dark:text-purple-300 dark:hover:bg-purple-950/40'
+              >
+                {isTranslating
+                  ? t('detailAutoTranslating')
+                  : t('detailAutoTranslate')}
+              </button>
+            ) : null}
             <button
               type='button'
               onClick={() => setIsPublic((prev) => !prev)}
@@ -179,8 +321,15 @@ export function EditorJsAdmin({
           </div>
         </div>
         <p className='text-sm text-zinc-500'>{t('detailEditorHint')}</p>
+        <p className='text-sm text-zinc-400'>{t('detailEditorI18nHint')}</p>
+        <p className='text-sm text-zinc-400'>
+          {t('detailEditorImagePasteHint')}
+        </p>
+        <p className='text-sm text-zinc-400'>{t('detailEditorMarkdownHint')}</p>
+        <p className='text-sm text-zinc-400'>{t('detailEditorUndoHint')}</p>
+        <p className='text-sm text-zinc-400'>{t('detailEditorVideoHint')}</p>
         <Link
-          href={`/${locale}/projects/${projectId}/story`}
+          href={getPublicStoryUrl(locale, projectId)}
           className='text-sm font-medium text-purple-600 hover:text-purple-700'
           target='_blank'
         >
@@ -193,7 +342,7 @@ export function EditorJsAdmin({
       ) : null}
       <div
         ref={holderRef}
-        className='min-h-[480px] rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900'
+        className='admin-editor-js min-h-[480px] w-full rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-6 dark:border-zinc-800 dark:bg-zinc-900 lg:p-8'
       />
     </div>
   );

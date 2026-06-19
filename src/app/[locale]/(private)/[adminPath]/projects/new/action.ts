@@ -1,7 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { ADMIN_ROUTES } from '@/constants/admin-routes';
+import { revalidateProjectsList } from '@/lib/revalidate-projects';
 import { requireAuth } from '@/utils/supabase/auth';
 import type { ProjectFormData } from '@/modules/projects';
 import { validateProjectServerPayload } from '@/modules/projects';
@@ -31,8 +30,7 @@ export async function saveProject(data: ProjectFormData) {
       'Project save',
     );
 
-    revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
-    revalidatePath('/[locale]', 'layout');
+    revalidateProjectsList();
 
     return { success: true, id: result.id };
   } catch (error) {

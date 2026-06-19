@@ -1,9 +1,7 @@
 import React from 'react';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import ThemeToggle from '@/components/theme/ThemeToggle';
-import { AdminLogoutButton } from '@/features/admin';
+import { AdminLogoutButton, AdminSidebarNav } from '@/features/admin';
 import { createClient } from '@/utils/supabase/server';
 
 const EXPECTED_ADMIN_PATH = (
@@ -28,7 +26,6 @@ export default async function AdminLayout({
   const isLoggedIn = !!data?.claims;
   const userEmail = data?.claims?.email ?? 'Not logged in';
 
-  const base = `/${locale}${ADMIN_ROUTES.DASHBOARD}`;
   return (
     <div className='flex h-screen bg-slate-50 dark:bg-slate-950'>
       {/* 사이드바 */}
@@ -37,32 +34,7 @@ export default async function AdminLayout({
           {/* 🚀 Success Gate */}
           🚀 Dashboard
         </div>
-        <nav className='flex-1 p-4 space-y-2'>
-          <Link
-            href={base}
-            className='block p-2 hover:bg-slate-800 dark:hover:bg-slate-800/80 rounded transition'
-          >
-            Dashboard
-          </Link>
-          <Link
-            href={`/${locale}${ADMIN_ROUTES.PROJECTS}`}
-            className='block p-2 hover:bg-slate-800 dark:hover:bg-slate-800/80 rounded transition'
-          >
-            Manage Projects
-          </Link>
-          <Link
-            href={`/${locale}${ADMIN_ROUTES.NEW_PROJECT}`}
-            className='block p-2 hover:bg-slate-800 dark:hover:bg-slate-800/80 rounded transition pl-6 text-sm text-slate-400'
-          >
-            + New Project
-          </Link>
-          <Link
-            href={`${base}/analytics`}
-            className='block p-2 hover:bg-slate-800 dark:hover:bg-slate-800/80 rounded transition'
-          >
-            GA4 Analytics
-          </Link>
-        </nav>
+        <AdminSidebarNav locale={locale} />
         <div className='p-4 border-t border-slate-800 text-xs text-slate-500'>
           Logined as: {userEmail}
         </div>
@@ -80,7 +52,7 @@ export default async function AdminLayout({
           </div>
         </header>
 
-        <main className='flex-1 overflow-y-auto p-8 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100'>
+        <main className='flex-1 overflow-y-auto bg-slate-50 p-6 text-slate-900 dark:bg-slate-950 dark:text-slate-100 lg:p-8'>
           {children}
         </main>
       </div>

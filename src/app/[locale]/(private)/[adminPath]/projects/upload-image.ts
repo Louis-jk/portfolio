@@ -34,7 +34,17 @@ export async function uploadProjectImage(
     };
   }
 
-  const fileExt = file.name.split('.').pop()?.toLowerCase();
+  const MIME_TO_EXT: Record<string, string> = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/webp': 'webp',
+    'image/gif': 'gif',
+  };
+
+  let fileExt = file.name.split('.').pop()?.toLowerCase();
+  if (!fileExt || !ALLOWED_IMAGE_EXTENSIONS.has(fileExt)) {
+    fileExt = MIME_TO_EXT[file.type];
+  }
   if (!fileExt || !ALLOWED_IMAGE_EXTENSIONS.has(fileExt)) {
     return {
       success: false,
