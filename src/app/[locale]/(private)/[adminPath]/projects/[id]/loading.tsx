@@ -1,6 +1,8 @@
+import { ADMIN_EDIT_SURFACE_CLASS } from '@/constants/admin-layout';
+
 export default function ProjectDetailLoading() {
   return (
-    <div className='max-w-4xl mx-auto p-8 space-y-6 animate-pulse'>
+    <div className={`${ADMIN_EDIT_SURFACE_CLASS} space-y-6 py-6 animate-pulse`}>
       <div className='flex gap-4 items-center'>
         <div className='h-48 w-64 bg-slate-200 dark:bg-slate-800 rounded-xl' />
         <div className='flex-1 space-y-3'>

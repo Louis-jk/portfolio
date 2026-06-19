@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Pencil, Globe, Smartphone, Laptop, Lock } from 'lucide-react';
+import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
+import { ADMIN_EDIT_SURFACE_CLASS } from '@/constants/admin-layout';
 import Image from 'next/image';
 
 import { readI18n, readI18nArray } from '@/modules/projects';
@@ -50,7 +52,7 @@ export default function ProjectPreviewClient({
   };
 
   return (
-    <div className='max-w-7xl mx-auto px-8 py-6 space-y-8'>
+    <div className={`${ADMIN_EDIT_SURFACE_CLASS} space-y-8 py-4`}>
       {/* 상단: 뒤로가기 + 수정하기 버튼 */}
       <div className='flex justify-between items-center'>
         <Link
@@ -59,13 +61,20 @@ export default function ProjectPreviewClient({
         >
           {tAdmin('backToList')}
         </Link>
-        <Link
-          href={`${basePath}/${project.id}/edit`}
-          className='inline-flex items-center gap-2 bg-purple-600 text-white px-5 py-2.5 rounded-md font-medium hover:bg-purple-600 transition shadow-sm'
-        >
-          <Pencil size={16} />
-          {tAdmin('edit')}
-        </Link>
+        <div className='flex flex-wrap items-center gap-2'>
+          <ProjectStoryAdminLinks
+            projectId={project.id}
+            locale={locale}
+            variant='button'
+          />
+          <Link
+            href={`${basePath}/${project.id}/edit`}
+            className='inline-flex items-center gap-2 bg-purple-600 text-white px-5 py-2.5 rounded-md font-medium hover:bg-purple-600 transition shadow-sm'
+          >
+            <Pencil size={16} />
+            {tAdmin('edit')}
+          </Link>
+        </div>
       </div>
 
       {/* 미리보기 카드 */}

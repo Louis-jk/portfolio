@@ -15,9 +15,11 @@ const Resume = ({ locale }: { locale: string }) => {
 
   return (
     <Link href={resumePath} target='_blank' rel='noopener noreferrer'>
-      <div className='flex flex-row items-center justify-baseline gap-2 bg-purple-500 px-4 py-2 rounded-md hover:bg-purple-600 transition-all duration-300'>
-        <span className='text-md font-bold text-white'>{tResumeTitle}</span>
-        <MdOpenInNew className='w-4 h-4 text-white' />
+      <div className='flex flex-row items-center justify-baseline gap-2 bg-primary font-bold text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-all duration-300'>
+        <span className='text-md font-bold text-primary-foreground'>
+          {tResumeTitle}
+        </span>
+        <MdOpenInNew className='w-4 h-4 text-primary-foreground' />
       </div>
     </Link>
   );

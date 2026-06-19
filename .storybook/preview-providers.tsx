@@ -6,7 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 
 const storybookMessages = {
   projectStory: {
-    viewStory: '상세 보기',
+    viewStory: '스토리 보기',
     backToProject: '프로젝트로 돌아가기',
     storyLabel: 'Project Story',
     loading: '스토리를 불러오는 중…',
@@ -18,7 +18,11 @@ const storybookMessages = {
 export function StorybookProviders({ children }: { children: ReactNode }) {
   return (
     <NextIntlClientProvider locale='ko' messages={storybookMessages}>
-      <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
+      <ThemeProvider
+        attribute='class'
+        defaultTheme='light'
+        enableSystem={false}
+      >
         <Suspense fallback={null}>{children}</Suspense>
       </ThemeProvider>
     </NextIntlClientProvider>

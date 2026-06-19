@@ -2,7 +2,6 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/utils/supabase/auth';
-import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import {
   upsertProjectDetailPage,
   type EditorOutput,
@@ -25,10 +24,9 @@ export async function saveProjectDetailPageAction(input: {
       isPublic: input.isPublic,
     });
 
-    revalidatePath(
-      `/${input.locale}${ADMIN_ROUTES.PROJECTS}/${input.projectId}/detail`,
-    );
+    // Do not revalidate the admin editor page — it remounts the client editor.
     revalidatePath(`/${input.locale}/projects/${input.projectId}/story`);
+    revalidatePath(`/${input.locale}`);
 
     return { success: true as const };
   } catch (error) {
