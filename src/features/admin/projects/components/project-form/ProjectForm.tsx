@@ -12,6 +12,7 @@ import { useProjectFormDraft } from '@/features/admin/projects/hooks/useProjectF
 import { useProjectFormSubmit } from '@/features/admin/projects/hooks/useProjectFormSubmit';
 import { useProjectImageUpload } from '@/features/admin/projects/hooks/useProjectImageUpload';
 import type { ProjectFormValues } from '@/types/project-form.type';
+import { ADMIN_EDIT_SURFACE_CLASS } from '@/constants/admin-layout';
 import { ProjectFormDraftBanner } from './ProjectFormDraftBanner';
 import { ProjectFormHeader } from './ProjectFormHeader';
 import { ProjectFormSidebar } from './ProjectFormSidebar';
@@ -88,7 +89,7 @@ export default function ProjectForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='max-w-7xl mx-auto p-8 space-y-10'
+      className={`${ADMIN_EDIT_SURFACE_CLASS} space-y-10 py-6`}
     >
       {draftRestored && (
         <ProjectFormDraftBanner onDiscard={handleDiscardDraft} />

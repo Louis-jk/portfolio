@@ -8,6 +8,7 @@ import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Eye, Pencil } from 'lucide-react';
+import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
 
 export default async function AdminDashboardPage({
   params,
@@ -181,6 +182,11 @@ export default async function AdminDashboardPage({
                     >
                       <Pencil size={18} />
                     </Link>
+                    <ProjectStoryAdminLinks
+                      projectId={project.id}
+                      locale={locale}
+                      variant='icon'
+                    />
                   </div>
                 </Card>
               );

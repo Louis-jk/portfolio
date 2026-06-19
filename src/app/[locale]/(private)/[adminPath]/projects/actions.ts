@@ -1,7 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { ADMIN_ROUTES } from '@/constants/admin-routes';
+import { revalidateProjectsList } from '@/lib/revalidate-projects';
 import { requireAuth } from '@/utils/supabase/auth';
 import { deleteProjectDocuments } from '@/lib/rag/portfolio-documents';
 import {
@@ -17,8 +16,7 @@ export async function updateProjectOrder(projectIds: number[]) {
 
   try {
     await reorderProjects(projectIds);
-    revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
-    revalidatePath('/[locale]', 'layout');
+    revalidateProjectsList();
     return { success: true };
   } catch (error) {
     console.error('❌ Project Order Update Error:', error);
@@ -45,8 +43,7 @@ export async function deleteProject(projectId: number) {
         error: indexError,
       });
     }
-    revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
-    revalidatePath('/[locale]', 'layout');
+    revalidateProjectsList();
     return { success: true };
   } catch (error) {
     console.error('❌ Project Delete Error:', error);
