@@ -3,7 +3,23 @@
 Personal portfolio and CMS built with **Next.js 15 (App Router)**.  
 Live site: [joonhokim.dev](https://www.joonhokim.dev)
 
+<!--
 ![Portfolio preview](https://github.com/user-attachments/assets/c511919c-0d5f-4a1b-8725-d91e9bf3d4ab)
+-->
+
+
+![Portfolio preview](https://github.com/user-attachments/assets/f725c702-a3bd-4965-b5dd-dc716fdf296d)
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-In_Progress-orange?style=flat-square" alt="Status">
+</p>
+<p align="center">
+  <sub><i>Continuously optimizing UI/UX and dark/light themes.</i></sub>
+</p>
+
+![Portfolio preview_storybook_dark_theme](https://github.com/user-attachments/assets/ee134b3a-e4c9-45db-981d-781bf950153d)
+![Portfolio preview_storybook_light_theme](https://github.com/user-attachments/assets/339b72a4-d872-4ad6-8ac5-0fdf4d823589)
+
+
 
 > A production-ready multilingual portfolio built with the latest frontend ecosystem — **Next.js 15**, **React 19**, **Tailwind CSS 4**, **Prisma 7**, and **Storybook 10**.
 
