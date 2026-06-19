@@ -1,67 +1,45 @@
 # Portfolio — Joonho Kim
 
-Personal portfolio and CMS built with **Next.js 15 (App Router)**.  
-Live site: [joonhokim.dev](https://www.joonhokim.dev)
+[joonhokim.dev](https://www.joonhokim.dev)
 
-<!--
-![Portfolio preview](https://github.com/user-attachments/assets/c511919c-0d5f-4a1b-8725-d91e9bf3d4ab)
--->
+## Preview
 
+### Public site
 
-![Portfolio preview](https://github.com/user-attachments/assets/f725c702-a3bd-4965-b5dd-dc716fdf296d)
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-In_Progress-orange?style=flat-square" alt="Status">
-</p>
-<p align="center">
-  <sub><i>Continuously optimizing UI/UX and dark/light themes.</i></sub>
-</p>
+<video src="https://github.com/user-attachments/assets/72c4b16e-00e9-48dc-8a56-a7b583ef4bf7" width="100%" autoplay muted loop playsinline />
 
-![Portfolio preview_storybook_dark_theme](https://github.com/user-attachments/assets/ee134b3a-e4c9-45db-981d-781bf950153d)
-![Portfolio preview_storybook_light_theme](https://github.com/user-attachments/assets/339b72a4-d872-4ad6-8ac5-0fdf4d823589)
+_Portfolio demo — hover, project detail, story overlay (MP4)_
 
+### Storybook
 
+Brand / semantic colors (`ThemeColors` story) — same page, light and dark theme.
 
-> A production-ready multilingual portfolio built with the latest frontend ecosystem — **Next.js 15**, **React 19**, **Tailwind CSS 4**, **Prisma 7**, and **Storybook 10**.
+![Storybook — theme colors (light)](https://github.com/user-attachments/assets/3ca6abb3-0ba1-4ec7-9f35-b64edb129a4e)
 
-## 🌟 Highlights
+![Storybook — theme colors (dark)](https://github.com/user-attachments/assets/b4c7c48a-5e69-47ea-b555-e9ac3d20fbbb)
 
-[🇺🇸 English](#-english) · [🇰🇷 한국어 요약](#-한국어-요약) · [🇯🇵 日本語要約](#-日本語要約)
+### Optional showcases
 
-### 🇺🇸 English
+Admin CMS shots are optional — add only if you want to highlight them. Mask or crop any secret URL path in the address bar or page chrome.
 
-- **Multilingual public site** (ko / en / ja) with project list, 3D avatar, filters, and project detail drawer
-- **Rich project stories** — Editor.js content with locale tabs in admin and a full-screen public overlay (`?item=&story=1`)
-- **RAG chatbot** — OpenAI + pgvector (Supabase) retrieval over portfolio content, with FAQ flows and project deep-links
-- **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
-- **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + build), env-based secrets, chat API rate limiting
+## Documentation
 
-### 🇰🇷 한국어 요약
+[🇰🇷 한국어](#-한국어) · [🇯🇵 日本語](#-日本語) · [🇺🇸 English](#-english)
 
 <details>
-<summary><b>💡 핵심 하이라이트 보기 (클릭하여 펼치기)</b></summary>
+<summary><b>🇰🇷 한국어</b></summary>
 
-- **다국어 지원 퍼블릭 사이트** (ko / en / ja): 프로젝트 목록·상세, 3D 아바타, 필터링 및 드로어(Drawer) 구현
-- **상세 스토리**: 어드민 Editor.js 다국어 편집 + 퍼블릭 `?item=&story=1` 오버레이
-- **RAG 기반 챗봇**: OpenAI API와 pgvector(Supabase)를 연동하여 포트폴리오 콘텐츠 내 문서 검색, FAQ 시나리오 및 프로젝트 딥링크 기능 지원
-- **비공개 관리자 CMS**: Supabase Auth와 Prisma/PostgreSQL 기반의 CRUD, 드래그 앤 드롭 정렬, 이미지 업로드 및 Zod 스키마로 검증된 Server Actions 적용
-- **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + Build), 환경 변수 기반 시크릿 관리, 챗봇 API 요청 제한(Rate Limiting) 반영
+Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **React 19**, **TanStack Query 5**, **Tailwind CSS 4**, **Prisma 7**, **Storybook 10**을 사용합니다.
 
-</details>
+### 핵심 하이라이트
 
-### 🇯🇵 日本語要約
+- **다국어 퍼블릭 사이트** (ko / en / ja): 프로젝트 목록·상세, 3D 아바타, 필터, 드로어
+- **상세 스토리**: 어드민 Editor.js 다국어 편집 + 퍼블릭 `?item=&story=1` 오버레이. **TanStack Query** prefetch·stale-while-revalidate
+- **RAG 챗봇**: OpenAI + pgvector(Supabase), FAQ·프로젝트 딥링크
+- **비공개 CMS**: Supabase Auth, Prisma/PostgreSQL, DnD 정렬, 이미지 업로드, Zod Server Actions
+- **프로덕션**: Sentry, GA4/GTM, CI(lint·unit·build), env 시크릿, 챗 API rate limit
 
-<details>
-<summary><b>💡 主なハイライトを表示 (クリックして展開)</b></summary>
-
-- **多言語対応パブリックサイト** (ko / en / ja): プロジェクト一覧・詳細、3Dアバター、フィルタリング、詳細表示ドロワー（Drawer）機能を搭載
-- **詳細ストーリー**: 管理画面の Editor.js 多言語編集と、公開サイトの `?item=&story=1` オーバーレイ
-- **RAGベースのチャットボット**: OpenAI + pgvector (Supabase) を活用し、ポートフォリオ内のコンテンツに基づくドキュメント検索、FAQフロー、プロジェクトへのディープリンクをサポート
-- **非公開の管理者用CMS**: Supabase Auth、Prisma/PostgreSQL、ドラッグ＆ドロップによる並び替え、画像アップロード、Zodによるバリデーションを経た Server Actions を実装
-- **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
-
-</details>
-
-## Tech stack
+### 기술 스택
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
@@ -69,91 +47,35 @@ Live site: [joonhokim.dev](https://www.joonhokim.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-| Layer | Choices |
-| ----- | ------- |
-| **Framework** | ⚡ **Next.js 15** · **React 19** · **TypeScript 5** |
-| **Styling** | 🎨 **Tailwind CSS 4** · Framer Motion · next-themes |
-| **i18n** | 🌐 next-intl (ko / en / ja) |
-| **Data** | 🗄️ **Prisma 7** · PostgreSQL · Supabase (Auth, Storage, pgvector) |
-| **AI / RAG** | 🤖 LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
-| **3D** | 🧊 React Three Fiber · drei |
-| **Quality** | ✅ Vitest · Playwright · ESLint · GitHub Actions · **Storybook 10** |
+| 계층 | 선택 |
+| ---- | ---- |
+| **Framework** | Next.js 15 · React 19 · TypeScript 5 |
+| **Styling** | Tailwind CSS 4 · Framer Motion · next-themes |
+| **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
+| **i18n** | next-intl (ko / en / ja) |
+| **Data** | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector) |
+| **AI / RAG** | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
+| **3D** | React Three Fiber · drei |
+| **Quality** | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10 |
 
-## Architecture
+### 아키텍처
 
-The codebase favors **colocation by responsibility** — related code lives next to the layer that owns it, not in a generic `services/` tree.
+코드베이스는 **책임별 colocation** — `services/` 트리 대신 레이어 소유권에 맞게 배치합니다.
 
-### Layer roles
+**레이어 역할**
 
-| Layer | Role | Import from |
-| ----- | ---- | ----------- |
-| `modules/` | Server domain only — `repository` → `service`, colocated `*.types.ts` | `@/modules/<name>` barrel (`index.ts`) |
-| `lib/` | Pure helpers (no React) shared across routes or UI | `@/lib/<area>` |
-| `features/` | Feature slices — UI + hooks + feature-local `lib/` | `@/features/<name>` |
-| `components/` | Shared presentation components | `@/components/...` |
-| `hooks/` | Shared React hooks used across layouts | `@/hooks/...` |
-| `app/` | Routes, BFF API handlers, colocated server actions | — |
-| `types/` | App-wide ambient / cross-cutting types only | `@/types/...` |
+| 레이어 | 역할 |
+| ------ | ---- |
+| `modules/` | 서버 도메인 — repository → service |
+| `lib/` | React 없는 순수 헬퍼 |
+| `features/` | 기능 슬라이스 (admin editor, chatbot) |
+| `components/` | 공유 UI |
+| `hooks/` | 공유 React 훅 |
+| `app/` | 라우트, BFF API, server actions |
 
-**Rules of thumb**
-
-- `modules/` must not contain React components or UI renderers.
-- Domain types stay **inside** their module (`projects.types.ts`, `types.ts`) — not in `src/types/`.
-- UI imports domain **types and services** from `modules/`; rendering lives in `components/` or `features/`.
-- Prefer the module barrel (`@/modules/projects`) over deep file paths.
-
-### Directory tree (selected)
-
-```text
-src/
-├── app/
-│   ├── [locale]/                    # Public pages + admin routes
-│   │   └── (private)/[adminPath]/projects/[id]/detail/   # Editor.js admin page
-│   └── api/projects/[id]/
-│       ├── detail-page/             # BFF — auth CRUD → Nest
-│       └── story/                   # BFF — public read
-├── modules/
-│   ├── projects/                    # Project list CRUD — repository · service · mapper
-│   └── project-detail-page/         # Rich story — repository · service · types
-├── features/
-│   ├── chatbot/                     # RAG chat UI + streaming hooks
-│   └── admin/projects/
-│       ├── components/              # List, form, detail editor shell
-│       └── editor/                  # Editor.js i18n tools + config
-├── lib/
-│   ├── http/                        # nest-client, api-error, parse-project-id
-│   ├── project-detail-page/         # block-utils, embed-utils (Editor.js blocks)
-│   ├── projects/                    # Scroll / motion helpers for public list
-│   ├── rag/                         # Embeddings + document indexing
-│   └── sanitize-html.ts             # DOMPurify wrapper for rendered HTML
-├── components/
-│   ├── main/                        # Home column layouts
-│   └── projects/
-│       ├── project-list/            # List item, hover preview
-│       ├── project-detail/          # Summary panel sections
-│       └── project-story/           # ?story=1 overlay + editor/ renderer
-├── hooks/                           # useProjectSelection, useProjectStory, breakpoints…
-├── constants/                       # admin-routes, breakpoints
-└── stories/ + .storybook/           # Storybook catalog (dev only, not in app bundle)
-```
-
-**Where things go**
-
-| Kind | Location | Example |
-| ---- | -------- | ------- |
-| Server/domain logic | `modules/` | `getProjectDetailPage`, `listProjects` |
-| Domain block helpers | `lib/project-detail-page/` | `getBlockText`, `getBlockI18n` (`block-utils.ts`); `isMermaidSource` (`embed-utils.ts`) |
-| Feature slice | `features/` | `features/admin/projects/editor/` |
-| Public story UI | `components/projects/project-story/editor/` | `EditorJsRenderer`, `renderBlock`; shell in `../ProjectStoryShell` |
-| Shared React hooks | `hooks/` | `useProjectStory`, `useProjectSelection` |
-| BFF API routes | `app/api/` | `/api/projects/[id]/story` |
-| Admin server actions | `app/.../projects/` | `detail/action.ts`, `upload-image.ts` |
-| App-wide types | `src/types/` | `editorjs-tools.d.ts`, `gtag.d.ts` |
-
-### Project detail story flow
-
-Admin writes Editor.js JSON per locale tab; the public site reads it through a BFF and renders it in a home overlay.
+**스토리 플로우**: 어드민 Editor.js JSON → BFF `/api/projects/[id]/story` → 퍼블릭 `?item=&story=1` 오버레이
 
 ```mermaid
 flowchart LR
@@ -180,183 +102,395 @@ flowchart LR
   ProjectsSvc --> Nest
 ```
 
-Entry points: **「상세 보기」** on project detail → `?item={id}&story=1`; `/[locale]/projects/[id]/story` redirects to the same query.
+### Technical Decisions & Performance Optimization
 
-### Shared hooks (`src/hooks/`)
+기존에는 **「스토리 보기」** 클릭 시점에만 API fetch가 시작되어 cold fetch 지연이 있었습니다. **TanStack Query**로 사용자 흐름(상세 진입 → hover → 클릭)에 맞춘 3단계 prefetch·캐싱을 구축했습니다.
 
-| Hook | Role |
-| ---- | ---- |
-| `useBreakpoints` | Project detail panel — mobile / tablet / desktop (≤767 / 768–1223 / ≥1224) |
-| `useLayoutBreakpoints` | Home shell — mobile / 2-column / desktop (≤768 / 769–1279 / ≥1280) |
-| `useProjectSelection` | URL `?item=`, drawer open/close, analytics on click |
-| `useProjectStory` | URL `?story=1` overlay open/close via `history.pushState` |
-| `useProjectListInteractions` | List keyboard nav, Lenis scroll-to-item, hover preview |
-| `useLenisPanelScroll` / `useLenisWrapperScroll` | Smooth scroll (intro, detail, list columns) |
-| `useTabletDevice` | Touch/coarse-pointer tablet detection (hover preview off) |
-
-### Public home layout
-
-| Viewport | Layout |
-| -------- | ------ |
-| ≥1280px | 3 columns — Intro · Project list · Project detail |
-| 769–1279px | 2 columns — Intro · list (each column scrolls; detail in drawer) |
-| ≤768px | Stacked — Intro then list (detail in drawer) |
-
-Constants live in `constants/breakpoints.ts`; prefer hooks over inline `window.innerWidth` checks.
-
-### Data flow (projects)
-
-When `API_URL` is set, `modules/projects` and `modules/project-detail-page` call the Nest API via `lib/http/nest-client.ts`. Otherwise Prisma is used locally for projects. Public pages consume `ProjectView` (locale-flattened); admin CMS uses `ProjectAdminView` with full i18n JSON.
-
-### Storybook
-
-Component catalog for local development — **not shipped** in the Next.js app bundle.
-
-```bash
-pnpm storybook          # http://localhost:6006
-pnpm build-storybook    # outputs to storybook-static/ (gitignored)
-```
-
-Stories live in `src/**/*.stories.tsx` and `src/stories/`; preview loads `globals.css` and supports light/dark toggle.
-
-## 🎯 Design choices
-
-[🇺🇸 English](#-english--design) · [🇰🇷 한국어 기술 결정](#-한국어-기술-결정) · [🇯🇵 日本語の設計選択](#-日本語の設計選択)
-
-### 🇺🇸 English · Design
-
-- **`modules/projects/`** — layered domain module (repository → service → mapper); Nest API via `API_URL` when set; `ProjectView` is locale-resolved for public UI, `ProjectAdminView` keeps i18n for CMS.
-- **`modules/project-detail-page/`** — rich story domain (Editor.js JSON); repository + service only; rendering in `components/projects/project-story/editor/`.
-- **`features/chatbot/`** — user-facing feature module; depends on `modules/projects`, not the other way around.
-- **`features/admin/projects/editor/`** — Editor.js admin tools with per-locale (ko/ja/en) text blocks.
-- **Public UI** — `components/main/` layout shells + `components/projects/`; story overlay via `?item=&story=1`; shared behavior in `hooks/`.
-- **i18n** — public copy uses `projects` and `projectStory` namespaces (`messages/*.json`).
-- **Admin CMS** — `features/admin/projects/` (list, form, detail editor); server actions in `app/.../projects/`; mutations through module services.
-- **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP; HTML sanitized on story render.
-
-### 🇰🇷 한국어 기술 결정
-
-<details>
-<summary><b>🛠️ 설계 및 아키텍처 초이스 보기 (클릭하여 펼치기)</b></summary>
-
-- **`modules/projects/`**: repository → service → mapper 레이어로 Nest API(`API_URL`)와 UI를 분리. 공개 UI용 `ProjectView`는 locale 기준 펼침, 어드민용 `ProjectAdminView`는 i18n JSON 유지.
-- **`modules/project-detail-page/`**: Editor.js 상세 스토리 도메인(repository · service · types). UI 렌더러는 `components/projects/project-story/editor/`.
-- **`features/chatbot/`**: UI·스트리밍·FAQ는 feature 모듈, 데이터 접근은 `modules/projects`에 위임.
-- **`features/admin/projects/editor/`**: locale 탭(ko/ja/en)별 Editor.js 커스텀 i18n 블록 도구.
-- **Public UI**: `components/projects/project-story/`에서 `?item=&story=1` 오버레이; 공유 로직은 `hooks/`.
-- **Admin CMS**: UI·클라이언트 로직은 `features/admin/projects/`, Server Actions는 `app/.../projects/`에 colocation.
-- **Security (보안)**: 환경 변수 기반 시크릿·관리자 가입 제한, 미들웨어 세션, `/api/chat` rate limit, 스토리 HTML sanitization.
-
-</details>
-
-### 🇯🇵 日本語の設計選択
-
-<details>
-<summary><b>🛠️ アーキテクチャ設計における選択を表示 (クリックして展開)</b></summary>
-
-- **`modules/projects/`**: repository → service → mapper のレイヤーで Nest API と UI を分離。公開 UI 向け `ProjectView` は locale 解決済み、管理画面向け `ProjectAdminView` は i18n JSON を保持します。
-- **`modules/project-detail-page/`**: Editor.js 詳細ストーリーのドメイン層。UI レンダラーは `components/projects/project-story/editor/`。
-- **`features/chatbot/`**: ユーザー向け機能は feature モジュールに、データアクセスは `modules/projects` に委譲します。
-- **Admin Routes**: Server Actions はルートフォルダに colocation し、プロジェクト CRUD は `modules/projects` service 経由のみです。
-- **セキュリティ(Security)**: 各種シークレットは環境変数で厳格に管理され、管理者登録は環境変数によって制限されています。ミドルウェアによるセッションチェック、および `/api/chat` パスに対するIPごとのレート制限が実装されています。
-
-</details>
-
-### System overview
+- **Prefetch**: 프로젝트 선택·스토리 링크 hover/focus (`staleTime: 0`, deduplication)
+- **즉시 렌더**: 캐시로 오버레이 즉시 표시 (체감 ≈ 0초)
+- **백그라운드 동기화**: `refetchOnMount: 'always'`로 어드민 수정 반영
 
 ```mermaid
-flowchart LR
-  subgraph public [Public]
-    Home[Projects + Avatar]
-    Bot[Chatbot]
-  end
-  subgraph admin [Admin CMS]
-    Auth[Supabase Auth]
-    CMS[Project CRUD]
-  end
-  subgraph data [Data]
-    PG[(PostgreSQL / Prisma)]
-    Vec[(pgvector documents)]
-    OAI[OpenAI API]
-  end
-  Home --> PG
-  Bot --> OAI
-  Bot --> Vec
-  CMS --> Auth
-  CMS --> PG
-  CMS --> Vec
+sequenceDiagram
+  participant User as 유저 (Client)
+  participant Cache as TanStack Query (캐시)
+  participant API as 백엔드 서버 (Nest API)
+  Note over User, Cache: 1·2단계: 클릭 전
+  User->>Cache: 리스트 호버 또는 프로젝트 선택
+  Cache->>API: 백그라운드 Prefetch
+  API-->>Cache: 스토리 데이터 (메모리 캐시)
+  Note over User, Cache: 3단계: 스토리 보기 클릭
+  User->>Cache: 오버레이 오픈
+  Cache-->>User: 캐시로 즉시 표시
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: 백그라운드 최신화
+  API-->>Cache: 최신 데이터
+  Cache-->>User: isRefreshing으로 교체
 ```
 
-## Getting started
+### 기술 결정
 
-### Prerequisites
+- **`modules/projects/`**: repository → service → mapper, Nest API(`API_URL`) 분리
+- **`modules/project-detail-page/`**: Editor.js 스토리 도메인, 렌더는 `components/projects/project-story/editor/`
+- **`features/chatbot/`**: UI는 feature, 데이터는 `modules/projects`
+- **`features/admin/projects/editor/`**: locale 탭(ko/ja/en) i18n 블록
+- **Public UI**: `?item=&story=1` 오버레이, TanStack Query (`lib/projects/project-story-query.ts`)
+- **Security**: env 시크릿, 미들웨어 세션, `/api/chat` rate limit, HTML sanitization
 
-- Node.js 22+
-- PostgreSQL database
-- Supabase project (Auth, Storage, pgvector extension)
-- OpenAI API key
-
-### Setup
+### 시작하기
 
 ```bash
 git clone https://github.com/Louis-jk/portfolio.git
 cd portfolio
 pnpm install
 cp .env.example .env.local
-# Fill in .env.local (see file for all variables)
-pnpm exec prisma migrate deploy   # or db push for local dev
-pnpm db:seed                      # optional sample data
+pnpm exec prisma migrate deploy
+pnpm db:seed
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+| 명령 | 설명 |
+| ---- | ---- |
+| `pnpm dev` | 개발 서버 |
+| `pnpm build` | 프로덕션 빌드 |
+| `pnpm test` | Vitest |
+| `pnpm test:e2e` | Playwright |
+| `pnpm storybook` | Storybook (6006) |
 
-### Scripts
+**브랜치**: `develop`(통합) → `main`(프로덕션)
+
+</details>
+
+<details>
+<summary><b>🇯🇵 日本語</b></summary>
+
+Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Next.js 15**、**React 19**、**TanStack Query 5**、**Tailwind CSS 4**、**Prisma 7**、**Storybook 10** を使用しています。
+
+### 主なハイライト
+
+- **多言語パブリックサイト** (ko / en / ja): プロジェクト一覧・詳細、3Dアバター、フィルター、ドロワー
+- **詳細ストーリー**: 管理画面 Editor.js 多言語編集 + 公開 `?item=&story=1` オーバーレイ。**TanStack Query** プリフェッチ・stale-while-revalidate
+- **RAG チャットボット**: OpenAI + pgvector (Supabase)、FAQ・プロジェクトディープリンク
+- **非公開 CMS**: Supabase Auth、Prisma/PostgreSQL、DnD 並び替え、画像アップロード、Zod Server Actions
+- **プロダクション**: Sentry、GA4/GTM、CI (lint・unit・build)、env シークレット、チャット API レート制限
+
+### 技術スタック
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
+
+| レイヤー | 選択 |
+| -------- | ---- |
+| **Framework** | Next.js 15 · React 19 · TypeScript 5 |
+| **Styling** | Tailwind CSS 4 · Framer Motion · next-themes |
+| **Client data** | TanStack Query 5 — prefetch、deduplication、stale-while-revalidate |
+| **i18n** | next-intl (ko / en / ja) |
+| **Data** | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector) |
+| **AI / RAG** | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
+| **3D** | React Three Fiber · drei |
+| **Quality** | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10 |
+
+### アーキテクチャ
+
+コードベースは **責務別 colocation** — 汎用 `services/` ツリーではなく、レイヤーの所有者に沿って配置します。
+
+**レイヤー役割**
+
+| レイヤー | 役割 |
+| -------- | ---- |
+| `modules/` | サーバードメイン — repository → service |
+| `lib/` | React なしの純粋ヘルパー |
+| `features/` | 機能スライス (admin editor, chatbot) |
+| `components/` | 共有 UI |
+| `hooks/` | 共有 React フック |
+| `app/` | ルート、BFF API、server actions |
+
+**ストーリーフロー**: 管理画面 Editor.js JSON → BFF `/api/projects/[id]/story` → 公開 `?item=&story=1` オーバーレイ
+
+```mermaid
+flowchart LR
+  subgraph admin [Admin CMS]
+    Editor[EditorJsAdmin]
+    Action[detail/action.ts]
+  end
+  subgraph bff [Next BFF]
+    DetailAPI["/api/projects/id/detail-page"]
+    StoryAPI["/api/projects/id/story"]
+  end
+  subgraph domain [modules]
+    DetailSvc[project-detail-page.service]
+    ProjectsSvc[projects.service]
+  end
+  subgraph publicUI [Public UI]
+    Overlay["?item=&story=1 overlay"]
+    Renderer[project-story/editor]
+  end
+  Nest[(Nest API)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
+  Overlay --> StoryAPI --> DetailSvc
+  Overlay --> Renderer
+  ProjectsSvc --> Nest
+```
+
+### Technical Decisions & Performance Optimization
+
+従来は **「ストーリーを見る」** クリック時のみ API フェッチが始まり、cold fetch の遅延がありました。**TanStack Query** でユーザー行動（詳細進入 → ホバー → クリック）に合わせた 3 段階プリフェッチ・キャッシュを実装しました。
+
+- **プリフェッチ**: プロジェクト選択・ストーリーリンク hover/focus（`staleTime: 0`、deduplication）
+- **即時レンダリング**: キャッシュでオーバーレイ即表示（体感 ≈ 0 秒）
+- **バックグラウンド同期**: `refetchOnMount: 'always'` で管理画面の編集を反映
+
+```mermaid
+sequenceDiagram
+  participant User as ユーザー (Client)
+  participant Cache as TanStack Query (キャッシュ)
+  participant API as バックエンド (Nest API)
+  Note over User, Cache: 1・2段階: クリック前
+  User->>Cache: リストホバーまたはプロジェクト選択
+  Cache->>API: バックグラウンド Prefetch
+  API-->>Cache: ストーリーデータ (メモリキャッシュ)
+  Note over User, Cache: 3段階: ストーリー表示
+  User->>Cache: オーバーレイを開く
+  Cache-->>User: キャッシュで即時表示
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: バックグラウンド再取得
+  API-->>Cache: 最新データ
+  Cache-->>User: isRefreshing で更新
+```
+
+### 設計選択
+
+- **`modules/projects/`**: repository → service → mapper、Nest API (`API_URL`) 分離
+- **`modules/project-detail-page/`**: Editor.js ストーリードメイン、レンダラーは `components/projects/project-story/editor/`
+- **`features/chatbot/`**: UI は feature、データは `modules/projects`
+- **`features/admin/projects/editor/`**: locale タブ (ko/ja/en) i18n ブロック
+- **Public UI**: `?item=&story=1` オーバーレイ、TanStack Query (`lib/projects/project-story-query.ts`)
+- **セキュリティ**: env シークレット、ミドルウェアセッション、`/api/chat` レート制限、HTML sanitization
+
+### はじめに
+
+```bash
+git clone https://github.com/Louis-jk/portfolio.git
+cd portfolio
+pnpm install
+cp .env.example .env.local
+pnpm exec prisma migrate deploy
+pnpm db:seed
+pnpm dev
+```
+
+| コマンド | 説明 |
+| -------- | ---- |
+| `pnpm dev` | 開発サーバー |
+| `pnpm build` | プロダクションビルド |
+| `pnpm test` | Vitest |
+| `pnpm test:e2e` | Playwright |
+| `pnpm storybook` | Storybook (6006) |
+
+**ブランチ**: `develop`（統合）→ `main`（本番）
+
+</details>
+
+<details>
+<summary><b>🇺🇸 English</b></summary>
+
+Multilingual portfolio and CMS built with **Next.js 15 (App Router)**. Stack: **Next.js 15**, **React 19**, **TanStack Query 5**, **Tailwind CSS 4**, **Prisma 7**, **Storybook 10**.
+
+### Highlights
+
+- **Multilingual public site** (ko / en / ja): project list, 3D avatar, filters, detail drawer
+- **Rich project stories**: Editor.js admin + public `?item=&story=1` overlay; **TanStack Query** prefetch + stale-while-revalidate
+- **RAG chatbot**: OpenAI + pgvector (Supabase), FAQ flows, project deep-links
+- **Private admin CMS**: Supabase Auth, Prisma/PostgreSQL, drag-and-drop, image upload, Zod server actions
+- **Production-minded**: Sentry, GA4/GTM, CI (lint + unit + build), env secrets, chat API rate limiting
+
+### Tech stack
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
+
+| Layer | Choices |
+| ----- | ------- |
+| **Framework** | Next.js 15 · React 19 · TypeScript 5 |
+| **Styling** | Tailwind CSS 4 · Framer Motion · next-themes |
+| **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
+| **i18n** | next-intl (ko / en / ja) |
+| **Data** | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector) |
+| **AI / RAG** | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
+| **3D** | React Three Fiber · drei |
+| **Quality** | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10 |
+
+### Architecture
+
+The codebase favors **colocation by responsibility** — related code lives next to the layer that owns it.
+
+**Layer roles**
+
+| Layer | Role |
+| ----- | ---- |
+| `modules/` | Server domain — repository → service |
+| `lib/` | Pure helpers (no React) |
+| `features/` | Feature slices (admin editor, chatbot) |
+| `components/` | Shared UI |
+| `hooks/` | Shared React hooks |
+| `app/` | Routes, BFF API, server actions |
+
+**Story flow**: Admin Editor.js JSON → BFF `/api/projects/[id]/story` → public `?item=&story=1` overlay
+
+```mermaid
+flowchart LR
+  subgraph admin [Admin CMS]
+    Editor[EditorJsAdmin]
+    Action[detail/action.ts]
+  end
+  subgraph bff [Next BFF]
+    DetailAPI["/api/projects/id/detail-page"]
+    StoryAPI["/api/projects/id/story"]
+  end
+  subgraph domain [modules]
+    DetailSvc[project-detail-page.service]
+    ProjectsSvc[projects.service]
+  end
+  subgraph publicUI [Public UI]
+    Overlay["?item=&story=1 overlay"]
+    Renderer[project-story/editor]
+  end
+  Nest[(Nest API)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
+  Overlay --> StoryAPI --> DetailSvc
+  Overlay --> Renderer
+  ProjectsSvc --> Nest
+```
+
+### Technical decisions & performance optimization
+
+Previously, the story API fetch started only on **View story** click (cold fetch). **TanStack Query** adds a three-step prefetch layer (select project → hover link → open overlay):
+
+1. **Prefetch** on selection and hover/focus (`staleTime: 0`, deduplication)
+2. **Instant render** from cache when overlay mounts (≈ 0s perceived wait)
+3. **Background refetch** (`refetchOnMount: 'always'`) for fresh admin edits
+
+```mermaid
+sequenceDiagram
+  participant User as User (Client)
+  participant Cache as TanStack Query (cache)
+  participant API as Backend (Nest API)
+  Note over User, Cache: Steps 1–2 before click
+  User->>Cache: Hover story link or select project
+  Cache->>API: Background prefetch
+  API-->>Cache: Story JSON (memory cache)
+  Note over User, Cache: Step 3 on click
+  User->>Cache: Open story overlay
+  Cache-->>User: Render cached content immediately
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: Background refetch
+  API-->>Cache: Latest story JSON
+  Cache-->>User: Smooth update (isRefreshing)
+```
+
+### Design choices
+
+- **`modules/projects/`** — repository → service → mapper; Nest via `API_URL`
+- **`modules/project-detail-page/`** — Editor.js story domain; render in `components/projects/project-story/editor/`
+- **`features/chatbot/`** — UI in feature; data from `modules/projects`
+- **`features/admin/projects/editor/`** — per-locale (ko/ja/en) i18n blocks
+- **Public UI** — `?item=&story=1` overlay; TanStack Query in `lib/projects/project-story-query.ts`
+- **Security** — env secrets, middleware sessions, `/api/chat` rate limit, HTML sanitization
+
+### Getting started
+
+```bash
+git clone https://github.com/Louis-jk/portfolio.git
+cd portfolio
+pnpm install
+cp .env.example .env.local
+pnpm exec prisma migrate deploy
+pnpm db:seed
+pnpm dev
+```
 
 | Command | Description |
 | ------- | ----------- |
 | `pnpm dev` | Development server |
 | `pnpm build` | Production build |
-| `pnpm lint` | ESLint |
 | `pnpm test` | Vitest unit tests |
-| `pnpm test:watch` | Vitest watch mode |
-| `pnpm test:e2e` | Playwright (requires `DATABASE_URL` for home spec) |
-| `pnpm storybook` | Storybook dev server (port 6006) |
-| `pnpm build-storybook` | Static Storybook build → `storybook-static/` |
-| `pnpm db:seed` | Seed database |
-| `pnpm db:embed-existing` | Re-index existing projects for RAG |
+| `pnpm test:e2e` | Playwright |
+| `pnpm storybook` | Storybook (port 6006) |
 
-## Environment variables
+**Branches**: `develop` (integration) → `main` (production)
 
-Copy `.env.example` to `.env.local`. Never commit real secrets.
+</details>
 
-**Required for core features:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`.
+## Reference
 
-**Optional:** `API_URL` — Nest project API base URL (public list/detail use `modules/projects` → nest-client when set).
+Language-neutral technical reference (paths, hooks, env).
 
-**Production recommendations:** `NEXT_PUBLIC_ADMIN_SIGNUP_ENABLED=false`, Sentry DSN/org/project, analytics IDs as needed.
+### Directory tree (selected)
 
-Admin UI is served under `/{locale}{NEXT_PUBLIC_ADMIN_SECRET_PATH}` (path is obscured, not secret — rely on Supabase Auth + RLS).
-
-## Testing
-
-```bash
-pnpm test          # domain + schema unit tests (Vitest)
-pnpm test:e2e      # Playwright — home, api, chatbot specs
+```text
+src/
+├── app/
+│   ├── [locale]/                    # Public pages + admin routes
+│   │   └── (private)/[adminPath]/projects/[id]/detail/
+│   └── api/projects/[id]/
+│       ├── detail-page/             # BFF — auth CRUD → Nest
+│       └── story/                   # BFF — public read
+├── modules/
+│   ├── projects/
+│   └── project-detail-page/
+├── features/
+│   ├── chatbot/
+│   └── admin/projects/editor/
+├── lib/
+│   ├── http/
+│   ├── project-detail-page/
+│   ├── projects/
+│   ├── query/                       # TanStack Query provider
+│   └── rag/
+├── components/projects/
+│   ├── project-list/
+│   ├── project-detail/
+│   └── project-story/
+└── hooks/
 ```
 
-CI runs **lint**, **unit-test**, and **build** on push and PR (`e2e` job is currently commented out in `.github/workflows/ci.yml`).
+### Shared hooks (`src/hooks/`)
 
-## Branch workflow
+| Hook | Role |
+| ---- | ---- |
+| `useBreakpoints` | Detail panel — mobile / tablet / desktop |
+| `useLayoutBreakpoints` | Home shell — mobile / 2-col / desktop |
+| `useProjectSelection` | URL `?item=`, drawer, analytics |
+| `useProjectStory` | URL `?story=1` overlay |
+| `usePrefetchProjectStory` | Prefetch story on hover, focus, selection |
+| `useProjectListInteractions` | Keyboard nav, Lenis scroll, hover preview |
 
-| Branch | Purpose |
-| ------ | ------- |
-| `develop` | Integration — features merge here first |
-| `main` | Production target (Vercel) — merge from `develop` when ready; automated deploy in `ci.yml` is commented out |
+### Environment variables
 
-## Deployment
+Copy `.env.example` → `.env.local`. Never commit secrets.
 
-Optimized for **Vercel** (`output: 'standalone'`). Set environment variables in the Vercel dashboard and redeploy after changes.
+**Required:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
+
+**Optional:** `API_URL` — Nest API base URL
+
+### Testing & CI
+
+```bash
+pnpm test          # Vitest
+pnpm test:e2e      # Playwright
+```
+
+CI runs lint, unit-test, and build on push/PR.
 
 ## License
 
