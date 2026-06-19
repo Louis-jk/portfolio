@@ -5,6 +5,7 @@ import MainDesktopLayout from '@/components/main/MainDesktopLayout';
 import MainMobileLayout from '@/components/main/MainMobileLayout';
 import MainTabletLayout from '@/components/main/MainTabletLayout';
 import { useProjectSelection } from '@/hooks/useProjectSelection';
+import { usePrefetchProjectStory } from '@/hooks/usePrefetchProjectStory';
 import { motion } from 'framer-motion';
 import { useMemo, Suspense } from 'react';
 import { useTranslations } from 'next-intl';
@@ -38,6 +39,8 @@ function MainContent({
   const { isLayoutMobile, isLayoutTablet } = useLayoutBreakpoints();
   const { selectedItem, isDrawerOpen, handleItemClick, handleDrawerClose } =
     useProjectSelection(projects, filteredProjects);
+
+  usePrefetchProjectStory(selectedItem?.id ?? null);
 
   const headerPadding =
     !isDesktopLayout && isFilterOpen ? 'pt-[140px]' : 'pt-[55px]';

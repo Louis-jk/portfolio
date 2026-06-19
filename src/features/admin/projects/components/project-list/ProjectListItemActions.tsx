@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Eye, FileText, Pencil, Trash2 } from 'lucide-react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
+import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
 
 export function ProjectListItemActions({
   projectId,
@@ -29,14 +30,11 @@ export function ProjectListItemActions({
       >
         <Pencil size={18} />
       </Link>
-      <Link
-        href={`/${locale}${ADMIN_ROUTES.PROJECTS}/${projectId}/detail`}
-        className='p-2 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors'
-        title='스토리 편집'
-        aria-label='Edit project story'
-      >
-        <FileText size={18} />
-      </Link>
+      <ProjectStoryAdminLinks
+        projectId={projectId}
+        locale={locale}
+        variant='icon'
+      />
       <button
         type='button'
         onClick={() => onDelete(projectId)}

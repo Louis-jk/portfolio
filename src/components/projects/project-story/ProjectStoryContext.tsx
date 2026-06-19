@@ -1,8 +1,11 @@
 'use client';
 
-import { createContext, useContext } from 'react';
+import { createContext, useCallback, useContext } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import type { ProjectView } from '@/modules/projects';
+import { projectStoryQueryOptions } from '@/lib/projects/project-story-query';
 import { useProjectStory } from '@/hooks/useProjectStory';
+import { usePrefetchProjectStory } from '@/hooks/usePrefetchProjectStory';
 import { ProjectStoryOverlay } from './ProjectStoryOverlay';
 
 type ProjectStoryContextValue = {
@@ -18,7 +21,19 @@ export function ProjectStoryProvider({
   projects: ProjectView[];
   children: React.ReactNode;
 }) {
-  const { storyProjectId, openStory, closeStory } = useProjectStory();
+  const { storyProjectId, openStory: openStoryFromUrl, closeStory } =
+    useProjectStory();
+  const queryClient = useQueryClient();
+
+  usePrefetchProjectStory(storyProjectId);
+
+  const openStory = useCallback(
+    (projectId: number) => {
+      void queryClient.prefetchQuery(projectStoryQueryOptions(projectId));
+      openStoryFromUrl(projectId);
+    },
+    [queryClient, openStoryFromUrl],
+  );
 
   const activeProject =
     storyProjectId != null

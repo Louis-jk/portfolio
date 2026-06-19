@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { EditorJsRenderer } from '@/components/projects/project-story/editor';
+import { STORY_CONTENT_SHELL_CLASS } from '@/constants/story-layout';
 import type { EditorOutput, I18nLocale } from '@/modules/project-detail-page';
 
 type ProjectStoryShellProps = {
@@ -14,6 +15,7 @@ type ProjectStoryShellProps = {
   content: EditorOutput | null;
   emptyMessage: string;
   isLoading?: boolean;
+  isRefreshing?: boolean;
   onClose: () => void;
 };
 
@@ -43,6 +45,7 @@ export function ProjectStoryShell({
   content,
   emptyMessage,
   isLoading = false,
+  isRefreshing = false,
   onClose,
 }: ProjectStoryShellProps) {
   const t = useTranslations('projectStory');
@@ -76,13 +79,13 @@ export function ProjectStoryShell({
 
   return (
     <motion.div
-      initial={{ x: '100%' }}
-      animate={{ x: isClosing ? '100%' : 0 }}
+      initial={{ y: '-100%' }}
+      animate={{ y: isClosing ? '-100%' : 0 }}
       transition={isClosing ? panelTransition.close : panelTransition.open}
       onAnimationComplete={() => {
         if (isClosing) finishClose();
       }}
-      className='fixed inset-0 z-[100] flex flex-col bg-zinc-50 dark:bg-slate-950'
+      className='fixed inset-0 z-100 flex flex-col bg-zinc-50 dark:bg-slate-950'
       role='dialog'
       aria-modal='true'
       aria-labelledby='project-story-title'
@@ -98,8 +101,8 @@ export function ProjectStoryShell({
           <X size={18} aria-hidden />
           {t('backToProject')}
         </button>
-        <p className='truncate text-xs font-black uppercase tracking-widest text-purple-600'>
-          {t('storyLabel')}
+        <p className='truncate text-xs font-black uppercase tracking-widest text-primary'>
+          {isRefreshing ? t('loading') : t('storyLabel')}
         </p>
       </header>
 
@@ -109,9 +112,12 @@ export function ProjectStoryShell({
           opacity: isClosing ? 0 : 1,
           y: isClosing ? 6 : 0,
         }}
-        transition={isClosing ? contentTransition.close : contentTransition.open}
-        className='mx-auto w-full max-w-3xl flex-1 overflow-y-auto px-6 py-10'
+        transition={
+          isClosing ? contentTransition.close : contentTransition.open
+        }
+        className='flex-1 overflow-y-auto'
       >
+        <div className={`${STORY_CONTENT_SHELL_CLASS} py-10`}>
         <header className='mb-10 space-y-2'>
           <h1
             id='project-story-title'
@@ -131,6 +137,7 @@ export function ProjectStoryShell({
             {emptyMessage}
           </p>
         )}
+        </div>
       </motion.main>
     </motion.div>
   );
