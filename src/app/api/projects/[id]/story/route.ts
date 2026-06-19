@@ -6,6 +6,8 @@ export const runtime = 'nodejs';
 
 type RouteContext = { params: Promise<{ id: string }> };
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(_request: Request, context: RouteContext) {
   const { id } = await context.params;
   const projectId = parseInt(id, 10);
@@ -15,7 +17,14 @@ export async function GET(_request: Request, context: RouteContext) {
 
   try {
     const page = await getProjectDetailPage(projectId);
-    return NextResponse.json({ content: page?.content ?? null });
+    return NextResponse.json(
+      { content: page?.content ?? null },
+      {
+        headers: {
+          'Cache-Control': 'no-store',
+        },
+      },
+    );
   } catch (error) {
     return toApiErrorResponse(error);
   }
