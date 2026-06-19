@@ -6,7 +6,7 @@
 
 ### Public site
 
-<video src="https://github.com/user-attachments/assets/72c4b16e-00e9-48dc-8a56-a7b583ef4bf7" width="100%" autoplay muted loop playsinline />
+[<video src="https://github.com/user-attachments/assets/72c4b16e-00e9-48dc-8a56-a7b583ef4bf7" width="100%" autoplay muted loop playsinline />](https://github.com/user-attachments/assets/72c4b16e-00e9-48dc-8a56-a7b583ef4bf7)
 
 _Portfolio demo — hover, project detail, story overlay (MP4)_
 
