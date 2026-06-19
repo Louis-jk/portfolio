@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import type { EditorOutput } from '@/modules/project-detail-page';
+import { STORY_CONTENT_SHELL_CLASS } from '@/constants/story-layout';
 
 const EditorJsAdmin = dynamic(
   () =>
@@ -16,7 +17,7 @@ const EditorJsAdmin = dynamic(
 function EditorJsAdminLoading() {
   const t = useTranslations('admin.projects');
   return (
-    <div className='mx-auto max-w-4xl p-6 text-sm text-zinc-500'>
+    <div className={`${STORY_CONTENT_SHELL_CLASS} py-4 text-sm text-zinc-500`}>
       {t('detailEditorLoading')}
     </div>
   );

@@ -1,10 +1,17 @@
 import type { PartialI18n } from '@/modules/project-detail-page';
+import { STORY_EDITOR_BODY_CLASS } from '@/constants/story-typography';
+import {
+  isAdminI18nFallback,
+  resolveAdminI18nText,
+} from '@/lib/project-detail-page/block-utils';
 import { sanitizeHtml } from '@/lib/sanitize-html';
 import {
   getActiveLocale,
   registerI18nTool,
   type I18nToolInstance,
 } from './locale-context';
+import { getHeaderLevelClass } from './editor-header-styles';
+import { attachContentEditableTextPaste } from './editor-text-paste';
 
 type I18nTextToolOptions = {
   toolboxTitle: string;
@@ -41,6 +48,7 @@ export function createI18nTextTool({
     private readOnly: boolean;
     private element: HTMLElement | null = null;
     private unregister: (() => void) | null = null;
+    private detachTextPaste: (() => void) | null = null;
 
     constructor({ data, readOnly }: ToolConfig) {
       this.data = { i18n: data?.i18n ?? {} };
@@ -51,22 +59,28 @@ export function createI18nTextTool({
       const el = document.createElement('div');
       el.contentEditable = this.readOnly ? 'false' : 'true';
       el.className = [
-        'outline-none min-h-[1.5rem] leading-relaxed',
+        'outline-none min-h-[1.5rem]',
+        STORY_EDITOR_BODY_CLASS,
         className,
       ]
         .filter(Boolean)
         .join(' ');
       if (placeholder) el.dataset.placeholder = placeholder;
-      el.innerHTML = sanitizeHtml(this.getCurrentText());
+      this.applyDisplayText(el);
 
       if (!this.readOnly) {
-        el.addEventListener('input', () => {
+        const syncToLocale = () => {
           const locale = getActiveLocale();
           this.data.i18n = {
             ...this.data.i18n,
             [locale]: sanitizeHtml(el.innerHTML),
           };
-        });
+          el.classList.remove('text-zinc-400', 'italic');
+          el.dataset.i18nFallback = 'false';
+        };
+
+        el.addEventListener('input', syncToLocale);
+        this.detachTextPaste = attachContentEditableTextPaste(el, syncToLocale);
       }
 
       this.element = el;
@@ -76,22 +90,41 @@ export function createI18nTextTool({
 
     updateLocale() {
       if (!this.element) return;
-      this.element.innerHTML = sanitizeHtml(this.getCurrentText());
+      this.applyDisplayText(this.element);
+    }
+
+    syncActiveLocaleToData() {
+      if (!this.element || this.readOnly) return;
+      const locale = getActiveLocale();
+      this.data.i18n = {
+        ...this.data.i18n,
+        [locale]: sanitizeHtml(this.element.innerHTML),
+      };
     }
 
     save() {
+      this.syncActiveLocaleToData();
       return { i18n: this.data.i18n ?? {} };
     }
 
     destroy() {
+      this.detachTextPaste?.();
+      this.detachTextPaste = null;
       this.unregister?.();
       this.unregister = null;
       this.element = null;
     }
 
-    private getCurrentText() {
+    private applyDisplayText(el: HTMLElement) {
       const locale = getActiveLocale();
-      return this.data.i18n?.[locale] ?? '';
+      const i18n = this.data.i18n;
+      const text = resolveAdminI18nText(i18n, locale);
+      const isFallback = isAdminI18nFallback(i18n, locale);
+
+      el.innerHTML = sanitizeHtml(text);
+      el.classList.toggle('text-zinc-400', isFallback);
+      el.classList.toggle('italic', isFallback);
+      el.dataset.i18nFallback = isFallback ? 'true' : 'false';
     }
   };
 }
@@ -110,8 +143,8 @@ export function createI18nHeaderTool() {
     private readOnly: boolean;
     private wrapper: HTMLElement | null = null;
     private input: HTMLElement | null = null;
-    private levelSelect: HTMLSelectElement | null = null;
     private unregister: (() => void) | null = null;
+    private detachTextPaste: (() => void) | null = null;
 
     constructor({ data, readOnly }: ToolConfig & { data: ToolData & { level?: number } }) {
       this.data = {
@@ -123,52 +156,60 @@ export function createI18nHeaderTool() {
 
     render() {
       const wrapper = document.createElement('div');
-      wrapper.className = 'space-y-2';
-
-      const levelSelect = document.createElement('select');
-      levelSelect.className =
-        'rounded border border-zinc-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-900';
-      [1, 2, 3, 4, 5, 6].forEach((level) => {
-        const option = document.createElement('option');
-        option.value = String(level);
-        option.textContent = `H${level}`;
-        if (level === (this.data.level ?? 2)) option.selected = true;
-        levelSelect.appendChild(option);
-      });
-      levelSelect.disabled = this.readOnly;
-      levelSelect.addEventListener('change', () => {
-        this.data.level = Number(levelSelect.value) || 2;
-      });
+      const level = Math.min(Math.max(this.data.level ?? 2, 1), 6);
 
       const input = document.createElement('div');
       input.contentEditable = this.readOnly ? 'false' : 'true';
-      input.className =
-        'min-h-[2rem] text-2xl font-black outline-none tracking-tight';
-      input.innerHTML = sanitizeHtml(this.getCurrentText());
+      input.dataset.headingLevel = String(level);
+      input.className = [
+        'outline-none min-h-[1.75rem] text-slate-900 dark:text-slate-100',
+        getHeaderLevelClass(level),
+      ].join(' ');
+      this.applyDisplayText(input);
       if (!this.readOnly) {
-        input.addEventListener('input', () => {
+        const syncToLocale = () => {
           const locale = getActiveLocale();
           this.data.i18n = {
             ...this.data.i18n,
             [locale]: sanitizeHtml(input.innerHTML),
           };
-        });
+          input.classList.remove('text-zinc-400', 'italic');
+          input.dataset.i18nFallback = 'false';
+        };
+
+        input.addEventListener('input', syncToLocale);
+        this.detachTextPaste = attachContentEditableTextPaste(input, syncToLocale);
       }
 
-      wrapper.appendChild(levelSelect);
       wrapper.appendChild(input);
       this.wrapper = wrapper;
       this.input = input;
-      this.levelSelect = levelSelect;
       this.unregister = registerI18nTool(this);
       return wrapper;
     }
 
     updateLocale() {
-      if (this.input) this.input.innerHTML = sanitizeHtml(this.getCurrentText());
+      if (!this.input) return;
+      const level = Math.min(Math.max(this.data.level ?? 2, 1), 6);
+      this.input.dataset.headingLevel = String(level);
+      this.input.className = [
+        'outline-none min-h-[1.75rem] text-slate-900 dark:text-slate-100',
+        getHeaderLevelClass(level),
+      ].join(' ');
+      this.applyDisplayText(this.input);
+    }
+
+    syncActiveLocaleToData() {
+      if (!this.input || this.readOnly) return;
+      const locale = getActiveLocale();
+      this.data.i18n = {
+        ...this.data.i18n,
+        [locale]: sanitizeHtml(this.input.innerHTML),
+      };
     }
 
     save() {
+      this.syncActiveLocaleToData();
       return {
         i18n: this.data.i18n ?? {},
         level: this.data.level ?? 2,
@@ -176,16 +217,24 @@ export function createI18nHeaderTool() {
     }
 
     destroy() {
+      this.detachTextPaste?.();
+      this.detachTextPaste = null;
       this.unregister?.();
       this.unregister = null;
       this.wrapper = null;
       this.input = null;
-      this.levelSelect = null;
     }
 
-    private getCurrentText() {
+    private applyDisplayText(el: HTMLElement) {
       const locale = getActiveLocale();
-      return this.data.i18n?.[locale] ?? '';
+      const i18n = this.data.i18n;
+      const text = resolveAdminI18nText(i18n, locale);
+      const isFallback = isAdminI18nFallback(i18n, locale);
+
+      el.innerHTML = sanitizeHtml(text);
+      el.classList.toggle('text-zinc-400', isFallback);
+      el.classList.toggle('italic', isFallback);
+      el.dataset.i18nFallback = isFallback ? 'true' : 'false';
     }
   };
 }
