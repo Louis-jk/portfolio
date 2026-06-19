@@ -1,7 +1,10 @@
+import { createRequire } from 'node:module';
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 import { getSupabaseStorageHostname } from './src/lib/supabase-hostname';
+
+const require = createRequire(import.meta.url);
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -20,8 +23,18 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
     serverActions: {
-      bodySizeLimit: '6mb',
+      bodySizeLimit: '100mb',
     },
+  },
+
+  webpack: (config) => {
+    // @hookform/resolvers/zod imports zod/v4/core; pin to installed zod (3.x ships v4 subpath).
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'zod/v4/core': require.resolve('zod/v4/core'),
+      'zod/v3': require.resolve('zod/v3'),
+    };
+    return config;
   },
 
   /* config options here */
