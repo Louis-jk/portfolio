@@ -11,6 +11,7 @@ import Script from 'next/script';
 
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
+import { QueryProvider } from '@/lib/query/query-provider';
 import './globals.css';
 import GTMTracker from './gtm-tracker';
 
@@ -136,7 +137,7 @@ export default async function RootLayout({
           defaultTheme='system'
           enableSystem
         >
-          {children}
+          <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>
 
         <Toaster richColors position='top-center' />

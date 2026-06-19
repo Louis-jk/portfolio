@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
-import type { EditorOutput, I18nLocale } from '@/modules/project-detail-page';
+import type { I18nLocale } from '@/modules/project-detail-page';
+import { projectStoryOverlayQueryOptions } from '@/lib/projects/project-story-query';
 import { ProjectStoryShell } from './ProjectStoryShell';
 
 type ProjectStoryOverlayProps = {
@@ -18,38 +19,13 @@ export function ProjectStoryOverlay({
 }: ProjectStoryOverlayProps) {
   const locale = useLocale() as I18nLocale;
   const t = useTranslations('projectStory');
-  const [content, setContent] = useState<EditorOutput | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    let cancelled = false;
+  const { data, isPending, isFetching } = useQuery({
+    ...projectStoryOverlayQueryOptions(projectId),
+  });
 
-    async function loadStory() {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`/api/projects/${projectId}/story`);
-        if (!response.ok) {
-          if (!cancelled) setContent(null);
-          return;
-        }
-
-        const data = (await response.json()) as { content: EditorOutput | null };
-        if (!cancelled) {
-          setContent(data.content ?? null);
-        }
-      } catch {
-        if (!cancelled) setContent(null);
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    }
-
-    void loadStory();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [projectId]);
+  const content = data?.content ?? null;
+  const isLoading = isPending && !data;
 
   return (
     <ProjectStoryShell
@@ -59,6 +35,7 @@ export function ProjectStoryOverlay({
       content={content}
       emptyMessage={isLoading ? t('loading') : t('empty')}
       isLoading={isLoading}
+      isRefreshing={Boolean(data && isFetching)}
       onClose={onClose}
     />
   );
