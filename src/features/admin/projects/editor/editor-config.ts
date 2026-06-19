@@ -9,9 +9,21 @@ import {
   createI18nTextTool,
 } from './i18n-text-tools';
 import { createEditorImageTool } from './editor-image-tool';
+import { createEditorVideoTool } from './editor-video-tool';
+import { createEditorDetailsTool } from './editor-details-tool';
+import { createEditorDetailsEndTool } from './editor-details-end-tool';
+
+type UploadResult = {
+  success: boolean;
+  file?: { url: string };
+};
 
 export function createEditorTools(
-  uploadByFile: (file: File) => Promise<{ success: boolean; file?: { url: string } }>,
+  uploadByFile: (file: File) => Promise<UploadResult>,
+  uploadVideo?: (
+    file: File,
+    onProgress?: (message: string) => void,
+  ) => Promise<UploadResult>,
 ) {
   return {
     paragraph: {
@@ -29,7 +41,8 @@ export function createEditorTools(
       class: createI18nTextTool({
         toolboxTitle: 'List',
         toolboxIcon: '•',
-        className: 'prose prose-zinc dark:prose-invert max-w-none',
+        className:
+          'prose prose-zinc dark:prose-invert max-w-none [&_li]:my-0.5 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5',
         placeholder: '<ul><li>Item</li></ul>',
       }) as unknown as ToolConstructable,
     },
@@ -45,6 +58,11 @@ export function createEditorTools(
     image: {
       class: createEditorImageTool(uploadByFile) as unknown as ToolConstructable,
     },
+    video: {
+      class: createEditorVideoTool(
+        uploadVideo ?? (async (file) => uploadByFile(file)),
+      ) as unknown as ToolConstructable,
+    },
     embed: {
       class: Embed as unknown as ToolConstructable,
       config: {
@@ -59,6 +77,12 @@ export function createEditorTools(
     table: {
       class: Table as unknown as ToolConstructable,
       inlineToolbar: true,
+    },
+    details: {
+      class: createEditorDetailsTool() as unknown as ToolConstructable,
+    },
+    detailsEnd: {
+      class: createEditorDetailsEndTool() as unknown as ToolConstructable,
     },
   };
 }
