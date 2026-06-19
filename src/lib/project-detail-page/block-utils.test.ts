@@ -3,7 +3,9 @@ import type { EditorBlock, EditorOutput } from '@/modules/project-detail-page/ty
 import {
   getBlockText,
   hasRenderableBlocks,
+  isAdminI18nFallback,
   isI18nTextBlock,
+  resolveAdminI18nText,
 } from './block-utils';
 
 describe('block-utils', () => {
@@ -26,6 +28,17 @@ describe('block-utils', () => {
     expect(getBlockText(paragraphBlock, 'ko')).toBe('한국어');
     expect(getBlockText(paragraphBlock, 'en')).toBe('English');
     expect(getBlockText(paragraphBlock, 'ja')).toBe('한국어');
+  });
+
+  it('shows Korean source in admin JA/EN tabs when locale is empty', () => {
+    const i18n = paragraphBlock.data.i18n as {
+      ko: string;
+      en: string;
+    };
+    expect(resolveAdminI18nText(i18n, 'ja')).toBe('한국어');
+    expect(resolveAdminI18nText(i18n, 'en')).toBe('English');
+    expect(isAdminI18nFallback(i18n, 'ja')).toBe(true);
+    expect(isAdminI18nFallback(i18n, 'en')).toBe(false);
   });
 
   it('returns empty string when i18n is missing', () => {

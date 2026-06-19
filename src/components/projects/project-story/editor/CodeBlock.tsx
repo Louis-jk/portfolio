@@ -1,7 +1,11 @@
 'use client';
 
 import { useEffect, useId, useState } from 'react';
-import { isMermaidSource } from '@/lib/project-detail-page';
+import { useTheme } from 'next-themes';
+import { isMermaidSource, normalizeMermaidSource } from '@/lib/project-detail-page';
+import { getMermaidRenderConfig } from '@/lib/project-detail-page/mermaid-theme';
+import { normalizeFixedWidthAscii } from '@/lib/project-detail-page/ascii-art-utils';
+import { STORY_CODE_BLOCK_CLASS, STORY_CODE_SURFACE_CLASS } from '@/constants/story-typography';
 
 type CodeBlockProps = {
   code: string;
@@ -9,20 +13,27 @@ type CodeBlockProps = {
 
 export function CodeBlock({ code }: CodeBlockProps) {
   const id = useId().replace(/:/g, '');
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
   const [svg, setSvg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const isMermaid = isMermaidSource(code);
+  const mermaidSource = isMermaid ? normalizeMermaidSource(code) : code;
+  const displayCode = isMermaid ? code : normalizeFixedWidthAscii(code);
 
   useEffect(() => {
-    if (!isMermaid) return;
+    if (!isMermaid || !mermaidSource) return;
 
     let cancelled = false;
 
     void (async () => {
       try {
         const mermaid = (await import('mermaid')).default;
-        mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
-        const { svg: rendered } = await mermaid.render(`mermaid-${id}`, code);
+        mermaid.initialize(getMermaidRenderConfig(isDark));
+        const { svg: rendered } = await mermaid.render(
+          `mermaid-${id}`,
+          mermaidSource,
+        );
         if (!cancelled) {
           setError(null);
           setSvg(rendered);
@@ -37,27 +48,29 @@ export function CodeBlock({ code }: CodeBlockProps) {
     return () => {
       cancelled = true;
     };
-  }, [code, id, isMermaid]);
+  }, [id, isDark, isMermaid, mermaidSource]);
 
   if (!isMermaid) {
     return (
-      <pre className='overflow-x-auto rounded-xl bg-zinc-950 p-4 text-sm text-zinc-100'>
-        <code>{code}</code>
+      <pre className={STORY_CODE_BLOCK_CLASS}>
+        {displayCode}
       </pre>
     );
   }
 
   if (error) {
     return (
-      <pre className='overflow-x-auto rounded-xl bg-red-950/40 p-4 text-sm text-red-200'>
-        <code>{code}</code>
+      <pre
+        className={`${STORY_CODE_BLOCK_CLASS} border-red-300/60 bg-red-50/90 text-red-900 dark:border-red-500/30 dark:bg-red-950/40 dark:text-red-100`}
+      >
+        {displayCode}
       </pre>
     );
   }
 
   if (!svg) {
     return (
-      <div className='rounded-xl bg-zinc-100 p-6 text-sm text-zinc-500 dark:bg-zinc-900'>
+      <div className={`${STORY_CODE_SURFACE_CLASS} p-6 text-base text-slate-600 dark:text-slate-400`}>
         Loading diagram…
       </div>
     );
@@ -65,7 +78,7 @@ export function CodeBlock({ code }: CodeBlockProps) {
 
   return (
     <div
-      className='overflow-x-auto rounded-xl bg-white p-4 dark:bg-zinc-900 [&_svg]:mx-auto'
+      className={`story-mermaid ${STORY_CODE_SURFACE_CLASS} overflow-x-auto p-4 [&_svg]:mx-auto`}
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );

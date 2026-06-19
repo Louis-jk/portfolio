@@ -7,6 +7,7 @@ import {
   Noto_Sans_KR,
   Hanalei_Fill,
 } from 'next/font/google';
+import { storyCodeFont } from '@/lib/fonts/story-code-font';
 import Script from 'next/script';
 
 import { ThemeProvider } from 'next-themes';
@@ -120,7 +121,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${notoSansJP.variable} ${notoSansKR.variable} ${geist.variable} ${geistMono.variable} ${hanaleiFill.variable} antialiased`}
+        className={`${notoSansJP.variable} ${notoSansKR.variable} ${geist.variable} ${geistMono.variable} ${storyCodeFont.variable} ${storyCodeFont.className} ${hanaleiFill.variable} antialiased`}
       >
         {/* GTM Body */}
         <noscript>
