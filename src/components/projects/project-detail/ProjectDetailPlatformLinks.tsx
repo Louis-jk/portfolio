@@ -6,9 +6,6 @@ import { TbBrowserShare } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import type { ProjectView } from '@/modules/projects';
 
-const linkButtonClass =
-  'px-2 py-1 dark:border-purple-500 bg-purple-700 dark:bg-purple-500 text-white hover:bg-purple-800 dark:hover:bg-purple-600 cursor-pointer transition-colors duration-200';
-
 type PlatformLink = {
   href: string;
   icon: React.ReactNode;
@@ -68,8 +65,8 @@ export default function ProjectDetailPlatformLinks({
         <Button
           key={link.label}
           variant='default'
-          className={linkButtonClass}
           size='sm'
+          className='cursor-pointer'
           onClick={() => window.open(link.href, '_blank')}
         >
           <div className='flex items-center gap-1'>
