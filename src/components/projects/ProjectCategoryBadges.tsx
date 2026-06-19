@@ -38,7 +38,7 @@ export default function ProjectCategoryBadges({
       {platformCategories.map((cat) => (
         <span
           key={cat}
-          className='px-2 py-0.5 rounded text-[10px] font-semibold uppercase bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300'
+          className='px-2 py-0.5 rounded text-[10px] font-semibold uppercase bg-primary/10 text-primary'
         >
           {t(`platform.${cat}`)}
         </span>

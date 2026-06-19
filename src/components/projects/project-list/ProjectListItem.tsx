@@ -74,7 +74,7 @@ export default function ProjectListItem({
         {showSelectionIcon && (
           <div className='shrink-0 mt-1'>
             {isSelected ? (
-              <Check className='w-4 h-4 text-purple-700 dark:text-purple-500' />
+              <Check className='w-4 h-4 text-point' />
             ) : (
               <div className='w-4 h-4' />
             )}
@@ -88,7 +88,7 @@ export default function ProjectListItem({
                 'font-bold text-lg transition-colors duration-200 flex-8',
                 isMobile && 'max-w-4/6 truncate',
                 isSelected
-                  ? 'text-purple-700 dark:text-purple-500 font-bold'
+                  ? 'text-point font-bold'
                   : 'text-gray-900 dark:text-gray-100',
               )}
             >

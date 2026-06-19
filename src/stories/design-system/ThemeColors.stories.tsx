@@ -4,6 +4,7 @@ const semanticTokens = [
   { name: 'background', className: 'bg-background text-foreground' },
   { name: 'foreground', className: 'bg-foreground text-background' },
   { name: 'primary', className: 'bg-primary text-primary-foreground' },
+  { name: 'point', className: 'bg-point text-point-foreground' },
   { name: 'secondary', className: 'bg-secondary text-secondary-foreground' },
   { name: 'muted', className: 'bg-muted text-muted-foreground' },
   { name: 'accent', className: 'bg-accent text-accent-foreground' },
@@ -42,7 +43,11 @@ function ThemeColorsShowcase() {
         <p className='text-sm text-muted-foreground'>
           Values come from CSS variables in{' '}
           <code className='rounded bg-muted px-1 py-0.5'>src/app/globals.css</code>
-          . Use the toolbar theme toggle to compare light and dark.
+          . <code className='rounded bg-muted px-1 py-0.5'>primary</code> is brand
+          purple; <code className='rounded bg-muted px-1 py-0.5'>point</code> is
+          green (light) / yellow (dark) — see{' '}
+          <strong>Design System / Brand Usage</strong> for when to use each utility.
+          Use the toolbar theme toggle to compare light and dark.
         </p>
       </div>
       <div className='grid grid-cols-2 gap-4 sm:grid-cols-3'>
