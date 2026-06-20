@@ -73,6 +73,35 @@ Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **
 | `hooks/`      | 공유 React 훅                         |
 | `app/`        | 라우트, BFF API, server actions       |
 
+**디렉터리 구조 (요약)**
+
+```text
+src/
+├── app/
+│   ├── [locale]/                    # Public pages + admin routes
+│   │   └── (private)/[adminPath]/projects/[id]/detail/
+│   └── api/projects/[id]/
+│       ├── detail-page/             # BFF — auth CRUD → Nest
+│       └── story/                   # BFF — public read
+├── modules/
+│   ├── projects/
+│   └── project-detail-page/
+├── features/
+│   ├── chatbot/
+│   └── admin/projects/editor/
+├── lib/
+│   ├── http/
+│   ├── project-detail-page/
+│   ├── projects/
+│   ├── query/                       # TanStack Query provider
+│   └── rag/
+├── components/projects/
+│   ├── project-list/
+│   ├── project-detail/
+│   └── project-story/
+└── hooks/
+```
+
 **스토리 플로우**: 어드민 Editor.js JSON → BFF `/api/projects/[id]/story` → 퍼블릭 `?item=&story=1` 오버레이
 
 ```mermaid
@@ -100,9 +129,20 @@ flowchart LR
   ProjectsSvc --> Nest
 ```
 
-### Technical Decisions & Performance Optimization
+### 기술 결정
 
-기존에는 **「스토리 보기」** 클릭 시점에만 API fetch가 시작되어 cold fetch 지연이 있었습니다. **TanStack Query**로 사용자 흐름(상세 진입 → hover → 클릭)에 맞춘 3단계 prefetch·캐싱을 구축했습니다.
+- **`modules/projects/`**: repository → service → mapper, Nest API(`API_URL`) 분리
+- **`modules/project-detail-page/`**: Editor.js 스토리 도메인, 렌더는 `components/projects/project-story/editor/`
+- **`features/chatbot/`**: UI는 feature, 데이터는 `modules/projects`
+- **`features/admin/projects/editor/`**: locale 탭(ko/ja/en) i18n 블록
+- **Public UI**: `?item=&story=1` 오버레이, TanStack Query (`lib/projects/project-story-query.ts`)
+- **Security**: env 시크릿, 미들웨어 세션, `/api/chat` rate limit, HTML sanitization
+
+### 스토리 로딩 성능 최적화
+
+**「스토리 보기」** UX를 위해 TanStack Query prefetch·캐싱을 적용한 사례입니다.
+
+기존에는 클릭 시점에만 API fetch가 시작되어 cold fetch 지연이 있었습니다. 사용자 흐름(상세 진입 → hover → 클릭)에 맞춘 3단계 레이어를 구축했습니다.
 
 - **Prefetch**: 프로젝트 선택·스토리 링크 hover/focus (`staleTime: 0`, deduplication)
 - **즉시 렌더**: 캐시로 오버레이 즉시 표시 (체감 ≈ 0초)
@@ -126,14 +166,37 @@ sequenceDiagram
   Cache-->>User: isRefreshing으로 교체
 ```
 
-### 기술 결정
+### 참고
 
-- **`modules/projects/`**: repository → service → mapper, Nest API(`API_URL`) 분리
-- **`modules/project-detail-page/`**: Editor.js 스토리 도메인, 렌더는 `components/projects/project-story/editor/`
-- **`features/chatbot/`**: UI는 feature, 데이터는 `modules/projects`
-- **`features/admin/projects/editor/`**: locale 탭(ko/ja/en) i18n 블록
-- **Public UI**: `?item=&story=1` 오버레이, TanStack Query (`lib/projects/project-story-query.ts`)
-- **Security**: env 시크릿, 미들웨어 세션, `/api/chat` rate limit, HTML sanitization
+훅·환경 변수 등 기술 레퍼런스입니다.
+
+#### 공유 훅 (`src/hooks/`)
+
+| 훅                           | 역할                                           |
+| ---------------------------- | ---------------------------------------------- |
+| `useBreakpoints`             | 상세 패널 — mobile / tablet / desktop          |
+| `useLayoutBreakpoints`       | 홈 레이아웃 — mobile / 2열 / desktop           |
+| `useProjectSelection`        | URL `?item=`, 드로어, analytics                |
+| `useProjectStory`            | URL `?story=1` 오버레이                        |
+| `usePrefetchProjectStory`    | hover·focus·선택 시 스토리 prefetch            |
+| `useProjectListInteractions` | 키보드 nav, Lenis 스크롤, hover 프리뷰         |
+
+#### 환경 변수
+
+`.env.example` → `.env.local`로 복사하세요. 시크릿은 커밋하지 마세요.
+
+**필수:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
+
+**선택:** `API_URL` — Nest API base URL
+
+#### 테스트 & CI
+
+```bash
+pnpm test          # Vitest
+pnpm test:e2e      # Playwright
+```
+
+push/PR 시 **lint**, **unit-test**, **build**가 실행됩니다.
 
 ### 시작하기
 
@@ -208,6 +271,35 @@ Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Ne
 | `hooks/`      | 共有 React フック                       |
 | `app/`        | ルート、BFF API、server actions         |
 
+**ディレクトリ構成 (抜粋)**
+
+```text
+src/
+├── app/
+│   ├── [locale]/                    # Public pages + admin routes
+│   │   └── (private)/[adminPath]/projects/[id]/detail/
+│   └── api/projects/[id]/
+│       ├── detail-page/             # BFF — auth CRUD → Nest
+│       └── story/                   # BFF — public read
+├── modules/
+│   ├── projects/
+│   └── project-detail-page/
+├── features/
+│   ├── chatbot/
+│   └── admin/projects/editor/
+├── lib/
+│   ├── http/
+│   ├── project-detail-page/
+│   ├── projects/
+│   ├── query/                       # TanStack Query provider
+│   └── rag/
+├── components/projects/
+│   ├── project-list/
+│   ├── project-detail/
+│   └── project-story/
+└── hooks/
+```
+
 **ストーリーフロー**: 管理画面 Editor.js JSON → BFF `/api/projects/[id]/story` → 公開 `?item=&story=1` オーバーレイ
 
 ```mermaid
@@ -235,9 +327,20 @@ flowchart LR
   ProjectsSvc --> Nest
 ```
 
-### Technical Decisions & Performance Optimization
+### 設計選択
 
-従来は **「ストーリーを見る」** クリック時のみ API フェッチが始まり、cold fetch の遅延がありました。**TanStack Query** でユーザー行動（詳細進入 → ホバー → クリック）に合わせた 3 段階プリフェッチ・キャッシュを実装しました。
+- **`modules/projects/`**: repository → service → mapper、Nest API (`API_URL`) 分離
+- **`modules/project-detail-page/`**: Editor.js ストーリードメイン、レンダラーは `components/projects/project-story/editor/`
+- **`features/chatbot/`**: UI は feature、データは `modules/projects`
+- **`features/admin/projects/editor/`**: locale タブ (ko/ja/en) i18n ブロック
+- **Public UI**: `?item=&story=1` オーバーレイ、TanStack Query (`lib/projects/project-story-query.ts`)
+- **セキュリティ**: env シークレット、ミドルウェアセッション、`/api/chat` レート制限、HTML sanitization
+
+### ストーリー読み込みの性能最適化
+
+**「ストーリーを見る」** UX 向けに TanStack Query のプリフェッチ・キャッシュを適用した事例です。
+
+従来はクリック時のみ API フェッチが始まり、cold fetch の遅延がありました。ユーザー行動（詳細進入 → ホバー → クリック）に合わせた 3 段階レイヤーを実装しました。
 
 - **プリフェッチ**: プロジェクト選択・ストーリーリンク hover/focus（`staleTime: 0`、deduplication）
 - **即時レンダリング**: キャッシュでオーバーレイ即表示（体感 ≈ 0 秒）
@@ -261,14 +364,37 @@ sequenceDiagram
   Cache-->>User: isRefreshing で更新
 ```
 
-### 設計選択
+### リファレンス
 
-- **`modules/projects/`**: repository → service → mapper、Nest API (`API_URL`) 分離
-- **`modules/project-detail-page/`**: Editor.js ストーリードメイン、レンダラーは `components/projects/project-story/editor/`
-- **`features/chatbot/`**: UI は feature、データは `modules/projects`
-- **`features/admin/projects/editor/`**: locale タブ (ko/ja/en) i18n ブロック
-- **Public UI**: `?item=&story=1` オーバーレイ、TanStack Query (`lib/projects/project-story-query.ts`)
-- **セキュリティ**: env シークレット、ミドルウェアセッション、`/api/chat` レート制限、HTML sanitization
+フック・環境変数などの技術リファレンスです。
+
+#### 共有フック (`src/hooks/`)
+
+| フック                       | 役割                                              |
+| ---------------------------- | ------------------------------------------------- |
+| `useBreakpoints`             | 詳細パネル — mobile / tablet / desktop            |
+| `useLayoutBreakpoints`       | ホームレイアウト — mobile / 2列 / desktop         |
+| `useProjectSelection`        | URL `?item=`、ドロワー、analytics                 |
+| `useProjectStory`            | URL `?story=1` オーバーレイ                       |
+| `usePrefetchProjectStory`    | hover・focus・選択時のストーリー prefetch           |
+| `useProjectListInteractions` | キーボード nav、Lenis スクロール、hover プレビュー |
+
+#### 環境変数
+
+`.env.example` を `.env.local` にコピーしてください。シークレットはコミットしないでください。
+
+**必須:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
+
+**任意:** `API_URL` — Nest API base URL
+
+#### テスト & CI
+
+```bash
+pnpm test          # Vitest
+pnpm test:e2e      # Playwright
+```
+
+push/PR 時に **lint**、**unit-test**、**build** が実行されます。
 
 ### はじめに
 
@@ -343,97 +469,7 @@ The codebase favors **colocation by responsibility** — related code lives next
 | `hooks/`      | Shared React hooks                     |
 | `app/`        | Routes, BFF API, server actions        |
 
-**Story flow**: Admin Editor.js JSON → BFF `/api/projects/[id]/story` → public `?item=&story=1` overlay
-
-```mermaid
-flowchart LR
-  subgraph admin [Admin CMS]
-    Editor[EditorJsAdmin]
-    Action[detail/action.ts]
-  end
-  subgraph bff [Next BFF]
-    DetailAPI["/api/projects/id/detail-page"]
-    StoryAPI["/api/projects/id/story"]
-  end
-  subgraph domain [modules]
-    DetailSvc[project-detail-page.service]
-    ProjectsSvc[projects.service]
-  end
-  subgraph publicUI [Public UI]
-    Overlay["?item=&story=1 overlay"]
-    Renderer[project-story/editor]
-  end
-  Nest[(Nest API)]
-  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
-  Overlay --> StoryAPI --> DetailSvc
-  Overlay --> Renderer
-  ProjectsSvc --> Nest
-```
-
-### Technical decisions & performance optimization
-
-Previously, the story API fetch started only on **View story** click (cold fetch). **TanStack Query** adds a three-step prefetch layer (select project → hover link → open overlay):
-
-1. **Prefetch** on selection and hover/focus (`staleTime: 0`, deduplication)
-2. **Instant render** from cache when overlay mounts (≈ 0s perceived wait)
-3. **Background refetch** (`refetchOnMount: 'always'`) for fresh admin edits
-
-```mermaid
-sequenceDiagram
-  participant User as User (Client)
-  participant Cache as TanStack Query (cache)
-  participant API as Backend (Nest API)
-  Note over User, Cache: Steps 1–2 before click
-  User->>Cache: Hover story link or select project
-  Cache->>API: Background prefetch
-  API-->>Cache: Story JSON (memory cache)
-  Note over User, Cache: Step 3 on click
-  User->>Cache: Open story overlay
-  Cache-->>User: Render cached content immediately
-  Note over Cache, API: staleTime 0 / refetchOnMount always
-  Cache->>API: Background refetch
-  API-->>Cache: Latest story JSON
-  Cache-->>User: Smooth update (isRefreshing)
-```
-
-### Design choices
-
-- **`modules/projects/`** — repository → service → mapper; Nest via `API_URL`
-- **`modules/project-detail-page/`** — Editor.js story domain; render in `components/projects/project-story/editor/`
-- **`features/chatbot/`** — UI in feature; data from `modules/projects`
-- **`features/admin/projects/editor/`** — per-locale (ko/ja/en) i18n blocks
-- **Public UI** — `?item=&story=1` overlay; TanStack Query in `lib/projects/project-story-query.ts`
-- **Security** — env secrets, middleware sessions, `/api/chat` rate limit, HTML sanitization
-
-### Getting started
-
-```bash
-git clone https://github.com/Louis-jk/portfolio.git
-cd portfolio
-pnpm install
-cp .env.example .env.local
-pnpm exec prisma migrate deploy
-pnpm db:seed
-pnpm dev
-```
-
-| Command          | Description           |
-| ---------------- | --------------------- |
-| `pnpm dev`       | Development server    |
-| `pnpm build`     | Production build      |
-| `pnpm test`      | Vitest unit tests     |
-| `pnpm test:e2e`  | Playwright            |
-| `pnpm storybook` | Storybook (port 6006) |
-
-**Branches**: `develop` (integration) → `main` (production)
-
-</details>
-
-## Reference
-
-Language-neutral technical reference (paths, hooks, env).
-
-### Directory tree (selected)
+**Directory tree (selected)**
 
 ```text
 src/
@@ -462,7 +498,75 @@ src/
 └── hooks/
 ```
 
-### Shared hooks (`src/hooks/`)
+**Story flow**: Admin Editor.js JSON → BFF `/api/projects/[id]/story` → public `?item=&story=1` overlay
+
+```mermaid
+flowchart LR
+  subgraph admin [Admin CMS]
+    Editor[EditorJsAdmin]
+    Action[detail/action.ts]
+  end
+  subgraph bff [Next BFF]
+    DetailAPI["/api/projects/id/detail-page"]
+    StoryAPI["/api/projects/id/story"]
+  end
+  subgraph domain [modules]
+    DetailSvc[project-detail-page.service]
+    ProjectsSvc[projects.service]
+  end
+  subgraph publicUI [Public UI]
+    Overlay["?item=&story=1 overlay"]
+    Renderer[project-story/editor]
+  end
+  Nest[(Nest API)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
+  Overlay --> StoryAPI --> DetailSvc
+  Overlay --> Renderer
+  ProjectsSvc --> Nest
+```
+
+### Design choices
+
+- **`modules/projects/`** — repository → service → mapper; Nest via `API_URL`
+- **`modules/project-detail-page/`** — Editor.js story domain; render in `components/projects/project-story/editor/`
+- **`features/chatbot/`** — UI in feature; data from `modules/projects`
+- **`features/admin/projects/editor/`** — per-locale (ko/ja/en) i18n blocks
+- **Public UI** — `?item=&story=1` overlay; TanStack Query in `lib/projects/project-story-query.ts`
+- **Security** — env secrets, middleware sessions, `/api/chat` rate limit, HTML sanitization
+
+### Story loading performance
+
+**View story** uses TanStack Query prefetch and caching for a snappier overlay.
+
+Previously, the API fetch started only on click (cold fetch). A three-step client layer matches user intent (select project → hover link → open overlay):
+
+1. **Prefetch** on selection and hover/focus (`staleTime: 0`, deduplication)
+2. **Instant render** from cache when overlay mounts (≈ 0s perceived wait)
+3. **Background refetch** (`refetchOnMount: 'always'`) for fresh admin edits
+
+```mermaid
+sequenceDiagram
+  participant User as User (Client)
+  participant Cache as TanStack Query (cache)
+  participant API as Backend (Nest API)
+  Note over User, Cache: Steps 1–2 before click
+  User->>Cache: Hover story link or select project
+  Cache->>API: Background prefetch
+  API-->>Cache: Story JSON (memory cache)
+  Note over User, Cache: Step 3 on click
+  User->>Cache: Open story overlay
+  Cache-->>User: Render cached content immediately
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: Background refetch
+  API-->>Cache: Latest story JSON
+  Cache-->>User: Smooth update (isRefreshing)
+```
+
+### Reference
+
+Technical reference for hooks and environment variables.
+
+#### Shared hooks (`src/hooks/`)
 
 | Hook                         | Role                                      |
 | ---------------------------- | ----------------------------------------- |
@@ -473,7 +577,7 @@ src/
 | `usePrefetchProjectStory`    | Prefetch story on hover, focus, selection |
 | `useProjectListInteractions` | Keyboard nav, Lenis scroll, hover preview |
 
-### Environment variables
+#### Environment variables
 
 Copy `.env.example` → `.env.local`. Never commit secrets.
 
@@ -481,14 +585,38 @@ Copy `.env.example` → `.env.local`. Never commit secrets.
 
 **Optional:** `API_URL` — Nest API base URL
 
-### Testing & CI
+#### Testing & CI
 
 ```bash
 pnpm test          # Vitest
 pnpm test:e2e      # Playwright
 ```
 
-CI runs lint, unit-test, and build on push/PR.
+CI runs **lint**, **unit-test**, and **build** on push/PR.
+
+### Getting started
+
+```bash
+git clone https://github.com/Louis-jk/portfolio.git
+cd portfolio
+pnpm install
+cp .env.example .env.local
+pnpm exec prisma migrate deploy
+pnpm db:seed
+pnpm dev
+```
+
+| Command          | Description           |
+| ---------------- | --------------------- |
+| `pnpm dev`       | Development server    |
+| `pnpm build`     | Production build      |
+| `pnpm test`      | Vitest unit tests     |
+| `pnpm test:e2e`  | Playwright            |
+| `pnpm storybook` | Storybook (port 6006) |
+
+**Branches**: `develop` (integration) → `main` (production)
+
+</details>
 
 ## License
 
