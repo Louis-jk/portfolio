@@ -24,8 +24,6 @@ Admin CMS shots are optional — add only if you want to highlight them. Mask or
 
 ## Documentation
 
-[🇰🇷 한국어](#-한국어) · [🇯🇵 日本語](#-日本語) · [🇺🇸 English](#-english)
-
 <details>
 <summary><b>🇰🇷 한국어</b></summary>
 
@@ -49,16 +47,16 @@ Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **
 [![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
 [![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-| 계층 | 선택 |
-| ---- | ---- |
-| **Framework** | Next.js 15 · React 19 · TypeScript 5 |
-| **Styling** | Tailwind CSS 4 · Framer Motion · next-themes |
+| 계층            | 선택                                                               |
+| --------------- | ------------------------------------------------------------------ |
+| **Framework**   | Next.js 15 · React 19 · TypeScript 5                               |
+| **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
 | **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
-| **i18n** | next-intl (ko / en / ja) |
-| **Data** | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector) |
-| **AI / RAG** | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
-| **3D** | React Three Fiber · drei |
-| **Quality** | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10 |
+| **i18n**        | next-intl (ko / en / ja)                                           |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector)         |
+| **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
+| **3D**          | React Three Fiber · drei                                           |
+| **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
 
 ### 아키텍처
 
@@ -66,14 +64,14 @@ Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **
 
 **레이어 역할**
 
-| 레이어 | 역할 |
-| ------ | ---- |
-| `modules/` | 서버 도메인 — repository → service |
-| `lib/` | React 없는 순수 헬퍼 |
-| `features/` | 기능 슬라이스 (admin editor, chatbot) |
-| `components/` | 공유 UI |
-| `hooks/` | 공유 React 훅 |
-| `app/` | 라우트, BFF API, server actions |
+| 레이어        | 역할                                  |
+| ------------- | ------------------------------------- |
+| `modules/`    | 서버 도메인 — repository → service    |
+| `lib/`        | React 없는 순수 헬퍼                  |
+| `features/`   | 기능 슬라이스 (admin editor, chatbot) |
+| `components/` | 공유 UI                               |
+| `hooks/`      | 공유 React 훅                         |
+| `app/`        | 라우트, BFF API, server actions       |
 
 **스토리 플로우**: 어드민 Editor.js JSON → BFF `/api/projects/[id]/story` → 퍼블릭 `?item=&story=1` 오버레이
 
@@ -149,12 +147,12 @@ pnpm db:seed
 pnpm dev
 ```
 
-| 명령 | 설명 |
-| ---- | ---- |
-| `pnpm dev` | 개발 서버 |
-| `pnpm build` | 프로덕션 빌드 |
-| `pnpm test` | Vitest |
-| `pnpm test:e2e` | Playwright |
+| 명령             | 설명             |
+| ---------------- | ---------------- |
+| `pnpm dev`       | 개발 서버        |
+| `pnpm build`     | 프로덕션 빌드    |
+| `pnpm test`      | Vitest           |
+| `pnpm test:e2e`  | Playwright       |
 | `pnpm storybook` | Storybook (6006) |
 
 **브랜치**: `develop`(통합) → `main`(프로덕션)
@@ -184,16 +182,16 @@ Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Ne
 [![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
 [![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-| レイヤー | 選択 |
-| -------- | ---- |
-| **Framework** | Next.js 15 · React 19 · TypeScript 5 |
-| **Styling** | Tailwind CSS 4 · Framer Motion · next-themes |
+| レイヤー        | 選択                                                               |
+| --------------- | ------------------------------------------------------------------ |
+| **Framework**   | Next.js 15 · React 19 · TypeScript 5                               |
+| **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
 | **Client data** | TanStack Query 5 — prefetch、deduplication、stale-while-revalidate |
-| **i18n** | next-intl (ko / en / ja) |
-| **Data** | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector) |
-| **AI / RAG** | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
-| **3D** | React Three Fiber · drei |
-| **Quality** | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10 |
+| **i18n**        | next-intl (ko / en / ja)                                           |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector)         |
+| **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
+| **3D**          | React Three Fiber · drei                                           |
+| **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
 
 ### アーキテクチャ
 
@@ -201,14 +199,14 @@ Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Ne
 
 **レイヤー役割**
 
-| レイヤー | 役割 |
-| -------- | ---- |
-| `modules/` | サーバードメイン — repository → service |
-| `lib/` | React なしの純粋ヘルパー |
-| `features/` | 機能スライス (admin editor, chatbot) |
-| `components/` | 共有 UI |
-| `hooks/` | 共有 React フック |
-| `app/` | ルート、BFF API、server actions |
+| レイヤー      | 役割                                    |
+| ------------- | --------------------------------------- |
+| `modules/`    | サーバードメイン — repository → service |
+| `lib/`        | React なしの純粋ヘルパー                |
+| `features/`   | 機能スライス (admin editor, chatbot)    |
+| `components/` | 共有 UI                                 |
+| `hooks/`      | 共有 React フック                       |
+| `app/`        | ルート、BFF API、server actions         |
 
 **ストーリーフロー**: 管理画面 Editor.js JSON → BFF `/api/projects/[id]/story` → 公開 `?item=&story=1` オーバーレイ
 
@@ -284,13 +282,13 @@ pnpm db:seed
 pnpm dev
 ```
 
-| コマンド | 説明 |
-| -------- | ---- |
-| `pnpm dev` | 開発サーバー |
-| `pnpm build` | プロダクションビルド |
-| `pnpm test` | Vitest |
-| `pnpm test:e2e` | Playwright |
-| `pnpm storybook` | Storybook (6006) |
+| コマンド         | 説明                 |
+| ---------------- | -------------------- |
+| `pnpm dev`       | 開発サーバー         |
+| `pnpm build`     | プロダクションビルド |
+| `pnpm test`      | Vitest               |
+| `pnpm test:e2e`  | Playwright           |
+| `pnpm storybook` | Storybook (6006)     |
 
 **ブランチ**: `develop`（統合）→ `main`（本番）
 
@@ -319,16 +317,16 @@ Multilingual portfolio and CMS built with **Next.js 15 (App Router)**. Stack: **
 [![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
 [![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-| Layer | Choices |
-| ----- | ------- |
-| **Framework** | Next.js 15 · React 19 · TypeScript 5 |
-| **Styling** | Tailwind CSS 4 · Framer Motion · next-themes |
+| Layer           | Choices                                                            |
+| --------------- | ------------------------------------------------------------------ |
+| **Framework**   | Next.js 15 · React 19 · TypeScript 5                               |
+| **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
 | **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
-| **i18n** | next-intl (ko / en / ja) |
-| **Data** | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector) |
-| **AI / RAG** | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
-| **3D** | React Three Fiber · drei |
-| **Quality** | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10 |
+| **i18n**        | next-intl (ko / en / ja)                                           |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector)         |
+| **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
+| **3D**          | React Three Fiber · drei                                           |
+| **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
 
 ### Architecture
 
@@ -336,14 +334,14 @@ The codebase favors **colocation by responsibility** — related code lives next
 
 **Layer roles**
 
-| Layer | Role |
-| ----- | ---- |
-| `modules/` | Server domain — repository → service |
-| `lib/` | Pure helpers (no React) |
-| `features/` | Feature slices (admin editor, chatbot) |
-| `components/` | Shared UI |
-| `hooks/` | Shared React hooks |
-| `app/` | Routes, BFF API, server actions |
+| Layer         | Role                                   |
+| ------------- | -------------------------------------- |
+| `modules/`    | Server domain — repository → service   |
+| `lib/`        | Pure helpers (no React)                |
+| `features/`   | Feature slices (admin editor, chatbot) |
+| `components/` | Shared UI                              |
+| `hooks/`      | Shared React hooks                     |
+| `app/`        | Routes, BFF API, server actions        |
 
 **Story flow**: Admin Editor.js JSON → BFF `/api/projects/[id]/story` → public `?item=&story=1` overlay
 
@@ -419,12 +417,12 @@ pnpm db:seed
 pnpm dev
 ```
 
-| Command | Description |
-| ------- | ----------- |
-| `pnpm dev` | Development server |
-| `pnpm build` | Production build |
-| `pnpm test` | Vitest unit tests |
-| `pnpm test:e2e` | Playwright |
+| Command          | Description           |
+| ---------------- | --------------------- |
+| `pnpm dev`       | Development server    |
+| `pnpm build`     | Production build      |
+| `pnpm test`      | Vitest unit tests     |
+| `pnpm test:e2e`  | Playwright            |
 | `pnpm storybook` | Storybook (port 6006) |
 
 **Branches**: `develop` (integration) → `main` (production)
@@ -466,13 +464,13 @@ src/
 
 ### Shared hooks (`src/hooks/`)
 
-| Hook | Role |
-| ---- | ---- |
-| `useBreakpoints` | Detail panel — mobile / tablet / desktop |
-| `useLayoutBreakpoints` | Home shell — mobile / 2-col / desktop |
-| `useProjectSelection` | URL `?item=`, drawer, analytics |
-| `useProjectStory` | URL `?story=1` overlay |
-| `usePrefetchProjectStory` | Prefetch story on hover, focus, selection |
+| Hook                         | Role                                      |
+| ---------------------------- | ----------------------------------------- |
+| `useBreakpoints`             | Detail panel — mobile / tablet / desktop  |
+| `useLayoutBreakpoints`       | Home shell — mobile / 2-col / desktop     |
+| `useProjectSelection`        | URL `?item=`, drawer, analytics           |
+| `useProjectStory`            | URL `?story=1` overlay                    |
+| `usePrefetchProjectStory`    | Prefetch story on hover, focus, selection |
 | `useProjectListInteractions` | Keyboard nav, Lenis scroll, hover preview |
 
 ### Environment variables
