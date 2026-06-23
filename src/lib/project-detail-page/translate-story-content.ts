@@ -29,6 +29,7 @@ type HtmlTranslationItem = {
   index: number;
   html: string;
   segments: string[];
+  placeholderPrefix: string;
 };
 
 type CodeTranslationItem = {
@@ -106,7 +107,7 @@ async function translateHtmlBatch(
       content: `You translate portfolio project story HTML from Korean to ${language}.
 Preserve every HTML tag, attribute, and structure exactly.
 Translate only human-readable text nodes.
-Never translate placeholder tokens like ___NT_0___.
+Never translate placeholder tokens like ___NT_<id>_0___.
 Never translate content inside code fences or pre/code blocks.
 Return ONLY a JSON array: [{"index":number,"html":"..."}] in the same order as input.
 Do not wrap the JSON in markdown fences.`,
@@ -239,6 +240,7 @@ export async function translateStoryContent(
       index: htmlItems.length,
       html: protectedSource.html,
       segments: protectedSource.segments,
+      placeholderPrefix: protectedSource.placeholderPrefix,
     });
   });
 
@@ -254,7 +256,11 @@ export async function translateStoryContent(
     if (!translated) continue;
     translatedByPath.set(
       item.path,
-      restoreNonTranslatableHtml(translated, item.segments),
+      restoreNonTranslatableHtml(
+        translated,
+        item.segments,
+        item.placeholderPrefix,
+      ),
     );
   }
 

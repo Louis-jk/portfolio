@@ -96,3 +96,22 @@ describe('migrateLegacyStoryContent', () => {
     expect(document.locales.ja.blocks[0]?.data.code).toBe('graph TD ja');
   });
 });
+
+describe('parseStoryContent malformed payloads', () => {
+  it('normalizes malformed locale documents', () => {
+    const malformed = {
+      time: 'bad',
+      version: 1,
+      locales: {
+        ko: { blocks: [{ type: 'paragraph', data: { html: 'ko' } }] },
+        ja: null,
+        en: { blocks: 'not-an-array' },
+      },
+    };
+
+    const parsed = parseStoryContent(malformed as never);
+    expect(parsed.locales.ko.blocks[0]?.data.html).toBe('ko');
+    expect(parsed.locales.ja.blocks).toEqual([]);
+    expect(parsed.locales.en.blocks).toEqual([]);
+  });
+});

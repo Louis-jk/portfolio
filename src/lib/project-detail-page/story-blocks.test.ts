@@ -49,4 +49,20 @@ describe('preserveSharedBlockData', () => {
       ja: 'flowchart LR\n  A --> B\n  C[上書き]',
     });
   });
+
+  it('maps shared blocks by path within the same layout', () => {
+    const original = output([
+      block('paragraph', { html: 'text' }),
+      block('image', { file: { url: 'https://example.com/a.png' } }),
+    ]);
+    const translated = output([
+      block('paragraph', { html: 'text ja' }),
+      block('image', { file: { url: 'https://example.com/b.png' } }),
+    ]);
+
+    const merged = preserveSharedBlockData(original, translated);
+    expect(merged.blocks[1]?.data.file).toEqual({
+      url: 'https://example.com/a.png',
+    });
+  });
 });

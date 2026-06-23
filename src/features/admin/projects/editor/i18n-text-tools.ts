@@ -3,7 +3,7 @@ import { STORY_EDITOR_BODY_CLASS } from '@/constants/story-typography';
 import { sanitizeHtml } from '@/lib/sanitize-html';
 import { normalizeParagraphHtml } from '@/lib/project-detail-page/paragraph-html';
 import { getLeafContentEditable } from './editor-html-persistence';
-import { registerI18nTool, type I18nToolInstance } from './locale-context';
+import { getActiveLocale, registerI18nTool, type I18nToolInstance } from './locale-context';
 import { getHeaderLevelClass } from './editor-header-styles';
 import { attachContentEditableTextPaste } from './editor-text-paste';
 
@@ -22,8 +22,10 @@ type ToolConfig = {
 function readHtmlFromData(data: Record<string, unknown> | undefined): string {
   if (typeof data?.html === 'string') return data.html;
   const i18n = data?.i18n;
-  if (i18n && typeof i18n === 'object' && 'ko' in i18n) {
-    return String((i18n as PartialI18n).ko ?? '');
+  if (i18n && typeof i18n === 'object') {
+    const partial = i18n as PartialI18n;
+    const locale = getActiveLocale();
+    return String(partial[locale] ?? partial.ko ?? '');
   }
   return '';
 }

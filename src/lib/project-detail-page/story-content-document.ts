@@ -17,12 +17,30 @@ export function isStoryContentDocument(
   value: unknown,
 ): value is StoryContentDocument {
   if (!value || typeof value !== 'object') return false;
-  const locales = (value as StoryContentDocument).locales;
-  return Boolean(locales && typeof locales === 'object' && 'ko' in locales);
+  const record = value as StoryContentDocument;
+  if (!record.locales || typeof record.locales !== 'object') return false;
+  return LOCALES.every((locale) => locale in record.locales);
 }
 
 export function emptyLocaleEditorOutput(): EditorOutput {
   return { time: 0, version: '2.29.0', blocks: [] };
+}
+
+function isEditorOutputLike(value: unknown): value is EditorOutput {
+  if (!value || typeof value !== 'object') return false;
+  return Array.isArray((value as EditorOutput).blocks);
+}
+
+function normalizeEditorOutput(value: unknown): EditorOutput {
+  if (!isEditorOutputLike(value)) {
+    return emptyLocaleEditorOutput();
+  }
+
+  return {
+    time: typeof value.time === 'number' ? value.time : 0,
+    version: typeof value.version === 'string' ? value.version : '2.29.0',
+    blocks: value.blocks,
+  };
 }
 
 function stripI18nFields(data: Record<string, unknown>): Record<string, unknown> {
@@ -99,12 +117,13 @@ export function parseStoryContent(
 ): StoryContentDocument {
   if (isStoryContentDocument(content)) {
     return {
-      time: content.time,
-      version: content.version,
+      time: typeof content.time === 'number' ? content.time : Date.now(),
+      version:
+        typeof content.version === 'string' ? content.version : '2.29.0',
       locales: {
-        ko: content.locales.ko ?? emptyLocaleEditorOutput(),
-        ja: content.locales.ja ?? emptyLocaleEditorOutput(),
-        en: content.locales.en ?? emptyLocaleEditorOutput(),
+        ko: normalizeEditorOutput(content.locales.ko),
+        ja: normalizeEditorOutput(content.locales.ja),
+        en: normalizeEditorOutput(content.locales.en),
       },
     };
   }

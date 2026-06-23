@@ -53,11 +53,13 @@ export function mapEditorBlocksWithPaths(
   });
 }
 
-function collectSharedBlocksInWalkOrder(blocks: EditorBlock[]): EditorBlock[] {
-  const shared: EditorBlock[] = [];
-  walkEditorBlocksWithPaths(blocks, (block) => {
+function collectSharedBlocksByPath(
+  blocks: EditorBlock[],
+): Map<string, EditorBlock> {
+  const shared = new Map<string, EditorBlock>();
+  walkEditorBlocksWithPaths(blocks, (block, path) => {
     if (isSharedBlockType(block.type)) {
-      shared.push(block);
+      shared.set(path, block);
     }
   });
   return shared;
@@ -68,15 +70,14 @@ export function preserveSharedBlockData(
   original: EditorOutput,
   translated: EditorOutput,
 ): EditorOutput {
-  const originalShared = collectSharedBlocksInWalkOrder(original.blocks);
-  let sharedIndex = 0;
+  const originalShared = collectSharedBlocksByPath(original.blocks);
 
   return {
     ...translated,
-    blocks: mapEditorBlocksWithPaths(translated.blocks, (block) => {
+    blocks: mapEditorBlocksWithPaths(translated.blocks, (block, path) => {
       if (!isSharedBlockType(block.type)) return block;
 
-      const snapshot = originalShared[sharedIndex++];
+      const snapshot = originalShared.get(path);
       if (!snapshot || snapshot.type !== block.type) return block;
 
       return {
