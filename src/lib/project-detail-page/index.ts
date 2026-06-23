@@ -7,6 +7,15 @@ export {
 export { parseStorySegments, nestDetailsBlocks, flattenDetailsBlocks, findEmptyDetailsSections } from './details-blocks';
 export type { StorySegment } from './details-blocks';
 export {
+  buildStoryContentDocument,
+  getLocaleEditorOutput,
+  getPublicLocaleEditorOutput,
+  hasStoryContentInAnyLocale,
+  isStoryContentDocument,
+  migrateLegacyStoryContent,
+  parseStoryContent,
+} from './story-content-document';
+export {
   getYouTubeEmbedUrl,
   isMermaidSource,
   normalizeMermaidSource,

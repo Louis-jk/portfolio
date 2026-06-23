@@ -103,6 +103,7 @@ export function toProjectView(dto: NestProjectDto, locale: string): ProjectView 
     description: readI18nArray(dto.description, locale),
     challenges: readI18nArray(dto.challenges, locale),
     achievements: readI18nArray(dto.achievements, locale),
+    storyIsPublic: false,
   };
 }
 

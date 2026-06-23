@@ -1,8 +1,9 @@
 'use client';
 
-import { createContext, useCallback, useContext } from 'react';
+import { createContext, useCallback, useContext, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { ProjectView } from '@/modules/projects';
+import { canShowPublicStoryLink } from '@/lib/projects/story-access';
 import { projectStoryQueryOptions } from '@/lib/projects/project-story-query';
 import { useProjectStory } from '@/hooks/useProjectStory';
 import { usePrefetchProjectStory } from '@/hooks/usePrefetchProjectStory';
@@ -40,10 +41,20 @@ export function ProjectStoryProvider({
       ? projects.find((project) => project.id === storyProjectId)
       : null;
 
+  useEffect(() => {
+    if (storyProjectId == null || !activeProject) return;
+    if (!canShowPublicStoryLink(activeProject)) {
+      closeStory();
+    }
+  }, [storyProjectId, activeProject, closeStory]);
+
+  const showStoryOverlay =
+    storyProjectId != null && canShowPublicStoryLink(activeProject);
+
   return (
     <ProjectStoryContext.Provider value={{ openStory }}>
       {children}
-      {storyProjectId != null && (
+      {showStoryOverlay && (
         <ProjectStoryOverlay
           projectId={storyProjectId}
           projectTitle={activeProject?.title ?? ''}

@@ -7,6 +7,7 @@ export type {
   PatchProjectDetailPageInput,
   ProjectDetailPage,
   SharedBlockType,
+  StoryContentDocument,
   UpsertProjectDetailPageInput,
 } from './types';
 export {

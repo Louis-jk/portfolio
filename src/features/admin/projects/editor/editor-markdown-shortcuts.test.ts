@@ -34,14 +34,14 @@ describe('matchMarkdownOnSpace', () => {
     expect(matchMarkdownOnSpace('*', '*')?.type).toBe('list');
     expect(matchMarkdownOnSpace('-', '- hello')?.type).toBe('list');
     expect(
-      (matchMarkdownOnSpace('-', '- hello')?.data.i18n as { ko?: string })?.ko,
+      (matchMarkdownOnSpace('-', '- hello')?.data as { html?: string })?.html,
     ).toContain('hello');
   });
 
   it('converts ordered list markers', () => {
     expect(matchMarkdownOnSpace('1.', '1.')?.type).toBe('list');
     expect(
-      (matchMarkdownOnSpace('1.', '1.')?.data.i18n as { ko?: string })?.ko,
+      (matchMarkdownOnSpace('1.', '1.')?.data as { html?: string })?.html,
     ).toContain('<ol>');
   });
 

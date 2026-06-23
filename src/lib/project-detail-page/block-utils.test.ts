@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import type { EditorBlock, EditorOutput } from '@/modules/project-detail-page/types';
 import {
+  getBlockI18n,
   getBlockText,
   hasRenderableBlocks,
-  isAdminI18nFallback,
+  isI18nCodeBlock,
   isI18nTextBlock,
   resolveAdminI18nText,
 } from './block-utils';
@@ -22,6 +23,8 @@ describe('block-utils', () => {
   it('detects i18n text blocks', () => {
     expect(isI18nTextBlock('paragraph')).toBe(true);
     expect(isI18nTextBlock('image')).toBe(false);
+    expect(isI18nCodeBlock('code')).toBe(true);
+    expect(isI18nTextBlock('code')).toBe(false);
   });
 
   it('resolves locale text with fallback chain', () => {
@@ -30,19 +33,30 @@ describe('block-utils', () => {
     expect(getBlockText(paragraphBlock, 'ja')).toBe('한국어');
   });
 
-  it('shows Korean source in admin JA/EN tabs when locale is empty', () => {
+  it('skips blank locale values when falling back', () => {
+    const block: EditorBlock = {
+      type: 'paragraph',
+      data: { i18n: { ko: '한국어', ja: '' } },
+    };
+    expect(getBlockText(block, 'ja')).toBe('한국어');
+  });
+
+  it('shows only the active locale in admin editor', () => {
     const i18n = paragraphBlock.data.i18n as {
       ko: string;
       en: string;
     };
-    expect(resolveAdminI18nText(i18n, 'ja')).toBe('한국어');
+    expect(resolveAdminI18nText(i18n, 'ja')).toBe('');
     expect(resolveAdminI18nText(i18n, 'en')).toBe('English');
-    expect(isAdminI18nFallback(i18n, 'ja')).toBe(true);
-    expect(isAdminI18nFallback(i18n, 'en')).toBe(false);
   });
 
-  it('returns empty string when i18n is missing', () => {
-    expect(getBlockText({ type: 'paragraph', data: {} }, 'ko')).toBe('');
+  it('migrates legacy shared code blocks to Korean i18n', () => {
+    expect(
+      getBlockI18n({ type: 'code', data: { code: 'flowchart LR' } }),
+    ).toEqual({ ko: 'flowchart LR' });
+    expect(getBlockText({ type: 'code', data: { code: 'flowchart LR' } }, 'ja')).toBe(
+      'flowchart LR',
+    );
   });
 
   it('detects renderable blocks', () => {

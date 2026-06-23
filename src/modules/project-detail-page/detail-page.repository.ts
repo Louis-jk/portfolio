@@ -1,4 +1,5 @@
 import { nestClient } from '@/lib/http/nest-client';
+import { serializeDetailPagePayloadForNest } from '@/lib/project-detail-page/nest-story-content';
 import type {
   PatchProjectDetailPageInput,
   ProjectDetailPage,
@@ -19,7 +20,7 @@ export async function upsertProjectDetailPage(
 ): Promise<ProjectDetailPage> {
   return nestClient.put<ProjectDetailPage>(
     `/projects/${projectId}/detail-page`,
-    payload,
+    serializeDetailPagePayloadForNest(payload),
   );
 }
 
@@ -27,9 +28,19 @@ export async function patchProjectDetailPage(
   projectId: number,
   payload: PatchProjectDetailPageInput,
 ): Promise<ProjectDetailPage> {
+  const body: PatchProjectDetailPageInput =
+    payload.content != null
+      ? {
+          ...payload,
+          content: serializeDetailPagePayloadForNest({
+            content: payload.content,
+          }).content,
+        }
+      : payload;
+
   return nestClient.patch<ProjectDetailPage>(
     `/projects/${projectId}/detail-page`,
-    payload,
+    body,
   );
 }
 

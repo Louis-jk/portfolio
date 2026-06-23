@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ExternalLink, FileText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
-import { getPublicStoryUrl } from '@/lib/projects/public-story-url';
+import { getAdminStoryPreviewUrl } from '@/lib/projects/admin-story-preview-url';
 
 type ProjectStoryAdminLinksProps = {
   projectId: number;
@@ -19,7 +19,7 @@ export function ProjectStoryAdminLinks({
 }: ProjectStoryAdminLinksProps) {
   const t = useTranslations('admin.projects');
   const editHref = `/${locale}${ADMIN_ROUTES.PROJECTS}/${projectId}/detail`;
-  const previewHref = getPublicStoryUrl(locale, projectId);
+  const previewHref = getAdminStoryPreviewUrl(locale, projectId);
 
   if (variant === 'icon') {
     return (

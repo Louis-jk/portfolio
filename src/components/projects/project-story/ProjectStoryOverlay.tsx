@@ -1,8 +1,10 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
-import type { I18nLocale } from '@/modules/project-detail-page';
+import type { I18nLocale, StoryContentDocument } from '@/modules/project-detail-page';
+import { getPublicLocaleEditorOutput } from '@/lib/project-detail-page/story-content-document';
 import { projectStoryOverlayQueryOptions } from '@/lib/projects/project-story-query';
 import { ProjectStoryShell } from './ProjectStoryShell';
 
@@ -24,7 +26,11 @@ export function ProjectStoryOverlay({
     ...projectStoryOverlayQueryOptions(projectId),
   });
 
-  const content = data?.content ?? null;
+  const content = useMemo(() => {
+    const raw = data?.content;
+    if (!raw) return null;
+    return getPublicLocaleEditorOutput(raw, locale);
+  }, [data?.content, locale]);
   const isLoading = isPending && !data;
 
   return (
