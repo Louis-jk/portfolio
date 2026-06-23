@@ -9,12 +9,15 @@ import { useLenisPanelScroll } from '@/hooks/useLenisPanelScroll';
 import ShareButton from '@/components/button/share/ShareButton';
 import ShareModal from '@/components/modal/shareModal';
 import type { ProjectView } from '@/modules/projects';
+import { canShowPublicStoryLink } from '@/lib/projects/story-access';
 import ProjectDetailBulletSection from './project-detail/ProjectDetailBulletSection';
 import ProjectDetailEmptyState from './project-detail/ProjectDetailEmptyState';
 import ProjectDetailHeroImage from './project-detail/ProjectDetailHeroImage';
 import ProjectDetailMetaHeader from './project-detail/ProjectDetailMetaHeader';
 import ProjectDetailPanelTitle from './project-detail/ProjectDetailPanelTitle';
-import ProjectDetailPlatformLinks from './project-detail/ProjectDetailPlatformLinks';
+import ProjectDetailPlatformLinks, {
+  getPlatformLinks,
+} from './project-detail/ProjectDetailPlatformLinks';
 import ProjectDetailTagList from './project-detail/ProjectDetailTagList';
 import ProjectDetailToolsSection from './project-detail/ProjectDetailToolsSection';
 import { ProjectStoryViewLink } from './project-story/ProjectStoryViewLink';
@@ -46,6 +49,8 @@ export default function ProjectDetail({
   }
 
   const stickyHeader = !isDesktopOrLaptop;
+  const showStory = showStoryLink && canShowPublicStoryLink(item);
+  const hasPlatformLinks = getPlatformLinks(item).length > 0;
 
   return (
     <article
@@ -91,7 +96,19 @@ export default function ProjectDetail({
           )}
 
           <motion.div {...detailSectionMotion(isVisible, 0.8)}>
-            <ProjectDetailPlatformLinks item={item} />
+            {isDesktopOrLaptop && (hasPlatformLinks || showStory) ? (
+              <div className='mb-5 flex w-full flex-wrap items-center gap-2'>
+                <ProjectDetailPlatformLinks item={item} />
+                {showStory ? (
+                  <ProjectStoryViewLink
+                    projectId={item.id}
+                    className='shrink-0'
+                  />
+                ) : null}
+              </div>
+            ) : (
+              <ProjectDetailPlatformLinks item={item} className='mb-5' />
+            )}
 
             <div className='flex items-center justify-between mb-3'>
               <h4 className='text-lg font-semibold'>{tD('overview')}</h4>
@@ -100,11 +117,11 @@ export default function ProjectDetail({
             <p className='text-gray-700 dark:text-gray-300 leading-[1.5] whitespace-pre-line'>
               {item.overview}
             </p>
-            {showStoryLink && (
+            {!isDesktopOrLaptop && showStory ? (
               <div className='mt-6'>
                 <ProjectStoryViewLink projectId={item.id} />
               </div>
-            )}
+            ) : null}
           </motion.div>
 
           <motion.div {...detailSectionMotion(isVisible, 1)}>

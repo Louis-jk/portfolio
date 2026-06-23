@@ -10,15 +10,17 @@ export const I18N_TEXT_BLOCK_TYPES = [
   'details',
 ] as const;
 
+export const I18N_CODE_BLOCK_TYPES = ['code'] as const;
+
 export const SHARED_BLOCK_TYPES = [
   'image',
   'embed',
-  'code',
   'delimiter',
   'table',
 ] as const;
 
 export type I18nTextBlockType = (typeof I18N_TEXT_BLOCK_TYPES)[number];
+export type I18nCodeBlockType = (typeof I18N_CODE_BLOCK_TYPES)[number];
 export type SharedBlockType = (typeof SHARED_BLOCK_TYPES)[number];
 
 export interface EditorBlock {
@@ -33,23 +35,30 @@ export interface EditorOutput {
   blocks: EditorBlock[];
 }
 
+/** Per-locale story documents — layout and text are independent per language. */
+export interface StoryContentDocument {
+  time: number;
+  version: string;
+  locales: Record<I18nLocale, EditorOutput>;
+}
+
 export interface ProjectDetailPage {
   id: number;
   projectId: number;
-  /** Admin metadata only — not used to gate public rendering. */
+  /** When false, the public site hides the story and blocks unauthenticated API access. */
   isPublic: boolean;
-  content: EditorOutput;
+  content: EditorOutput | StoryContentDocument;
   createdAt: string;
   updatedAt: string;
 }
 
 export type UpsertProjectDetailPageInput = {
-  content: EditorOutput;
+  content: EditorOutput | StoryContentDocument;
   isPublic?: boolean;
 };
 
 export type PatchProjectDetailPageInput = {
-  content?: EditorOutput;
+  content?: EditorOutput | StoryContentDocument;
   isPublic?: boolean;
 };
 

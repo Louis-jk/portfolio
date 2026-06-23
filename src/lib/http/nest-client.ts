@@ -55,12 +55,15 @@ async function request<T>(
   const body = await parseJsonBody(response);
 
   if (!response.ok) {
-    const message =
-      typeof body === 'object' &&
-      body !== null &&
-      'message' in body &&
-      typeof (body as { message: unknown }).message === 'string'
-        ? (body as { message: string }).message
+    const bodyMessage =
+      typeof body === 'object' && body !== null && 'message' in body
+        ? (body as { message: unknown }).message
+        : undefined;
+
+    const message = Array.isArray(bodyMessage)
+      ? bodyMessage.join('; ')
+      : typeof bodyMessage === 'string'
+        ? bodyMessage
         : `Nest API error (${response.status})`;
 
     throw new NestApiError(message, response.status, body);

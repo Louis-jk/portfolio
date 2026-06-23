@@ -1,18 +1,30 @@
 import type EditorJS from '@editorjs/editorjs';
+import { syncAllI18nToolsToActiveLocale } from './locale-context';
 
 const INLINE_CODE_PATTERN = /`([^`\n]+)$/;
 
-const INLINE_CODE_BLOCKS = new Set(['paragraph', 'header', 'quote', 'list']);
+const INLINE_CODE_BLOCKS = new Set([
+  'paragraph',
+  'header',
+  'quote',
+  'list',
+  'table',
+]);
 
 function getEditableFromEvent(
   event: Event,
   holder: HTMLElement,
 ): HTMLElement | null {
   const target = event.target;
-  if (target instanceof HTMLElement && target.isContentEditable) {
-    return holder.contains(target) ? target : null;
+  if (!(target instanceof HTMLElement)) return null;
+
+  const editable = target.isContentEditable
+    ? target
+    : target.closest('[contenteditable="true"]');
+  if (!(editable instanceof HTMLElement) || !holder.contains(editable)) {
+    return null;
   }
-  return null;
+  return editable;
 }
 
 function getTextBeforeCursor(editable: HTMLElement): string | null {
@@ -140,6 +152,7 @@ export function attachEditorInlineCode(
     if (tryWrapInlineCode(editable)) {
       event.preventDefault();
       event.stopPropagation();
+      syncAllI18nToolsToActiveLocale();
     }
   };
 

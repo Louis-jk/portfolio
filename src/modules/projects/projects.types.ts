@@ -111,6 +111,8 @@ export type ProjectView = {
   achievements: string[];
   platforms: ProjectPlatformView | null;
   tools: ProjectToolsView | null;
+  /** Detail story visibility — gates the public “view story” button. */
+  storyIsPublic: boolean;
 };
 
 /** 어드민 — Nest i18n 필드 그대로 */

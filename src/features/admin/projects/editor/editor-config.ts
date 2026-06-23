@@ -1,6 +1,5 @@
 import type { OutputData } from '@editorjs/editorjs';
 import Embed from '@editorjs/embed';
-import CodeTool from '@editorjs/code';
 import Delimiter from '@editorjs/delimiter';
 import Table from '@editorjs/table';
 import type { ToolConstructable } from '@editorjs/editorjs';
@@ -8,6 +7,7 @@ import {
   createI18nHeaderTool,
   createI18nTextTool,
 } from './i18n-text-tools';
+import { createI18nCodeTool } from './editor-i18n-code-tool';
 import { createEditorImageTool } from './editor-image-tool';
 import { createEditorVideoTool } from './editor-video-tool';
 import { createEditorDetailsTool } from './editor-details-tool';
@@ -72,7 +72,9 @@ export function createEditorTools(
         },
       },
     },
-    code: CodeTool as unknown as ToolConstructable,
+    code: {
+      class: createI18nCodeTool() as unknown as ToolConstructable,
+    },
     delimiter: Delimiter as unknown as ToolConstructable,
     table: {
       class: Table as unknown as ToolConstructable,

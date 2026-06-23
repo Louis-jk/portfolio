@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getProjectDetailPage } from '@/modules/project-detail-page';
 import { toApiErrorResponse } from '@/lib/http/api-error';
+import { requireAuth } from '@/utils/supabase/auth';
 
 export const runtime = 'nodejs';
 
@@ -17,8 +18,19 @@ export async function GET(_request: Request, context: RouteContext) {
 
   try {
     const page = await getProjectDetailPage(projectId);
+    if (!page) {
+      return NextResponse.json({ content: null }, { status: 404 });
+    }
+
+    if (!page.isPublic) {
+      const auth = await requireAuth();
+      if (!auth.authorized) {
+        return NextResponse.json({ content: null }, { status: 404 });
+      }
+    }
+
     return NextResponse.json(
-      { content: page?.content ?? null },
+      { content: page.content ?? null },
       {
         headers: {
           'Cache-Control': 'no-store',

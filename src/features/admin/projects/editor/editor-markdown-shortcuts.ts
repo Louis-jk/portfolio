@@ -1,7 +1,6 @@
 import type EditorJS from '@editorjs/editorjs';
 import type { BlockAPI } from '@editorjs/editorjs';
-import type { PartialI18n } from '@/modules/project-detail-page';
-import { getActiveLocale } from './locale-context';
+import { extractHtmlFromBlockSave } from './block-save-i18n';
 
 type MarkdownConversion = {
   type: string;
@@ -55,14 +54,13 @@ function getEditableContext(editable: HTMLElement): EditableContext {
   };
 }
 
-function i18nHtml(html: string) {
-  const locale = getActiveLocale();
-  return { i18n: { [locale]: html } };
+function htmlData(html: string) {
+  return { html };
 }
 
-function plainTextToI18nHtml(text: string) {
+function plainTextToHtmlData(text: string) {
   if (!text) {
-    return i18nHtml('');
+    return htmlData('');
   }
 
   const escaped = text
@@ -70,7 +68,7 @@ function plainTextToI18nHtml(text: string) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  return i18nHtml(escaped);
+  return htmlData(escaped);
 }
 
 /** Line-start prefix before cursor (handles soft line breaks inside a block). */
@@ -89,11 +87,10 @@ function getRestOfLineAfterMarker(
   return fullText.slice(lineStart + markerLength);
 }
 
-export function buildListI18nData(
+export function buildListHtmlData(
   itemText: string,
   kind: 'ul' | 'ol' = 'ul',
 ): Record<string, unknown> {
-  const locale = getActiveLocale();
   const tag = kind === 'ol' ? 'ol' : 'ul';
   const liInner = itemText
     ? itemText
@@ -101,7 +98,7 @@ export function buildListI18nData(
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
     : '<br>';
-  return { i18n: { [locale]: `<${tag}><li>${liInner}</li></${tag}>` } };
+  return { html: `<${tag}><li>${liInner}</li></${tag}>` };
 }
 
 export function matchMarkdownHeader(
@@ -132,7 +129,7 @@ export function matchMarkdownOnSpace(
     return {
       type: 'header',
       data: {
-        ...plainTextToI18nHtml(header.text),
+        ...plainTextToHtmlData(header.text),
         level: header.level,
       },
     };
@@ -148,7 +145,7 @@ export function matchMarkdownOnSpace(
     );
     return {
       type: 'list',
-      data: buildListI18nData(rest.trimStart()),
+      data: buildListHtmlData(rest.trimStart()),
     };
   }
 
@@ -161,7 +158,7 @@ export function matchMarkdownOnSpace(
     );
     return {
       type: 'list',
-      data: buildListI18nData(rest.trimStart(), 'ol'),
+      data: buildListHtmlData(rest.trimStart(), 'ol'),
     };
   }
 
@@ -171,7 +168,7 @@ export function matchMarkdownOnSpace(
       fullText,
       linePrefix.length,
     );
-    return { type: 'quote', data: plainTextToI18nHtml(rest.trimStart()) };
+    return { type: 'quote', data: plainTextToHtmlData(rest.trimStart()) };
   }
 
   return null;
@@ -194,6 +191,16 @@ export function matchMarkdownOnEnter(
 function focusBlockEditable(holder: HTMLElement, placeAtEnd: boolean) {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
+      const textarea = holder.querySelector('textarea');
+      if (textarea instanceof HTMLTextAreaElement) {
+        textarea.focus();
+        if (placeAtEnd) {
+          const length = textarea.value.length;
+          textarea.setSelectionRange(length, length);
+        }
+        return;
+      }
+
       const editable = holder.querySelector('[contenteditable="true"]');
       if (!(editable instanceof HTMLElement)) return;
 
@@ -262,22 +269,11 @@ async function updateHeaderLevel(
   header: { level: number; text: string },
 ) {
   const saved = await block.save();
-  const existingI18n =
-    saved &&
-    typeof saved === 'object' &&
-    'data' in saved &&
-    saved.data &&
-    typeof saved.data === 'object' &&
-    'i18n' in saved.data &&
-    saved.data.i18n &&
-    typeof saved.data.i18n === 'object'
-      ? (saved.data.i18n as PartialI18n)
-      : {};
-
-  const { i18n: nextI18n } = plainTextToI18nHtml(header.text);
+  const existingHtml = extractHtmlFromBlockSave(saved);
+  const { html: nextHtml } = plainTextToHtmlData(header.text);
 
   const updated = await editor.blocks.update(block.id, {
-    i18n: { ...existingI18n, ...nextI18n },
+    html: header.text ? nextHtml : existingHtml,
     level: header.level,
   });
   focusBlockEditable(updated.holder, true);
@@ -367,7 +363,13 @@ export function attachEditorMarkdownShortcuts(
 
     if (enterAction === 'delete-and-insert-code') {
       editor.blocks.delete(index);
-      const inserted = editor.blocks.insert('code', { code: '' }, {}, index, true);
+      const inserted = editor.blocks.insert(
+        'code',
+        { code: '' },
+        {},
+        index,
+        true,
+      );
       focusBlockEditable(inserted.holder, true);
     }
   };

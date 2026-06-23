@@ -44,3 +44,34 @@ export async function deleteProjectDetailPage(
 ): Promise<void> {
   return deleteProjectDetailPageRequest(projectId);
 }
+
+/** Batch lookup for public story link visibility on the portfolio list. */
+export async function getStoryPublicFlags(
+  projectIds: number[],
+): Promise<Map<number, boolean>> {
+  if (projectIds.length === 0) return new Map();
+
+  const flags = new Map<number, boolean>();
+  for (const projectId of projectIds) {
+    flags.set(projectId, false);
+  }
+
+  const concurrency = 8;
+  for (let offset = 0; offset < projectIds.length; offset += concurrency) {
+    const chunk = projectIds.slice(offset, offset + concurrency);
+    const results = await Promise.allSettled(
+      chunk.map(async (projectId) => {
+        const page = await getProjectDetailPage(projectId);
+        return { projectId, isPublic: page?.isPublic ?? false };
+      }),
+    );
+
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        flags.set(result.value.projectId, result.value.isPublic);
+      }
+    }
+  }
+
+  return flags;
+}

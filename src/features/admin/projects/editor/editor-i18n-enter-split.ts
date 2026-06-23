@@ -1,7 +1,10 @@
 import type EditorJS from '@editorjs/editorjs';
-import type { PartialI18n } from '@/modules/project-detail-page';
 import { sanitizeHtml } from '@/lib/sanitize-html';
-import { getActiveLocale } from './locale-context';
+import {
+  extractHeaderLevelFromBlockSave,
+  extractHtmlFromBlockSave,
+} from './block-save-i18n';
+import { normalizeParagraphHtml, isBlankStoryHtml } from '@/lib/project-detail-page/paragraph-html';
 import { matchMarkdownOnEnter } from './editor-markdown-shortcuts';
 
 function getEditableFromEvent(
@@ -57,24 +60,6 @@ function focusEditable(editable: HTMLElement, atStart: boolean) {
   });
 }
 
-function extractI18nFromSave(
-  saved: Awaited<ReturnType<import('@editorjs/editorjs').BlockAPI['save']>>,
-): PartialI18n {
-  if (
-    saved &&
-    typeof saved === 'object' &&
-    'data' in saved &&
-    saved.data &&
-    typeof saved.data === 'object' &&
-    'i18n' in saved.data &&
-    saved.data.i18n &&
-    typeof saved.data.i18n === 'object'
-  ) {
-    return saved.data.i18n as PartialI18n;
-  }
-  return {};
-}
-
 export function attachEditorI18nEnterSplit(
   holder: HTMLElement,
   editor: EditorJS,
@@ -109,34 +94,26 @@ export function attachEditorI18nEnterSplit(
     event.stopPropagation();
 
     void (async () => {
-      const locale = getActiveLocale();
       const saved = await block.save();
-      const existingI18n = extractI18nFromSave(saved);
+      const existingHtml = extractHtmlFromBlockSave(saved);
       const index = editor.blocks.getBlockIndex(block.id);
       if (index < 0) return;
 
-      const beforeHtml = sanitizeHtml(split.beforeHtml);
-      const afterHtml = sanitizeHtml(split.afterHtml);
+      const rawBeforeHtml = sanitizeHtml(split.beforeHtml);
+      const beforeHtml = normalizeParagraphHtml(rawBeforeHtml);
+      const afterHtml = normalizeParagraphHtml(sanitizeHtml(split.afterHtml));
 
       if (block.name === 'header') {
-        const level =
-          saved &&
-          typeof saved === 'object' &&
-          'data' in saved &&
-          saved.data &&
-          typeof saved.data === 'object' &&
-          'level' in saved.data
-            ? Number(saved.data.level) || 2
-            : 2;
+        const level = extractHeaderLevelFromBlockSave(saved);
 
         await editor.blocks.update(block.id, {
-          i18n: { ...existingI18n, [locale]: beforeHtml },
+          html: isBlankStoryHtml(rawBeforeHtml) ? existingHtml : beforeHtml,
           level,
         });
 
         const inserted = editor.blocks.insert(
           'paragraph',
-          { i18n: { [locale]: afterHtml } },
+          { html: afterHtml },
           {},
           index + 1,
           true,
@@ -151,12 +128,12 @@ export function attachEditorI18nEnterSplit(
       }
 
       await editor.blocks.update(block.id, {
-        i18n: { ...existingI18n, [locale]: beforeHtml },
+        html: beforeHtml,
       });
 
       const inserted = editor.blocks.insert(
         'paragraph',
-        { i18n: { [locale]: afterHtml } },
+        { html: afterHtml },
         {},
         index + 1,
         true,

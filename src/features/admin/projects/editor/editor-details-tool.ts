@@ -1,24 +1,24 @@
 import type { BlockTool } from '@editorjs/editorjs';
-import type { PartialI18n } from '@/modules/project-detail-page';
-import {
-  isAdminI18nFallback,
-  resolveAdminI18nText,
-} from '@/lib/project-detail-page/block-utils';
 import { sanitizeHtml } from '@/lib/sanitize-html';
-import {
-  getActiveLocale,
-  registerI18nTool,
-  type I18nToolInstance,
-} from './locale-context';
+import { registerI18nTool, type I18nToolInstance } from './locale-context';
 import { attachContentEditableTextPaste } from './editor-text-paste';
 
 type DetailsData = {
-  i18n?: PartialI18n;
+  html?: string;
   defaultOpen?: boolean;
 };
 
 const CHEVRON_ICON =
   '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function readHtmlFromData(data: Record<string, unknown> | undefined): string {
+  if (typeof data?.html === 'string') return data.html;
+  const i18n = data?.i18n;
+  if (i18n && typeof i18n === 'object' && 'ko' in i18n) {
+    return String((i18n as { ko?: string }).ko ?? '');
+  }
+  return '';
+}
 
 export function createEditorDetailsTool() {
   return class EditorDetailsTool implements BlockTool, I18nToolInstance {
@@ -33,7 +33,8 @@ export function createEditorDetailsTool() {
       return true;
     }
 
-    private data: DetailsData;
+    private html = '';
+    private defaultOpen = false;
     private readOnly: boolean;
     private summaryEl: HTMLElement | null = null;
     private defaultOpenInput: HTMLInputElement | null = null;
@@ -44,13 +45,11 @@ export function createEditorDetailsTool() {
       data,
       readOnly,
     }: {
-      data: DetailsData;
+      data: DetailsData & Record<string, unknown>;
       readOnly?: boolean;
     }) {
-      this.data = {
-        i18n: data?.i18n ?? {},
-        defaultOpen: Boolean(data?.defaultOpen),
-      };
+      this.html = readHtmlFromData(data);
+      this.defaultOpen = Boolean(data?.defaultOpen);
       this.readOnly = Boolean(readOnly);
     }
 
@@ -70,21 +69,14 @@ export function createEditorDetailsTool() {
       summary.dataset.placeholder = '접기 제목 (예: 상세 아키텍처 및 데이터 흐름 다이어그램 보기)';
       summary.className =
         'min-h-[1.75rem] rounded-lg border border-purple-200 bg-white px-3 py-2 text-base leading-snug text-slate-800 outline-none dark:border-purple-500/30 dark:bg-zinc-950 dark:text-slate-100';
-      this.applyDisplayText(summary);
+      summary.innerHTML = sanitizeHtml(this.html);
 
       if (!this.readOnly) {
-        const syncToLocale = () => {
-          const locale = getActiveLocale();
-          this.data.i18n = {
-            ...this.data.i18n,
-            [locale]: sanitizeHtml(summary.innerHTML),
-          };
-          summary.classList.remove('text-zinc-400', 'italic');
-          summary.dataset.i18nFallback = 'false';
+        const syncHtml = () => {
+          this.html = sanitizeHtml(summary.innerHTML);
         };
-
-        summary.addEventListener('input', syncToLocale);
-        this.detachTextPaste = attachContentEditableTextPaste(summary, syncToLocale);
+        summary.addEventListener('input', syncHtml);
+        this.detachTextPaste = attachContentEditableTextPaste(summary, syncHtml);
       }
 
       const options = document.createElement('label');
@@ -92,10 +84,10 @@ export function createEditorDetailsTool() {
         'mt-3 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300';
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.checked = Boolean(this.data.defaultOpen);
+      checkbox.checked = this.defaultOpen;
       checkbox.disabled = this.readOnly;
       checkbox.addEventListener('change', () => {
-        this.data.defaultOpen = checkbox.checked;
+        this.defaultOpen = checkbox.checked;
       });
       options.appendChild(checkbox);
       options.append('처음부터 펼쳐 두기');
@@ -109,23 +101,19 @@ export function createEditorDetailsTool() {
 
     updateLocale() {
       if (!this.summaryEl) return;
-      this.applyDisplayText(this.summaryEl);
+      this.summaryEl.innerHTML = sanitizeHtml(this.html);
     }
 
     syncActiveLocaleToData() {
       if (!this.summaryEl || this.readOnly) return;
-      const locale = getActiveLocale();
-      this.data.i18n = {
-        ...this.data.i18n,
-        [locale]: sanitizeHtml(this.summaryEl.innerHTML),
-      };
+      this.html = sanitizeHtml(this.summaryEl.innerHTML);
     }
 
     save() {
       this.syncActiveLocaleToData();
       return {
-        i18n: this.data.i18n ?? {},
-        defaultOpen: Boolean(this.data.defaultOpen),
+        html: this.html,
+        defaultOpen: Boolean(this.defaultOpen),
       };
     }
 
@@ -136,18 +124,6 @@ export function createEditorDetailsTool() {
       this.unregister = null;
       this.summaryEl = null;
       this.defaultOpenInput = null;
-    }
-
-    private applyDisplayText(el: HTMLElement) {
-      const locale = getActiveLocale();
-      const i18n = this.data.i18n;
-      const text = resolveAdminI18nText(i18n, locale);
-      const isFallback = isAdminI18nFallback(i18n, locale);
-
-      el.innerHTML = sanitizeHtml(text);
-      el.classList.toggle('text-zinc-400', isFallback);
-      el.classList.toggle('italic', isFallback);
-      el.dataset.i18nFallback = isFallback ? 'true' : 'false';
     }
   };
 }

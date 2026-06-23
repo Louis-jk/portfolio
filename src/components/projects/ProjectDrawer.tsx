@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import type { ProjectView } from '@/modules/projects';
+import { canShowPublicStoryLink } from '@/lib/projects/story-access';
 import { IoClose } from 'react-icons/io5';
 import ProjectDetail from './ProjectDetail';
 import { ProjectStoryViewLink } from './project-story/ProjectStoryViewLink';
@@ -86,7 +87,12 @@ export default function ProjectDrawer({
             <div className='overflow-y-auto bg-white dark:bg-black h-full'>
               <div className='px-4 py-0 h-full flex flex-col'>
                 <div className='shrink-0 py-4'>
-                  <ProjectStoryViewLink projectId={item.id} className='w-full justify-center' />
+                  {canShowPublicStoryLink(item) ? (
+                    <ProjectStoryViewLink
+                      projectId={item.id}
+                      className='w-full justify-center'
+                    />
+                  ) : null}
                 </div>
                 <div className='flex-1 min-h-0'>
                   <ProjectDetail

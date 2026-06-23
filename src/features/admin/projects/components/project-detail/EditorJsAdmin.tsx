@@ -5,16 +5,22 @@ import type EditorJS from '@editorjs/editorjs';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { getPublicStoryUrl } from '@/lib/projects/public-story-url';
+import { getAdminStoryPreviewUrl } from '@/lib/projects/admin-story-preview-url';
 import {
   type EditorOutput,
   type I18nLocale,
+  type StoryContentDocument,
 } from '@/modules/project-detail-page';
 import {
   flattenDetailsBlocks,
   findEmptyDetailsSections,
   nestDetailsBlocks,
 } from '@/lib/project-detail-page/details-blocks';
+import {
+  buildStoryContentDocument,
+  parseStoryContent,
+} from '@/lib/project-detail-page/story-content-document';
+import { normalizeStoryParagraphBlocks } from '@/lib/project-detail-page/paragraph-html';
 import { uploadProjectImage } from '@/app/[locale]/(private)/[adminPath]/projects/upload-image';
 import { uploadProjectVideo } from '@/app/[locale]/(private)/[adminPath]/projects/upload-video';
 import { prepareVideoForUpload } from '@/lib/media/compress-video.client';
@@ -22,10 +28,15 @@ import { saveProjectDetailPageAction } from '@/app/[locale]/(private)/[adminPath
 import { translateStoryContentAction } from '@/app/[locale]/(private)/[adminPath]/projects/[id]/detail/translate-action';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import {
-  refreshAllI18nTools,
   setActiveLocale,
   syncAllI18nToolsToActiveLocale,
 } from '@/features/admin/projects/editor/locale-context';
+import {
+  captureI18nTextBlocksFromDom,
+  captureTableCellsFromHolder,
+  normalizeEditorOutputForSave,
+  prepareEditorOutputForLoad,
+} from '@/features/admin/projects/editor/editor-html-persistence';
 import { attachEditorImagePaste } from '@/features/admin/projects/editor/editor-image-paste';
 import { attachEditorCodePaste } from '@/features/admin/projects/editor/editor-code-paste';
 import { attachEditorI18nEnterSplit } from '@/features/admin/projects/editor/editor-i18n-enter-split';
@@ -34,15 +45,33 @@ import { attachEditorInlineCode } from '@/features/admin/projects/editor/editor-
 import { attachEditorUndo } from '@/features/admin/projects/editor/editor-undo';
 import { STORY_CONTENT_SHELL_CLASS } from '@/constants/story-layout';
 import { LocaleTabSwitcher } from './LocaleTabSwitcher';
-import { AdminVisibilityBadge } from '@/features/admin/projects/components/shared/AdminVisibilityBadge';
+import { StoryEditorVisibilityToggle } from '@/features/admin/projects/components/project-detail/StoryEditorVisibilityToggle';
+
+const LOCALE_ORDER: I18nLocale[] = ['ko', 'ja', 'en'];
 
 type EditorJsAdminProps = {
   projectId: number;
   locale: string;
   projectTitle: string;
-  initialContent: EditorOutput;
+  initialContent: EditorOutput | StoryContentDocument;
   initialIsPublic: boolean;
 };
+
+function flattenLocaleDocs(
+  document: StoryContentDocument,
+): Record<I18nLocale, EditorOutput> {
+  const locales = {
+    ko: flattenDetailsBlocks(document.locales.ko),
+    ja: flattenDetailsBlocks(document.locales.ja),
+    en: flattenDetailsBlocks(document.locales.en),
+  };
+
+  return {
+    ko: prepareEditorOutputForLoad(locales.ko),
+    ja: prepareEditorOutputForLoad(locales.ja),
+    en: prepareEditorOutputForLoad(locales.en),
+  };
+}
 
 export function EditorJsAdmin({
   projectId,
@@ -58,14 +87,31 @@ export function EditorJsAdmin({
   const t = useTranslations('admin.projects');
   const holderRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<EditorJS | null>(null);
-  const initialContentRef = useRef(flattenDetailsBlocks(initialContent));
+  const localeDocsRef = useRef<Record<I18nLocale, EditorOutput>>(
+    flattenLocaleDocs(parseStoryContent(initialContent)),
+  );
+  const initialContentRef = useRef(localeDocsRef.current[initialLocale]);
   const [activeLocale, setActiveLocaleState] =
     useState<I18nLocale>(initialLocale);
   const [isPublic, setIsPublic] = useState(initialIsPublic);
   const [isSaving, setIsSaving] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
+  const [isSwitchingLocale, setIsSwitchingLocale] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isLoadingEditor, setIsLoadingEditor] = useState(true);
+
+  const persistActiveLocaleDoc = useCallback(async () => {
+    if (!editorRef.current || !holderRef.current) return;
+    await editorRef.current.isReady;
+    syncAllI18nToolsToActiveLocale();
+    let flatOutput = (await editorRef.current.save()) as EditorOutput;
+    flatOutput = captureI18nTextBlocksFromDom(editorRef.current, flatOutput);
+    flatOutput = captureTableCellsFromHolder(holderRef.current, flatOutput);
+    flatOutput = normalizeEditorOutputForSave(flatOutput);
+    flatOutput = normalizeStoryParagraphBlocks(flatOutput);
+    localeDocsRef.current[activeLocale] = flatOutput;
+    initialContentRef.current = flatOutput;
+  }, [activeLocale]);
 
   const uploadByFile = useCallback(async (file: File) => {
     const formData = new FormData();
@@ -99,6 +145,10 @@ export function EditorJsAdmin({
     },
     [],
   );
+
+  useEffect(() => {
+    setActiveLocale(activeLocale);
+  }, [activeLocale]);
 
   useEffect(() => {
     if (!holderRef.current || editorRef.current) return;
@@ -178,17 +228,37 @@ export function EditorJsAdmin({
     };
     // `t` is intentionally omitted: an unstable reference would destroy and
     // re-create the editor after save, resetting visible content.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- see comment above
   }, [uploadByFile, uploadVideoByFile]);
 
-  useEffect(() => {
-    setActiveLocale(activeLocale);
-    refreshAllI18nTools();
-  }, [activeLocale]);
-
   const handleLocaleChange = (nextLocale: I18nLocale) => {
-    if (nextLocale === activeLocale) return;
-    syncAllI18nToolsToActiveLocale();
-    setActiveLocaleState(nextLocale);
+    if (
+      nextLocale === activeLocale ||
+      !editorRef.current ||
+      editorBusy
+    ) {
+      return;
+    }
+
+    void (async () => {
+      setIsSwitchingLocale(true);
+      try {
+        await persistActiveLocaleDoc();
+        setActiveLocaleState(nextLocale);
+        setActiveLocale(nextLocale);
+        const nextContent = prepareEditorOutputForLoad(
+          localeDocsRef.current[nextLocale],
+        );
+        await editorRef.current!.render(nextContent);
+        initialContentRef.current = nextContent;
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? error.message : t('detailSaveFailed'),
+        );
+      } finally {
+        setIsSwitchingLocale(false);
+      }
+    })();
   };
 
   const handleAutoTranslate = async () => {
@@ -196,9 +266,11 @@ export function EditorJsAdmin({
 
     setIsTranslating(true);
     try {
-      const current = (await editorRef.current.save()) as EditorOutput;
+      await persistActiveLocaleDoc();
+
+      const koreanDoc = nestDetailsBlocks(localeDocsRef.current.ko);
       const result = await translateStoryContentAction({
-        content: current,
+        content: koreanDoc,
         targetLocale: activeLocale,
       });
       if (!result.success) {
@@ -206,9 +278,12 @@ export function EditorJsAdmin({
         return;
       }
 
-      await editorRef.current.render(result.content);
-      initialContentRef.current = result.content;
-      refreshAllI18nTools();
+      const translatedFlat = prepareEditorOutputForLoad(
+        flattenDetailsBlocks(result.content),
+      );
+      localeDocsRef.current[activeLocale] = translatedFlat;
+      await editorRef.current.render(translatedFlat);
+      initialContentRef.current = translatedFlat;
       toast.success(t('detailAutoTranslateDone'));
     } catch (error) {
       toast.error(
@@ -223,21 +298,31 @@ export function EditorJsAdmin({
     if (!editorRef.current) return;
     setIsSaving(true);
     try {
-      const flatOutput = (await editorRef.current.save()) as EditorOutput;
-      const nestedOutput = nestDetailsBlocks(flatOutput);
-      const emptyDetails = findEmptyDetailsSections(nestedOutput);
+      await persistActiveLocaleDoc();
+
+      const nestedByLocale = LOCALE_ORDER.reduce(
+        (acc, loc) => {
+          acc[loc] = nestDetailsBlocks(
+            normalizeStoryParagraphBlocks(localeDocsRef.current[loc]),
+          );
+          return acc;
+        },
+        {} as Record<I18nLocale, EditorOutput>,
+      );
+
+      const document = buildStoryContentDocument(nestedByLocale);
+      const emptyDetails = findEmptyDetailsSections(nestedByLocale[activeLocale]);
 
       const result = await saveProjectDetailPageAction({
         projectId,
         locale,
-        content: nestedOutput,
+        content: document,
         isPublic,
       });
       if (!result.success) {
         toast.error(result.error ?? t('detailSaveFailed'));
         return;
       }
-      initialContentRef.current = flatOutput;
       if (emptyDetails.length > 0) {
         toast.warning(t('detailEmptyToggleSections'));
       }
@@ -252,6 +337,7 @@ export function EditorJsAdmin({
   };
 
   const projectsBase = `/${locale}${ADMIN_ROUTES.PROJECTS}`;
+  const editorBusy = !isReady || isSaving || isTranslating || isSwitchingLocale;
 
   return (
     <div className={`${STORY_CONTENT_SHELL_CLASS} space-y-6 py-4`}>
@@ -288,6 +374,7 @@ export function EditorJsAdmin({
             <LocaleTabSwitcher
               activeLocale={activeLocale}
               onChange={handleLocaleChange}
+              disabled={editorBusy}
             />
             {activeLocale !== 'ko' ? (
               <button
@@ -295,7 +382,7 @@ export function EditorJsAdmin({
                 onClick={() => {
                   void handleAutoTranslate();
                 }}
-                disabled={!isReady || isTranslating || isSaving}
+                disabled={editorBusy}
                 className='rounded-full border border-purple-200 px-4 py-2 text-sm font-bold text-purple-700 transition hover:bg-purple-50 disabled:opacity-50 dark:border-purple-900 dark:text-purple-300 dark:hover:bg-purple-950/40'
               >
                 {isTranslating
@@ -303,17 +390,20 @@ export function EditorJsAdmin({
                   : t('detailAutoTranslate')}
               </button>
             ) : null}
-            <button
-              type='button'
-              onClick={() => setIsPublic((prev) => !prev)}
-              className='rounded-full border border-zinc-200 px-3 py-1.5 dark:border-zinc-700'
-            >
-              <AdminVisibilityBadge isPublic={isPublic} />
-            </button>
+            <StoryEditorVisibilityToggle
+              isPublic={isPublic}
+              onChange={setIsPublic}
+              disabled={editorBusy}
+              label={t('detailStoryVisibilityLabel')}
+              publicDesc={t('detailStoryPublicDesc')}
+              privateDesc={t('detailStoryPrivateDesc')}
+              publicAria={t('publicProject')}
+              privateAria={t('confidentialProject')}
+            />
             <button
               type='button'
               onClick={handleSave}
-              disabled={!isReady || isSaving}
+              disabled={editorBusy}
               className='rounded-full bg-purple-600 px-5 py-2 text-sm font-bold text-white transition hover:bg-purple-700 disabled:opacity-50'
             >
               {isSaving ? t('saving') : t('detailSave')}
@@ -329,7 +419,7 @@ export function EditorJsAdmin({
         <p className='text-sm text-zinc-400'>{t('detailEditorUndoHint')}</p>
         <p className='text-sm text-zinc-400'>{t('detailEditorVideoHint')}</p>
         <Link
-          href={getPublicStoryUrl(locale, projectId)}
+          href={getAdminStoryPreviewUrl(locale, projectId)}
           className='text-sm font-medium text-purple-600 hover:text-purple-700'
           target='_blank'
         >

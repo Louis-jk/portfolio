@@ -7,6 +7,7 @@ import {
   fetchProjectById,
   updateProject as updateProjectRequest,
 } from './projects.repository';
+import { getStoryPublicFlags } from '@/modules/project-detail-page/detail-page.service';
 import {
   hasLocaleTitle,
   toIndexingTranslations,
@@ -30,12 +31,16 @@ function sortByOrder<T extends { sortOrder: number }>(projects: T[]): T[] {
 /** Public portfolio list — locale fields are resolved in the mapper. */
 export async function listProjects(locale: string): Promise<ProjectView[]> {
   const raw = await fetchAllProjects();
-
-  return sortByOrder(
-    raw
-      .filter((dto) => hasLocaleTitle(dto, locale))
-      .map((dto) => toProjectView(dto, locale)),
+  const filtered = sortByOrder(
+    raw.filter((dto) => hasLocaleTitle(dto, locale)),
   );
+  const views = filtered.map((dto) => toProjectView(dto, locale));
+  const storyFlags = await getStoryPublicFlags(views.map((view) => view.id));
+
+  return views.map((view) => ({
+    ...view,
+    storyIsPublic: storyFlags.get(view.id) ?? false,
+  }));
 }
 
 /** Admin list — keeps Nest i18n shape for multi-locale CMS. */

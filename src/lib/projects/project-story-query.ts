@@ -1,7 +1,7 @@
-import type { EditorOutput } from '@/modules/project-detail-page';
+import type { EditorOutput, StoryContentDocument } from '@/modules/project-detail-page';
 
 export type ProjectStoryData = {
-  content: EditorOutput | null;
+  content: EditorOutput | StoryContentDocument | null;
 };
 
 /** Keep prefetched stories in memory; freshness is handled via refetch on open. */

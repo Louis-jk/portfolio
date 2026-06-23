@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import type { EditorOutput } from '@/modules/project-detail-page';
+import type { EditorOutput, StoryContentDocument } from '@/modules/project-detail-page';
 import { STORY_CONTENT_SHELL_CLASS } from '@/constants/story-layout';
 
 const EditorJsAdmin = dynamic(
@@ -27,7 +27,7 @@ type ProjectDetailEditorClientProps = {
   projectId: number;
   locale: string;
   projectTitle: string;
-  initialContent: EditorOutput;
+  initialContent: EditorOutput | StoryContentDocument;
   initialIsPublic: boolean;
 };
 

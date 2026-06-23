@@ -5,8 +5,10 @@ import {
   STORY_BODY_CLASS,
   STORY_QUOTE_CLASS,
 } from '@/constants/story-typography';
-import { sanitizeHtml } from '@/lib/sanitize-html';
+import { sanitizeStoryHtml } from '@/lib/sanitize-html';
 import { getBlockText } from '@/lib/project-detail-page';
+import { prepareStoryRichTextHtml } from '@/lib/project-detail-page/story-inline-code-html';
+import { isBlankStoryHtml } from '@/lib/project-detail-page/paragraph-html';
 import type { EditorBlock, I18nLocale } from '@/modules/project-detail-page';
 import { CodeBlock } from './CodeBlock';
 import { EmbedBlock } from './EmbedBlock';
@@ -23,7 +25,7 @@ function getImageUrl(data: Record<string, unknown>): string | null {
 }
 
 function storyHtml(text: string): string {
-  return sanitizeHtml(text);
+  return sanitizeStoryHtml(prepareStoryRichTextHtml(text));
 }
 
 function renderHeader(block: EditorBlock, locale: I18nLocale): ReactNode {
@@ -42,7 +44,9 @@ function renderHeader(block: EditorBlock, locale: I18nLocale): ReactNode {
 
 function renderParagraph(block: EditorBlock, locale: I18nLocale): ReactNode {
   const text = getBlockText(block, locale);
-  if (!text) return null;
+  if (isBlankStoryHtml(text)) {
+    return <div className='story-paragraph-break' aria-hidden />;
+  }
   const safeText = storyHtml(text);
   return (
     <div
@@ -159,22 +163,23 @@ function renderTable(data: Record<string, unknown>): ReactNode {
   const rows = content as string[][];
 
   return (
-    <div className='overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800'>
-      <table className='min-w-full text-left text-sm'>
+    <div className='story-table-wrap overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800'>
+      <table className='story-table min-w-full border-collapse text-left text-sm'>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className='border-b border-zinc-100 last:border-0 dark:border-zinc-800'
-            >
+            <tr key={rowIndex}>
               {row.map((cell, cellIndex) => {
                 const CellTag = withHeadings && rowIndex === 0 ? 'th' : 'td';
+                const cellHtml = storyHtml(String(cell ?? ''));
                 return (
                   <CellTag
                     key={cellIndex}
                     className='px-4 py-3 align-top text-slate-700 dark:text-slate-300'
                   >
-                    {cell}
+                    <div
+                      className='story-table-cell'
+                      dangerouslySetInnerHTML={{ __html: cellHtml }}
+                    />
                   </CellTag>
                 );
               })}
@@ -210,11 +215,7 @@ export function renderBlock(block: EditorBlock, locale: I18nLocale): ReactNode {
         />
       );
     case 'code':
-      return (
-        <CodeBlock
-          code={typeof block.data.code === 'string' ? block.data.code : ''}
-        />
-      );
+      return <CodeBlock code={getBlockText(block, locale)} />;
     case 'delimiter':
       return <StoryDelimiterBlock />;
     case 'table':

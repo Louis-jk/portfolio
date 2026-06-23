@@ -1,15 +1,9 @@
 import type { PartialI18n } from '@/modules/project-detail-page';
 import { STORY_EDITOR_BODY_CLASS } from '@/constants/story-typography';
-import {
-  isAdminI18nFallback,
-  resolveAdminI18nText,
-} from '@/lib/project-detail-page/block-utils';
 import { sanitizeHtml } from '@/lib/sanitize-html';
-import {
-  getActiveLocale,
-  registerI18nTool,
-  type I18nToolInstance,
-} from './locale-context';
+import { normalizeParagraphHtml } from '@/lib/project-detail-page/paragraph-html';
+import { getLeafContentEditable } from './editor-html-persistence';
+import { getActiveLocale, registerI18nTool, type I18nToolInstance } from './locale-context';
 import { getHeaderLevelClass } from './editor-header-styles';
 import { attachContentEditableTextPaste } from './editor-text-paste';
 
@@ -20,14 +14,26 @@ type I18nTextToolOptions = {
   placeholder?: string;
 };
 
-type ToolData = {
-  i18n?: PartialI18n;
-};
-
 type ToolConfig = {
-  data: ToolData;
+  data: Record<string, unknown>;
   readOnly?: boolean;
 };
+
+function readHtmlFromData(data: Record<string, unknown> | undefined): string {
+  if (typeof data?.html === 'string') return data.html;
+  const i18n = data?.i18n;
+  if (i18n && typeof i18n === 'object') {
+    const partial = i18n as PartialI18n;
+    const locale = getActiveLocale();
+    return String(partial[locale] ?? partial.ko ?? '');
+  }
+  return '';
+}
+
+function readHtmlFromRoot(root: HTMLElement): string {
+  const editable = getLeafContentEditable(root) ?? root;
+  return normalizeParagraphHtml(sanitizeHtml(editable.innerHTML));
+}
 
 export function createI18nTextTool({
   toolboxTitle,
@@ -44,14 +50,14 @@ export function createI18nTextTool({
       return true;
     }
 
-    private data: ToolData;
+    private html = '';
     private readOnly: boolean;
     private element: HTMLElement | null = null;
     private unregister: (() => void) | null = null;
     private detachTextPaste: (() => void) | null = null;
 
     constructor({ data, readOnly }: ToolConfig) {
-      this.data = { i18n: data?.i18n ?? {} };
+      this.html = readHtmlFromData(data);
       this.readOnly = Boolean(readOnly);
     }
 
@@ -66,21 +72,15 @@ export function createI18nTextTool({
         .filter(Boolean)
         .join(' ');
       if (placeholder) el.dataset.placeholder = placeholder;
-      this.applyDisplayText(el);
+      el.innerHTML = sanitizeHtml(this.html);
 
       if (!this.readOnly) {
-        const syncToLocale = () => {
-          const locale = getActiveLocale();
-          this.data.i18n = {
-            ...this.data.i18n,
-            [locale]: sanitizeHtml(el.innerHTML),
-          };
-          el.classList.remove('text-zinc-400', 'italic');
-          el.dataset.i18nFallback = 'false';
+        const syncHtml = () => {
+          if (!this.element) return;
+          this.html = readHtmlFromRoot(this.element);
         };
-
-        el.addEventListener('input', syncToLocale);
-        this.detachTextPaste = attachContentEditableTextPaste(el, syncToLocale);
+        el.addEventListener('input', syncHtml);
+        this.detachTextPaste = attachContentEditableTextPaste(el, syncHtml);
       }
 
       this.element = el;
@@ -90,21 +90,17 @@ export function createI18nTextTool({
 
     updateLocale() {
       if (!this.element) return;
-      this.applyDisplayText(this.element);
+      this.element.innerHTML = sanitizeHtml(this.html);
     }
 
     syncActiveLocaleToData() {
       if (!this.element || this.readOnly) return;
-      const locale = getActiveLocale();
-      this.data.i18n = {
-        ...this.data.i18n,
-        [locale]: sanitizeHtml(this.element.innerHTML),
-      };
+      this.html = readHtmlFromRoot(this.element);
     }
 
     save() {
       this.syncActiveLocaleToData();
-      return { i18n: this.data.i18n ?? {} };
+      return { html: this.html };
     }
 
     destroy() {
@@ -113,18 +109,6 @@ export function createI18nTextTool({
       this.unregister?.();
       this.unregister = null;
       this.element = null;
-    }
-
-    private applyDisplayText(el: HTMLElement) {
-      const locale = getActiveLocale();
-      const i18n = this.data.i18n;
-      const text = resolveAdminI18nText(i18n, locale);
-      const isFallback = isAdminI18nFallback(i18n, locale);
-
-      el.innerHTML = sanitizeHtml(text);
-      el.classList.toggle('text-zinc-400', isFallback);
-      el.classList.toggle('italic', isFallback);
-      el.dataset.i18nFallback = isFallback ? 'true' : 'false';
     }
   };
 }
@@ -139,46 +123,40 @@ export function createI18nHeaderTool() {
       return true;
     }
 
-    private data: { i18n?: PartialI18n; level?: number };
+    private html = '';
+    private level = 2;
     private readOnly: boolean;
     private wrapper: HTMLElement | null = null;
     private input: HTMLElement | null = null;
     private unregister: (() => void) | null = null;
     private detachTextPaste: (() => void) | null = null;
 
-    constructor({ data, readOnly }: ToolConfig & { data: ToolData & { level?: number } }) {
-      this.data = {
-        i18n: data?.i18n ?? {},
-        level: data?.level ?? 2,
-      };
+    constructor({ data, readOnly }: ToolConfig) {
+      this.html = readHtmlFromData(data);
+      this.level = Math.min(Math.max(Number(data?.level) || 2, 1), 6);
       this.readOnly = Boolean(readOnly);
     }
 
     render() {
       const wrapper = document.createElement('div');
-      const level = Math.min(Math.max(this.data.level ?? 2, 1), 6);
-
       const input = document.createElement('div');
       input.contentEditable = this.readOnly ? 'false' : 'true';
-      input.dataset.headingLevel = String(level);
+      input.dataset.headingLevel = String(this.level);
       input.className = [
         'outline-none min-h-[1.75rem] text-slate-900 dark:text-slate-100',
-        getHeaderLevelClass(level),
+        getHeaderLevelClass(this.level),
       ].join(' ');
-      this.applyDisplayText(input);
-      if (!this.readOnly) {
-        const syncToLocale = () => {
-          const locale = getActiveLocale();
-          this.data.i18n = {
-            ...this.data.i18n,
-            [locale]: sanitizeHtml(input.innerHTML),
-          };
-          input.classList.remove('text-zinc-400', 'italic');
-          input.dataset.i18nFallback = 'false';
-        };
+      input.innerHTML = sanitizeHtml(this.html);
 
-        input.addEventListener('input', syncToLocale);
-        this.detachTextPaste = attachContentEditableTextPaste(input, syncToLocale);
+      if (!this.readOnly) {
+        const syncHtml = () => {
+          if (!this.wrapper) return;
+          this.html = sanitizeHtml(
+            (getLeafContentEditable(this.wrapper) ?? input).innerHTML,
+          );
+        };
+        input.addEventListener('input', syncHtml);
+        this.detachTextPaste = attachContentEditableTextPaste(input, syncHtml);
       }
 
       wrapper.appendChild(input);
@@ -190,30 +168,24 @@ export function createI18nHeaderTool() {
 
     updateLocale() {
       if (!this.input) return;
-      const level = Math.min(Math.max(this.data.level ?? 2, 1), 6);
-      this.input.dataset.headingLevel = String(level);
+      this.input.dataset.headingLevel = String(this.level);
       this.input.className = [
         'outline-none min-h-[1.75rem] text-slate-900 dark:text-slate-100',
-        getHeaderLevelClass(level),
+        getHeaderLevelClass(this.level),
       ].join(' ');
-      this.applyDisplayText(this.input);
+      this.input.innerHTML = sanitizeHtml(this.html);
     }
 
     syncActiveLocaleToData() {
       if (!this.input || this.readOnly) return;
-      const locale = getActiveLocale();
-      this.data.i18n = {
-        ...this.data.i18n,
-        [locale]: sanitizeHtml(this.input.innerHTML),
-      };
+      const editable =
+        (this.wrapper && getLeafContentEditable(this.wrapper)) ?? this.input;
+      this.html = sanitizeHtml(editable.innerHTML);
     }
 
     save() {
       this.syncActiveLocaleToData();
-      return {
-        i18n: this.data.i18n ?? {},
-        level: this.data.level ?? 2,
-      };
+      return { html: this.html, level: this.level };
     }
 
     destroy() {
@@ -223,18 +195,6 @@ export function createI18nHeaderTool() {
       this.unregister = null;
       this.wrapper = null;
       this.input = null;
-    }
-
-    private applyDisplayText(el: HTMLElement) {
-      const locale = getActiveLocale();
-      const i18n = this.data.i18n;
-      const text = resolveAdminI18nText(i18n, locale);
-      const isFallback = isAdminI18nFallback(i18n, locale);
-
-      el.innerHTML = sanitizeHtml(text);
-      el.classList.toggle('text-zinc-400', isFallback);
-      el.classList.toggle('italic', isFallback);
-      el.dataset.i18nFallback = isFallback ? 'true' : 'false';
     }
   };
 }

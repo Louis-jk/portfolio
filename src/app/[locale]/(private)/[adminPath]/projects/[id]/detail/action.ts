@@ -5,12 +5,13 @@ import { requireAuth } from '@/utils/supabase/auth';
 import {
   upsertProjectDetailPage,
   type EditorOutput,
+  type StoryContentDocument,
 } from '@/modules/project-detail-page';
 
 export async function saveProjectDetailPageAction(input: {
   projectId: number;
   locale: string;
-  content: EditorOutput;
+  content: EditorOutput | StoryContentDocument;
   isPublic: boolean;
 }) {
   const auth = await requireAuth();

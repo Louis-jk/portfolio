@@ -4,6 +4,7 @@ import { FaGooglePlay, FaDesktop } from 'react-icons/fa';
 import { IoLogoAppleAppstore } from 'react-icons/io5';
 import { TbBrowserShare } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import type { ProjectView } from '@/modules/projects';
 
 type PlatformLink = {
@@ -12,7 +13,7 @@ type PlatformLink = {
   label: string;
 };
 
-function getPlatformLinks(item: ProjectView): PlatformLink[] {
+export function getPlatformLinks(item: ProjectView): PlatformLink[] {
   if (!item.isPublic || !item.platforms) return [];
 
   const links: PlatformLink[] = [];
@@ -51,16 +52,18 @@ function getPlatformLinks(item: ProjectView): PlatformLink[] {
 
 type ProjectDetailPlatformLinksProps = {
   item: ProjectView;
+  className?: string;
 };
 
 export default function ProjectDetailPlatformLinks({
   item,
+  className,
 }: ProjectDetailPlatformLinksProps) {
   const links = getPlatformLinks(item);
   if (links.length === 0) return null;
 
   return (
-    <div className='mb-5 flex gap-2'>
+    <div className={cn('flex flex-wrap gap-2', className)}>
       {links.map((link) => (
         <Button
           key={link.label}
