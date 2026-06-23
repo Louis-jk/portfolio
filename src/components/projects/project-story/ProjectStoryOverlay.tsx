@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
-import type { I18nLocale, StoryContentDocument } from '@/modules/project-detail-page';
+import type { I18nLocale } from '@/modules/project-detail-page';
 import { getPublicLocaleEditorOutput } from '@/lib/project-detail-page/story-content-document';
 import { projectStoryOverlayQueryOptions } from '@/lib/projects/project-story-query';
 import { ProjectStoryShell } from './ProjectStoryShell';

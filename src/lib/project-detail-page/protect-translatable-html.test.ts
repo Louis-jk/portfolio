@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import type { EditorBlock, EditorOutput } from '@/modules/project-detail-page/types';
 import {
   protectNonTranslatableHtml,
   restoreNonTranslatableHtml,

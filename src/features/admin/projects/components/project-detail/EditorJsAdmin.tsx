@@ -228,6 +228,7 @@ export function EditorJsAdmin({
     };
     // `t` is intentionally omitted: an unstable reference would destroy and
     // re-create the editor after save, resetting visible content.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- see comment above
   }, [uploadByFile, uploadVideoByFile]);
 
   const handleLocaleChange = (nextLocale: I18nLocale) => {

@@ -68,7 +68,8 @@ export function captureI18nTextBlocksFromDom(
     const editable = getLeafContentEditable(holder);
     if (!(editable instanceof HTMLElement)) return block;
 
-    const { text: _text, ...restData } = block.data as Record<string, unknown>;
+    const restData = { ...(block.data as Record<string, unknown>) };
+    delete restData.text;
     const html = persistEditorHtml(editable.innerHTML);
 
     return {
