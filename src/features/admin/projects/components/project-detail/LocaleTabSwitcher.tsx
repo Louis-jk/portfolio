@@ -13,11 +13,13 @@ const LABELS: Record<I18nLocale, string> = {
 type LocaleTabSwitcherProps = {
   activeLocale: I18nLocale;
   onChange: (locale: I18nLocale) => void;
+  disabled?: boolean;
 };
 
 export function LocaleTabSwitcher({
   activeLocale,
   onChange,
+  disabled = false,
 }: LocaleTabSwitcherProps) {
   return (
     <div className='inline-flex rounded-full border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-900'>
@@ -25,6 +27,7 @@ export function LocaleTabSwitcher({
         <button
           key={locale}
           type='button'
+          disabled={disabled}
           onClick={() => onChange(locale)}
           className={`rounded-full px-4 py-1.5 text-xs font-black transition ${
             activeLocale === locale

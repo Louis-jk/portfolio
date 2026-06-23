@@ -4,7 +4,7 @@ import {
   extractHeaderLevelFromBlockSave,
   extractHtmlFromBlockSave,
 } from './block-save-i18n';
-import { normalizeParagraphHtml } from '@/lib/project-detail-page/paragraph-html';
+import { normalizeParagraphHtml, isBlankStoryHtml } from '@/lib/project-detail-page/paragraph-html';
 import { matchMarkdownOnEnter } from './editor-markdown-shortcuts';
 
 function getEditableFromEvent(
@@ -99,14 +99,15 @@ export function attachEditorI18nEnterSplit(
       const index = editor.blocks.getBlockIndex(block.id);
       if (index < 0) return;
 
-      const beforeHtml = normalizeParagraphHtml(sanitizeHtml(split.beforeHtml));
+      const rawBeforeHtml = sanitizeHtml(split.beforeHtml);
+      const beforeHtml = normalizeParagraphHtml(rawBeforeHtml);
       const afterHtml = normalizeParagraphHtml(sanitizeHtml(split.afterHtml));
 
       if (block.name === 'header') {
         const level = extractHeaderLevelFromBlockSave(saved);
 
         await editor.blocks.update(block.id, {
-          html: beforeHtml || existingHtml,
+          html: isBlankStoryHtml(rawBeforeHtml) ? existingHtml : beforeHtml,
           level,
         });
 

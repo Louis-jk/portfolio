@@ -232,18 +232,25 @@ export function EditorJsAdmin({
   }, [uploadByFile, uploadVideoByFile]);
 
   const handleLocaleChange = (nextLocale: I18nLocale) => {
-    if (nextLocale === activeLocale || !editorRef.current) return;
+    if (
+      nextLocale === activeLocale ||
+      !editorRef.current ||
+      editorBusy
+    ) {
+      return;
+    }
 
     void (async () => {
       setIsSwitchingLocale(true);
       try {
         await persistActiveLocaleDoc();
+        setActiveLocaleState(nextLocale);
+        setActiveLocale(nextLocale);
         const nextContent = prepareEditorOutputForLoad(
           localeDocsRef.current[nextLocale],
         );
         await editorRef.current!.render(nextContent);
         initialContentRef.current = nextContent;
-        setActiveLocaleState(nextLocale);
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : t('detailSaveFailed'),
@@ -271,7 +278,9 @@ export function EditorJsAdmin({
         return;
       }
 
-      const translatedFlat = flattenDetailsBlocks(result.content);
+      const translatedFlat = prepareEditorOutputForLoad(
+        flattenDetailsBlocks(result.content),
+      );
       localeDocsRef.current[activeLocale] = translatedFlat;
       await editorRef.current.render(translatedFlat);
       initialContentRef.current = translatedFlat;
@@ -365,6 +374,7 @@ export function EditorJsAdmin({
             <LocaleTabSwitcher
               activeLocale={activeLocale}
               onChange={handleLocaleChange}
+              disabled={editorBusy}
             />
             {activeLocale !== 'ko' ? (
               <button

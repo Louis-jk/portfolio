@@ -296,7 +296,7 @@
       "domainTags": "Domain/Technology Tags",
       "detailEditorTitle": "Detail Story",
       "editStory": "Edit story",
-      "detailEditorHint": "Block layout is shared across all locales. Edit text blocks only in the active locale tab.",
+      "detailEditorHint": "Each KO / JA / EN tab saves its own story layout. Select the tab for the language you want to edit.",
       "detailEditorI18nHint": "Each KO / JA / EN tab saves its own layout — paragraphs, spacing, and block order are independent. Line breaks in one tab do not affect the others. Use “Auto-translate from KO” to draft a tab, then edit.",
       "detailAutoTranslate": "Auto-translate from KO",
       "detailAutoTranslating": "Translating…",

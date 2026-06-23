@@ -59,7 +59,7 @@ export function prepareEditorHtmlForRender(html: string): string {
 
   const decoded = decodeEscapedStoryHtml(html.trim());
   const withCode = normalizeStoryInlineCodeInHtml(decoded);
-  return escapeStrayAngleBrackets(encodeInlineCodeContents(withCode));
+  return sanitizeStoryHtml(withCode);
 }
 
 export function sanitizeHtml(html: string): string {

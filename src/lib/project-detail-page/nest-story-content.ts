@@ -26,11 +26,7 @@ export function serializeStoryContentForNest(
     return content;
   }
 
-  return {
-    time: content.time,
-    version: content.version,
-    locales: content.locales,
-  };
+  return serializeStoryDocumentForNest(content);
 }
 
 export function serializeDetailPagePayloadForNest(

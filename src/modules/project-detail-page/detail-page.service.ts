@@ -51,21 +51,27 @@ export async function getStoryPublicFlags(
 ): Promise<Map<number, boolean>> {
   if (projectIds.length === 0) return new Map();
 
-  const results = await Promise.allSettled(
-    projectIds.map(async (projectId) => {
-      const page = await getProjectDetailPage(projectId);
-      return { projectId, isPublic: page?.isPublic ?? false };
-    }),
-  );
-
   const flags = new Map<number, boolean>();
   for (const projectId of projectIds) {
     flags.set(projectId, false);
   }
-  for (const result of results) {
-    if (result.status === 'fulfilled') {
-      flags.set(result.value.projectId, result.value.isPublic);
+
+  const concurrency = 8;
+  for (let offset = 0; offset < projectIds.length; offset += concurrency) {
+    const chunk = projectIds.slice(offset, offset + concurrency);
+    const results = await Promise.allSettled(
+      chunk.map(async (projectId) => {
+        const page = await getProjectDetailPage(projectId);
+        return { projectId, isPublic: page?.isPublic ?? false };
+      }),
+    );
+
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        flags.set(result.value.projectId, result.value.isPublic);
+      }
     }
   }
+
   return flags;
 }

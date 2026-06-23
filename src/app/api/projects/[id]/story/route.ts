@@ -22,9 +22,11 @@ export async function GET(_request: Request, context: RouteContext) {
       return NextResponse.json({ content: null }, { status: 404 });
     }
 
-    const auth = await requireAuth();
-    if (!page.isPublic && !auth.authorized) {
-      return NextResponse.json({ content: null }, { status: 404 });
+    if (!page.isPublic) {
+      const auth = await requireAuth();
+      if (!auth.authorized) {
+        return NextResponse.json({ content: null }, { status: 404 });
+      }
     }
 
     return NextResponse.json(

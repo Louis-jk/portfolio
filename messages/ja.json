@@ -276,7 +276,7 @@
       "domainTags": "ドメイン/技術 タグ",
       "detailEditorTitle": "詳細ストーリー",
       "editStory": "ストーリー編集",
-      "detailEditorHint": "ブロックレイアウトは全言語で共有されます。テキストブロックのみ選択中の言語タブで編集してください。",
+      "detailEditorHint": "KO / JA / EN 各タブでストーリーレイアウトが個別に保存されます。編集する言語タブを選んでから入力してください。",
       "detailEditorI18nHint": "KO / JA / EN 各タブは段落・行間・ブロック構成が完全に独立して保存されます。あるタブで Enter して行間を入れても他の言語には影響しません。必要なら「韓国語から自動翻訳」で下書きしてから編集してください。",
       "detailAutoTranslate": "韓国語から自動翻訳",
       "detailAutoTranslating": "翻訳中…",
