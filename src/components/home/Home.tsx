@@ -10,12 +10,14 @@ import Chatbot from '@/features/chatbot';
 import LoadingScreen from '@/components/loading/Loading';
 import type { ProjectView } from '@/modules/projects';
 import { ProjectStoryProvider } from '@/components/projects/project-story/ProjectStoryContext';
+import { useLiveProjects } from '@/hooks/useLiveProjects';
 
 interface HomeProps {
   projects: ProjectView[];
 }
 
-export default function Home({ projects }: HomeProps) {
+export default function Home({ projects: initialProjects }: HomeProps) {
+  const projects = useLiveProjects(initialProjects);
   const [isLoading, setIsLoading] = useState(true);
   const [platformFilter, setPlatformFilter] = useState<string | null>(null);
   const [domainFilter, setDomainFilter] = useState<string | null>(null);

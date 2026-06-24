@@ -6,7 +6,7 @@ import { deleteProjectDocuments } from '@/lib/rag/portfolio-documents';
 import {
   deleteProject as deleteProjectFromApi,
   reorderProjects,
-} from '@/modules/projects/projects.service';
+} from '@/modules/projects/server';
 
 export async function updateProjectOrder(projectIds: number[]) {
   const auth = await requireAuth();

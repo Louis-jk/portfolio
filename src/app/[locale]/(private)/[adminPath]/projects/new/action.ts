@@ -8,7 +8,7 @@ import { scheduleProjectIndexing } from '@/lib/rag/schedule-project-indexing';
 import {
   buildProjectIndexingInput,
   createProject,
-} from '@/modules/projects/projects.service';
+} from '@/modules/projects/server';
 
 export async function saveProject(data: ProjectFormData) {
   const auth = await requireAuth();

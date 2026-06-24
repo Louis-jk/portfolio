@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/utils/supabase/auth';
 import {
+  deleteProjectDetailPage,
   getProjectDetailPage,
   patchProjectDetailPage,
   upsertProjectDetailPage,
-  deleteProjectDetailPage,
-} from '@/modules/project-detail-page';
+} from '@/modules/project-detail-page/server';
 import { toApiErrorResponse } from '@/lib/http/api-error';
 import { parseProjectId } from '@/lib/http/parse-project-id';
 

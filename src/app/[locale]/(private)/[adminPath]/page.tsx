@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { listAllProjects, readI18n } from '@/modules/projects';
+import { readI18n } from '@/modules/projects';
+import { listAllProjects } from '@/modules/projects/server';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';

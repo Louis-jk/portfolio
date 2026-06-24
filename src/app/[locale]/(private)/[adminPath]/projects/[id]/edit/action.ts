@@ -9,7 +9,7 @@ import {
   buildProjectIndexingInputFromAdmin,
   getProjectById,
   updateProject as updateProjectViaApi,
-} from '@/modules/projects/projects.service';
+} from '@/modules/projects/server';
 
 export async function updateProject(
   projectId: number,

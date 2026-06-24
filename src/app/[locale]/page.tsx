@@ -1,4 +1,4 @@
-import { listProjects } from '@/modules/projects';
+import { listProjects } from '@/modules/projects/server';
 import Home from '@/components/home/Home';
 
 export default async function HomePage({

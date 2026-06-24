@@ -1,4 +1,4 @@
-import { listAllProjects } from '@/modules/projects';
+import { listAllProjects } from '@/modules/projects/server';
 import Link from 'next/link';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { getTranslations } from 'next-intl/server';

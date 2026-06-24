@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getProjectDetailPage } from '@/modules/project-detail-page';
+import { getProjectDetailPage } from '@/modules/project-detail-page/server';
 import { toApiErrorResponse } from '@/lib/http/api-error';
 import { requireAuth } from '@/utils/supabase/auth';
 

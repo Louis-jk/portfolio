@@ -53,7 +53,7 @@ Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **
 | **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
 | **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
 | **i18n**        | next-intl (ko / en / ja)                                           |
-| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector)         |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, Realtime, pgvector) |
 | **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
 | **3D**          | React Three Fiber · drei                                           |
 | **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
@@ -81,7 +81,7 @@ src/
 │   ├── [locale]/                    # Public pages + admin routes
 │   │   └── (private)/[adminPath]/projects/[id]/detail/
 │   └── api/projects/[id]/
-│       ├── detail-page/             # BFF — auth CRUD → Nest
+│       ├── detail-page/             # BFF — auth CRUD → Prisma
 │       └── story/                   # BFF — public read
 ├── modules/
 │   ├── projects/
@@ -122,16 +122,56 @@ flowchart LR
     Overlay["?item=&story=1 overlay"]
     Renderer[project-story/editor]
   end
-  Nest[(Nest API)]
-  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
+  DB[(Prisma / Supabase)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> DB
   Overlay --> StoryAPI --> DetailSvc
   Overlay --> Renderer
-  ProjectsSvc --> Nest
+  ProjectsSvc --> DB
 ```
+
+### 데이터 계층: Nest API → Prisma 직결
+
+이전에는 별도 **Nest.js 백엔드**가 Supabase PostgreSQL에 REST로 접근했습니다. 포트폴리오 규모에서는 **항상 켜 둘 서버 비용·운영 부담**이 컸고, Next.js(Vercel)만으로도 Server Actions·BFF·Prisma로 동일 기능을 구현할 수 있어 **Prisma 직접 연결**로 전환했습니다.
+
+| 항목 | 이전 (Nest) | 현재 |
+| ---- | ----------- | ---- |
+| 프로젝트·스토리 CRUD | Nest REST → DB | Next `modules/*` → **Prisma** → Supabase PostgreSQL |
+| 어드민 인증 | Supabase Auth | 동일 (Supabase Auth) |
+| 이미지 | Supabase Storage | 동일 |
+| RAG 벡터 | pgvector | 동일 (Prisma / SQL) |
+| 별도 API 서버 | 필요 | **불필요** (`nest-client` 제거) |
+
+스키마는 Nest와 동일한 **JSONB i18n** 형태(`projects`, `project_detail_pages`)를 유지합니다.
+
+### 스토리 공개 상태 실시간 반영 (Supabase Realtime)
+
+어드민에서 스토리 **공개/비공개**를 바꾸면, 이미 열려 있는 퍼블릭 탭에도 **새로고침 없이** 「스토리 보기」버튼 표시·숨김이 반영됩니다.
+
+- **`story_visibility` 테이블** — `project_id` + `is_public`만 노출 (스토리 JSONB는 REST/Realtime으로 노출하지 않음). `project_detail_pages` 변경 시 DB 트리거로 동기화
+- **Postgres Changes** — 클라이언트가 `story_visibility` 구독 (`useStoryVisibilityRealtime`)
+- **Broadcast** — 어드민 저장 시 서버가 즉시 푸시 (`broadcastStoryVisibilityChange`)
+- **클라이언트 상태** — `useLiveProjects`가 SSR 목록의 `storyIsPublic`을 실시간 갱신
+
+```mermaid
+sequenceDiagram
+  participant Admin as 어드민 (저장)
+  participant DB as Supabase PostgreSQL
+  participant RT as Supabase Realtime
+  participant Home as 퍼블릭 탭 (Home)
+  Admin->>DB: Prisma upsert project_detail_pages
+  DB->>DB: trigger → story_visibility
+  Admin->>RT: Broadcast visibility_changed
+  RT-->>Home: postgres_changes / broadcast
+  Home->>Home: storyIsPublic 갱신, 오버레이 닫기
+```
+
+**환경 변수:** `DATABASE_URL`과 `NEXT_PUBLIC_SUPABASE_URL`은 **같은 Supabase 프로젝트 ref**를 가리켜야 합니다. 확인: `pnpm exec tsx scripts/check-supabase-env-alignment.ts`
+
+**마이그레이션:** Realtime용 SQL은 `prisma/migrations/20250613120000_story_visibility_realtime/`에 있습니다. 배포·로컬 DB에 `pnpm db:migrate` 한 번 실행하세요.
 
 ### 기술 결정
 
-- **`modules/projects/`**: repository → service → mapper, Nest API(`API_URL`) 분리
+- **`modules/projects/`**: repository → service → mapper, Prisma direct to Supabase
 - **`modules/project-detail-page/`**: Editor.js 스토리 도메인, 렌더는 `components/projects/project-story/editor/`
 - **`features/chatbot/`**: UI는 feature, 데이터는 `modules/projects`
 - **`features/admin/projects/editor/`**: locale 탭(ko/ja/en) i18n 블록
@@ -152,7 +192,7 @@ flowchart LR
 sequenceDiagram
   participant User as 유저 (Client)
   participant Cache as TanStack Query (캐시)
-  participant API as 백엔드 서버 (Nest API)
+  participant API as PostgreSQL (Prisma)
   Note over User, Cache: 1·2단계: 클릭 전
   User->>Cache: 리스트 호버 또는 프로젝트 선택
   Cache->>API: 백그라운드 Prefetch
@@ -179,6 +219,8 @@ sequenceDiagram
 | `useProjectSelection`        | URL `?item=`, 드로어, analytics                |
 | `useProjectStory`            | URL `?story=1` 오버레이                        |
 | `usePrefetchProjectStory`    | hover·focus·선택 시 스토리 prefetch            |
+| `useLiveProjects`            | SSR 목록 + Realtime `storyIsPublic` 동기화     |
+| `useStoryVisibilityRealtime` | Supabase Realtime 구독 (`story_visibility`)  |
 | `useProjectListInteractions` | 키보드 nav, Lenis 스크롤, hover 프리뷰         |
 
 #### 환경 변수
@@ -187,7 +229,7 @@ sequenceDiagram
 
 **필수:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
 
-**선택:** `API_URL` — Nest API base URL
+`DATABASE_URL`의 Supabase project ref와 `NEXT_PUBLIC_SUPABASE_URL` 호스트가 **동일**해야 Realtime·Auth·Storage가 Prisma와 맞습니다.
 
 #### 테스트 & CI
 
@@ -251,7 +293,7 @@ Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Ne
 | **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
 | **Client data** | TanStack Query 5 — prefetch、deduplication、stale-while-revalidate |
 | **i18n**        | next-intl (ko / en / ja)                                           |
-| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector)         |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, Realtime, pgvector) |
 | **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
 | **3D**          | React Three Fiber · drei                                           |
 | **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
@@ -279,7 +321,7 @@ src/
 │   ├── [locale]/                    # Public pages + admin routes
 │   │   └── (private)/[adminPath]/projects/[id]/detail/
 │   └── api/projects/[id]/
-│       ├── detail-page/             # BFF — auth CRUD → Nest
+│       ├── detail-page/             # BFF — auth CRUD → Prisma
 │       └── story/                   # BFF — public read
 ├── modules/
 │   ├── projects/
@@ -320,16 +362,43 @@ flowchart LR
     Overlay["?item=&story=1 overlay"]
     Renderer[project-story/editor]
   end
-  Nest[(Nest API)]
-  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
+  DB[(Prisma / Supabase)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> DB
   Overlay --> StoryAPI --> DetailSvc
   Overlay --> Renderer
-  ProjectsSvc --> Nest
+  ProjectsSvc --> DB
 ```
+
+### データ層: Nest API → Prisma 直結
+
+以前は別の **Nest.js バックエンド**が Supabase PostgreSQL に REST でアクセスしていました。ポートフォリオ規模では **常時起動サーバーのコスト・運用**が負担になり、Next.js (Vercel) の Server Actions・BFF・Prisma だけで同等機能を実装できるため **Prisma 直結**に移行しました。
+
+| 項目 | 以前 (Nest) | 現在 |
+| ---- | ----------- | ---- |
+| プロジェクト・ストーリー CRUD | Nest REST → DB | Next `modules/*` → **Prisma** → Supabase PostgreSQL |
+| 管理画面認証 | Supabase Auth | 同じ |
+| 画像 | Supabase Storage | 同じ |
+| RAG ベクトル | pgvector | 同じ |
+| 別 API サーバー | 必要 | **不要** (`nest-client` 削除) |
+
+スキーマは Nest と同じ **JSONB i18n** (`projects`, `project_detail_pages`) です。
+
+### ストーリー公開状態のリアルタイム反映 (Supabase Realtime)
+
+管理画面でストーリーの **公開/非公開** を変更すると、開いている公開タブでも **リロードなし** で「ストーリーを見る」ボタンの表示が変わります。
+
+- **`story_visibility` テーブル** — `project_id` + `is_public` のみ（ストーリー JSONB は公開しない）
+- **Postgres Changes** — `useStoryVisibilityRealtime`
+- **Broadcast** — 保存時にサーバーが即時プッシュ
+- **クライアント** — `useLiveProjects` が `storyIsPublic` を更新
+
+**環境変数:** `DATABASE_URL` と `NEXT_PUBLIC_SUPABASE_URL` は **同じ Supabase プロジェクト ref** である必要があります。`pnpm exec tsx scripts/check-supabase-env-alignment.ts`
+
+**マイグレーション:** 各環境で `pnpm db:migrate` を一度実行してください。
 
 ### 設計選択
 
-- **`modules/projects/`**: repository → service → mapper、Nest API (`API_URL`) 分離
+- **`modules/projects/`**: repository → service → mapper、Prisma 直結
 - **`modules/project-detail-page/`**: Editor.js ストーリードメイン、レンダラーは `components/projects/project-story/editor/`
 - **`features/chatbot/`**: UI は feature、データは `modules/projects`
 - **`features/admin/projects/editor/`**: locale タブ (ko/ja/en) i18n ブロック
@@ -350,7 +419,7 @@ flowchart LR
 sequenceDiagram
   participant User as ユーザー (Client)
   participant Cache as TanStack Query (キャッシュ)
-  participant API as バックエンド (Nest API)
+  participant API as PostgreSQL (Prisma)
   Note over User, Cache: 1・2段階: クリック前
   User->>Cache: リストホバーまたはプロジェクト選択
   Cache->>API: バックグラウンド Prefetch
@@ -377,6 +446,8 @@ sequenceDiagram
 | `useProjectSelection`        | URL `?item=`、ドロワー、analytics                 |
 | `useProjectStory`            | URL `?story=1` オーバーレイ                       |
 | `usePrefetchProjectStory`    | hover・focus・選択時のストーリー prefetch           |
+| `useLiveProjects`            | SSR 一覧 + Realtime `storyIsPublic` 同期          |
+| `useStoryVisibilityRealtime` | Supabase Realtime 購読                            |
 | `useProjectListInteractions` | キーボード nav、Lenis スクロール、hover プレビュー |
 
 #### 環境変数
@@ -385,7 +456,7 @@ sequenceDiagram
 
 **必須:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
 
-**任意:** `API_URL` — Nest API base URL
+`DATABASE_URL` と `NEXT_PUBLIC_SUPABASE_URL` は **同じ Supabase プロジェクト**を指す必要があります。
 
 #### テスト & CI
 
@@ -449,7 +520,7 @@ Multilingual portfolio and CMS built with **Next.js 15 (App Router)**. Stack: **
 | **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
 | **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
 | **i18n**        | next-intl (ko / en / ja)                                           |
-| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, pgvector)         |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, Realtime, pgvector) |
 | **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
 | **3D**          | React Three Fiber · drei                                           |
 | **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
@@ -477,7 +548,7 @@ src/
 │   ├── [locale]/                    # Public pages + admin routes
 │   │   └── (private)/[adminPath]/projects/[id]/detail/
 │   └── api/projects/[id]/
-│       ├── detail-page/             # BFF — auth CRUD → Nest
+│       ├── detail-page/             # BFF — auth CRUD → Prisma
 │       └── story/                   # BFF — public read
 ├── modules/
 │   ├── projects/
@@ -518,16 +589,43 @@ flowchart LR
     Overlay["?item=&story=1 overlay"]
     Renderer[project-story/editor]
   end
-  Nest[(Nest API)]
-  Editor --> Action --> DetailAPI --> DetailSvc --> Nest
+  DB[(Prisma / Supabase)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> DB
   Overlay --> StoryAPI --> DetailSvc
   Overlay --> Renderer
-  ProjectsSvc --> Nest
+  ProjectsSvc --> DB
 ```
+
+### Data layer: Nest API → Prisma direct
+
+Previously a separate **Nest.js backend** exposed REST over Supabase PostgreSQL. For a portfolio-sized app, **always-on server cost and ops** were hard to justify; Next.js (Vercel) already provides Server Actions, BFF routes, and Prisma, so the app now uses **Prisma direct** to Supabase.
+
+| Area | Before (Nest) | Now |
+| ---- | ------------- | --- |
+| Project & story CRUD | Nest REST → DB | Next `modules/*` → **Prisma** → Supabase PostgreSQL |
+| Admin auth | Supabase Auth | Same |
+| Images | Supabase Storage | Same |
+| RAG vectors | pgvector | Same |
+| Separate API server | Required | **Not required** (`nest-client` removed) |
+
+The schema keeps Nest-compatible **JSONB i18n** (`projects`, `project_detail_pages`).
+
+### Live story visibility (Supabase Realtime)
+
+When an admin toggles story **public / private**, open public tabs update the “view story” button **without a full page reload**.
+
+- **`story_visibility` table** — only `project_id` + `is_public` (no story JSONB over Realtime)
+- **Postgres Changes** — `useStoryVisibilityRealtime` subscribes on the client
+- **Broadcast** — server pushes on save (`broadcastStoryVisibilityChange`)
+- **Client state** — `useLiveProjects` merges live `storyIsPublic` into the SSR project list
+
+**Env:** `DATABASE_URL` and `NEXT_PUBLIC_SUPABASE_URL` must reference the **same Supabase project ref**. Check: `pnpm exec tsx scripts/check-supabase-env-alignment.ts`
+
+**Migrations:** run `pnpm db:migrate` once per environment (includes `20250613120000_story_visibility_realtime`).
 
 ### Design choices
 
-- **`modules/projects/`** — repository → service → mapper; Nest via `API_URL`
+- **`modules/projects/`** — repository → service → mapper; Prisma direct
 - **`modules/project-detail-page/`** — Editor.js story domain; render in `components/projects/project-story/editor/`
 - **`features/chatbot/`** — UI in feature; data from `modules/projects`
 - **`features/admin/projects/editor/`** — per-locale (ko/ja/en) i18n blocks
@@ -548,7 +646,7 @@ Previously, the API fetch started only on click (cold fetch). A three-step clien
 sequenceDiagram
   participant User as User (Client)
   participant Cache as TanStack Query (cache)
-  participant API as Backend (Nest API)
+  participant API as PostgreSQL (Prisma)
   Note over User, Cache: Steps 1–2 before click
   User->>Cache: Hover story link or select project
   Cache->>API: Background prefetch
@@ -575,6 +673,8 @@ Technical reference for hooks and environment variables.
 | `useProjectSelection`        | URL `?item=`, drawer, analytics           |
 | `useProjectStory`            | URL `?story=1` overlay                    |
 | `usePrefetchProjectStory`    | Prefetch story on hover, focus, selection |
+| `useLiveProjects`            | SSR list + live `storyIsPublic` from Realtime |
+| `useStoryVisibilityRealtime` | Supabase Realtime subscription               |
 | `useProjectListInteractions` | Keyboard nav, Lenis scroll, hover preview |
 
 #### Environment variables
@@ -583,7 +683,7 @@ Copy `.env.example` → `.env.local`. Never commit secrets.
 
 **Required:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
 
-**Optional:** `API_URL` — Nest API base URL
+`DATABASE_URL` and `NEXT_PUBLIC_SUPABASE_URL` must point at the **same Supabase project** for Realtime, Auth, and Storage to match Prisma.
 
 #### Testing & CI
 
