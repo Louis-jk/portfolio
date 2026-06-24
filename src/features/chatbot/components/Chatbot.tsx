@@ -8,16 +8,17 @@ import { cn } from '@/lib/utils';
 import { chatbotDataByLocale } from '@/data/chatbot';
 import type { ChatbotData } from '@/types/chatbot';
 import { getCurrentLocale } from '@/utils/locale';
-import { usePathname, useRouter } from 'next/navigation';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { ProjectView } from '@/modules/projects';
 import { useChatbotStore } from '@/stores/chatbot-store';
 import { useChatbotMessaging } from '@/features/chatbot/hooks/useChatbotMessaging';
 import { useChatbotShell } from '@/features/chatbot/hooks/useChatbotShell';
 import { ChatbotToggleButton } from '@/features/chatbot/components/ChatbotToggleButton';
 import { ChatbotWindow } from '@/features/chatbot/components/ChatbotWindow';
+import { useStoryFabStore } from '@/stores/story-fab-store';
 
 interface ChatbotProps {
-  projects?: ProjectWithTranslations[];
+  projects?: ProjectView[];
 }
 
 function getNavigatingLabel(locale: string) {
@@ -32,6 +33,9 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
   const isKeyboardOpen = useDetectKeyboardOpen();
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isStoryOpen = searchParams.get('story') === '1';
+  const storyFabVisible = useStoryFabStore((state) => state.fabVisible);
 
   const currentLocale = getCurrentLocale();
   const chatbotData: ChatbotData =
@@ -53,6 +57,8 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
   const setIsNavigatingProject = useChatbotStore(
     (state) => state.setIsNavigatingProject,
   );
+
+  const toggleVisible = !isStoryOpen || open || storyFabVisible;
 
   const {
     isMobile,
@@ -94,6 +100,7 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
       <ChatbotToggleButton
         open={open}
         resolvedTheme={resolvedTheme}
+        visible={toggleVisible}
         ariaLabel={open ? t('close') : t('open')}
         onToggle={() => setOpen((prev) => !prev)}
       />

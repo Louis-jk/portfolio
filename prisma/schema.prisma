@@ -1,11 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Prisma schema — JSONB i18n projects + story detail pages (matches Nest backend DB shape)
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"   
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -13,80 +10,48 @@ datasource db {
 }
 
 model Project {
-  id           Int                  @id @default(autoincrement())
-  sortOrder    Int                  @default(0) // 드래그 정렬용 (작을수록 위)
-  imageUrl     String               // 공통 이미지 URL
-  startDate    DateTime
-  endDate      DateTime?
-  isPublic     Boolean              @default(false)
-  
-  // 기술 스택 (영문 공통)
-  technologies String[]
-  tools        ProjectTools?
+  id                 Int       @id @default(autoincrement())
+  sortOrder          Int       @default(0) @map("sort_order")
+  imageUrl           String    @map("image_url")
+  startDate          DateTime  @map("start_date")
+  endDate            DateTime? @map("end_date")
+  isPublic           Boolean   @default(false) @map("is_public")
 
-  // 플랫폼 카테고리 (web, mobile, desktop - 복수 선택)
-  platformCategories String[] @default([])
-  // 도메인/기술 태그 (web3, blockchain, ai 등)
-  domainTags        String[]  @default([])
+  technologies       String[]  @default([])
+  platformCategories String[] @default([]) @map("platform_categories")
+  domainTags         String[]  @default([]) @map("domain_tags")
 
-  // 플랫폼 링크 통합 (별도 모델 대신 1:1 관계 하나로 정리)
-  platforms ProjectPlatform?
+  title        Json @db.JsonB
+  company      Json @db.JsonB
+  region       Json @db.JsonB
+  role         Json @db.JsonB
+  overview     Json @db.JsonB
+  description  Json @db.JsonB
+  challenges   Json @db.JsonB
+  achievements Json @db.JsonB
+  platforms    Json @db.JsonB
+  tools        Json @db.JsonB
 
-  // 다국어 데이터 (여기에 상세 정보인 description, challenges 등이 모두 들어감)
-  translations ProjectTranslation[] 
-  
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
+  detailPage ProjectDetailPage?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("projects")
 }
 
-model ProjectTranslation {
-  id           Int      @id @default(autoincrement())
-  projectId    Int
-  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  
-  locale       String   // "ko", "ja", "en"
-  title        String
-  company      String
-  region       String
-  role         String
-  overview     String   @db.Text
-  description  String[]
-  challenges   String[]
-  achievements String[]
-  
-  // 상세 페이지용 추가 이미지나 텍스트가 필요하다면 여기에 추가
-  detailImage  String?
+model ProjectDetailPage {
+  id        Int     @id @default(autoincrement())
+  projectId Int     @unique @map("project_id")
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  @@unique([projectId, locale])
-}
+  content  Json    @default("{}") @db.JsonB
+  isPublic Boolean @default(false) @map("is_public")
 
-model ProjectPlatform {
-  id          Int      @id @default(autoincrement())
-  projectId   Int      @unique
-  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  
-  webLink     String?
-  iosLink     String?
-  androidLink String?
-  desktopLink String?
-  
-  // 활성화 여부는 링크 존재 여부로 프론트에서 판단하거나, 필드를 추가할 수 있습니다.
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-model ProjectTools {
-  id              Int            @id @default(autoincrement())
-  projectId       Int      @unique
-  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  
-  development     String[]
-  communication   String[]
-  design          String[]
-  debugging       String[]
-  
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  @@map("project_detail_pages")
 }
 
 model PortfolioDocument {
@@ -96,7 +61,7 @@ model PortfolioDocument {
   locale     String
   title      String
   content    String                 @db.Text
-  metadata   Json                   @default("{}")
+  metadata   Json                   @default("{}") @db.JsonB
   embedding  Unsupported("vector(1536)")
   createdAt  DateTime               @default(now()) @map("created_at")
   updatedAt  DateTime               @default(now()) @updatedAt @map("updated_at")

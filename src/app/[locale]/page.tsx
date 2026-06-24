@@ -1,7 +1,5 @@
-'use server';
-
-import { getProjectsByLocale } from '@/lib/projects';
-import HomeClient from './HomeClient';
+import { listProjects } from '@/modules/projects/server';
+import Home from '@/components/home/Home';
 
 export default async function HomePage({
   params,
@@ -9,7 +7,7 @@ export default async function HomePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const projects = await getProjectsByLocale(locale);
+  const projects = await listProjects(locale);
 
-  return <HomeClient projects={projects} />;
+  return <Home projects={projects} />;
 }

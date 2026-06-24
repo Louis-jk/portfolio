@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PROJECT_LOCALES } from '@/lib/projects/types';
+import { PROJECT_LOCALES } from '@/modules/projects';
 
 const optionalUrl = z.union([z.string().url(), z.literal('')]);
 

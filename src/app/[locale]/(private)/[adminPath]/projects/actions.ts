@@ -1,10 +1,12 @@
 'use server';
 
-import { prisma } from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { revalidateProjectsList } from '@/lib/revalidate-projects';
 import { requireAuth } from '@/utils/supabase/auth';
 import { deleteProjectDocuments } from '@/lib/rag/portfolio-documents';
+import {
+  deleteProject as deleteProjectFromApi,
+  reorderProjects,
+} from '@/modules/projects/server';
 
 export async function updateProjectOrder(projectIds: number[]) {
   const auth = await requireAuth();
@@ -13,16 +15,8 @@ export async function updateProjectOrder(projectIds: number[]) {
   }
 
   try {
-    await prisma.$transaction(
-      projectIds.map((id, index) =>
-        prisma.project.update({
-          where: { id },
-          data: { sortOrder: index },
-        }),
-      ),
-    );
-    revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
-    revalidatePath('/[locale]', 'layout');
+    await reorderProjects(projectIds);
+    revalidateProjectsList();
     return { success: true };
   } catch (error) {
     console.error('❌ Project Order Update Error:', error);
@@ -40,9 +34,7 @@ export async function deleteProject(projectId: number) {
   }
 
   try {
-    await prisma.project.delete({
-      where: { id: projectId },
-    });
+    await deleteProjectFromApi(projectId);
     try {
       await deleteProjectDocuments(projectId);
     } catch (indexError) {
@@ -51,8 +43,7 @@ export async function deleteProject(projectId: number) {
         error: indexError,
       });
     }
-    revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
-    revalidatePath('/[locale]', 'layout');
+    revalidateProjectsList();
     return { success: true };
   } catch (error) {
     console.error('❌ Project Delete Error:', error);

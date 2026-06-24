@@ -49,3 +49,7 @@ next-env.d.ts
 .env.sentry-build-plugin
 
 /src/generated/prisma
+
+# storybook (build output only — keep .storybook/ and *.stories.tsx)
+/storybook-static/
+*storybook.log

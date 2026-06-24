@@ -8,14 +8,18 @@
   --color-scheme: light dark;
 }
 
-/* 다크모드 변형 정의 */
-@custom-variant dark (&:is(.dark *));
+/* 다크모드 변형 정의 (next-themes: html.dark) */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:not(:where(.dark, .dark *)));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-story-code: var(--font-nanum-coding), ui-monospace, 'SFMono-Regular', 'SF Mono',
+    Menlo, Consolas, 'Liberation Mono', 'Courier New', 'D2Coding', 'Nanum Gothic Coding',
+    'Noto Sans Mono CJK KR', monospace;
   --font-roboto: var(--font-roboto);
   --font-noto-sans-jp: var(--font-noto-sans-jp);
   --font-noto-sans-kr: var(--font-noto-sans-kr);
@@ -46,6 +50,8 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-point-foreground: var(--point-foreground);
+  --color-point: var(--point);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -57,6 +63,8 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-story-bulb-hop-once: story-bulb-hop 0.5s ease-out 1 both;
+  --animate-story-arrow-nudge: story-arrow-nudge 1.5s ease-in-out infinite;
 }
 
 /* 테마 색상 변수 보간 (클래스 전환 시 서서히 변화) */
@@ -93,12 +101,22 @@
 @property --primary {
   syntax: '<color>';
   inherits: true;
-  initial-value: oklch(0.205 0 0);
+  initial-value: oklch(0.42 0.27 302);
 }
 @property --primary-foreground {
   syntax: '<color>';
   inherits: true;
   initial-value: oklch(0.985 0 0);
+}
+@property --point {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: oklch(0.54 0.15 162);
+}
+@property --point-foreground {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: oklch(0.985 0.005 155);
 }
 @property --secondary {
   syntax: '<color>';
@@ -223,18 +241,20 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.42 0.27 302);
   --primary-foreground: oklch(0.985 0 0);
+  --point: oklch(0.54 0.15 162);
+  --point-foreground: oklch(0.985 0.005 155);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --accent: oklch(0.96 0.03 302);
+  --accent-foreground: oklch(0.42 0.27 302);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.48 0.27 302);
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
@@ -242,7 +262,7 @@
   --chart-5: oklch(0.424 0.199 265.638);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: oklch(0.42 0.27 302);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -260,18 +280,20 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.627 0.265 304);
+  --primary-foreground: oklch(0.985 0 0);
+  --point: oklch(0.88 0.17 98);
+  --point-foreground: oklch(0.22 0.05 55);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.28 0.06 302);
+  --accent-foreground: oklch(0.75 0.18 304);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.627 0.265 304);
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
@@ -279,7 +301,7 @@
   --chart-5: oklch(0.424 0.199 265.638);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: oklch(0.627 0.265 304);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
@@ -310,7 +332,7 @@ body {
   input:focus-visible,
   select:focus-visible,
   textarea:focus-visible {
-    @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-background rounded-md;
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background rounded-md;
   }
 }
 
@@ -332,6 +354,8 @@ html {
       --popover-foreground 1.4s cubic-bezier(0.4, 0, 0.2, 1),
       --primary 1.4s cubic-bezier(0.4, 0, 0.2, 1),
       --primary-foreground 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+      --point 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+      --point-foreground 1.4s cubic-bezier(0.4, 0, 0.2, 1),
       --secondary 1.4s cubic-bezier(0.4, 0, 0.2, 1),
       --secondary-foreground 1.4s cubic-bezier(0.4, 0, 0.2, 1),
       --muted 1.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -523,4 +547,379 @@ body.chatbot-open {
     opacity: 1;
     transform: scale(1) translateX(0);
   }
+}
+
+@keyframes story-bulb-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-4px);
+  }
+  55% {
+    transform: translateY(0);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+  85% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes story-arrow-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* Admin Editor.js — fill story column (default Codex caps blocks at ~650px) */
+.admin-editor-js .codex-editor,
+.admin-editor-js .codex-editor__redactor {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+.admin-editor-js .ce-block__content,
+.admin-editor-js .ce-toolbar__content {
+  max-width: 100% !important;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.admin-editor-js .codex-editor__redactor {
+  margin-right: 0;
+  padding-bottom: 120px !important;
+}
+
+.admin-editor-js .ce-block + .ce-block {
+  margin-top: 0.65em;
+}
+
+/* Public story — match admin Editor.js typography */
+.story-prose {
+  line-height: 1.7;
+}
+
+.story-prose .editor-block {
+  margin-bottom: 0;
+}
+
+.story-prose .editor-block + .editor-block {
+  margin-top: 1rem;
+}
+
+/* Enter로 나뉜 연속 본문 블록 — 줄바꿈 행간에 가깝게 */
+.story-prose
+  .editor-block:has(.story-paragraph, blockquote)
+  + .editor-block:has(.story-paragraph, blockquote) {
+  margin-top: 0.65em;
+}
+
+.story-prose .story-paragraph,
+.story-prose .editor-block blockquote,
+.story-prose .editor-block li {
+  line-height: 1.7;
+}
+
+.story-prose .story-paragraph,
+.story-prose .editor-block blockquote {
+  margin: 0;
+}
+
+.story-prose .story-paragraph-break {
+  height: 1em;
+}
+
+.story-prose .story-paragraph :is(p, div) {
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+}
+
+.story-prose .editor-block :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+}
+
+.story-prose figure video {
+  display: block;
+}
+
+.story-prose figure figcaption {
+  margin: 0;
+}
+
+/* Public story tables */
+.story-prose .story-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.story-prose .story-table th,
+.story-prose .story-table td {
+  border: 1px solid rgb(228 228 231);
+}
+
+:is(.dark) .story-prose .story-table th,
+:is(.dark) .story-prose .story-table td {
+  border-color: rgb(82 82 91);
+}
+
+.story-prose .story-table th {
+  font-weight: 600;
+  background: rgb(250 250 250);
+  color: rgb(15 23 42);
+}
+
+:is(.dark) .story-prose .story-table th {
+  background: rgb(39 39 42);
+  color: rgb(241 245 249);
+}
+
+:is(.dark) .story-prose .story-table td {
+  background: rgb(24 24 27);
+}
+
+.story-prose .story-table-cell code,
+.story-prose .story-table td code,
+.story-prose .story-table th code {
+  border-radius: 0.3rem;
+  background: rgb(228 228 231);
+  padding: 0.125rem 0.375rem;
+  font-family: ui-monospace, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: rgb(190 75 95);
+}
+
+:is(.dark) .story-prose .story-table-cell code,
+:is(.dark) .story-prose .story-table td code,
+:is(.dark) .story-prose .story-table th code {
+  background: rgb(63 63 70);
+  color: rgb(251 146 145);
+}
+
+/* Collapsible details sections (Toggle block) */
+.story-details {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(228 228 231);
+  background: rgb(250 250 250);
+  padding: 1rem 1.125rem;
+}
+
+:is(.dark) .story-details {
+  border-color: rgb(39 39 42);
+  background: rgb(24 24 27 / 0.55);
+}
+
+.story-details-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.story-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.story-details-chevron {
+  margin-top: 0.2rem;
+  transition: transform 0.2s ease;
+}
+
+.story-details[open] .story-details-chevron {
+  transform: rotate(90deg);
+}
+
+.story-details-body {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(228 228 231 / 0.9);
+}
+
+:is(.dark) .story-details-body {
+  border-top-color: rgb(63 63 70 / 0.9);
+}
+
+.story-details-body > .editor-block:first-child {
+  margin-top: 0;
+}
+
+.story-details-body > .editor-block + .editor-block {
+  margin-top: 1rem;
+}
+
+.story-details-admin [data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: rgb(161 161 170);
+  pointer-events: none;
+}
+
+/* Mermaid SVG — ensure readable labels on dark story surfaces */
+:is(.dark) .story-mermaid svg .messageText,
+:is(.dark) .story-mermaid svg .labelText,
+:is(.dark) .story-mermaid svg .loopText,
+:is(.dark) .story-mermaid svg .noteText,
+:is(.dark) .story-mermaid svg .actor tspan,
+:is(.dark) .story-mermaid svg .nodeLabel,
+:is(.dark) .story-mermaid svg text {
+  fill: #f1f5f9;
+}
+
+:is(.dark) .story-mermaid svg .note rect,
+:is(.dark) .story-mermaid svg .labelBox {
+  fill: #475569;
+  stroke: #64748b;
+}
+
+/* Inline code — `text` */
+.story-prose code.story-inline-code,
+.story-prose :not(pre) > code,
+.story-prose p code,
+.story-prose .story-paragraph code,
+.story-prose li code,
+.story-prose blockquote code,
+.story-prose td code,
+.story-prose th code,
+.story-prose h1 code,
+.story-prose h2 code,
+.story-prose h3 code,
+.story-prose h4 code,
+.story-prose h5 code,
+.story-prose h6 code {
+  border-radius: 0.3rem;
+  background: rgb(228 228 231);
+  padding: 0.125rem 0.375rem;
+  font-family: ui-monospace, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: rgb(190 75 95);
+}
+
+:is(.dark) .story-prose code.story-inline-code,
+:is(.dark) .story-prose :not(pre) > code,
+:is(.dark) .story-prose p code,
+:is(.dark) .story-prose .story-paragraph code,
+:is(.dark) .story-prose li code,
+:is(.dark) .story-prose blockquote code,
+:is(.dark) .story-prose td code,
+:is(.dark) .story-prose th code,
+:is(.dark) .story-prose h1 code,
+:is(.dark) .story-prose h2 code,
+:is(.dark) .story-prose h3 code,
+:is(.dark) .story-prose h4 code,
+:is(.dark) .story-prose h5 code,
+:is(.dark) .story-prose h6 code {
+  background: rgb(39 39 42);
+  color: rgb(251 146 145);
+}
+
+.story-prose pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Mixed ko/en ASCII diagrams — avoid Geist Mono (latin-only) for column alignment */
+.story-code-block,
+.admin-editor-js .ce-code__textarea {
+  display: block;
+  white-space: pre;
+  overflow-x: auto;
+  text-wrap: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  font-family: var(--font-nanum-coding), 'Nanum Gothic Coding', 'D2Coding', monospace;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
+  font-synthesis: none;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  letter-spacing: 0;
+}
+
+.admin-editor-js [contenteditable='true'] code.story-inline-code,
+.admin-editor-js [contenteditable='true'] code,
+.admin-editor-js .tc-cell code.story-inline-code,
+.admin-editor-js .tc-cell code {
+  border-radius: 0.3rem;
+  background: rgb(228 228 231);
+  padding: 0.125rem 0.375rem;
+  font-family: ui-monospace, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: rgb(190 75 95);
+}
+
+:is(.dark) .admin-editor-js [contenteditable='true'] code.story-inline-code,
+:is(.dark) .admin-editor-js [contenteditable='true'] code,
+:is(.dark) .admin-editor-js .tc-cell code.story-inline-code,
+:is(.dark) .admin-editor-js .tc-cell code {
+  background: rgb(39 39 42);
+  color: rgb(251 146 145);
+}
+
+/* Editor.js delimiter — *** */
+.story-prose .story-delimiter {
+  line-height: 1.6em;
+  width: 100%;
+  text-align: center;
+  color: inherit;
+}
+
+.story-prose .story-delimiter::before {
+  display: inline-block;
+  content: '***';
+  font-size: 30px;
+  line-height: 65px;
+  height: 30px;
+  letter-spacing: 0.2em;
+}
+
+.admin-editor-js [contenteditable='true'] {
+  line-height: 1.7;
+}
+
+.admin-editor-js [contenteditable='true'] ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+}
+
+.admin-editor-js [contenteditable='true'] ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+}
+
+.admin-editor-js [contenteditable='true'] li {
+  display: list-item;
+}
+
+.admin-editor-js .ce-code__textarea {
+  min-height: 160px;
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #1e293b;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.75rem;
+  box-shadow: none;
+}
+
+:is(.dark .admin-editor-js .ce-code__textarea, .admin-editor-js.dark .ce-code__textarea) {
+  color: #cbd5e1;
+  background: #0f172a;
+  border-color: #1e293b;
 }

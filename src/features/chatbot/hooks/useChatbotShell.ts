@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 import type { ChatbotData } from '@/types/chatbot';
-import type { ProjectWithTranslations } from '@/lib/projects';
+import type { ProjectView } from '@/modules/projects';
 import type { ChatMessage } from '@/stores/chatbot-store';
 import { normalizeProjectLinkForLocale } from '@/features/chatbot/components/chatbot-project-links';
 
@@ -16,7 +17,7 @@ type UseChatbotShellArgs = {
   chatbotData: ChatbotData;
   currentLocale: string;
   pathname: string;
-  projects: ProjectWithTranslations[];
+  projects: ProjectView[];
   isKeyboardOpen: boolean;
 };
 
@@ -31,7 +32,7 @@ export function useChatbotShell({
   projects,
   isKeyboardOpen,
 }: UseChatbotShellArgs) {
-  const [isMobile, setIsMobile] = useState(false);
+  const { isLayoutMobile: isMobile } = useLayoutBreakpoints();
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,9 @@ export function useChatbotShell({
           from: 'bot',
           text: chatbotData.welcome.message,
           timestamp: new Date(),
-          choices: chatbotData.welcome.choices.map((id) => chatbotData.choices[id]),
+          choices: chatbotData.welcome.choices.map(
+            (id) => chatbotData.choices[id],
+          ),
           isChoiceMessage: true,
         },
       ]);
@@ -70,25 +73,13 @@ export function useChatbotShell({
         }
         if (message.goToProjectLink?.length) {
           nextMessage.goToProjectLink = message.goToProjectLink.map((link) =>
-            normalizeProjectLinkForLocale(
-              link,
-              projects,
-              currentLocale,
-              localizedPathname,
-            ),
+            normalizeProjectLinkForLocale(link, projects, localizedPathname),
           );
         }
         return nextMessage;
       }),
     );
   }, [chatbotData, currentLocale, pathname, projects, setMessages]);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     if (messages.length > 1) {

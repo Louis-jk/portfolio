@@ -2,6 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
+import { isDetailMobileWidth } from '@/constants/breakpoints';
 import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -84,7 +85,9 @@ export default function Renderer() {
   // 반응형 Canvas 사이즈
   useEffect(() => {
     const updateSize = () => {
-      const w = window.innerWidth < 768 ? window.innerWidth * 0.6 : 232;
+      const w = isDetailMobileWidth(window.innerWidth)
+        ? window.innerWidth * 0.6
+        : 232;
       const h = w;
       setCanvasSize({ width: w, height: h });
     };

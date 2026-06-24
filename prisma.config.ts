@@ -9,7 +9,7 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
   datasource: {
-    url: process.env['DATABASE_URL'],
-    shadowDatabaseUrl: process.env['DIRECT_URL'],
+    // Migrations need a session/direct connection (Supabase :5432), not PgBouncer (:6543).
+    url: process.env['DIRECT_URL'] ?? process.env['DATABASE_URL'],
   },
 });

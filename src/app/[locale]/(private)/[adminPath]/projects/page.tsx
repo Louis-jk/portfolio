@@ -1,8 +1,8 @@
-import { listAdminProjects } from '@/lib/projects/queries';
+import { listAllProjects } from '@/modules/projects/server';
 import Link from 'next/link';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { getTranslations } from 'next-intl/server';
-import ProjectListSortable from './ProjectListSortable';
+import { ProjectListSortable } from '@/features/admin/projects';
 
 export default async function ProjectListPage({
   params,
@@ -12,7 +12,7 @@ export default async function ProjectListPage({
   const { locale } = await params;
   const t = await getTranslations('admin.projects');
 
-  const projects = await listAdminProjects();
+  const projects = await listAllProjects();
 
   return (
     <div className='max-w-6xl mx-auto p-6 space-y-8'>
@@ -36,7 +36,9 @@ export default async function ProjectListPage({
       <div className='grid grid-cols-1 gap-4'>
         {projects.length === 0 ? (
           <div className='text-center py-20 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800'>
-            <p className='text-zinc-400 dark:text-zinc-500'>{t('noProjects')}</p>
+            <p className='text-zinc-400 dark:text-zinc-500'>
+              {t('noProjects')}
+            </p>
           </div>
         ) : (
           <ProjectListSortable projects={projects} locale={locale} />

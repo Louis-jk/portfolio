@@ -1,41 +1,21 @@
 import { config } from 'dotenv';
-import { prisma } from '../src/lib/prisma';
 import { upsertProjectDocuments } from '../src/lib/rag/portfolio-documents';
 import { upsertStaticPortfolioDocuments } from '../src/lib/rag/static-documents';
+import { fetchAllProjects } from '../src/modules/projects/projects.repository';
+import { toProjectAdminView } from '../src/modules/projects/projects.mapper';
+import { buildProjectIndexingInputFromAdmin } from '../src/modules/projects/projects.service';
 
 config({ path: '.env.local' });
 config();
 
 async function main() {
-  const projects = await prisma.project.findMany({
-    where: {
-      isPublic: true,
-    },
-    include: {
-      translations: true,
-    },
-  });
+  const projects = (await fetchAllProjects())
+    .map(toProjectAdminView)
+    .filter((project) => project.isPublic);
 
   let processed = 0;
   for (const project of projects) {
-    await upsertProjectDocuments({
-      projectId: project.id,
-      isPublic: project.isPublic,
-      technologies: project.technologies,
-      platformCategories: project.platformCategories,
-      domainTags: project.domainTags,
-      translations: project.translations.map((translation) => ({
-        locale: translation.locale,
-        title: translation.title,
-        company: translation.company,
-        region: translation.region,
-        role: translation.role,
-        overview: translation.overview,
-        description: translation.description,
-        challenges: translation.challenges,
-        achievements: translation.achievements,
-      })),
-    });
+    await upsertProjectDocuments(buildProjectIndexingInputFromAdmin(project));
     processed += 1;
     console.log(`Embedded project ${project.id} (${processed}/${projects.length})`);
   }
@@ -45,11 +25,7 @@ async function main() {
   console.log('Done. Embedded static bio/about documents.');
 }
 
-main()
-  .catch((error) => {
-    console.error('Failed to embed existing projects:', error);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main().catch((error) => {
+  console.error('Failed to embed existing projects:', error);
+  process.exit(1);
+});
