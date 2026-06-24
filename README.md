@@ -35,7 +35,7 @@ Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **
 - **상세 스토리**: 어드민 Editor.js 다국어 편집 + 퍼블릭 `?item=&story=1` 오버레이. **TanStack Query** prefetch·stale-while-revalidate
 - **RAG 챗봇**: OpenAI + pgvector(Supabase), FAQ·프로젝트 딥링크
 - **비공개 CMS**: Supabase Auth, Prisma/PostgreSQL, DnD 정렬, 이미지 업로드, Zod Server Actions
-- **프로덕션**: Sentry, GA4/GTM, CI(lint·unit·build), env 시크릿, 챗 API rate limit
+- **프로덕션**: Sentry, GA4, CI(lint·unit·build), env 시크릿, 챗 API rate limit
 
 ### 기술 스택
 
@@ -275,7 +275,7 @@ Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Ne
 - **詳細ストーリー**: 管理画面 Editor.js 多言語編集 + 公開 `?item=&story=1` オーバーレイ。**TanStack Query** プリフェッチ・stale-while-revalidate
 - **RAG チャットボット**: OpenAI + pgvector (Supabase)、FAQ・プロジェクトディープリンク
 - **非公開 CMS**: Supabase Auth、Prisma/PostgreSQL、DnD 並び替え、画像アップロード、Zod Server Actions
-- **プロダクション**: Sentry、GA4/GTM、CI (lint・unit・build)、env シークレット、チャット API レート制限
+- **プロダクション**: Sentry、GA4、CI (lint・unit・build)、env シークレット、チャット API レート制限
 
 ### 技術スタック
 
@@ -502,7 +502,7 @@ Multilingual portfolio and CMS built with **Next.js 15 (App Router)**. Stack: **
 - **Rich project stories**: Editor.js admin + public `?item=&story=1` overlay; **TanStack Query** prefetch + stale-while-revalidate
 - **RAG chatbot**: OpenAI + pgvector (Supabase), FAQ flows, project deep-links
 - **Private admin CMS**: Supabase Auth, Prisma/PostgreSQL, drag-and-drop, image upload, Zod server actions
-- **Production-minded**: Sentry, GA4/GTM, CI (lint + unit + build), env secrets, chat API rate limiting
+- **Production-minded**: Sentry, GA4, CI (lint + unit + build), env secrets, chat API rate limiting
 
 ### Tech stack
 

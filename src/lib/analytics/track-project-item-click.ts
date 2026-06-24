@@ -1,4 +1,5 @@
 import type { ProjectView } from '@/modules/projects';
+import { trackGa4Event } from '@/lib/analytics/ga4';
 
 type ProjectClickPayload = {
   project_id: string;
@@ -19,16 +20,7 @@ function buildPayload(item: ProjectView): ProjectClickPayload {
   };
 }
 
-/** GTM dataLayer + GA4 gtag — single entry for project list clicks. */
+/** GA4 custom event for project list clicks. */
 export function trackProjectItemClick(item: ProjectView) {
-  if (typeof window === 'undefined') return;
-
-  const payload = buildPayload(item);
-
-  window.dataLayer?.push({
-    event: 'project_item_click',
-    ...payload,
-  });
-
-  window.gtag?.('event', 'project_item_click', payload);
+  trackGa4Event('project_item_click', buildPayload(item));
 }
