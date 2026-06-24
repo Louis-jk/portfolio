@@ -61,7 +61,7 @@ model PortfolioDocument {
   locale     String
   title      String
   content    String                 @db.Text
-  metadata   Json                   @db.JsonB
+  metadata   Json                   @default("{}") @db.JsonB
   embedding  Unsupported("vector(1536)")
   createdAt  DateTime               @default(now()) @map("created_at")
   updatedAt  DateTime               @default(now()) @updatedAt @map("updated_at")

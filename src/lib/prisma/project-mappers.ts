@@ -61,6 +61,7 @@ export function toProjectDetailPageRecord(
     id: row.id,
     projectId: row.projectId,
     isPublic: row.isPublic,
+    // JsonValue cast: content is always written via serializeDetailPagePayloadForNest on upsert.
     content: row.content as unknown as EditorOutput | StoryContentDocument,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),

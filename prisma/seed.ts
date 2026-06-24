@@ -47,7 +47,7 @@ function parseDate(dateStr: string): { startDate: Date; endDate: Date | null } {
     const [, sy, sm, ey, em] = rangeMatch;
     return {
       startDate: new Date(parseInt(sy!, 10), parseInt(sm!, 10) - 1, 1),
-      endDate: new Date(parseInt(ey!, 10), parseInt(em!, 10) - 1, 28),
+      endDate: new Date(parseInt(ey!, 10), parseInt(em!, 10), 0),
     };
   }
   const monthNames: Record<string, number> = {
@@ -70,14 +70,14 @@ function parseDate(dateStr: string): { startDate: Date; endDate: Date | null } {
   if (monthMatch) {
     const [, sm, sy, em, ey] = monthMatch;
     const startDate = new Date(parseInt(sy!, 10), monthNames[sm!]!, 1);
-    const endDate = new Date(parseInt(ey!, 10), monthNames[em!]!, 28);
+    const endDate = new Date(parseInt(ey!, 10), monthNames[em!]! + 1, 0);
     return { startDate, endDate };
   }
   const singleMatch = normalized.match(/(\d{4})\.(\d{1,2})/);
   if (singleMatch) {
     const [, y, m] = singleMatch;
     const d = new Date(parseInt(y!, 10), parseInt(m!, 10) - 1, 1);
-    return { startDate: d, endDate: d };
+    return { startDate: d, endDate: null };
   }
   return {
     startDate: new Date(2020, 0, 1),
