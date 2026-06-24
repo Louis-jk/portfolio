@@ -28,9 +28,25 @@ async function main() {
     process.exit(1);
   }
 
-  const exists = buckets?.some((bucket) => bucket.name === BUCKET);
-  if (exists) {
-    console.log(`✅ Storage bucket "${BUCKET}" already exists.`);
+  const existing = buckets?.find((bucket) => bucket.name === BUCKET);
+  if (existing) {
+    if (!existing.public) {
+      const { error: updateError } = await supabase.storage.updateBucket(
+        BUCKET,
+        { public: true },
+      );
+      if (updateError) {
+        console.error(
+          `Failed to make bucket "${BUCKET}" public:`,
+          updateError.message,
+        );
+        process.exit(1);
+      }
+      console.log(`✅ Updated storage bucket "${BUCKET}" to public.`);
+      return;
+    }
+
+    console.log(`✅ Storage bucket "${BUCKET}" already exists (public).`);
     return;
   }
 
@@ -46,4 +62,7 @@ async function main() {
   console.log(`✅ Created public storage bucket "${BUCKET}".`);
 }
 
-void main();
+main().catch((error) => {
+  console.error('Unexpected setup failure:', error);
+  process.exit(1);
+});
