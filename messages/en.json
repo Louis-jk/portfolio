@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Joonho Kim | Senior Frontend Engineer",
+    "title": "Joonho Kim | Frontend Engineer",
     "description": "Joonho Kim is a frontend engineer who has worked in web design and publishing since 2011, and has participated in many React-based production projects since 2020. He focuses on user-centered UI/UX and reliable frontend architecture with strong technical ownership.",
-    "keywords": "Joonho Kim, Senior Frontend Engineer, Frontend Developer, React Expert, Next.js, React Native, Electron, Web3, Dapp, Remote Developer, Technical Ownership",
+    "keywords": "Joonho Kim, Frontend Engineer, Frontend Developer, React Expert, Next.js, React Native, Electron, Web3, Dapp, Remote Developer, Technical Ownership",
     "ogDescription": "Portfolio of Joonho Kim, who has worked in web design/publishing since 2011 and React-based development since 2020. Combining design precision with technical ownership to deliver user-centered frontend solutions."
   },
   "homePage": {
@@ -29,9 +29,305 @@
       }
     }
   },
-  "timeline": {
+  "modal": {
+    "languageSelector": {
+      "title": "Language Selection",
+      "description": "Please select your preferred language.",
+      "switchingLanguage": "Switching language…",
+      "languages": {
+        "ko": "한국어",
+        "ja": "日本語",
+        "en": "English"
+      }
+    },
+    "shareModal": {
+      "title": "Share",
+      "description": "Please share this project with your friends.",
+      "copyToClipboard": "Copy to clipboard",
+      "copied": "Copied!",
+      "copyFailed": "Copy failed!"
+    },
+    "shareButton": {
+      "buttonTitle": {
+        "kakaoTalk": "Go to Web"
+      }
+    },
+    "chatbot": {
+      "title": "Portfolio Chatbot",
+      "description": "Hello! This is the portfolio chatbot. Do you have any questions? Please select or type your question.",
+      "placeholder": "Type your question.",
+      "button": "Open Chatbot",
+      "close": "Close Chatbot",
+      "open": "Open Chatbot",
+      "sorry": "Sorry, I didn't understand. Please select from the options above.",
+      "resetToStart": "↺ Back to Start",
+      "whatIsMySkill": {
+        "question": "What are your skills?",
+        "answer": "I specialize in building fast and maintainable frontend applications using React, Next.js, and TypeScript. I implement consistent UI with Tailwind CSS, and manage state using Zustand, Redux, and Context API. I also develop mobile apps with React Native, and recently have been focusing on Web3, chatbots, and interactive animations.",
+        "followUpChoices": [
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I've collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "How do you work?",
+            "answer": "I actively participate from the planning phase and value clear communication. I'm responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I'm comfortable working independently as well as collaborating with designers and backend developers."
+          },
+          {
+            "question": "What are your strengths?",
+            "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs."
+          }
+        ]
+      },
+      "projectExperience": {
+        "question": "What kind of project experience do you have?",
+        "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I've collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites.",
+        "followUpChoices": [
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I've collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "How do you work?",
+            "answer": "I actively participate from the planning phase and value clear communication. I'm responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I'm comfortable working independently as well as collaborating with designers and backend developers."
+          },
+          {
+            "question": "What are your strengths?",
+            "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs."
+          }
+        ]
+      },
+      "languages": {
+        "question": "What languages do you speak?",
+        "answer": "I am a native Korean speaker and fluent in Japanese for business communication. I'm currently studying English from the basics, and while I can handle simple communication, I'm working hard to improve my skills.",
+        "followUpChoices": [
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "What framework experience do you have?",
+            "answer": "I have experience with frontend frameworks like React, Next.js, React Native, Electron, and backend frameworks like Laravel, Express, NestJS, Fiber, and others."
+          },
+          {
+            "question": "What database experience do you have?",
+            "answer": "I have experience with relational databases (MySQL, MariaDB) and NoSQL (MongoDB), and I'm interested in data modeling and optimization."
+          },
+          {
+            "question": "What cloud experience do you have?",
+            "answer": "I have experience deploying services on AWS cloud platform (EC2, S3, Route53, CloudFront)."
+          }
+        ]
+      },
+      "workStyle": {
+        "question": "How do you work?",
+        "answer": "I actively participate from the planning phase and value clear communication. I'm responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I'm comfortable working independently as well as collaborating with designers and backend developers.",
+        "followUpChoices": [
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "What's your communication style?",
+            "answer": "I prefer clear and concise explanations, and I'm good at explaining technical content in a way that non-developers can understand."
+          },
+          {
+            "question": "How do you learn?",
+            "answer": "I continuously learn through online courses, technical documentation, open source project participation, and writing technical blog posts."
+          },
+          {
+            "question": "What's your work environment preference?",
+            "answer": "I prefer remote work if possible. Office work is also possible, but I value flexible working hours."
+          }
+        ]
+      },
+      "strengths": {
+        "question": "What are your strengths?",
+        "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs.",
+        "followUpChoices": [
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "What's your tech stack?",
+            "answer": "Frontend: TypeScript, React, Next.js, React Native, Electron / Backend: Node.js, Go (personal project experience) / Database: MongoDB, MySQL, MariaDB / Cloud: AWS (EC2, S3, Route53, CloudFront)"
+          },
+          {
+            "question": "How do you handle teamwork?",
+            "answer": "I collaborate with team members through active communication even in remote work environments, and I value code reviews and knowledge sharing."
+          },
+          {
+            "question": "What about problem-solving skills?",
+            "answer": "I approach problems systematically, present various solutions, and enjoy finding the optimal solution."
+          }
+        ]
+      },
+      "interestedIn": {
+        "question": "What are you interested in?",
+        "answer": "I'm passionate about building user-friendly frontend experiences, and I'm especially interested in Web3, chatbot UIs, interactive animations, and building multilingual global services.",
+        "followUpChoices": [
+          {
+            "question": "What kind of project experience do you have?",
+            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
+          },
+          {
+            "question": "What are you improving on?",
+            "answer": "I'm working on becoming faster and more efficient in frontend development."
+          },
+          {
+            "question": "What are your goals?",
+            "answer": "My goal is to become a frontend developer who continuously improves user experience through new technologies and challenges, and grows together with the team."
+          },
+          {
+            "question": "What technologies are you currently studying?",
+            "answer": "I'm studying both frontend and backend development areas."
+          },
+          {
+            "question": "What are your future plans?",
+            "answer": "My plan is to become a full-stack developer from a frontend developer, and to provide valuable services to users by introducing new technologies."
+          },
+          {
+            "question": "What do you think about new challenges?",
+            "answer": "I'm not afraid of challenges in new technologies and domains, and I enjoy the learning curve."
+          }
+        ]
+      },
+      "contact": {
+        "question": "How can I contact you?",
+        "answer": "If you'd like to get in touch, please click the buttons below.",
+        "contactButtons": [
+          {
+            "text": "📧 Contact via Email",
+            "action": "email",
+            "url": "mailto:joonhokim.dev@gmail.com"
+          },
+          {
+            "text": "💼 Contact via LinkedIn",
+            "action": "linkedin",
+            "url": "https://www.linkedin.com/in/joonhokim0506"
+          }
+        ]
+      }
+    }
+  },
+  "details": {
+    "title": "Project Details",
+    "overview": "Overview",
+    "technologies": "Technologies",
+    "toolsAndEnvironments": "Tools & Environments",
+    "development": "Development",
+    "debugging": "Monitoring / Debugging",
+    "communication": "Communication",
+    "design": "Design",
+    "challenges": "Challenges",
+    "achievements": "Achievements"
+  },
+  "loading": {
+    "page": "Loading...",
+    "image": "Loading image..."
+  },
+  "admin": {
+    "projects": {
+      "project": "Project",
+      "yourRole": "Your Role",
+      "fullStackDev": "Full-Stack Dev",
+      "clientCompany": "Client/Company",
+      "clientName": "Client Name",
+      "region": "Region",
+      "cityCountry": "City, Country",
+      "overviewPlaceholder": "Enter project overview.",
+      "projectTitle": "Project Title",
+      "projectTitlePlaceholder": "Enter project title.",
+      "backToList": "← Back to project list",
+      "edit": "Edit",
+      "preview": "Preview",
+      "previewLanguage": "Preview language",
+      "listTitle": "PROJECTS LIST",
+      "projectCount": "{count} projects registered as digital assets.",
+      "noProjects": "No projects yet. Register your first project!",
+      "newProject": "+ NEW PROJECT",
+      "untitledProject": "Untitled Project",
+      "overview": "Overview",
+      "technologies": "Technologies",
+      "toolsAndStack": "Tools & Stack",
+      "links": "Links",
+      "description": "Description",
+      "challenges": "Challenges",
+      "achievements": "Achievements",
+      "development": "Development",
+      "communication": "Communication",
+      "design": "Design",
+      "debugging": "Debugging",
+      "addAfterCommaOrEnter": "Add more, then comma or Enter",
+      "technologiesPlaceholder": "React, TypeScript, Node.js (add with comma or Enter)",
+      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma (add with comma or Enter)",
+      "toolsCommunicationPlaceholder": "Slack, Notion, Jira (add with comma or Enter)",
+      "toolsDesignPlaceholder": "Figma, Photoshop (add with comma or Enter)",
+      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry (add with comma or Enter)",
+      "visibilityLabel": "Public status",
+      "publicProject": "Public project",
+      "confidentialProject": "Confidential project",
+      "publicProjectDesc": "Public project: Can be shared externally.",
+      "confidentialProjectDesc": "Confidential project: Requires confidentiality.",
+      "orderChanged": "Project order has been updated.",
+      "orderChangeFailed": "Failed to update order.",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "externalLinks": "External Links",
+      "uploading": "Uploading...",
+      "saving": "Saving...",
+      "deploying": "Deploying...",
+      "updateProject": "Update Project",
+      "deployProject": "Deploy Project",
+      "registerProject": "Register Project",
+      "imageUploadError": "Only image files can be uploaded.",
+      "imageUploadSizeError": "The file size must be less than 5MB.",
+      "deleteProjectConfirm": "Are you sure you want to delete this project?",
+      "deleteProjectFailed": "Failed to delete project.",
+      "deleteProjectDeleted": "Project has been deleted.",
+      "deleteProjectCancelled": "Delete project cancelled.",
+      "deleteProjectCancel": "Cancel delete",
+      "platformCategories": "Platform Categories",
+      "domainTags": "Domain/Technology Tags",
+      "detailEditorTitle": "Detail Story",
+      "editStory": "Edit story",
+      "detailEditorHint": "Each KO / JA / EN tab saves its own story layout. Select the tab for the language you want to edit.",
+      "detailEditorI18nHint": "Each KO / JA / EN tab saves its own layout — paragraphs, spacing, and block order are independent. Line breaks in one tab do not affect the others. Use “Auto-translate from KO” to draft a tab, then edit.",
+      "detailAutoTranslate": "Auto-translate from KO",
+      "detailAutoTranslating": "Translating…",
+      "detailAutoTranslateDone": "Translation applied. Review and save when ready.",
+      "detailAutoTranslateFailed": "Auto-translation failed.",
+      "detailEditorImagePasteHint": "Paste screenshots (dashboard, Storybook, etc.) with Cmd/Ctrl+V — they upload automatically.",
+      "detailEditorMarkdownHint": "Markdown: `###`+Space → H3 heading (type immediately), `-`+Space (list), `>`+Space (quote), `---`+Enter (divider). `### Title` at line start + Space converts the rest to a heading.",
+      "detailEditorVideoHint": "Video: add a Video block from the + menu — drag & drop or pick a file (mp4, webm, mov, up to 80MB).",
+      "detailEditorUndoHint": "Undo/redo: Ctrl+Z / Ctrl+Y (Mac: ⌘+Z / ⌘+Shift+Z).",
+      "detailSave": "Save story",
+      "detailStoryVisibilityLabel": "Story visibility",
+      "detailStoryPublicDesc": "PUBLIC — Shows the “View story” button on the portfolio. Save, then check the home page.",
+      "detailStoryPrivateDesc": "PRIVATE — Hides the story button from visitors. Use “Preview story” below to review.",
+      "detailSaved": "Detail story saved.",
+      "detailEmptyToggleSections": "A toggle section is empty. Add blocks (code, image, etc.) between “Toggle start” and “Toggle end”.",
+      "detailSaveFailed": "Failed to save detail story.",
+      "detailPreviewStory": "Preview story ↗",
+      "detailEditorLoading": "Loading editor..."
+    }
+  },
+  "projectStory": {
+    "backToPortfolio": "← Back to portfolio",
+    "backToProject": "Back to project",
+    "viewStory": "View story",
+    "storyLabel": "Project Story",
+    "loading": "Loading story…",
+    "empty": "No detail story has been published yet.",
+    "untitled": "Untitled"
+  },
+  "projects": {
     "title": "Projects",
-    "mobileHeaderTimelineTitle": "Projects",
     "details": {
       "title": "Project Details"
     },
@@ -56,7 +352,9 @@
       },
       "resetFilter": "Reset"
     },
-    "projects": {
+    "noItemsFound": "No projects found.",
+    "mobileHeaderTitle": "Projects",
+    "items": {
       "crewinc_mobile_frontend": {
         "title": "Frontend Development for an AI (LLM) Mobile Application (React Native / Full Remote)",
         "date": "Dec 2025 - Feb 2026",
@@ -752,252 +1050,9 @@
         }
       }
     },
-    "noItemsFound": "No projects found."
-  },
-  "modal": {
-    "languageSelector": {
-      "title": "Language Selection",
-      "description": "Please select your preferred language.",
-      "switchingLanguage": "Switching language…",
-      "languages": {
-        "ko": "한국어",
-        "ja": "日本語",
-        "en": "English"
-      }
-    },
-    "shareModal": {
-      "title": "Share",
-      "description": "Please share this project with your friends.",
-      "copyToClipboard": "Copy to clipboard",
-      "copied": "Copied!",
-      "copyFailed": "Copy failed!"
-    },
-    "shareButton": {
-      "buttonTitle": {
-        "kakaoTalk": "Go to Web"
-      }
-    },
-    "chatbot": {
-      "title": "Portfolio Chatbot",
-      "description": "Hello! This is the portfolio chatbot. Do you have any questions? Please select or type your question.",
-      "placeholder": "Type your question.",
-      "button": "Open Chatbot",
-      "close": "Close Chatbot",
-      "open": "Open Chatbot",
-      "sorry": "Sorry, answer is not ready yet.",
-      "resetToStart": "↺ Back to Start",
-      "whatIsMySkill": {
-        "question": "What are your skills?",
-        "answer": "I specialize in building fast and maintainable frontend applications using React, Next.js, and TypeScript. I implement consistent UI with Tailwind CSS, and manage state using Zustand, Redux, and Context API. I also develop mobile apps with React Native, and recently have been focusing on Web3, chatbots, and interactive animations.",
-        "followUpChoices": [
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I've collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-          {
-            "question": "How do you work?",
-            "answer": "I actively participate from the planning phase and value clear communication. I'm responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I'm comfortable working independently as well as collaborating with designers and backend developers."
-          },
-
-          {
-            "question": "What are your strengths?",
-            "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs."
-          }
-        ]
-      },
-      "projectExperience": {
-        "question": "What kind of project experience do you have?",
-        "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I've collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites.",
-        "followUpChoices": [
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I've worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I've collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-          {
-            "question": "How do you work?",
-            "answer": "I actively participate from the planning phase and value clear communication. I'm responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I'm comfortable working independently as well as collaborating with designers and backend developers."
-          },
-          {
-            "question": "What are your strengths?",
-            "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs."
-          }
-        ]
-      },
-      "languages": {
-        "question": "What languages do you speak?",
-        "answer": "I am a native Korean speaker and fluent in Japanese for business communication. I'm currently studying English from the basics, and while I can handle simple communication, I'm working hard to improve my skills.",
-        "followUpChoices": [
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-
-          {
-            "question": "What framework experience do you have?",
-            "answer": "I have experience with frontend frameworks like React, Next.js, React Native, Electron, and backend frameworks like Laravel, Express, NestJS, Fiber, and others."
-          },
-          {
-            "question": "What database experience do you have?",
-            "answer": "I have experience with relational databases (MySQL, MariaDB) and NoSQL (MongoDB), and I'm interested in data modeling and optimization."
-          },
-          {
-            "question": "What cloud experience do you have?",
-            "answer": "I have experience deploying services on AWS cloud platform (EC2, S3, Route53, CloudFront)."
-          }
-        ]
-      },
-      "workStyle": {
-        "question": "How do you work?",
-        "answer": "I actively participate from the planning phase and value clear communication. I'm responsible with deadlines, respond quickly to feedback, and adapt flexibly to changes. I'm comfortable working independently as well as collaborating with designers and backend developers.",
-        "followUpChoices": [
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-
-          {
-            "question": "What's your communication style?",
-            "answer": "I prefer clear and concise explanations, and I'm good at explaining technical content in a way that non-developers can understand."
-          },
-          {
-            "question": "How do you learn?",
-            "answer": "I continuously learn through online courses, technical documentation, open source project participation, and writing technical blog posts."
-          },
-          {
-            "question": "What's your work environment preference?",
-            "answer": "I prefer remote work if possible. Office work is also possible, but I value flexible working hours."
-          }
-        ]
-      },
-      "strengths": {
-        "question": "What are your strengths?",
-        "answer": "My strengths are quick problem-solving and adaptability. I'm skilled in component-based architecture, performance optimization, and user-centered UI development. I pay close attention to cross-browser and mobile responsiveness, and focus on delivering what the client truly needs.",
-        "followUpChoices": [
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-
-          {
-            "question": "What's your tech stack?",
-            "answer": "Frontend: TypeScript, React, Next.js, React Native, Electron / Backend: Node.js, Go (personal project experience) / Database: MongoDB, MySQL, MariaDB / Cloud: AWS (EC2, S3, Route53, CloudFront)"
-          },
-          {
-            "question": "How do you handle teamwork?",
-            "answer": "I collaborate with team members through active communication even in remote work environments, and I value code reviews and knowledge sharing."
-          },
-          {
-            "question": "What about problem-solving skills?",
-            "answer": "I approach problems systematically, present various solutions, and enjoy finding the optimal solution."
-          }
-        ]
-      },
-      "interestedIn": {
-        "question": "What are you interested in?",
-        "answer": "I'm passionate about building user-friendly frontend experiences, and I'm especially interested in Web3, chatbot UIs, interactive animations, and building multilingual global services.",
-        "followUpChoices": [
-          {
-            "question": "What kind of project experience do you have?",
-            "answer": "I have worked on many production-level projects including websites, responsive web apps, mobile applications, and admin dashboards. I have collaborated with international clients as a freelancer, and I have experience handling entire workflows from planning and development to deployment. My strengths include B2B services, printing quote platforms, delivery management apps, and multilingual websites."
-          },
-
-          {
-            "question": "What are you improving on?",
-            "answer": "I'm working on becoming faster and more efficient in frontend development."
-          },
-          {
-            "question": "What are your goals?",
-            "answer": "My goal is to become a frontend developer who continuously improves user experience through new technologies and challenges, and grows together with the team."
-          },
-          {
-            "question": "What technologies are you currently studying?",
-            "answer": "I'm studying both frontend and backend development areas."
-          },
-          {
-            "question": "What are your future plans?",
-            "answer": "My plan is to become a full-stack developer from a frontend developer, and to provide valuable services to users by introducing new technologies."
-          },
-          {
-            "question": "What do you think about new challenges?",
-            "answer": "I'm not afraid of challenges in new technologies and domains, and I enjoy the learning curve."
-          }
-        ]
-      },
-      "contact": {
-        "question": "How can I contact you?",
-        "answer": "If you'd like to get in touch, please click the buttons below.",
-        "contactButtons": [
-          {
-            "text": "📧 Contact via Email",
-            "action": "email",
-            "url": "mailto:joonhokim.dev@gmail.com"
-          },
-          {
-            "text": "💼 Contact via LinkedIn",
-            "action": "linkedin",
-            "url": "https://www.linkedin.com/in/joonhokim0506"
-          }
-        ]
-      },
-      "sorry": "Sorry, I didn't understand. Please select from the options above."
-    }
-  },
-  "details": {
-    "title": "Project Details",
-    "overview": "Overview",
-    "technologies": "Technologies",
-    "toolsAndEnvironments": "Tools & Environments",
-    "development": "Development",
-    "debugging": "Monitoring / Debugging",
-    "communication": "Communication",
-    "design": "Design",
-    "challenges": "Challenges",
-    "achievements": "Achievements"
-  },
-  "loading": {
-    "page": "Loading...",
-    "image": "Loading image..."
-  },
-  "admin": {
-    "projects": {
-      "backToList": "← Back to project list",
-      "edit": "Edit",
-      "preview": "Preview",
-      "previewLanguage": "Preview language",
-      "listTitle": "PROJECTS LIST",
-      "projectCount": "{count} projects registered as digital assets.",
-      "noProjects": "No projects yet. Register your first project!",
-      "newProject": "+ NEW PROJECT",
-      "untitledProject": "Untitled Project",
-      "overview": "Overview",
-      "technologies": "Technologies",
-      "toolsAndStack": "Tools & Stack",
-      "links": "Links",
-      "description": "Description",
-      "challenges": "Challenges",
-      "achievements": "Achievements",
-      "development": "Development",
-      "communication": "Communication",
-      "design": "Design",
-      "debugging": "Debugging",
-      "addAfterCommaOrEnter": "Add more, then comma or Enter",
-      "technologiesPlaceholder": "React, TypeScript, Node.js (add with comma or Enter)",
-      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma (add with comma or Enter)",
-      "toolsCommunicationPlaceholder": "Slack, Notion, Jira (add with comma or Enter)",
-      "toolsDesignPlaceholder": "Figma, Photoshop (add with comma or Enter)",
-      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry (add with comma or Enter)",
-      "visibilityLabel": "Public status",
-      "publicProject": "Public project",
-      "confidentialProject": "Confidential project",
-      "publicProjectDesc": "Public project: Can be shared externally.",
-      "confidentialProjectDesc": "Confidential project: Requires confidentiality.",
-      "orderChanged": "Project order has been updated.",
-      "orderChangeFailed": "Failed to update order."
+    "emptyState": {
+      "title": "Select a project to view details",
+      "hint": "Click on a project in the list to see more information"
     }
   }
 }

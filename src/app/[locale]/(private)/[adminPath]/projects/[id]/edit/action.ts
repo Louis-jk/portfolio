@@ -1,7 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { revalidateProjectsList } from '@/lib/revalidate-projects';
 import { requireAuth } from '@/utils/supabase/auth';
 import type { ProjectFormData } from '@/modules/projects';
 import { validateProjectServerPayload } from '@/modules/projects';
@@ -10,7 +9,7 @@ import {
   buildProjectIndexingInputFromAdmin,
   getProjectById,
   updateProject as updateProjectViaApi,
-} from '@/modules/projects/projects.service';
+} from '@/modules/projects/server';
 
 export async function updateProject(
   projectId: number,
@@ -48,8 +47,7 @@ export async function updateProject(
       'Project update',
     );
 
-    revalidatePath(`/[locale]${ADMIN_ROUTES.PROJECTS}`, 'page');
-    revalidatePath('/[locale]', 'layout');
+    revalidateProjectsList();
     return { success: true, id };
   } catch (error) {
     console.error('❌ Project Update Error:', error);

@@ -1,205 +1,722 @@
 # Portfolio — Joonho Kim
 
-Personal portfolio and CMS built with **Next.js 15 (App Router)**.  
-Live site: [joonhokim.dev](https://www.joonhokim.dev)
+[joonhokim.dev](https://www.joonhokim.dev)
 
-![Portfolio preview](https://github.com/user-attachments/assets/c511919c-0d5f-4a1b-8725-d91e9bf3d4ab)
+## Preview
 
-## 🌟 Highlights
+### Public site
 
-<p align="left">
-  <a href="#highlights-en">🇺🇸 English</a> | 
-  <a href="#highlights-ko">🇰🇷 한국어 요약</a> | 
-  <a href="#highlights-ja">🇯🇵 日本語要約</a>
-</p>
+[<video src="https://github.com/user-attachments/assets/72c4b16e-00e9-48dc-8a56-a7b583ef4bf7" width="100%" autoplay muted loop playsinline />](https://github.com/user-attachments/assets/72c4b16e-00e9-48dc-8a56-a7b583ef4bf7)
 
-### <span id="highlights-en">🇺🇸 English</span>
+_Portfolio demo — hover, project detail, story overlay (MP4)_
 
-- **Multilingual public site** (ko / en / ja) with timeline, 3D avatar, filters, and project detail drawer
-- **RAG chatbot** — OpenAI + pgvector (Supabase) retrieval over portfolio content, with FAQ flows and project deep-links
-- **Private admin CMS** — Supabase Auth, Prisma/PostgreSQL, drag-and-drop ordering, image upload, Zod-validated server actions
-- **Production-minded** — Sentry, GA4/GTM, CI (lint + unit + e2e + build), env-based secrets, chat API rate limiting
+### Storybook
 
-### <span id="highlights-ko">🇰🇷 한국어 요약</span>
+Brand / semantic colors (`ThemeColors` story) — same page, light and dark theme.
 
-<details>
-<summary><b>💡 핵심 하이라이트 보기 (클릭하여 펼치기)</b></summary>
-<br>
+![Storybook — theme colors (light)](https://github.com/user-attachments/assets/3ca6abb3-0ba1-4ec7-9f35-b64edb129a4e)
 
-- **다국어 지원 퍼블릭 사이트** (ko / en / ja): 인터랙티브 타임라인, 3D 아바타, 프로젝트 필터링 및 상세 보기 드로어(Drawer) 구현
-- **RAG 기반 챗봇**: OpenAI API와 pgvector(Supabase)를 연동하여 포트폴리오 콘텐츠 내 문서 검색, FAQ 시나리오 및 프로젝트 딥링크 기능 지원
-- **비공개 관리자 CMS**: Supabase Auth와 Prisma/PostgreSQL 기반의 CRUD, 드래그 앤 드롭 정렬, 이미지 업로드 및 Zod 스키마로 검증된 Server Actions 적용
-- **프로덕션 지향 아키텍처**: Sentry 에러 트래킹, GA4/GTM 분석, GitHub Actions CI 파이프라인(Lint + Unit + E2E + Build), 환경 변수 기반 암호화, 챗봇 API 요청 제한(Rate Limiting) 반영
-</details>
+![Storybook — theme colors (dark)](https://github.com/user-attachments/assets/b4c7c48a-5e69-47ea-b555-e9ac3d20fbbb)
 
-### <span id="highlights-ja">🇯🇵 日本語要約</span>
+### Optional showcases
+
+Admin CMS shots are optional — add only if you want to highlight them. Mask or crop any secret URL path in the address bar or page chrome.
+
+## Documentation
 
 <details>
-<summary><b>💡 主なハイライトを表示 (クリックして展開)</b></summary>
-<br>
+<summary><b>🇰🇷 한국어</b></summary>
 
-- **多言語対応パブリックサイト** (ko / en / ja): タイムライン、3Dアバター、プロジェクトのフィルタリング、詳細表示ドロワー（Drawer）機能を搭載
-- **RAGベースのチャットボット**: OpenAI + pgvector (Supabase) を活用し、ポートフォリオ内のコンテンツに基づくドキュメント検索、FAQフロー、プロジェクトへのディープリンクをサポート
-- **非公開の管理者用CMS**: Supabase Auth、Prisma/PostgreSQL、ドラッグ＆ドロップによる並び替え、画像アップロード、Zodによるバリデーションを経た Server Actions を実装
-- **プロダクション環境を意識した設計**: Sentry によるエラー追跡、GA4/GTM 解析、CIパイプライン（Lint + Unit + E2E + Build）、環境変数によるシークレット管理、チャットAPIのレート制限（Rate Limiting）を適用
-</details>
+Next.js 15 기반 다국어 포트폴리오 및 CMS입니다. **Next.js 15**, **React 19**, **TanStack Query 5**, **Tailwind CSS 4**, **Prisma 7**, **Storybook 10**을 사용합니다.
 
-## Tech stack
+### 핵심 하이라이트
 
-| Layer     | Choices                                                     |
-| --------- | ----------------------------------------------------------- |
-| Framework | Next.js 15, React 19, TypeScript                            |
-| Styling   | Tailwind CSS 4, Framer Motion, next-themes                  |
-| i18n      | next-intl                                                   |
-| Data      | Prisma 7, PostgreSQL, Supabase (Auth, Storage, pgvector)    |
-| AI / RAG  | LangChain, OpenAI (`gpt-4o-mini`, `text-embedding-3-small`) |
-| 3D        | React Three Fiber, drei                                     |
-| Quality   | Vitest, Playwright, ESLint, GitHub Actions                  |
+- **다국어 퍼블릭 사이트** (ko / en / ja): 프로젝트 목록·상세, 3D 아바타, 필터, 드로어
+- **상세 스토리**: 어드민 Editor.js 다국어 편집 + 퍼블릭 `?item=&story=1` 오버레이. **TanStack Query** prefetch·stale-while-revalidate
+- **RAG 챗봇**: OpenAI + pgvector(Supabase), FAQ·프로젝트 딥링크
+- **비공개 CMS**: Supabase Auth, Prisma/PostgreSQL, DnD 정렬, 이미지 업로드, Zod Server Actions
+- **프로덕션**: Sentry, GA4, CI(lint·unit·build), env 시크릿, 챗 API rate limit
 
-## Architecture
+### 기술 스택
 
-The codebase favors **colocation by responsibility** rather than a generic `services/` layer:
+[![Next.js](https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-```
+| 계층            | 선택                                                               |
+| --------------- | ------------------------------------------------------------------ |
+| **Framework**   | Next.js 15 · React 19 · TypeScript 5                               |
+| **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
+| **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
+| **i18n**        | next-intl (ko / en / ja)                                           |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, Realtime, pgvector) |
+| **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
+| **3D**          | React Three Fiber · drei                                           |
+| **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
+
+### 아키텍처
+
+코드베이스는 **책임별 colocation** — `services/` 트리 대신 레이어 소유권에 맞게 배치합니다.
+
+**레이어 역할**
+
+| 레이어        | 역할                                  |
+| ------------- | ------------------------------------- |
+| `modules/`    | 서버 도메인 — repository → service    |
+| `lib/`        | React 없는 순수 헬퍼                  |
+| `features/`   | 기능 슬라이스 (admin editor, chatbot) |
+| `components/` | 공유 UI                               |
+| `hooks/`      | 공유 React 훅                         |
+| `app/`        | 라우트, BFF API, server actions       |
+
+**디렉터리 구조 (요약)**
+
+```text
 src/
-├── app/                    # Routes, API handlers, server actions (admin CMS)
+├── app/
+│   ├── [locale]/                    # Public pages + admin routes
+│   │   └── (private)/[adminPath]/projects/[id]/detail/
+│   └── api/projects/[id]/
+│       ├── detail-page/             # BFF — auth CRUD → Prisma
+│       └── story/                   # BFF — public read
 ├── modules/
-│   └── projects/           # Project domain — repository → service → mapper
-│       ├── index.ts        # Public API (import only from here)
-│       ├── projects.repository.ts
-│       ├── projects.service.ts
-│       ├── projects.mapper.ts      # Nest DTO → ProjectView / ProjectAdminView
-│       └── projects-payload.mapper.ts
-├── features/chatbot/       # Chatbot UI, hooks, feature-specific lib
+│   ├── projects/
+│   └── project-detail-page/
+├── features/
+│   ├── chatbot/
+│   └── admin/projects/editor/
 ├── lib/
-│   ├── http/               # nest-client, api-error
-│   ├── rag/                # Embedding + portfolio document indexing
-│   └── supabase/           # Admin client, hostname helpers
-├── components/             # Shared public UI (timeline, header, intro, …)
-├── hooks/                  # Cross-feature hooks (e.g. useMounted)
-└── stores/                 # Zustand (chatbot UI state)
+│   ├── http/
+│   ├── project-detail-page/
+│   ├── projects/
+│   ├── query/                       # TanStack Query provider
+│   └── rag/
+├── components/projects/
+│   ├── project-list/
+│   ├── project-detail/
+│   └── project-story/
+└── hooks/
 ```
 
-## 🎯 Design choices
-
-<p align="left">
-  <a href="#design-en">🇺🇸 English</a> | 
-  <a href="#design-ko">🇰🇷 한국어 기술 결정</a> | 
-  <a href="#design-ja">🇯🇵 日本語の設計選択</a>
-</p>
-
-#### <span id="design-en">🇺🇸 English</span>
-
-- **`modules/projects/`** — layered domain module (repository → service → mapper); Nest API is the single source of truth; `ProjectView` is locale-resolved for public UI, `ProjectAdminView` keeps i18n for CMS.
-- **`features/chatbot/`** — user-facing feature module; depends on `modules/projects`, not the other way around.
-- **Admin routes** — server actions colocated with routes; mutations go through `modules/projects` service, not direct DB/API calls in components.
-- **Security** — no hardcoded secrets; admin signup gated by env; middleware session checks; `/api/chat` rate-limited per IP.
-
-#### <span id="design-ko">🇰🇷 한국어 기술 결정</span>
-
-<details>
-<summary><b>🛠️ 설계 및 아키텍처 초이스 보기 (클릭하여 펼치기)</b></summary>
-<br>
-
-- **`modules/projects/`**: repository → service → mapper 레이어로 Nest API와 UI를 분리했으며, 공개 UI용 `ProjectView`는 locale 기준으로 펼친 모델, 어드민용 `ProjectAdminView`는 i18n JSON을 유지합니다.
-- **`features/chatbot/`**: UI·스트리밍·FAQ 등 사용자 기능은 feature 모듈로, 데이터 접근은 `modules/projects`에 위임합니다.
-- **Admin routes**: Server Actions는 라우트 폴더에 colocation하고, 프로젝트 CRUD는 `modules/projects` service를 통해서만 수행합니다.
-- **Security (보안)**: 하드코딩된 시크릿 키가 없으며, 관리자 회원가입은 환경 변수로 원천 차단됩니다. 미들웨어 세션 체크 및 `/api/chat` 경로에 대한 IP별 요청 제한이 적용되어 있습니다.
-</details>
-
-#### <span id="design-ja">🇯🇵 日本語の設計選択</span>
-
-<details>
-<summary><b>🛠️ アーキテクチャ設計における選択を表示 (クリックして展開)</b></summary>
-<br>
-
-- **`modules/projects/`**: repository → service → mapper のレイヤーで Nest API と UI を分離。公開 UI 向け `ProjectView` は locale 解決済み、管理画面向け `ProjectAdminView` は i18n JSON を保持します。
-- **`features/chatbot/`**: ユーザー向け機能は feature モジュールに、データアクセスは `modules/projects` に委譲します。
-- **Admin Routes**: Server Actions はルートフォルダに colocation し、プロジェクト CRUD は `modules/projects` service 経由のみです。
-- **セキュリティ(Security)**: 各種シークレットは環境変数で厳格に管理され、管理者登録は環境変数によって制限されています。ミドルウェアによるセッションチェック、および `/api/chat` パスに対するIPごとのレート制限が実装されています。
-</details>
+**스토리 플로우**: 어드민 Editor.js JSON → BFF `/api/projects/[id]/story` → 퍼블릭 `?item=&story=1` 오버레이
 
 ```mermaid
 flowchart LR
-  subgraph public [Public]
-    Home[Timeline + Avatar]
-    Bot[Chatbot]
-  end
   subgraph admin [Admin CMS]
-    Auth[Supabase Auth]
-    CMS[Project CRUD]
+    Editor[EditorJsAdmin]
+    Action[detail/action.ts]
   end
-  subgraph data [Data]
-    PG[(PostgreSQL / Prisma)]
-    Vec[(pgvector documents)]
-    OAI[OpenAI API]
+  subgraph bff [Next BFF]
+    DetailAPI["/api/projects/id/detail-page"]
+    StoryAPI["/api/projects/id/story"]
   end
-  Home --> PG
-  Bot --> OAI
-  Bot --> Vec
-  CMS --> Auth
-  CMS --> PG
-  CMS --> Vec
+  subgraph domain [modules]
+    DetailSvc[project-detail-page.service]
+    ProjectsSvc[projects.service]
+  end
+  subgraph publicUI [Public UI]
+    Overlay["?item=&story=1 overlay"]
+    Renderer[project-story/editor]
+  end
+  DB[(Prisma / Supabase)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> DB
+  Overlay --> StoryAPI --> DetailSvc
+  Overlay --> Renderer
+  ProjectsSvc --> DB
 ```
 
-## Getting started
+### 데이터 계층: Nest API → Prisma 직결
 
-### Prerequisites
+이전에는 별도 **Nest.js 백엔드**가 Supabase PostgreSQL에 REST로 접근했습니다. 포트폴리오 규모에서는 **항상 켜 둘 서버 비용·운영 부담**이 컸고, Next.js(Vercel)만으로도 Server Actions·BFF·Prisma로 동일 기능을 구현할 수 있어 **Prisma 직접 연결**로 전환했습니다.
 
-- Node.js 22+
-- PostgreSQL database
-- Supabase project (Auth, Storage, pgvector extension)
-- OpenAI API key
+| 항목 | 이전 (Nest) | 현재 |
+| ---- | ----------- | ---- |
+| 프로젝트·스토리 CRUD | Nest REST → DB | Next `modules/*` → **Prisma** → Supabase PostgreSQL |
+| 어드민 인증 | Supabase Auth | 동일 (Supabase Auth) |
+| 이미지 | Supabase Storage | 동일 |
+| RAG 벡터 | pgvector | 동일 (Prisma / SQL) |
+| 별도 API 서버 | 필요 | **불필요** (`nest-client` 제거) |
 
-### Setup
+스키마는 Nest와 동일한 **JSONB i18n** 형태(`projects`, `project_detail_pages`)를 유지합니다.
+
+### 스토리 공개 상태 실시간 반영 (Supabase Realtime)
+
+어드민에서 스토리 **공개/비공개**를 바꾸면, 이미 열려 있는 퍼블릭 탭에도 **새로고침 없이** 「스토리 보기」버튼 표시·숨김이 반영됩니다.
+
+- **`story_visibility` 테이블** — `project_id` + `is_public`만 노출 (스토리 JSONB는 REST/Realtime으로 노출하지 않음). `project_detail_pages` 변경 시 DB 트리거로 동기화
+- **Postgres Changes** — 클라이언트가 `story_visibility` 구독 (`useStoryVisibilityRealtime`)
+- **Broadcast** — 어드민 저장 시 서버가 즉시 푸시 (`broadcastStoryVisibilityChange`)
+- **클라이언트 상태** — `useLiveProjects`가 SSR 목록의 `storyIsPublic`을 실시간 갱신
+
+```mermaid
+sequenceDiagram
+  participant Admin as 어드민 (저장)
+  participant DB as Supabase PostgreSQL
+  participant RT as Supabase Realtime
+  participant Home as 퍼블릭 탭 (Home)
+  Admin->>DB: Prisma upsert project_detail_pages
+  DB->>DB: trigger → story_visibility
+  Admin->>RT: Broadcast visibility_changed
+  RT-->>Home: postgres_changes / broadcast
+  Home->>Home: storyIsPublic 갱신, 오버레이 닫기
+```
+
+**환경 변수:** `DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`, `SUPABASE_SERVICE_ROLE_KEY`는 **같은 Supabase 프로젝트**에서 발급된 값이어야 합니다 (ref 불일치 시 Realtime·Auth가 조용히 실패할 수 있음). 확인: `pnpm exec tsx scripts/check-supabase-env-alignment.ts`
+
+**마이그레이션:** Realtime용 SQL은 `prisma/migrations/20250613120000_story_visibility_realtime/`에 있습니다. 배포·로컬 DB에 `pnpm db:migrate` 한 번 실행하세요.
+
+### 기술 결정
+
+- **`modules/projects/`**: repository → service → mapper, Prisma direct to Supabase
+- **`modules/project-detail-page/`**: Editor.js 스토리 도메인, 렌더는 `components/projects/project-story/editor/`
+- **`features/chatbot/`**: UI는 feature, 데이터는 `modules/projects`
+- **`features/admin/projects/editor/`**: locale 탭(ko/ja/en) i18n 블록
+- **Public UI**: `?item=&story=1` 오버레이, TanStack Query (`lib/projects/project-story-query.ts`)
+- **Security**: env 시크릿, 미들웨어 세션, `/api/chat` rate limit, HTML sanitization
+
+### 스토리 로딩 성능 최적화
+
+**「스토리 보기」** UX를 위해 TanStack Query prefetch·캐싱을 적용한 사례입니다.
+
+기존에는 클릭 시점에만 API fetch가 시작되어 cold fetch 지연이 있었습니다. 사용자 흐름(상세 진입 → hover → 클릭)에 맞춘 3단계 레이어를 구축했습니다.
+
+- **Prefetch**: 프로젝트 선택·스토리 링크 hover/focus (`staleTime: 0`, deduplication)
+- **즉시 렌더**: 캐시로 오버레이 즉시 표시 (체감 ≈ 0초)
+- **백그라운드 동기화**: `refetchOnMount: 'always'`로 어드민 수정 반영
+
+```mermaid
+sequenceDiagram
+  participant User as 유저 (Client)
+  participant Cache as TanStack Query (캐시)
+  participant API as PostgreSQL (Prisma)
+  Note over User, Cache: 1·2단계: 클릭 전
+  User->>Cache: 리스트 호버 또는 프로젝트 선택
+  Cache->>API: 백그라운드 Prefetch
+  API-->>Cache: 스토리 데이터 (메모리 캐시)
+  Note over User, Cache: 3단계: 스토리 보기 클릭
+  User->>Cache: 오버레이 오픈
+  Cache-->>User: 캐시로 즉시 표시
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: 백그라운드 최신화
+  API-->>Cache: 최신 데이터
+  Cache-->>User: isRefreshing으로 교체
+```
+
+### 참고
+
+훅·환경 변수 등 기술 레퍼런스입니다.
+
+#### 공유 훅 (`src/hooks/`)
+
+| 훅                           | 역할                                           |
+| ---------------------------- | ---------------------------------------------- |
+| `useBreakpoints`             | 상세 패널 — mobile / tablet / desktop          |
+| `useLayoutBreakpoints`       | 홈 레이아웃 — mobile / 2열 / desktop           |
+| `useProjectSelection`        | URL `?item=`, 드로어, analytics                |
+| `useProjectStory`            | URL `?story=1` 오버레이                        |
+| `usePrefetchProjectStory`    | hover·focus·선택 시 스토리 prefetch            |
+| `useLiveProjects`            | SSR 목록 + Realtime `storyIsPublic` 동기화     |
+| `useStoryVisibilityRealtime` | Supabase Realtime 구독 (`story_visibility`)  |
+| `useProjectListInteractions` | 키보드 nav, Lenis 스크롤, hover 프리뷰         |
+
+#### 환경 변수
+
+`.env.example` → `.env.local`로 복사하세요. 시크릿은 커밋하지 마세요.
+
+**필수:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
+
+`DATABASE_URL`의 Supabase project ref와 `NEXT_PUBLIC_SUPABASE_URL`·publishable key·`SUPABASE_SERVICE_ROLE_KEY`가 **동일 프로젝트**여야 Realtime·Auth·Storage가 Prisma와 맞습니다.
+
+#### 테스트 & CI
+
+```bash
+pnpm test          # Vitest
+pnpm test:e2e      # Playwright
+```
+
+push/PR 시 **lint**, **unit-test**, **build**가 실행됩니다.
+
+### 시작하기
 
 ```bash
 git clone https://github.com/Louis-jk/portfolio.git
 cd portfolio
-npm ci
+pnpm install
 cp .env.example .env.local
-# Fill in .env.local (see file for all variables)
-npx prisma migrate deploy   # or db push for local dev
-npm run db:seed             # optional sample data
-npm run dev
+pnpm exec prisma migrate deploy
+pnpm db:seed
+pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+| 명령             | 설명             |
+| ---------------- | ---------------- |
+| `pnpm dev`       | 개발 서버        |
+| `pnpm build`     | 프로덕션 빌드    |
+| `pnpm test`      | Vitest           |
+| `pnpm test:e2e`  | Playwright       |
+| `pnpm storybook` | Storybook (6006) |
 
-### Scripts
+**브랜치**: `develop`(통합) → `main`(프로덕션)
 
-| Command                     | Description                                        |
-| --------------------------- | -------------------------------------------------- |
-| `npm run dev`               | Development server                                 |
-| `npm run build`             | Production build                                   |
-| `npm run lint`              | ESLint                                             |
-| `npm run test`              | Vitest unit tests                                  |
-| `npm run test:e2e`          | Playwright (requires `DATABASE_URL` for home spec) |
-| `npm run db:seed`           | Seed database                                      |
-| `npm run db:embed-existing` | Re-index existing projects for RAG                 |
+</details>
 
-## Environment variables
+<details>
+<summary><b>🇯🇵 日本語</b></summary>
 
-Copy `.env.example` to `.env.local`. Never commit real secrets.
+Next.js 15 ベースの多言語ポートフォリオおよび CMS です。**Next.js 15**、**React 19**、**TanStack Query 5**、**Tailwind CSS 4**、**Prisma 7**、**Storybook 10** を使用しています。
 
-**Required for core features:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`.
+### 主なハイライト
 
-**Production recommendations:** `NEXT_PUBLIC_ADMIN_SIGNUP_ENABLED=false`, Sentry DSN/org/project, analytics IDs as needed.
+- **多言語パブリックサイト** (ko / en / ja): プロジェクト一覧・詳細、3Dアバター、フィルター、ドロワー
+- **詳細ストーリー**: 管理画面 Editor.js 多言語編集 + 公開 `?item=&story=1` オーバーレイ。**TanStack Query** プリフェッチ・stale-while-revalidate
+- **RAG チャットボット**: OpenAI + pgvector (Supabase)、FAQ・プロジェクトディープリンク
+- **非公開 CMS**: Supabase Auth、Prisma/PostgreSQL、DnD 並び替え、画像アップロード、Zod Server Actions
+- **プロダクション**: Sentry、GA4、CI (lint・unit・build)、env シークレット、チャット API レート制限
 
-Admin UI is served under `/{locale}{NEXT_PUBLIC_ADMIN_SECRET_PATH}` (path is obscured, not secret — rely on Supabase Auth + RLS).
+### 技術スタック
 
-## Testing
+[![Next.js](https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
+
+| レイヤー        | 選択                                                               |
+| --------------- | ------------------------------------------------------------------ |
+| **Framework**   | Next.js 15 · React 19 · TypeScript 5                               |
+| **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
+| **Client data** | TanStack Query 5 — prefetch、deduplication、stale-while-revalidate |
+| **i18n**        | next-intl (ko / en / ja)                                           |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, Realtime, pgvector) |
+| **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
+| **3D**          | React Three Fiber · drei                                           |
+| **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
+
+### アーキテクチャ
+
+コードベースは **責務別 colocation** — 汎用 `services/` ツリーではなく、レイヤーの所有者に沿って配置します。
+
+**レイヤー役割**
+
+| レイヤー      | 役割                                    |
+| ------------- | --------------------------------------- |
+| `modules/`    | サーバードメイン — repository → service |
+| `lib/`        | React なしの純粋ヘルパー                |
+| `features/`   | 機能スライス (admin editor, chatbot)    |
+| `components/` | 共有 UI                                 |
+| `hooks/`      | 共有 React フック                       |
+| `app/`        | ルート、BFF API、server actions         |
+
+**ディレクトリ構成 (抜粋)**
+
+```text
+src/
+├── app/
+│   ├── [locale]/                    # Public pages + admin routes
+│   │   └── (private)/[adminPath]/projects/[id]/detail/
+│   └── api/projects/[id]/
+│       ├── detail-page/             # BFF — auth CRUD → Prisma
+│       └── story/                   # BFF — public read
+├── modules/
+│   ├── projects/
+│   └── project-detail-page/
+├── features/
+│   ├── chatbot/
+│   └── admin/projects/editor/
+├── lib/
+│   ├── http/
+│   ├── project-detail-page/
+│   ├── projects/
+│   ├── query/                       # TanStack Query provider
+│   └── rag/
+├── components/projects/
+│   ├── project-list/
+│   ├── project-detail/
+│   └── project-story/
+└── hooks/
+```
+
+**ストーリーフロー**: 管理画面 Editor.js JSON → BFF `/api/projects/[id]/story` → 公開 `?item=&story=1` オーバーレイ
+
+```mermaid
+flowchart LR
+  subgraph admin [Admin CMS]
+    Editor[EditorJsAdmin]
+    Action[detail/action.ts]
+  end
+  subgraph bff [Next BFF]
+    DetailAPI["/api/projects/id/detail-page"]
+    StoryAPI["/api/projects/id/story"]
+  end
+  subgraph domain [modules]
+    DetailSvc[project-detail-page.service]
+    ProjectsSvc[projects.service]
+  end
+  subgraph publicUI [Public UI]
+    Overlay["?item=&story=1 overlay"]
+    Renderer[project-story/editor]
+  end
+  DB[(Prisma / Supabase)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> DB
+  Overlay --> StoryAPI --> DetailSvc
+  Overlay --> Renderer
+  ProjectsSvc --> DB
+```
+
+### データ層: Nest API → Prisma 直結
+
+以前は別の **Nest.js バックエンド**が Supabase PostgreSQL に REST でアクセスしていました。ポートフォリオ規模では **常時起動サーバーのコスト・運用**が負担になり、Next.js (Vercel) の Server Actions・BFF・Prisma だけで同等機能を実装できるため **Prisma 直結**に移行しました。
+
+| 項目 | 以前 (Nest) | 現在 |
+| ---- | ----------- | ---- |
+| プロジェクト・ストーリー CRUD | Nest REST → DB | Next `modules/*` → **Prisma** → Supabase PostgreSQL |
+| 管理画面認証 | Supabase Auth | 同じ |
+| 画像 | Supabase Storage | 同じ |
+| RAG ベクトル | pgvector | 同じ |
+| 別 API サーバー | 必要 | **不要** (`nest-client` 削除) |
+
+スキーマは Nest と同じ **JSONB i18n** (`projects`, `project_detail_pages`) です。
+
+### ストーリー公開状態のリアルタイム反映 (Supabase Realtime)
+
+管理画面でストーリーの **公開/非公開** を変更すると、開いている公開タブでも **リロードなし** で「ストーリーを見る」ボタンの表示が変わります。
+
+- **`story_visibility` テーブル** — `project_id` + `is_public` のみ（ストーリー JSONB は公開しない）
+- **Postgres Changes** — `useStoryVisibilityRealtime`
+- **Broadcast** — 保存時にサーバーが即時プッシュ
+- **クライアント** — `useLiveProjects` が `storyIsPublic` を更新
+
+**環境変数:** `DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`, `SUPABASE_SERVICE_ROLE_KEY` は **同じ Supabase プロジェクト**の値である必要があります。`pnpm exec tsx scripts/check-supabase-env-alignment.ts`
+
+**マイグレーション:** 各環境で `pnpm db:migrate` を一度実行してください。
+
+### 設計選択
+
+- **`modules/projects/`**: repository → service → mapper、Prisma 直結
+- **`modules/project-detail-page/`**: Editor.js ストーリードメイン、レンダラーは `components/projects/project-story/editor/`
+- **`features/chatbot/`**: UI は feature、データは `modules/projects`
+- **`features/admin/projects/editor/`**: locale タブ (ko/ja/en) i18n ブロック
+- **Public UI**: `?item=&story=1` オーバーレイ、TanStack Query (`lib/projects/project-story-query.ts`)
+- **セキュリティ**: env シークレット、ミドルウェアセッション、`/api/chat` レート制限、HTML sanitization
+
+### ストーリー読み込みの性能最適化
+
+**「ストーリーを見る」** UX 向けに TanStack Query のプリフェッチ・キャッシュを適用した事例です。
+
+従来はクリック時のみ API フェッチが始まり、cold fetch の遅延がありました。ユーザー行動（詳細進入 → ホバー → クリック）に合わせた 3 段階レイヤーを実装しました。
+
+- **プリフェッチ**: プロジェクト選択・ストーリーリンク hover/focus（`staleTime: 0`、deduplication）
+- **即時レンダリング**: キャッシュでオーバーレイ即表示（体感 ≈ 0 秒）
+- **バックグラウンド同期**: `refetchOnMount: 'always'` で管理画面の編集を反映
+
+```mermaid
+sequenceDiagram
+  participant User as ユーザー (Client)
+  participant Cache as TanStack Query (キャッシュ)
+  participant API as PostgreSQL (Prisma)
+  Note over User, Cache: 1・2段階: クリック前
+  User->>Cache: リストホバーまたはプロジェクト選択
+  Cache->>API: バックグラウンド Prefetch
+  API-->>Cache: ストーリーデータ (メモリキャッシュ)
+  Note over User, Cache: 3段階: ストーリー表示
+  User->>Cache: オーバーレイを開く
+  Cache-->>User: キャッシュで即時表示
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: バックグラウンド再取得
+  API-->>Cache: 最新データ
+  Cache-->>User: isRefreshing で更新
+```
+
+### リファレンス
+
+フック・環境変数などの技術リファレンスです。
+
+#### 共有フック (`src/hooks/`)
+
+| フック                       | 役割                                              |
+| ---------------------------- | ------------------------------------------------- |
+| `useBreakpoints`             | 詳細パネル — mobile / tablet / desktop            |
+| `useLayoutBreakpoints`       | ホームレイアウト — mobile / 2列 / desktop         |
+| `useProjectSelection`        | URL `?item=`、ドロワー、analytics                 |
+| `useProjectStory`            | URL `?story=1` オーバーレイ                       |
+| `usePrefetchProjectStory`    | hover・focus・選択時のストーリー prefetch           |
+| `useLiveProjects`            | SSR 一覧 + Realtime `storyIsPublic` 同期          |
+| `useStoryVisibilityRealtime` | Supabase Realtime 購読                            |
+| `useProjectListInteractions` | キーボード nav、Lenis スクロール、hover プレビュー |
+
+#### 環境変数
+
+`.env.example` を `.env.local` にコピーしてください。シークレットはコミットしないでください。
+
+**必須:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
+
+`DATABASE_URL` と `NEXT_PUBLIC_SUPABASE_URL`・publishable key・`SUPABASE_SERVICE_ROLE_KEY` は **同じ Supabase プロジェクト**を指す必要があります。
+
+#### テスト & CI
 
 ```bash
-npm run test          # domain + schema unit tests
-npm run test:e2e      # smoke / health checks
+pnpm test          # Vitest
+pnpm test:e2e      # Playwright
 ```
 
-CI runs lint, unit tests, e2e, and production build on push and PR.
+push/PR 時に **lint**、**unit-test**、**build** が実行されます。
 
-## Deployment
+### はじめに
 
-Optimized for **Vercel** (`output: 'standalone'`). Set environment variables in the Vercel dashboard and redeploy after changes.
+```bash
+git clone https://github.com/Louis-jk/portfolio.git
+cd portfolio
+pnpm install
+cp .env.example .env.local
+pnpm exec prisma migrate deploy
+pnpm db:seed
+pnpm dev
+```
+
+| コマンド         | 説明                 |
+| ---------------- | -------------------- |
+| `pnpm dev`       | 開発サーバー         |
+| `pnpm build`     | プロダクションビルド |
+| `pnpm test`      | Vitest               |
+| `pnpm test:e2e`  | Playwright           |
+| `pnpm storybook` | Storybook (6006)     |
+
+**ブランチ**: `develop`（統合）→ `main`（本番）
+
+</details>
+
+<details>
+<summary><b>🇺🇸 English</b></summary>
+
+Multilingual portfolio and CMS built with **Next.js 15 (App Router)**. Stack: **Next.js 15**, **React 19**, **TanStack Query 5**, **Tailwind CSS 4**, **Prisma 7**, **Storybook 10**.
+
+### Highlights
+
+- **Multilingual public site** (ko / en / ja): project list, 3D avatar, filters, detail drawer
+- **Rich project stories**: Editor.js admin + public `?item=&story=1` overlay; **TanStack Query** prefetch + stale-while-revalidate
+- **RAG chatbot**: OpenAI + pgvector (Supabase), FAQ flows, project deep-links
+- **Private admin CMS**: Supabase Auth, Prisma/PostgreSQL, drag-and-drop, image upload, Zod server actions
+- **Production-minded**: Sentry, GA4, CI (lint + unit + build), env secrets, chat API rate limiting
+
+### Tech stack
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
+
+| Layer           | Choices                                                            |
+| --------------- | ------------------------------------------------------------------ |
+| **Framework**   | Next.js 15 · React 19 · TypeScript 5                               |
+| **Styling**     | Tailwind CSS 4 · Framer Motion · next-themes                       |
+| **Client data** | TanStack Query 5 — prefetch, deduplication, stale-while-revalidate |
+| **i18n**        | next-intl (ko / en / ja)                                           |
+| **Data**        | Prisma 7 · PostgreSQL · Supabase (Auth, Storage, Realtime, pgvector) |
+| **AI / RAG**    | LangChain · OpenAI (`gpt-4o-mini`, `text-embedding-3-small`)       |
+| **3D**          | React Three Fiber · drei                                           |
+| **Quality**     | Vitest · Playwright · ESLint · GitHub Actions · Storybook 10       |
+
+### Architecture
+
+The codebase favors **colocation by responsibility** — related code lives next to the layer that owns it.
+
+**Layer roles**
+
+| Layer         | Role                                   |
+| ------------- | -------------------------------------- |
+| `modules/`    | Server domain — repository → service   |
+| `lib/`        | Pure helpers (no React)                |
+| `features/`   | Feature slices (admin editor, chatbot) |
+| `components/` | Shared UI                              |
+| `hooks/`      | Shared React hooks                     |
+| `app/`        | Routes, BFF API, server actions        |
+
+**Directory tree (selected)**
+
+```text
+src/
+├── app/
+│   ├── [locale]/                    # Public pages + admin routes
+│   │   └── (private)/[adminPath]/projects/[id]/detail/
+│   └── api/projects/[id]/
+│       ├── detail-page/             # BFF — auth CRUD → Prisma
+│       └── story/                   # BFF — public read
+├── modules/
+│   ├── projects/
+│   └── project-detail-page/
+├── features/
+│   ├── chatbot/
+│   └── admin/projects/editor/
+├── lib/
+│   ├── http/
+│   ├── project-detail-page/
+│   ├── projects/
+│   ├── query/                       # TanStack Query provider
+│   └── rag/
+├── components/projects/
+│   ├── project-list/
+│   ├── project-detail/
+│   └── project-story/
+└── hooks/
+```
+
+**Story flow**: Admin Editor.js JSON → BFF `/api/projects/[id]/story` → public `?item=&story=1` overlay
+
+```mermaid
+flowchart LR
+  subgraph admin [Admin CMS]
+    Editor[EditorJsAdmin]
+    Action[detail/action.ts]
+  end
+  subgraph bff [Next BFF]
+    DetailAPI["/api/projects/id/detail-page"]
+    StoryAPI["/api/projects/id/story"]
+  end
+  subgraph domain [modules]
+    DetailSvc[project-detail-page.service]
+    ProjectsSvc[projects.service]
+  end
+  subgraph publicUI [Public UI]
+    Overlay["?item=&story=1 overlay"]
+    Renderer[project-story/editor]
+  end
+  DB[(Prisma / Supabase)]
+  Editor --> Action --> DetailAPI --> DetailSvc --> DB
+  Overlay --> StoryAPI --> DetailSvc
+  Overlay --> Renderer
+  ProjectsSvc --> DB
+```
+
+### Data layer: Nest API → Prisma direct
+
+Previously a separate **Nest.js backend** exposed REST over Supabase PostgreSQL. For a portfolio-sized app, **always-on server cost and ops** were hard to justify; Next.js (Vercel) already provides Server Actions, BFF routes, and Prisma, so the app now uses **Prisma direct** to Supabase.
+
+| Area | Before (Nest) | Now |
+| ---- | ------------- | --- |
+| Project & story CRUD | Nest REST → DB | Next `modules/*` → **Prisma** → Supabase PostgreSQL |
+| Admin auth | Supabase Auth | Same |
+| Images | Supabase Storage | Same |
+| RAG vectors | pgvector | Same |
+| Separate API server | Required | **Not required** (`nest-client` removed) |
+
+The schema keeps Nest-compatible **JSONB i18n** (`projects`, `project_detail_pages`).
+
+### Live story visibility (Supabase Realtime)
+
+When an admin toggles story **public / private**, open public tabs update the “view story” button **without a full page reload**.
+
+- **`story_visibility` table** — only `project_id` + `is_public` (no story JSONB over Realtime)
+- **Postgres Changes** — `useStoryVisibilityRealtime` subscribes on the client
+- **Broadcast** — server pushes on save (`broadcastStoryVisibilityChange`)
+- **Client state** — `useLiveProjects` merges live `storyIsPublic` into the SSR project list
+
+**Env:** `DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` must all come from the **same Supabase project** (mismatched keys can silently break Realtime). Check: `pnpm exec tsx scripts/check-supabase-env-alignment.ts`
+
+**Migrations:** run `pnpm db:migrate` once per environment (includes `20250613120000_story_visibility_realtime`).
+
+### Design choices
+
+- **`modules/projects/`** — repository → service → mapper; Prisma direct
+- **`modules/project-detail-page/`** — Editor.js story domain; render in `components/projects/project-story/editor/`
+- **`features/chatbot/`** — UI in feature; data from `modules/projects`
+- **`features/admin/projects/editor/`** — per-locale (ko/ja/en) i18n blocks
+- **Public UI** — `?item=&story=1` overlay; TanStack Query in `lib/projects/project-story-query.ts`
+- **Security** — env secrets, middleware sessions, `/api/chat` rate limit, HTML sanitization
+
+### Story loading performance
+
+**View story** uses TanStack Query prefetch and caching for a snappier overlay.
+
+Previously, the API fetch started only on click (cold fetch). A three-step client layer matches user intent (select project → hover link → open overlay):
+
+1. **Prefetch** on selection and hover/focus (`staleTime: 0`, deduplication)
+2. **Instant render** from cache when overlay mounts (≈ 0s perceived wait)
+3. **Background refetch** (`refetchOnMount: 'always'`) for fresh admin edits
+
+```mermaid
+sequenceDiagram
+  participant User as User (Client)
+  participant Cache as TanStack Query (cache)
+  participant API as PostgreSQL (Prisma)
+  Note over User, Cache: Steps 1–2 before click
+  User->>Cache: Hover story link or select project
+  Cache->>API: Background prefetch
+  API-->>Cache: Story JSON (memory cache)
+  Note over User, Cache: Step 3 on click
+  User->>Cache: Open story overlay
+  Cache-->>User: Render cached content immediately
+  Note over Cache, API: staleTime 0 / refetchOnMount always
+  Cache->>API: Background refetch
+  API-->>Cache: Latest story JSON
+  Cache-->>User: Smooth update (isRefreshing)
+```
+
+### Reference
+
+Technical reference for hooks and environment variables.
+
+#### Shared hooks (`src/hooks/`)
+
+| Hook                         | Role                                      |
+| ---------------------------- | ----------------------------------------- |
+| `useBreakpoints`             | Detail panel — mobile / tablet / desktop  |
+| `useLayoutBreakpoints`       | Home shell — mobile / 2-col / desktop     |
+| `useProjectSelection`        | URL `?item=`, drawer, analytics           |
+| `useProjectStory`            | URL `?story=1` overlay                    |
+| `usePrefetchProjectStory`    | Prefetch story on hover, focus, selection |
+| `useLiveProjects`            | SSR list + live `storyIsPublic` from Realtime |
+| `useStoryVisibilityRealtime` | Supabase Realtime subscription               |
+| `useProjectListInteractions` | Keyboard nav, Lenis scroll, hover preview |
+
+#### Environment variables
+
+Copy `.env.example` → `.env.local`. Never commit secrets.
+
+**Required:** `DATABASE_URL`, `DIRECT_URL`, Supabase URL/keys, `OPENAI_API_KEY`, `NEXT_PUBLIC_ADMIN_SECRET_PATH`
+
+`DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, publishable key, and `SUPABASE_SERVICE_ROLE_KEY` must point at the **same Supabase project** for Realtime, Auth, and Storage to match Prisma.
+
+#### Testing & CI
+
+```bash
+pnpm test          # Vitest
+pnpm test:e2e      # Playwright
+```
+
+CI runs **lint**, **unit-test**, and **build** on push/PR.
+
+### Getting started
+
+```bash
+git clone https://github.com/Louis-jk/portfolio.git
+cd portfolio
+pnpm install
+cp .env.example .env.local
+pnpm exec prisma migrate deploy
+pnpm db:seed
+pnpm dev
+```
+
+| Command          | Description           |
+| ---------------- | --------------------- |
+| `pnpm dev`       | Development server    |
+| `pnpm build`     | Production build      |
+| `pnpm test`      | Vitest unit tests     |
+| `pnpm test:e2e`  | Playwright            |
+| `pnpm storybook` | Storybook (port 6006) |
+
+**Branches**: `develop` (integration) → `main` (production)
+
+</details>
 
 ## License
 

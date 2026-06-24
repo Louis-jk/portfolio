@@ -1,6 +1,5 @@
 import { motion, MotionValue, useAnimationFrame } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
 
 // 복잡한 굴곡을 위한 path 생성 함수
 function generateSplashPath(t: number): string {
@@ -57,7 +56,6 @@ export default function LiquidButton({
   onClick,
   children,
 }: LiquidButtonProps) {
-  const { resolvedTheme } = useTheme();
   const t = useRef(0);
   const [path, setPath] = useState('');
   const [isVisible, setIsVisible] = useState(false);
@@ -99,11 +97,7 @@ export default function LiquidButton({
         clipPath: `path("${path}")`,
       }}
       onClick={onClick}
-      className={`w-24 h-24 rounded-full shadow-lg flex items-center justify-center text-xl font-bold select-none ${
-        resolvedTheme === 'dark'
-          ? 'bg-purple-500 text-white'
-          : ' bg-purple-700 text-white'
-      }`}
+      className='flex h-24 w-24 select-none items-center justify-center rounded-full bg-point text-xl font-bold text-point-foreground shadow-lg'
     >
       <p className='italic'>{children ?? 'Click!'}</p>
     </motion.button>

@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "金俊皓 | シニアフロントエンドエンジニア",
+    "title": "金俊皓 | フロントエンドエンジニア",
     "description": "2011年からWebデザイン・パブリッシングの実務に携わり、2020年からはReactベースのプロジェクトに多数参画してきたフロントエンドエンジニア金俊皓（キム・ジュノ）です。技術的オーナーシップに基づき、ユーザー中心のUI/UXと安定したフロントエンドアーキテクチャを実装します。",
-    "keywords": "Joonho Kim, 金俊皓, キムジュノ, シニアフロントエンド, Senior Frontend Engineer, React Expert, Next.js, React Native, Electron, Web3, Dapp, リモートワーク, 技術的オーナーシップ",
+    "keywords": "Joonho Kim, 金俊皓, キムジュノ, フロントエンドエンジニア, Frontend Engineer, React Expert, Next.js, React Native, Electron, Web3, Dapp, リモートワーク, 技術的オーナーシップ",
     "ogDescription": "2011年からWebデザイン・パブリッシング、2020年からReactベース開発に取り組んできた金俊皓のポートフォリオ。デザイン感覚と技術的オーナーシップを融合した、ユーザー中心のフロントエンドエンジニアリング。"
   },
   "homePage": {
@@ -29,9 +29,285 @@
       }
     }
   },
-  "timeline": {
+  "modal": {
+    "languageSelector": {
+      "title": "言語選択",
+      "description": "あなたの好みの言語を選択してください。",
+      "switchingLanguage": "言語を切り替えています…",
+      "languages": {
+        "ko": "한국어",
+        "ja": "日本語",
+        "en": "English"
+      }
+    },
+    "shareModal": {
+      "title": "共有",
+      "description": "このプロジェクトを友達に共有してください。",
+      "copyToClipboard": "クリップボードにコピー",
+      "copied": "コピーしました！",
+      "copyFailed": "コピーに失敗しました！"
+    },
+    "shareButton": {
+      "buttonTitle": {
+        "kakaoTalk": "ウェブに移動"
+      }
+    },
+    "chatbot": {
+      "title": "ポートフォリオ チャットボット",
+      "description": "はじめまして！ ポートフォリオ チャットボットです。 ご質問を選択いただくか、直接入力してください。",
+      "placeholder": "質問を入力してください。",
+      "button": "チャットボットを開く",
+      "close": "チャットボットを閉じる",
+      "open": "チャットボットを開く",
+      "sorry": "申し訳ありません。理解できませんでした。上記の選択肢から選択してください。",
+      "resetToStart": "↺ 最初に戻る",
+      "whatIsMySkill": {
+        "question": "技術スタックは？",
+        "answer": "React、Next.js、TypeScriptを中心に、迅速で保守性の高いフロントエンド開発を得意としています。Tailwind CSSで統一感のあるUIを構築し、状態管理はZustand、Redux、Context APIを使い分けています。React Nativeを使ってモバイルアプリの開発も行い、最近ではWeb3やチャットボット、インタラクティブなアニメーションにも注力しています。",
+        "followUpChoices": [
+          {
+            "question": "プロジェクト経験は？",
+            "answer": "Webサイト、レスポンシブWebアプリ、モバイルアプリ、管理画面など、実際に運用されているプロジェクトを多数経験しています。フリーランスとして海外クライアントと協業した経験もあり、企画から開発、デプロイまで一貫して対応したこともあります。特に、B2Bサービス、印刷見積もりプラットフォーム、配達管理アプリ、多言語対応Webサイトの開発に強みがあります。"
+          },
+          {
+            "question": "仕事スタイルは？",
+            "answer": "企画段階から積極的に関わり、明確なコミュニケーションを大切にしています。納期を守る責任感を持ち、フィードバックにも素早く対応し、柔軟に変化へ適応します。単独での開発はもちろん、デザイナーやバックエンド開発者との連携経験も豊富です。"
+          },
+          {
+            "question": "強みは？",
+            "answer": "問題を迅速に把握し解決する能力が強みです。コンポーネント設計、パフォーマンス最適화、ユーザー目線のUI実装が得意で、クロスブラウザ対応やモバイル対応にも注力しています。クライアントのニーズを正確に反映することを大切にしています。"
+          }
+        ]
+      },
+      "projectExperience": {
+        "question": "プロジェクト経験は？",
+        "answer": "Webサイト、レスポンシブWebアプリ、モバイルアプリ、管理画面など、実際に運用されているプロジェクトを多数経験しています。フリーランスとして海外クライアントと協業した経験もあり、企画から開発、デプロイまで一貫して対応したこともあります。特に、B2Bサービス、印刷見積もりプラットフォーム、配達管理アプリ、多言語対応Webサイトの開発に強みがあります。",
+        "followUpChoices": [
+          {
+            "question": "プロジェクト経験は？",
+            "answer": "Webサイト、レスポンシブWebアプリ、モバイルアプリ、管理画面など、実際に運用されているプロジェクトを多数経験しています。フリーランスとして海外クライアントと協業した経験もあり、企画から開発、デプロイまで一貫して対応したこともあります。特に、B2Bサービス、印刷見積もりプラットフォーム、配達管理アプリ、多言語対応Webサイトの開発に強みがあります。"
+          },
+          {
+            "question": "仕事スタイルは？",
+            "answer": "企画段階から積極的に関わり、明確なコミュニケーションを大切にしています。納期を守る責任感を持ち、フィードバックにも素早く対応し、柔軟に変化へ適応します。単独での開発はもちろん、デザイナーやバックエンド開発者との連携経験も豊富です。"
+          },
+          {
+            "question": "強みは？",
+            "answer": "問題を迅速に把握し解決する能力が強みです。コンポーネント設計、パフォーマンス最適化、ユーザー目線のUI実装が得意で、クロスブラウザ対応やモバイル対応にも注力しています。クライアントのニーズを正確に反映することを大切にしています。"
+          }
+        ]
+      },
+      "languages": {
+        "question": "言語は？",
+        "answer": "韓国語は母国語で、日本語はビジネスレベルで自然なコミュニケーションが可能です。英語は現在基礎から勉強中で、簡単なコミュニケーションはできますが、実務で使えるように日々学習を続けています。",
+        "followUpChoices": [
+          {
+            "question": "フレームワークの経験は？",
+            "answer": "React、Next.js、React Native、Electronなどのフロントエンドフレームワークと、Laravel、Express、NestJS、Fiberなどのバックエンドフレームワークの経験があります。"
+          },
+          {
+            "question": "データベースの経験は？",
+            "answer": "リレーショナルデータベース（MySQL、MariaDB）とNoSQL（MongoDB）の経験があり、データモデリングと最適化に興味があります。"
+          },
+          {
+            "question": "クラウドの経験は？",
+            "answer": "AWS（EC2、S3、Route53、CloudFront）クラウドプラットフォームでのサービスデプロイ経験があります。"
+          }
+        ]
+      },
+      "workStyle": {
+        "question": "仕事スタイルは？",
+        "answer": "企画段階から積極的に関わり、明確なコミュニケーションを大切にしています。納期を守る責任感を持ち、フィードバックにも素早く対応し、柔軟に変化へ適応します。単独での開発はもちろん、デザイナーやバックエンド開発者との連携経験も豊富です。",
+        "followUpChoices": [
+          {
+            "question": "コミュニケーションスタイルは？",
+            "answer": "明確で簡潔な説明を好み、技術的な内容を非開発者にも理解しやすく説明することを得意としています。"
+          },
+          {
+            "question": "学習方法は？",
+            "answer": "オンライン講座、技術文書、オープンソースプロジェクトへの参加、技術ブログの執筆などを通じて継続的に学習しています。"
+          },
+          {
+            "question": "仕事環境の好みは？",
+            "answer": "可能であればリモートワークを好みます。オフィス勤務も可能ですが、柔軟な勤務時間を重視しています。"
+          }
+        ]
+      },
+      "strengths": {
+        "question": "強みは？",
+        "answer": "問題を迅速に把握し解決する能力が強みです。コンポーネント設計、パフォーマンス最適化、ユーザー目線のUI実装が得意で、クロスブラウザ対応やモバイル対応にも注力しています。クライアントのニーズを正確に反映することを大切にしています。",
+        "followUpChoices": [
+          {
+            "question": "技術スタックは？",
+            "answer": "フロントエンド: TypeScript、React、Next.js、React Native、Electron / バックエンド: Node.js、Go（個人プロジェクト経験） / データベース: MongoDB、MySQL、MariaDB / クラウド: AWS（EC2、S3、Route53、CloudFront）"
+          },
+          {
+            "question": "チームワークはどうやって？",
+            "answer": "リモートワーク環境でも積極的なコミュニケーションを通じてチームメンバーと協力し、コードレビューと知識共有を重視しています。"
+          },
+          {
+            "question": "問題解決能力は？",
+            "answer": "システム的なアプローチで問題を分析し、様々な解決策を提示し、最適なソリューションを見つけ出すことを好みます。"
+          }
+        ]
+      },
+      "interestedIn": {
+        "question": "興味のある分野は？",
+        "answer": "ユーザー体験を重視したフロントエンド開発に強い関心があり、Web3、チャットボットUI、インタラクティブなアニメーション、多言語グローバル対応サービスの構築にも情熱を持っています。",
+        "followUpChoices": [
+          {
+            "question": "改善している部分は？",
+            "answer": "フロントエンド開発分野でより迅速で効率的な開発を目指して努力しています。"
+          },
+          {
+            "question": "目標は何？",
+            "answer": "常に新しい技術と挑戦を通じてユーザー体験を向上させ、チームと共に成長するフロントエンド開発者になることが目標です。"
+          },
+          {
+            "question": "現在勉強中の技術は？",
+            "answer": "フロントエンド開発分野とバックエンド開発分野を勉強しています。"
+          },
+          {
+            "question": "将来の計画は？",
+            "answer": "フロントエンド開発者からフルスタック開発者になることを目標とし、新しい技術を導入してユーザーに価値のあるサービスを提供することが計画です。"
+          },
+          {
+            "question": "新しい挑戦についてどう思う？",
+            "answer": "新しい技術とドメインへの挑戦を恐れず、学習曲線を楽しんでいます。"
+          }
+        ]
+      },
+      "contact": {
+        "question": "連絡方法は？",
+        "answer": "連絡したい場合は、下のボタンをクリックしてください。",
+        "contactButtons": [
+          {
+            "text": "📧 メールで連絡する",
+            "action": "email",
+            "url": "mailto:joonhokim.dev@gmail.com"
+          },
+          {
+            "text": "💼 LinkedInで連絡する",
+            "action": "linkedin",
+            "url": "https://www.linkedin.com/in/joonhokim0506"
+          }
+        ]
+      }
+    }
+  },
+  "details": {
+    "title": "プロジェクト詳細",
+    "overview": "概要",
+    "technologies": "技術スタック",
+    "toolsAndEnvironments": "ツール & 開発環境",
+    "development": "開発",
+    "debugging": "モニタリング / デバッグ",
+    "communication": "コミュニケーション",
+    "design": "デザイン",
+    "challenges": "課題",
+    "achievements": "実績"
+  },
+  "loading": {
+    "page": "読み込み中...",
+    "image": "画像読み込み中..."
+  },
+  "admin": {
+    "projects": {
+      "project": "プロジェクト",
+      "yourRole": "役割（ポジション）",
+      "fullStackDev": "フルスタック開発者",
+      "clientCompany": "クライアント/会社",
+      "clientName": "クライアント名",
+      "region": "地域（エリア）",
+      "cityCountry": "都市（都道府県）, 国",
+      "overviewPlaceholder": "プロジェクト概要を入力してください。",
+      "projectTitle": "プロジェクトタイトル",
+      "projectTitlePlaceholder": "プロジェクトタイトルを入力してください。",
+      "backToList": "← プロジェクト一覧へ",
+      "edit": "編集",
+      "preview": "プレビュー",
+      "previewLanguage": "プレビュー言語",
+      "listTitle": "プロジェクト一覧",
+      "projectCount": "合計{count}件のプロジェクトがデジタル資産として登録されています。",
+      "noProjects": "登録されたプロジェクトがありません。最初のプロジェクトを登録しましょう！",
+      "newProject": "+ 新規プロジェクト",
+      "untitledProject": "タイトルなし",
+      "overview": "概要",
+      "technologies": "技術スタック",
+      "toolsAndStack": "ツール & 開発環境",
+      "links": "外部リンク",
+      "description": "説明",
+      "challenges": "課題",
+      "achievements": "実績",
+      "development": "開発",
+      "communication": "コミュニケーション",
+      "design": "デザイン",
+      "debugging": "モニタリング / デバッグ",
+      "addAfterCommaOrEnter": "追加入力後、カンマまたはEnter",
+      "technologiesPlaceholder": "React, TypeScript, Node.js（カンマまたはEnterで追加）",
+      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma（カンマまたはEnterで追加）",
+      "toolsCommunicationPlaceholder": "Slack, Notion, Jira（カンマまたはEnterで追加）",
+      "toolsDesignPlaceholder": "Figma, Photoshop（カンマまたはEnterで追加）",
+      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry（カンマまたはEnterで追加）",
+      "visibilityLabel": "公開状況",
+      "publicProject": "公開プロジェクト",
+      "confidentialProject": "機密保持プロジェクト",
+      "publicProjectDesc": "公開プロジェクト：外部に公開しても問題ありません。",
+      "confidentialProjectDesc": "機密保持プロジェクト：機密保持が必要なプロジェクトです。",
+      "orderChanged": "プロジェクトの順序が変更されました。",
+      "orderChangeFailed": "順序の変更に失敗しました。",
+      "startDate": "開始日",
+      "endDate": "終了日",
+      "externalLinks": "外部リンク",
+      "uploading": "アップロード中...",
+      "saving": "保存中...",
+      "deploying": "デプロイ中...",
+      "updateProject": "プロジェクト更新",
+      "deployProject": "プロジェクトデプロイ",
+      "registerProject": "プロジェクト登録",
+      "imageUploadError": "画像ファイルのみアップロードできます。",
+      "imageUploadSizeError": "ファイルサイズは5MB以下にしてください。",
+      "deleteProjectConfirm": "このプロジェクトを削除してもよろしいですか？",
+      "deleteProjectFailed": "プロジェクトの削除に失敗しました。",
+      "deleteProjectDeleted": "プロジェクトが削除されました。",
+      "deleteProjectCancelled": "プロジェクトの削除がキャンセルされました。",
+      "deleteProjectCancel": "削除をキャンセル",
+      "platformCategories": "プラットフォーム カテゴリ",
+      "domainTags": "ドメイン/技術 タグ",
+      "detailEditorTitle": "詳細ストーリー",
+      "editStory": "ストーリー編集",
+      "detailEditorHint": "KO / JA / EN 各タブでストーリーレイアウトが個別に保存されます。編集する言語タブを選んでから入力してください。",
+      "detailEditorI18nHint": "KO / JA / EN 各タブは段落・行間・ブロック構成が完全に独立して保存されます。あるタブで Enter して行間を入れても他の言語には影響しません。必要なら「韓国語から自動翻訳」で下書きしてから編集してください。",
+      "detailAutoTranslate": "韓国語から自動翻訳",
+      "detailAutoTranslating": "翻訳中…",
+      "detailAutoTranslateDone": "翻訳を適用しました。確認後に保存してください。",
+      "detailAutoTranslateFailed": "自動翻訳に失敗しました。",
+      "detailEditorImagePasteHint": "ダッシュボードや Storybook のスクリーンショットは Cmd/Ctrl+V で貼り付けできます（自動アップロード）。",
+      "detailEditorMarkdownHint": "Markdown: `###`+Space → H3見出し（そのまま入力）、`-`+Space（リスト）、`>`+Space（引用）、`---`+Enter（区切り）。行頭の `### タイトル` の後に Space でも変換されます。",
+      "detailEditorVideoHint": "動画: + メニューから Video ブロックを追加 — ドラッグ＆ドロップまたはファイル選択（mp4, webm, mov、最大80MB）。",
+      "detailEditorUndoHint": "元に戻す/やり直し: Ctrl+Z / Ctrl+Y（Mac: ⌘+Z / ⌘+Shift+Z）。",
+      "detailSave": "ストーリー保存",
+      "detailStoryVisibilityLabel": "ストーリー公開",
+      "detailStoryPublicDesc": "PUBLIC — ポートフォリオに「ストーリーを見る」ボタンが表示されます。保存後、ホームで確認してください。",
+      "detailStoryPrivateDesc": "PRIVATE — ユーザーにはストーリーボタンが非表示です。「ストーリーをプレビュー」からのみ確認できます。",
+      "detailSaved": "詳細ストーリーを保存しました。",
+      "detailEmptyToggleSections": "折りたたみセクションが空です。「折りたたみ」と「折りたたみ終了」の間にブロックを追加してください。",
+      "detailSaveFailed": "詳細ストーリーの保存に失敗しました。",
+      "detailPreviewStory": "ストーリーをプレビュー ↗",
+      "detailEditorLoading": "エディターを読み込み中..."
+    }
+  },
+  "projectStory": {
+    "backToPortfolio": "← ポートフォリオへ",
+    "backToProject": "プロジェクトに戻る",
+    "viewStory": "ストーリーを見る",
+    "storyLabel": "Project Story",
+    "loading": "ストーリーを読み込み中…",
+    "empty": "詳細ストーリーはまだ登録されていません。",
+    "untitled": "タイトルなし"
+  },
+  "projects": {
     "title": "職務経歴",
-    "mobileHeaderTimelineTitle": "職務経歴",
     "details": {
       "title": "プロジェクト詳細"
     },
@@ -56,7 +332,9 @@
       },
       "resetFilter": "リセット"
     },
-    "projects": {
+    "noItemsFound": "プロジェクトが見つかりませんでした。",
+    "mobileHeaderTitle": "職務経歴",
+    "items": {
       "crewinc_mobile_frontend": {
         "title": "AI（LLM）モバイルアプリのフロントエンド開発（React Native / フルリモート）",
         "date": "2025.11 - 2026.02",
@@ -752,226 +1030,9 @@
         }
       }
     },
-    "noItemsFound": "プロジェクトが見つかりませんでした。"
-  },
-  "modal": {
-    "languageSelector": {
-      "title": "言語選択",
-      "description": "あなたの好みの言語を選択してください。",
-      "switchingLanguage": "言語を切り替えています…",
-      "languages": {
-        "ko": "한국어",
-        "ja": "日本語",
-        "en": "English"
-      }
-    },
-    "shareModal": {
-      "title": "共有",
-      "description": "このプロジェクトを友達に共有してください。",
-      "copyToClipboard": "クリップボードにコピー",
-      "copied": "コピーしました！",
-      "copyFailed": "コピーに失敗しました！"
-    },
-    "shareButton": {
-      "buttonTitle": {
-        "kakaoTalk": "ウェブに移動"
-      }
-    },
-    "chatbot": {
-      "title": "ポートフォリオ チャットボット",
-      "description": "はじめまして！ ポートフォリオ チャットボットです。 ご質問を選択いただくか、直接入力してください。",
-      "placeholder": "質問を入力してください。",
-      "button": "チャットボットを開く",
-      "close": "チャットボットを閉じる",
-      "open": "チャットボットを開く",
-      "sorry": "申し訳ありません。回答はまだ準備ができていません。",
-      "resetToStart": "↺ 最初に戻る",
-      "whatIsMySkill": {
-        "question": "技術スタックは？",
-        "answer": "React、Next.js、TypeScriptを中心に、迅速で保守性の高いフロントエンド開発を得意としています。Tailwind CSSで統一感のあるUIを構築し、状態管理はZustand、Redux、Context APIを使い分けています。React Nativeを使ってモバイルアプリの開発も行い、最近ではWeb3やチャットボット、インタラクティブなアニメーションにも注力しています。",
-        "followUpChoices": [
-          {
-            "question": "プロジェクト経験は？",
-            "answer": "Webサイト、レスポンシブWebアプリ、モバイルアプリ、管理画面など、実際に運用されているプロジェクトを多数経験しています。フリーランスとして海外クライアントと協業した経験もあり、企画から開発、デプロイまで一貫して対応したこともあります。特に、B2Bサービス、印刷見積もりプラットフォーム、配達管理アプリ、多言語対応Webサイトの開発に強みがあります。"
-          },
-          {
-            "question": "仕事スタイルは？",
-            "answer": "企画段階から積極的に関わり、明確なコミュニケーションを大切にしています。納期を守る責任感を持ち、フィードバックにも素早く対応し、柔軟に変化へ適応します。単独での開発はもちろん、デザイナーやバックエンド開発者との連携経験も豊富です。"
-          },
-          {
-            "question": "強みは？",
-            "answer": "問題を迅速に把握し解決する能力が強みです。コンポーネント設計、パフォーマンス最適화、ユーザー目線のUI実装が得意で、クロスブラウザ対応やモバイル対応にも注力しています。クライアントのニーズを正確に反映することを大切にしています。"
-          }
-        ]
-      },
-      "projectExperience": {
-        "question": "プロジェクト経験は？",
-        "answer": "Webサイト、レスポンシブWebアプリ、モバイルアプリ、管理画面など、実際に運用されているプロジェクトを多数経験しています。フリーランスとして海外クライアントと協業した経験もあり、企画から開発、デプロイまで一貫して対応したこともあります。特に、B2Bサービス、印刷見積もりプラットフォーム、配達管理アプリ、多言語対応Webサイトの開発に強みがあります。",
-        "followUpChoices": [
-          {
-            "question": "プロジェクト経験は？",
-            "answer": "Webサイト、レスポンシブWebアプリ、モバイルアプリ、管理画面など、実際に運用されているプロジェクトを多数経験しています。フリーランスとして海外クライアントと協業した経験もあり、企画から開発、デプロイまで一貫して対応したこともあります。特に、B2Bサービス、印刷見積もりプラットフォーム、配達管理アプリ、多言語対応Webサイトの開発に強みがあります。"
-          },
-          {
-            "question": "仕事スタイルは？",
-            "answer": "企画段階から積極的に関わり、明確なコミュニケーションを大切にしています。納期を守る責任感を持ち、フィードバックにも素早く対応し、柔軟に変化へ適応します。単独での開発はもちろん、デザイナーやバックエンド開発者との連携経験も豊富です。"
-          },
-          {
-            "question": "強みは？",
-            "answer": "問題を迅速に把握し解決する能力が強みです。コンポーネント設計、パフォーマンス最適化、ユーザー目線のUI実装が得意で、クロスブラウザ対応やモバイル対応にも注力しています。クライアントのニーズを正確に反映することを大切にしています。"
-          }
-        ]
-      },
-      "languages": {
-        "question": "言語は？",
-        "answer": "韓国語は母国語で、日本語はビジネスレベルで自然なコミュニケーションが可能です。英語は現在基礎から勉強中で、簡単なコミュニケーションはできますが、実務で使えるように日々学習を続けています。",
-        "followUpChoices": [
-          {
-            "question": "フレームワークの経験は？",
-            "answer": "React、Next.js、React Native、Electronなどのフロントエンドフレームワークと、Laravel、Express、NestJS、Fiberなどのバックエンドフレームワークの経験があります。"
-          },
-          {
-            "question": "データベースの経験は？",
-            "answer": "リレーショナルデータベース（MySQL、MariaDB）とNoSQL（MongoDB）の経験があり、データモデリングと最適化に興味があります。"
-          },
-          {
-            "question": "クラウドの経験は？",
-            "answer": "AWS（EC2、S3、Route53、CloudFront）クラウドプラットフォームでのサービスデプロイ経験があります。"
-          }
-        ]
-      },
-      "workStyle": {
-        "question": "仕事スタイルは？",
-        "answer": "企画段階から積極的に関わり、明確なコミュニケーションを大切にしています。納期を守る責任感を持ち、フィードバックにも素早く対応し、柔軟に変化へ適応します。単独での開発はもちろん、デザイナーやバックエンド開発者との連携経験も豊富です。",
-        "followUpChoices": [
-          {
-            "question": "コミュニケーションスタイルは？",
-            "answer": "明確で簡潔な説明を好み、技術的な内容を非開発者にも理解しやすく説明することを得意としています。"
-          },
-          {
-            "question": "学習方法は？",
-            "answer": "オンライン講座、技術文書、オープンソースプロジェクトへの参加、技術ブログの執筆などを通じて継続的に学習しています。"
-          },
-          {
-            "question": "仕事環境の好みは？",
-            "answer": "可能であればリモートワークを好みます。オフィス勤務も可能ですが、柔軟な勤務時間を重視しています。"
-          }
-        ]
-      },
-      "strengths": {
-        "question": "強みは？",
-        "answer": "問題を迅速に把握し解決する能力が強みです。コンポーネント設計、パフォーマンス最適化、ユーザー目線のUI実装が得意で、クロスブラウザ対応やモバイル対応にも注力しています。クライアントのニーズを正確に反映することを大切にしています。",
-        "followUpChoices": [
-          {
-            "question": "技術スタックは？",
-            "answer": "フロントエンド: TypeScript、React、Next.js、React Native、Electron / バックエンド: Node.js、Go（個人プロジェクト経験） / データベース: MongoDB、MySQL、MariaDB / クラウド: AWS（EC2、S3、Route53、CloudFront）"
-          },
-          {
-            "question": "チームワークはどうやって？",
-            "answer": "リモートワーク環境でも積極的なコミュニケーションを通じてチームメンバーと協力し、コードレビューと知識共有を重視しています。"
-          },
-          {
-            "question": "問題解決能力は？",
-            "answer": "システム的なアプローチで問題を分析し、様々な解決策を提示し、最適なソリューションを見つけ出すことを好みます。"
-          }
-        ]
-      },
-      "interestedIn": {
-        "question": "興味のある分野は？",
-        "answer": "ユーザー体験を重視したフロントエンド開発に強い関心があり、Web3、チャットボットUI、インタラクティブなアニメーション、多言語グローバル対応サービスの構築にも情熱を持っています。",
-        "followUpChoices": [
-          {
-            "question": "改善している部分は？",
-            "answer": "フロントエンド開発分野でより迅速で効率的な開発を目指して努力しています。"
-          },
-          {
-            "question": "目標は何？",
-            "answer": "常に新しい技術と挑戦を通じてユーザー体験を向上させ、チームと共に成長するフロントエンド開発者になることが目標です。"
-          },
-          {
-            "question": "現在勉強中の技術は？",
-            "answer": "フロントエンド開発分野とバックエンド開発分野を勉強しています。"
-          },
-          {
-            "question": "将来の計画は？",
-            "answer": "フロントエンド開発者からフルスタック開発者になることを目標とし、新しい技術を導入してユーザーに価値のあるサービスを提供することが計画です。"
-          },
-          {
-            "question": "新しい挑戦についてどう思う？",
-            "answer": "新しい技術とドメインへの挑戦を恐れず、学習曲線を楽しんでいます。"
-          }
-        ]
-      },
-      "contact": {
-        "question": "連絡方法は？",
-        "answer": "連絡したい場合は、下のボタンをクリックしてください。",
-        "contactButtons": [
-          {
-            "text": "📧 メールで連絡する",
-            "action": "email",
-            "url": "mailto:joonhokim.dev@gmail.com"
-          },
-          {
-            "text": "💼 LinkedInで連絡する",
-            "action": "linkedin",
-            "url": "https://www.linkedin.com/in/joonhokim0506"
-          }
-        ]
-      },
-      "sorry": "申し訳ありません。理解できませんでした。上記の選択肢から選択してください。"
-    }
-  },
-  "details": {
-    "title": "プロジェクト詳細",
-    "overview": "概要",
-    "technologies": "技術スタック",
-    "toolsAndEnvironments": "ツール & 開発環境",
-    "development": "開発",
-    "debugging": "モニタリング / デバッグ",
-    "communication": "コミュニケーション",
-    "design": "デザイン",
-    "challenges": "課題",
-    "achievements": "実績"
-  },
-  "loading": {
-    "page": "読み込み中...",
-    "image": "画像読み込み中..."
-  },
-  "admin": {
-    "projects": {
-      "backToList": "← プロジェクト一覧へ",
-      "edit": "編集",
-      "preview": "プレビュー",
-      "previewLanguage": "プレビュー言語",
-      "listTitle": "PROJECTS LIST",
-      "projectCount": "合計{count}件のプロジェクトがデジタル資産として登録されています。",
-      "noProjects": "登録されたプロジェクトがありません。最初のプロジェクトを登録しましょう！",
-      "newProject": "+ NEW PROJECT",
-      "untitledProject": "タイトルなし",
-      "overview": "Overview",
-      "technologies": "Technologies",
-      "toolsAndStack": "Tools & Stack",
-      "links": "Links",
-      "description": "Description",
-      "challenges": "Challenges",
-      "achievements": "Achievements",
-      "development": "Development",
-      "communication": "Communication",
-      "design": "Design",
-      "debugging": "Debugging",
-      "addAfterCommaOrEnter": "追加入力後、カンマまたはEnter",
-      "technologiesPlaceholder": "React, TypeScript, Node.js（カンマまたはEnterで追加）",
-      "toolsDevelopmentPlaceholder": "React, Next.js, Prisma（カンマまたはEnterで追加）",
-      "toolsCommunicationPlaceholder": "Slack, Notion, Jira（カンマまたはEnterで追加）",
-      "toolsDesignPlaceholder": "Figma, Photoshop（カンマまたはEnterで追加）",
-      "toolsDebuggingPlaceholder": "Chrome DevTools, Sentry（カンマまたはEnterで追加）",
-      "visibilityLabel": "公開状況",
-      "publicProject": "公開プロジェクト",
-      "confidentialProject": "機密保持プロジェクト",
-      "publicProjectDesc": "公開プロジェクト：外部に公開しても問題ありません。",
-      "confidentialProjectDesc": "機密保持プロジェクト：機密保持が必要なプロジェクトです。",
-      "orderChanged": "プロジェクトの順序が変更されました。",
-      "orderChangeFailed": "順序の変更に失敗しました。"
+    "emptyState": {
+      "title": "プロジェクトを選択して詳細を表示",
+      "hint": "一覧のプロジェクトをクリックしてください"
     }
   }
 }

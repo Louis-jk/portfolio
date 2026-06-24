@@ -3,7 +3,7 @@ import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 import { createClient } from '@/utils/supabase/middleware';
 import { isAdminSignupEnabled } from '@/lib/admin-signup';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 
 const EXPECTED_ADMIN_PATH = (
   process.env.NEXT_PUBLIC_ADMIN_SECRET_PATH ?? ''

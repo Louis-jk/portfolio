@@ -1,13 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { listAllProjects, readI18n } from '@/modules/projects';
-import { ADMIN_ROUTES } from '@/lib/constants';
+import { readI18n } from '@/modules/projects';
+import { listAllProjects } from '@/modules/projects/server';
+import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Eye, Pencil } from 'lucide-react';
+import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
 
 export default async function AdminDashboardPage({
   params,
@@ -75,7 +77,7 @@ export default async function AdminDashboardPage({
         ) : (
           <div className='space-y-4'>
             {recentProjects.map((project) => {
-              const title = readI18n(project.title, locale) || t('untitledLabel');
+              const title = readI18n(project.title, locale) || t('untitledProject');
               return (
                 <Card
                   key={project.id}
@@ -181,6 +183,11 @@ export default async function AdminDashboardPage({
                     >
                       <Pencil size={18} />
                     </Link>
+                    <ProjectStoryAdminLinks
+                      projectId={project.id}
+                      locale={locale}
+                      variant='icon'
+                    />
                   </div>
                 </Card>
               );

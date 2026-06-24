@@ -1,0 +1,46 @@
+import { Loader2, Send } from 'lucide-react';
+
+export function ProjectFormHeader({
+  projectId,
+  isSubmitting,
+  isProcessing,
+  submitPhase,
+  t,
+}: {
+  projectId?: number;
+  isSubmitting: boolean;
+  isProcessing: boolean;
+  submitPhase: 'idle' | 'uploading' | 'saving';
+  t: (key: string) => string;
+}) {
+  return (
+    <header className='flex justify-between items-end border-b border-zinc-100 dark:border-slate-800 pb-8'>
+      <div>
+        <h1 className='text-5xl font-black tracking-tighter text-zinc-900 dark:text-slate-100 uppercase'>
+          {t('project')}{' '}
+          <span className='text-purple-600'>
+            {projectId ? t('edit') : t('registerProject')}
+          </span>
+        </h1>
+      </div>
+      <button
+        type='submit'
+        disabled={isSubmitting || isProcessing}
+        className='bg-purple-600 text-white px-12 py-5 rounded-full font-black text-lg hover:bg-purple-600 disabled:bg-zinc-300 dark:disabled:bg-slate-600 transition-all shadow-2xl flex items-center gap-3 active:scale-95 cursor-pointer'
+      >
+        {isProcessing || isSubmitting ? (
+          <Loader2 className='animate-spin' />
+        ) : (
+          <Send size={20} />
+        )}
+        {submitPhase === 'uploading'
+          ? t('uploading')
+          : submitPhase === 'saving' || isSubmitting
+            ? t('saving')
+            : projectId
+              ? t('updateProject')
+              : t('deployProject')}
+      </button>
+    </header>
+  );
+}
