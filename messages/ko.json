@@ -304,12 +304,14 @@
     "storyLabel": "Project Story",
     "loading": "스토리를 불러오는 중…",
     "empty": "아직 등록된 상세 스토리가 없습니다.",
-    "untitled": "제목 없음"
+    "untitled": "제목 없음",
+    "scrollToTop": "맨 위로"
   },
   "projects": {
     "title": "업무 경력 사항",
     "details": {
-      "title": "프로젝트 상세"
+      "title": "프로젝트 상세",
+      "scrollToTop": "맨 위로"
     },
     "categories": {
       "platform": {

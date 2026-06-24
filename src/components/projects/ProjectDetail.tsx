@@ -27,12 +27,15 @@ interface ProjectDetailProps {
   item: ProjectView | null;
   isVisible: boolean;
   showStoryLink?: boolean;
+  /** When true, parent (drawer) owns scrolling — no inner overflow or extra bottom pad. */
+  embeddedInDrawer?: boolean;
 }
 
 export default function ProjectDetail({
   item,
   isVisible,
   showStoryLink = true,
+  embeddedInDrawer = false,
 }: ProjectDetailProps) {
   const [openShareModal, setOpenShareModal] = useState(false);
   const tD = useTranslations('details');
@@ -54,17 +57,18 @@ export default function ProjectDetail({
 
   return (
     <article
-      className='flex flex-col h-full'
+      className={cn('flex flex-col', !embeddedInDrawer && 'h-full')}
       aria-labelledby='detail-project-title'
     >
-      {isDesktopOrLaptop && <ProjectDetailPanelTitle />}
+      {isDesktopOrLaptop && !embeddedInDrawer && <ProjectDetailPanelTitle />}
 
       <div
         ref={scrollRef}
         className={cn(
-          'h-[calc(100vh-135px)] overflow-y-auto overflow-x-hidden',
-          isDesktopOrLaptop && 'h-[calc(100vh-275px)] pt-5',
-          isMobile && 'pb-36',
+          !embeddedInDrawer &&
+            'h-[calc(100vh-135px)] overflow-y-auto overflow-x-hidden',
+          !embeddedInDrawer && isDesktopOrLaptop && 'h-[calc(100vh-275px)] pt-5',
+          !embeddedInDrawer && isMobile && 'pb-36',
         )}
       >
         <motion.div

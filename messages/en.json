@@ -324,12 +324,14 @@
     "storyLabel": "Project Story",
     "loading": "Loading story…",
     "empty": "No detail story has been published yet.",
-    "untitled": "Untitled"
+    "untitled": "Untitled",
+    "scrollToTop": "Scroll to top"
   },
   "projects": {
     "title": "Projects",
     "details": {
-      "title": "Project Details"
+      "title": "Project Details",
+      "scrollToTop": "Scroll to top"
     },
     "categories": {
       "platform": {

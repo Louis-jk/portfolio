@@ -304,12 +304,14 @@
     "storyLabel": "Project Story",
     "loading": "ストーリーを読み込み中…",
     "empty": "詳細ストーリーはまだ登録されていません。",
-    "untitled": "タイトルなし"
+    "untitled": "タイトルなし",
+    "scrollToTop": "ページ上部へ"
   },
   "projects": {
     "title": "職務経歴",
     "details": {
-      "title": "プロジェクト詳細"
+      "title": "プロジェクト詳細",
+      "scrollToTop": "ページ上部へ"
     },
     "categories": {
       "platform": {
