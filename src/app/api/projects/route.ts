@@ -1,6 +1,6 @@
 // app/api/projects/route.ts
 import { NextResponse } from 'next/server';
-import { listProjects } from '@/modules/projects/projects.service';
+import { listProjects } from '@/modules/projects/server';
 import { toApiErrorResponse } from '@/lib/http/api-error';
 
 export const runtime = 'nodejs';

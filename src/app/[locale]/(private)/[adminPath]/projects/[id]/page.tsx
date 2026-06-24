@@ -1,4 +1,4 @@
-import { getProjectById } from '@/modules/projects';
+import { getProjectById } from '@/modules/projects/server';
 import { notFound } from 'next/navigation';
 import {
   ProjectPreviewClient,

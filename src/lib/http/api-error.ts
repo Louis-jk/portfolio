@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server';
-import { NestApiError } from '@/lib/http/nest-client';
+import { RecordNotFoundError } from '@/lib/prisma/errors';
 
 export function toApiErrorResponse(error: unknown): NextResponse {
-  if (error instanceof NestApiError) {
-    return NextResponse.json(
-      { error: error.message },
-      { status: error.status >= 400 ? error.status : 502 },
-    );
+  if (error instanceof RecordNotFoundError) {
+    return NextResponse.json({ error: error.message }, { status: 404 });
   }
 
   console.error('[api-error]', error);

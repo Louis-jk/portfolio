@@ -16,9 +16,4 @@ export {
   SHARED_BLOCK_TYPES,
 } from './types';
 
-export {
-  deleteProjectDetailPage,
-  getProjectDetailPage,
-  patchProjectDetailPage,
-  upsertProjectDetailPage,
-} from './detail-page.service';
+// Server-only data access: import from `@/modules/project-detail-page/server`

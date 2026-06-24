@@ -21,32 +21,13 @@ export type {
 } from './projects.types';
 export { PROJECT_LOCALES } from './projects.types';
 
-// Read path (public site + admin list/detail)
-export {
-  getProjectById,
-  listAllProjects,
-  listProjects,
-} from './projects.service';
-
-// Write path (admin mutations)
-export {
-  createProject,
-  deleteProject,
-  reorderProjects,
-  updateProject,
-} from './projects.service';
-
-// RAG indexing helpers
-export {
-  buildProjectIndexingInput,
-  buildProjectIndexingInputFromAdmin,
-} from './projects.service';
-
-// i18n + presentation helpers
+// i18n + presentation helpers (client-safe)
 export { readI18n, readI18nArray } from './projects.mapper';
 export { formatProjectDateRange } from './format-date';
 
-// Admin form pipeline
+// Admin form pipeline (client-safe validators / mappers)
 export { mapAllFormTranslations, mapTranslation } from './form-mapper';
 export { validateProjectServerPayload } from './validate-server-payload';
 export type { ParsedProjectServerPayload } from './validate-server-payload';
+
+// Server-only data access: import from `@/modules/projects/server`

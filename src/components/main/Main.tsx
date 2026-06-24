@@ -40,7 +40,9 @@ function MainContent({
   const { selectedItem, isDrawerOpen, handleItemClick, handleDrawerClose } =
     useProjectSelection(projects, filteredProjects);
 
-  usePrefetchProjectStory(selectedItem?.id ?? null);
+  usePrefetchProjectStory(
+    selectedItem?.storyIsPublic ? selectedItem.id : null,
+  );
 
   const headerPadding =
     !isDesktopLayout && isFilterOpen ? 'pt-[140px]' : 'pt-[55px]';

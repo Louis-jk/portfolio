@@ -1,4 +1,4 @@
-import { getProjectById } from '@/modules/projects';
+import { getProjectById } from '@/modules/projects/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';

@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { getProjectById, readI18n } from '@/modules/projects';
+import { readI18n } from '@/modules/projects';
+import { getProjectById } from '@/modules/projects/server';
 import {
   EMPTY_EDITOR_OUTPUT,
-  getProjectDetailPage,
 } from '@/modules/project-detail-page';
+import { getProjectDetailPage } from '@/modules/project-detail-page/server';
 import { parseProjectId } from '@/lib/http/parse-project-id';
 import { ProjectDetailEditorClient } from '@/features/admin/projects/components/project-detail/ProjectDetailEditorClient';
 
