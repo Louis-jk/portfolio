@@ -1,16 +1,18 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'react-responsive';
 import { X } from 'lucide-react';
 import { EditorJsRenderer } from '@/components/projects/project-story/editor';
 import ThemeToggle from '@/components/theme/ThemeToggle';
-import { Button } from '@/components/ui/button';
+import { OverlayBottomFabStack } from '@/components/projects/OverlayBottomFabStack';
 import { cn } from '@/lib/utils';
-import { STORY_CONTENT_SHELL_CLASS } from '@/constants/story-layout';
+import {
+  STORY_CONTENT_SHELL_CLASS,
+  OVERLAY_FAB_SAFE_PADDING_CLASS,
+} from '@/constants/story-layout';
 import { BREAKPOINTS } from '@/constants/breakpoints';
 import { useScrollRevealFab } from '@/hooks/useScrollRevealFab';
 import { useStoryFabStore } from '@/stores/story-fab-store';
@@ -65,8 +67,14 @@ export function ProjectStoryShell({
   });
   const isMobileFabBehavior = !isPcViewport;
   const fabVisible = useScrollRevealFab(scrollRoot, isMobileFabBehavior);
+  const setOverlayFabSyncEnabled = useStoryFabStore(
+    (state) => state.setOverlayFabSyncEnabled,
+  );
   const setStoryFabVisible = useStoryFabStore((state) => state.setFabVisible);
-  const resetStoryFabVisible = useStoryFabStore((state) => state.resetFabVisible);
+  const resetFabVisible = useStoryFabStore((state) => state.resetFabVisible);
+  const resetOverlayFabSync = useStoryFabStore(
+    (state) => state.resetOverlayFabSync,
+  );
 
   const setScrollContainerRef = useCallback((node: HTMLElement | null) => {
     setScrollRoot(node);
@@ -78,17 +86,25 @@ export function ProjectStoryShell({
 
   useEffect(() => {
     if (!isMobileFabBehavior) {
-      resetStoryFabVisible();
+      setOverlayFabSyncEnabled(false);
+      resetFabVisible();
       return;
     }
+    setOverlayFabSyncEnabled(true);
     setStoryFabVisible(fabVisible);
-  }, [fabVisible, isMobileFabBehavior, resetStoryFabVisible, setStoryFabVisible]);
+  }, [
+    fabVisible,
+    isMobileFabBehavior,
+    resetFabVisible,
+    setOverlayFabSyncEnabled,
+    setStoryFabVisible,
+  ]);
 
   useEffect(
     () => () => {
-      resetStoryFabVisible();
+      resetOverlayFabSync();
     },
-    [resetStoryFabVisible],
+    [resetOverlayFabSync],
   );
 
   useEffect(() => {
@@ -138,32 +154,23 @@ export function ProjectStoryShell({
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [handleClose, isPcViewport]);
 
-  const showFloatingClose = isPcViewport || fabVisible;
+  const showFloatingActions = isPcViewport || fabVisible;
 
-  const floatingCloseButton =
-    isMounted &&
-    !isClosing &&
-    createPortal(
-      <Button
-        type='button'
-        variant='point'
-        onClick={handleClose}
-        disabled={isClosing}
-        aria-busy={isClosing}
-        aria-label={t('backToProject')}
-        aria-hidden={!showFloatingClose}
-        tabIndex={showFloatingClose ? 0 : -1}
-        className={cn(
-          'fixed right-6 bottom-24 z-10001 size-15 cursor-pointer rounded-full shadow-lg transition-all duration-300 ease-in-out disabled:cursor-wait',
-          showFloatingClose
-            ? 'translate-y-0 opacity-100 pointer-events-auto'
-            : 'translate-y-4 opacity-0 pointer-events-none',
-        )}
-      >
-        <X size={28} strokeWidth={3} aria-hidden />
-      </Button>,
-      document.body,
-    );
+  const floatingActionStack =
+    isMounted && !isClosing ? (
+      <OverlayBottomFabStack
+        mounted={isMounted}
+        visible={showFloatingActions}
+        scrollRoot={scrollRoot}
+        scrollToTopLabel={t('scrollToTop')}
+        showScrollToTop
+        showClose
+        closeLabel={t('backToProject')}
+        onClose={handleClose}
+        closeDisabled={isClosing}
+        closeBusy={isClosing}
+      />
+    ) : null;
 
   return (
     <motion.div
@@ -213,7 +220,7 @@ export function ProjectStoryShell({
           className={cn(
             STORY_CONTENT_SHELL_CLASS,
             'py-10',
-            isMobileFabBehavior && 'pb-32',
+            isMobileFabBehavior && OVERLAY_FAB_SAFE_PADDING_CLASS,
           )}
         >
         <header className='mb-10 space-y-2'>
@@ -237,7 +244,7 @@ export function ProjectStoryShell({
         )}
         </div>
       </motion.main>
-      {floatingCloseButton}
+      {floatingActionStack}
     </motion.div>
   );
 }

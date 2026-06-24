@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
-import { useLocale } from 'next-intl';
 import { FaUserAlt } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 import type { ProjectView } from '@/modules/projects';
@@ -44,7 +43,6 @@ export default function ProjectListItem({
   onMouseLeave,
   registerRef,
 }: ProjectListItemProps) {
-  const locale = useLocale();
   const isSelected = isSameProjectId(item.id, selectedItem?.id);
   const isMobile = variant === 'mobile';
 
@@ -86,7 +84,6 @@ export default function ProjectListItem({
             <h3
               className={cn(
                 'font-bold text-lg transition-colors duration-200 flex-8',
-                isMobile && 'max-w-4/6 truncate',
                 isSelected
                   ? 'text-point font-bold'
                   : 'text-gray-900 dark:text-gray-100',
@@ -94,31 +91,14 @@ export default function ProjectListItem({
             >
               {item.title}
             </h3>
-            {isMobile && (
-              <p className='text-base font-medium dark:text-gray-400 mt-1 flex-4 text-right'>
-                {item.region}
-              </p>
-            )}
           </div>
           <div className='flex items-center gap-2 justify-between'>
-            {isMobile ? (
-              <>
-                <p className='text-sm font-bold text-gray-700 dark:text-gray-100 mt-1 whitespace-pre-line flex-7'>
-                  {item.role}
-                </p>
-                <p className='text-sm text-gray-500 dark:text-gray-400 mt-1 flex-5 text-right'>
-                  {item.startDate.toLocaleDateString(locale)} -{' '}
-                  {item.endDate?.toLocaleDateString(locale)}
-                </p>
-              </>
-            ) : (
-              <div className='flex justify-start items-center gap-1 flex-7'>
-                <FaUserAlt className='size-3 text-gray-400 dark:text-gray-100 mt-1' />
-                <p className='text-sm font-medium text-gray-500 dark:text-gray-100 mt-1 whitespace-pre-line'>
-                  {item.role}
-                </p>
-              </div>
-            )}
+            <div className='flex justify-start items-center gap-1 flex-7'>
+              <FaUserAlt className='size-3 text-gray-400 dark:text-gray-100 mt-1' />
+              <p className='text-sm font-medium text-gray-500 dark:text-gray-100 mt-1 whitespace-pre-line'>
+                {item.role}
+              </p>
+            </div>
           </div>
           <ul className='list-disc ml-5 mt-3 text-sm space-y-1 text-gray-600 dark:text-gray-300'>
             {item.description.map((line, i) => (

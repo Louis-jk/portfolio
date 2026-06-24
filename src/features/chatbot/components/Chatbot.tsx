@@ -35,7 +35,10 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isStoryOpen = searchParams.get('story') === '1';
-  const storyFabVisible = useStoryFabStore((state) => state.fabVisible);
+  const overlayFabSyncEnabled = useStoryFabStore(
+    (state) => state.overlayFabSyncEnabled,
+  );
+  const fabVisible = useStoryFabStore((state) => state.fabVisible);
 
   const currentLocale = getCurrentLocale();
   const chatbotData: ChatbotData =
@@ -58,7 +61,8 @@ export default function Chatbot({ projects = [] }: ChatbotProps) {
     (state) => state.setIsNavigatingProject,
   );
 
-  const toggleVisible = !isStoryOpen || open || storyFabVisible;
+  const toggleVisible =
+    (!isStoryOpen && !overlayFabSyncEnabled) || open || fabVisible;
 
   const {
     isMobile,

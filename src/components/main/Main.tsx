@@ -4,11 +4,13 @@ import ProjectDrawer from '@/components/projects/ProjectDrawer';
 import MainDesktopLayout from '@/components/main/MainDesktopLayout';
 import MainMobileLayout from '@/components/main/MainMobileLayout';
 import MainTabletLayout from '@/components/main/MainTabletLayout';
+import { MainMobileScrollToTopFab } from '@/components/main/MainMobileScrollToTopFab';
 import { useProjectSelection } from '@/hooks/useProjectSelection';
 import { usePrefetchProjectStory } from '@/hooks/usePrefetchProjectStory';
 import { motion } from 'framer-motion';
 import { useMemo, Suspense } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 import type { ProjectView } from '@/modules/projects';
 
@@ -36,6 +38,8 @@ function MainContent({
   }, [projects, platformFilter, domainFilter]);
 
   const tProjects = useTranslations('projects');
+  const searchParams = useSearchParams();
+  const isStoryOpen = searchParams.get('story') === '1';
   const { isLayoutMobile, isLayoutTablet } = useLayoutBreakpoints();
   const { selectedItem, isDrawerOpen, handleItemClick, handleDrawerClose } =
     useProjectSelection(projects, filteredProjects);
@@ -47,6 +51,8 @@ function MainContent({
   const headerPadding =
     !isDesktopLayout && isFilterOpen ? 'pt-[140px]' : 'pt-[55px]';
   const isViewportLocked = isDesktopLayout || isLayoutTablet;
+  const showMainScrollToTopFab =
+    isLayoutMobile && !isDrawerOpen && !isStoryOpen;
 
   const shellProps = {
     projects: filteredProjects,
@@ -83,6 +89,7 @@ function MainContent({
         isOpen={isDrawerOpen}
         onClose={handleDrawerClose}
       />
+      <MainMobileScrollToTopFab enabled={showMainScrollToTopFab} />
     </>
   );
 }
