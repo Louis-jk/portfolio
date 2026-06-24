@@ -260,7 +260,7 @@ pnpm dev
 | `pnpm test:e2e`  | Playwright       |
 | `pnpm storybook` | Storybook (6006) |
 
-**브랜치**: `develop`(통합) → `main`(프로덕션)
+**브랜치**: `feature/*` → `main`(프로덕션)
 
 </details>
 
@@ -487,7 +487,7 @@ pnpm dev
 | `pnpm test:e2e`  | Playwright           |
 | `pnpm storybook` | Storybook (6006)     |
 
-**ブランチ**: `develop`（統合）→ `main`（本番）
+**ブランチ**: `feature/*` → `main`（本番）
 
 </details>
 
@@ -714,7 +714,7 @@ pnpm dev
 | `pnpm test:e2e`  | Playwright            |
 | `pnpm storybook` | Storybook (port 6006) |
 
-**Branches**: `develop` (integration) → `main` (production)
+**Branches**: `feature/*` → `main` (production)
 
 </details>
 

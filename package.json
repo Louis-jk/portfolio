@@ -16,6 +16,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "db:migrate": "prisma migrate deploy",
+    "db:setup-storage": "pnpm exec tsx scripts/setup-project-images-bucket.ts",
     "db:seed": "SEED_CONFIRM=yes pnpm exec tsx prisma/seed.ts",
     "db:embed-existing": "pnpm exec tsx scripts/embed-existing.ts"
   },
