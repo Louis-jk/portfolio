@@ -100,7 +100,7 @@ export const chatbotDataJa: ChatbotData = {
       id: 'collaboration',
       text: '協力方式は？',
       response:
-        'デザイナー、バックエンド開発者との協力経験が豊富で、リモートワーク環境でも積極的なコミュニケーションを通じてプロジェクトを進めています。',
+        'デザイナー、バックエンドエンジニアとの協力経験が豊富で、リモートワーク環境でも積極的なコミュニケーションを通じてプロジェクトを進めています。',
       nextChoices: ['experience', 'contact'],
     },
     workflow: {
@@ -149,7 +149,7 @@ export const chatbotDataJa: ChatbotData = {
       id: 'communication',
       text: 'コミュニケーションスタイルは？',
       response:
-        '明確で簡潔な説明を好み、技術的内容を非開発者も理解できるように説明することを得意としています。',
+        '明確で簡潔な説明を好み、技術的内容を非エンジニアも理解できるように説明することを得意としています。',
       nextChoices: ['workStyle', 'contact'],
     },
     learning: {
@@ -218,7 +218,7 @@ export const chatbotDataJa: ChatbotData = {
       id: 'goals',
       text: '目標は？',
       response:
-        '常に新しい技術と挑戦を通じてユーザーエクスペリエンスを改善し、チームと共に成長するフロントエンド開発者になることが目標です。',
+        '常に新しい技術と挑戦を通じてユーザーエクスペリエンスを改善し、チームと共に成長するフロントエンドエンジニアになることが目標です。',
       nextChoices: ['interests', 'contact'],
     },
     currentStudy: {
@@ -232,7 +232,7 @@ export const chatbotDataJa: ChatbotData = {
       id: 'futurePlans',
       text: '将来の計画は？',
       response:
-        'フロントエンド開発者からフルスタック開発者になることを目標とし、新しい技術を導入してユーザーに価値のあるサービスを提供することが計画です。',
+        'フロントエンドエンジニアからフルスタックエンジニアになることを目標とし、新しい技術を導入してユーザーに価値のあるサービスを提供することが計画です。',
       nextChoices: ['interests', 'contact'],
     },
     newChallenges: {
