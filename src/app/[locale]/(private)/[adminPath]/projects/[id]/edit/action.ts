@@ -48,7 +48,7 @@ export async function updateProject(
       'Project update',
     );
 
-    await notifyProjectCatalogChange({ projectId: id, event: 'upsert' });
+    void notifyProjectCatalogChange({ projectId: id, event: 'upsert' });
 
     revalidateProjectsList();
     return { success: true, id };

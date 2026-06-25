@@ -31,7 +31,7 @@ export async function saveProject(data: ProjectFormData) {
       'Project save',
     );
 
-    await notifyProjectCatalogChange({
+    void notifyProjectCatalogChange({
       projectId: result.id,
       event: 'upsert',
     });

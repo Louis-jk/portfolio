@@ -58,15 +58,16 @@ export function useLiveProjects(initialProjects: ProjectView[]): ProjectView[] {
     (change: Parameters<typeof applyStoryVisibilityUpdate>[1]) => {
       setProjects((current) => applyStoryVisibilityUpdate(current, change));
 
-      void queryClient.invalidateQueries({
-        queryKey: projectStoryQueryKey(change.projectId),
-      });
-
       if (!change.isPublic) {
         void queryClient.removeQueries({
           queryKey: projectStoryQueryKey(change.projectId),
         });
+        return;
       }
+
+      void queryClient.invalidateQueries({
+        queryKey: projectStoryQueryKey(change.projectId),
+      });
     },
     [queryClient],
   );

@@ -17,7 +17,7 @@ export async function updateProjectOrder(projectIds: number[]) {
 
   try {
     await reorderProjects(projectIds);
-    await notifyProjectCatalogChange({ projectId: 0, event: 'reorder' });
+    void notifyProjectCatalogChange({ projectId: 0, event: 'reorder' });
     revalidateProjectsList();
     return { success: true };
   } catch (error) {
@@ -45,7 +45,7 @@ export async function deleteProject(projectId: number) {
         error: indexError,
       });
     }
-    await notifyProjectCatalogChange({ projectId, event: 'delete' });
+    void notifyProjectCatalogChange({ projectId, event: 'delete' });
     revalidateProjectsList();
     return { success: true };
   } catch (error) {

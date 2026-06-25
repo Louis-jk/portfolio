@@ -21,10 +21,15 @@ BEGIN
         RETURN OLD;
     END IF;
 
-    INSERT INTO public.project_catalog_signals (project_id, updated_at)
-    VALUES (NEW.id, CURRENT_TIMESTAMP)
-    ON CONFLICT (project_id) DO UPDATE
-        SET updated_at = EXCLUDED.updated_at;
+    IF NEW.is_public = true THEN
+        INSERT INTO public.project_catalog_signals (project_id, updated_at)
+        VALUES (NEW.id, CURRENT_TIMESTAMP)
+        ON CONFLICT (project_id) DO UPDATE
+            SET updated_at = EXCLUDED.updated_at;
+    ELSE
+        DELETE FROM public.project_catalog_signals
+        WHERE project_id = NEW.id;
+    END IF;
 
     RETURN NEW;
 END;
@@ -40,6 +45,7 @@ CREATE TRIGGER trg_sync_project_catalog_signal
 INSERT INTO public.project_catalog_signals (project_id, updated_at)
 SELECT id, updated_at
 FROM public.projects
+WHERE is_public = true
 ON CONFLICT (project_id) DO UPDATE
     SET updated_at = EXCLUDED.updated_at;
 
