@@ -1,3 +1,4 @@
+import 'server-only';
 import { broadcastProjectCatalogChange } from '@/lib/supabase/broadcast-project-catalog';
 import type { ProjectCatalogBroadcastPayload } from '@/lib/supabase/project-catalog-realtime';
 import { describeSupabaseEnvMismatch } from '@/lib/supabase/env-alignment';

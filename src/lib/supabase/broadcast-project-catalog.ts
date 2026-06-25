@@ -1,4 +1,5 @@
-import { createSupabaseAdminClient } from '@/utils/supabase/admin';
+import 'server-only';
+import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import {
   PROJECT_CATALOG_BROADCAST_CHANNEL,
   PROJECT_CATALOG_BROADCAST_EVENT,
