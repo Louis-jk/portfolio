@@ -3,6 +3,7 @@
 import { revalidateProjectsList } from '@/lib/revalidate-projects';
 import { requireAuth } from '@/utils/supabase/auth';
 import { deleteProjectDocuments } from '@/lib/rag/portfolio-documents';
+import { notifyProjectCatalogChange } from '@/lib/supabase/notify-project-catalog';
 import {
   deleteProject as deleteProjectFromApi,
   reorderProjects,
@@ -16,6 +17,7 @@ export async function updateProjectOrder(projectIds: number[]) {
 
   try {
     await reorderProjects(projectIds);
+    void notifyProjectCatalogChange({ projectId: 0, event: 'reorder' });
     revalidateProjectsList();
     return { success: true };
   } catch (error) {
@@ -43,6 +45,7 @@ export async function deleteProject(projectId: number) {
         error: indexError,
       });
     }
+    void notifyProjectCatalogChange({ projectId, event: 'delete' });
     revalidateProjectsList();
     return { success: true };
   } catch (error) {
