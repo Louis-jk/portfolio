@@ -5,6 +5,7 @@ import { requireAuth } from '@/utils/supabase/auth';
 import type { ProjectFormData } from '@/modules/projects';
 import { validateProjectServerPayload } from '@/modules/projects';
 import { scheduleProjectIndexing } from '@/lib/rag/schedule-project-indexing';
+import { notifyProjectCatalogChange } from '@/lib/supabase/notify-project-catalog';
 import {
   buildProjectIndexingInput,
   createProject,
@@ -29,6 +30,11 @@ export async function saveProject(data: ProjectFormData) {
       buildProjectIndexingInput(result.id, validData),
       'Project save',
     );
+
+    await notifyProjectCatalogChange({
+      projectId: result.id,
+      event: 'upsert',
+    });
 
     revalidateProjectsList();
 
