@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { projectsData } from './seed-data/projects.data';
 import type { ProjectSeedItem } from './seed-data/projects.type';
-import type { ProjectLocale } from '../src/modules/projects/projects.types';
+import type { ProjectLocale } from '../src/entities/projects/model/projects.types';
 
 const LOCALES: ProjectLocale[] = ['ko', 'ja', 'en'];
 
