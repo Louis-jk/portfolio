@@ -5,12 +5,12 @@ import type {
   NestPlatformsDto,
   NestProjectDto,
   NestToolsDto,
-} from '@/modules/projects/projects.types';
+} from '@/entities/projects/model/projects.types';
 import type {
   EditorOutput,
   ProjectDetailPage,
   StoryContentDocument,
-} from '@/modules/project-detail-page/types';
+} from '@/entities/project-detail-page/model/types';
 
 function asI18nString(value: Prisma.JsonValue): I18nStringDto {
   return (value ?? {}) as I18nStringDto;
@@ -107,7 +107,7 @@ function applyJsonMerge(
 }
 
 export function toProjectCreateInput(
-  payload: import('@/modules/projects/projects.types').NestProjectWriteDto,
+  payload: import('@/entities/projects/model/projects.types').NestProjectWriteDto,
 ): Prisma.ProjectCreateInput {
   return {
     sortOrder: payload.sortOrder ?? 0,
@@ -132,7 +132,7 @@ export function toProjectCreateInput(
 }
 
 export function toProjectUpdateInput(
-  payload: Partial<import('@/modules/projects/projects.types').NestProjectWriteDto>,
+  payload: Partial<import('@/entities/projects/model/projects.types').NestProjectWriteDto>,
   existing: PrismaProject,
 ): Prisma.ProjectUpdateInput {
   const data: Prisma.ProjectUpdateInput = {};

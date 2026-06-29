@@ -1,8 +1,8 @@
 'use server';
 
 import { requireAuth } from '@/utils/supabase/auth';
-import type { EditorOutput, I18nLocale } from '@/modules/project-detail-page';
-import { translateStoryContent } from '@/lib/project-detail-page/translate-story-content';
+import type { EditorOutput, I18nLocale } from '@/entities/project-detail-page';
+import { translateStoryContent } from '@/entities/project-detail-page/lib/translate-story-content';
 
 export async function translateStoryContentAction(input: {
   content: EditorOutput;

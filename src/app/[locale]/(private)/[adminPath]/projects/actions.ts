@@ -7,7 +7,7 @@ import { notifyProjectCatalogChange } from '@/lib/supabase/notify-project-catalo
 import {
   deleteProject as deleteProjectFromApi,
   reorderProjects,
-} from '@/modules/projects/server';
+} from '@/entities/projects/server';
 
 export async function updateProjectOrder(projectIds: number[]) {
   const auth = await requireAuth();

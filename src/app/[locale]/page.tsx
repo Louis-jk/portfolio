@@ -1,5 +1,5 @@
-import { listProjects } from '@/modules/projects/server';
-import Home from '@/components/home/Home';
+import { listProjects } from '@/entities/projects/server';
+import Home from '@/widgets/home';
 
 export default async function HomePage({
   params,

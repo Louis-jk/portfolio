@@ -5,10 +5,10 @@ import { requireAuth } from '@/utils/supabase/auth';
 import type {
   EditorOutput,
   StoryContentDocument,
-} from '@/modules/project-detail-page';
+} from '@/entities/project-detail-page';
 import { broadcastStoryVisibilityChange } from '@/lib/supabase/broadcast-story-visibility';
 import { describeSupabaseEnvMismatch } from '@/lib/supabase/env-alignment';
-import { upsertProjectDetailPage } from '@/modules/project-detail-page/server';
+import { upsertProjectDetailPage } from '@/entities/project-detail-page/server';
 
 export async function saveProjectDetailPageAction(input: {
   projectId: number;

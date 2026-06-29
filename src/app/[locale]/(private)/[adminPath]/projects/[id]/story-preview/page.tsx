@@ -1,13 +1,13 @@
 import { notFound, redirect } from 'next/navigation';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
-import { getPublicLocaleEditorOutput } from '@/lib/project-detail-page/story-content-document';
+import { getPublicLocaleEditorOutput } from '@/entities/project-detail-page/lib/story-content-document';
 import { parseProjectId } from '@/lib/http/parse-project-id';
-import { readI18n } from '@/modules/projects';
-import { getProjectById } from '@/modules/projects/server';
-import { getProjectDetailPage } from '@/modules/project-detail-page/server';
+import { readI18n } from '@/entities/projects';
+import { getProjectById } from '@/entities/projects/server';
+import { getProjectDetailPage } from '@/entities/project-detail-page/server';
 import { requireAuth } from '@/utils/supabase/auth';
-import { AdminStoryPreviewClient } from '@/features/admin/projects/components/project-detail/AdminStoryPreviewClient';
-import type { I18nLocale } from '@/modules/project-detail-page';
+import { AdminStoryPreviewClient } from '@/features/projects/admin';
+import type { I18nLocale } from '@/entities/project-detail-page';
 
 export default async function AdminStoryPreviewPage({
   params,
