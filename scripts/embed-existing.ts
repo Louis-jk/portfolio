@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 import { upsertProjectDocuments } from '../src/lib/rag/portfolio-documents';
 import { upsertStaticPortfolioDocuments } from '../src/lib/rag/static-documents';
-import { fetchAllProjects } from '../src/modules/projects/projects.repository';
-import { toProjectAdminView } from '../src/modules/projects/projects.mapper';
-import { buildProjectIndexingInputFromAdmin } from '../src/modules/projects/projects.service';
+import { fetchAllProjects } from '../src/entities/projects/server/projects.repository';
+import { toProjectAdminView } from '../src/entities/projects/lib/projects.mapper';
+import { buildProjectIndexingInputFromAdmin } from '../src/entities/projects/server/projects.service';
 
 config({ path: '.env.local' });
 config();
