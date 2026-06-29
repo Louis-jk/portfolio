@@ -2,14 +2,14 @@
 
 import { revalidateProjectsList } from '@/lib/revalidate-projects';
 import { requireAuth } from '@/utils/supabase/auth';
-import type { ProjectFormData } from '@/modules/projects';
-import { validateProjectServerPayload } from '@/modules/projects';
+import type { ProjectFormData } from '@/entities/projects';
+import { validateProjectServerPayload } from '@/entities/projects';
 import { scheduleProjectIndexing } from '@/lib/rag/schedule-project-indexing';
 import { notifyProjectCatalogChange } from '@/lib/supabase/notify-project-catalog';
 import {
   buildProjectIndexingInput,
   createProject,
-} from '@/modules/projects/server';
+} from '@/entities/projects/server';
 
 export async function saveProject(data: ProjectFormData) {
   const auth = await requireAuth();

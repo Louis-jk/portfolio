@@ -1,4 +1,4 @@
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectView } from '@/entities/projects';
 import { trackGa4Event } from '@/lib/analytics/ga4';
 
 type ProjectClickPayload = {

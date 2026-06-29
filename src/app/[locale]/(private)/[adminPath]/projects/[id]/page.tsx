@@ -1,9 +1,9 @@
-import { getProjectById } from '@/modules/projects/server';
+import { getProjectById } from '@/entities/projects/server';
 import { notFound } from 'next/navigation';
 import {
   ProjectPreviewClient,
   type AdminProjectPreview,
-} from '@/features/admin/projects';
+} from '@/features/projects/admin';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 
 export default async function ProjectPreviewPage({

@@ -4,7 +4,7 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
-import { listProjects } from '@/modules/projects/server';
+import { listProjects } from '@/entities/projects/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import {
   buildSystemPrompt,

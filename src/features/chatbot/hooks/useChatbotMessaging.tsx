@@ -5,7 +5,7 @@ import { FaLinkedin } from 'react-icons/fa6';
 import { SiMinutemailer } from 'react-icons/si';
 import { CiLink } from 'react-icons/ci';
 import type { ChatbotData } from '@/types/chatbot';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectView } from '@/entities/projects';
 import type { ChatMessage } from '@/stores/chatbot-store';
 import { getModerationWarning } from '@/features/chatbot/lib/chatbot-moderation';
 import { buildProjectLinksFromIds } from '@/features/chatbot/components/chatbot-project-links';

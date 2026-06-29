@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing';
-import { getPublicStoryUrl } from '@/lib/projects/public-story-url';
+import { getPublicStoryUrl } from '@/entities/projects/lib/public-story-url';
 
 export default async function PublicProjectStoryPage({
   params,

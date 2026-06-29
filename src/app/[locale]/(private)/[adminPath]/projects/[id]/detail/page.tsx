@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { readI18n } from '@/modules/projects';
-import { getProjectById } from '@/modules/projects/server';
+import { readI18n } from '@/entities/projects';
+import { getProjectById } from '@/entities/projects/server';
 import {
   EMPTY_EDITOR_OUTPUT,
-} from '@/modules/project-detail-page';
-import { getProjectDetailPage } from '@/modules/project-detail-page/server';
+} from '@/entities/project-detail-page';
+import { getProjectDetailPage } from '@/entities/project-detail-page/server';
 import { parseProjectId } from '@/lib/http/parse-project-id';
-import { ProjectDetailEditorClient } from '@/features/admin/projects/components/project-detail/ProjectDetailEditorClient';
+import { ProjectDetailEditorClient } from '@/features/projects/admin';
 
 export default async function ProjectDetailEditorPage({
   params,

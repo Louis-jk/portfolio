@@ -1,4 +1,4 @@
-import { ProjectForm } from '@/features/admin/projects';
+import { ProjectForm } from '@/features/projects/admin';
 
 export default async function NewProjectPage({
   params,
