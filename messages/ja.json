@@ -285,6 +285,7 @@
       "detailEditorImagePasteHint": "ダッシュボードや Storybook のスクリーンショットは Cmd/Ctrl+V で貼り付けできます（自動アップロード）。",
       "detailEditorMarkdownHint": "Markdown: `###`+Space → H3見出し（そのまま入力）、`-`+Space（リスト）、`>`+Space（引用）、`---`+Enter（区切り）。行頭の `### タイトル` の後に Space でも変換されます。",
       "detailEditorVideoHint": "動画: + メニューから Video ブロックを追加 — ドラッグ＆ドロップまたはファイル選択（mp4, webm, mov、最大80MB）。",
+      "detailEditorLayoutHint": "レイアウト: Media + Text（メディア+本文の2列）、Media Row（1行にメディア2つ）— デスクトップは横2列、モバイルは縦に並びます。",
       "detailEditorUndoHint": "元に戻す/やり直し: Ctrl+Z / Ctrl+Y（Mac: ⌘+Z / ⌘+Shift+Z）。",
       "detailSave": "ストーリー保存",
       "detailStoryVisibilityLabel": "ストーリー公開",

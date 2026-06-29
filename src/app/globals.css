@@ -654,6 +654,108 @@ body.chatbot-open {
   margin: 0;
 }
 
+/* Story layout blocks — media + text, two-column media row */
+.story-media-text {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+}
+
+.story-media-text__media {
+  min-width: 0;
+}
+
+.story-media-text__body {
+  min-width: 0;
+}
+
+.story-media-text__video {
+  max-height: min(70vh, 720px);
+  object-fit: contain;
+}
+
+.story-media-row {
+  display: grid;
+  gap: 1rem;
+}
+
+.story-media-row__item {
+  margin: 0;
+}
+
+.story-media-row__video {
+  max-height: min(60vh, 640px);
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .story-media-text--media-left {
+    grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .story-media-text--media-right {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 38%);
+    align-items: start;
+  }
+
+  .story-media-text--media-right .story-media-text__media {
+    order: 2;
+  }
+
+  .story-media-text--media-right .story-media-text__body {
+    order: 1;
+  }
+
+  .story-media-text__video {
+    max-width: none;
+  }
+
+  .story-media-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* Admin editor layout preview mirrors public breakpoints */
+.admin-editor-js .story-layout-admin__grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-editor-js .story-layout-admin__grid[data-layout='media-left'],
+.admin-editor-js .story-layout-admin__grid[data-layout='media-right'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.admin-editor-js .story-layout-admin__row {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+  .admin-editor-js .story-layout-admin__grid[data-layout='media-left'] {
+    grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+  }
+
+  .admin-editor-js .story-layout-admin__grid[data-layout='media-right'] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 38%);
+  }
+
+  .admin-editor-js .story-layout-admin__grid[data-layout='media-right']
+    .story-layout-admin__media {
+    order: 2;
+  }
+
+  .admin-editor-js .story-layout-admin__grid[data-layout='media-right']
+    .story-layout-admin__text {
+    order: 1;
+  }
+
+  .admin-editor-js .story-layout-admin__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* Public story tables */
 .story-prose .story-table {
   width: 100%;
