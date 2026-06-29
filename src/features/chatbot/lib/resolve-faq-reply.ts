@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { ChatbotChoice, ChatbotData } from '@/types/chatbot';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectView } from '@/entities/projects';
 import { renderProjectLinkLabel } from '@/features/chatbot/components/chatbot-project-links';
 
 export type FaqContactButton = {

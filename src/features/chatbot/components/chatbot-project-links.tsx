@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { CiLink } from 'react-icons/ci';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectView } from '@/entities/projects';
 
 export function renderProjectLinkLabel(project: ProjectView) {
   return (

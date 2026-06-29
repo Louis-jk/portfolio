@@ -5,6 +5,7 @@ export {
   ProjectEditForm,
   ProjectListSortable,
   ProjectPreviewClient,
+  ProjectStoryAdminLinks,
   type AdminProjectListItem,
   type AdminProjectPreview,
-} from './projects';
+} from '../projects/admin';

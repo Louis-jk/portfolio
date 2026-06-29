@@ -1,15 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { readI18n } from '@/modules/projects';
-import { listAllProjects } from '@/modules/projects/server';
+import { readI18n } from '@/entities/projects';
+import { listAllProjects } from '@/entities/projects/server';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Eye, Pencil } from 'lucide-react';
-import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
+import { ProjectStoryAdminLinks } from '@/features/projects/admin';
 
 export default async function AdminDashboardPage({
   params,

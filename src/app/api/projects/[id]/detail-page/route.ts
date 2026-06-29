@@ -5,7 +5,7 @@ import {
   getProjectDetailPage,
   patchProjectDetailPage,
   upsertProjectDetailPage,
-} from '@/modules/project-detail-page/server';
+} from '@/entities/project-detail-page/server';
 import { toApiErrorResponse } from '@/lib/http/api-error';
 import { parseProjectId } from '@/lib/http/parse-project-id';
 

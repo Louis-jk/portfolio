@@ -1,8 +1,8 @@
-import { listAllProjects } from '@/modules/projects/server';
+import { listAllProjects } from '@/entities/projects/server';
 import Link from 'next/link';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
 import { getTranslations } from 'next-intl/server';
-import { ProjectListSortable } from '@/features/admin/projects';
+import { ProjectListSortable } from '@/features/projects/admin';
 
 export default async function ProjectListPage({
   params,

@@ -305,6 +305,7 @@
       "detailEditorImagePasteHint": "Paste screenshots (dashboard, Storybook, etc.) with Cmd/Ctrl+V — they upload automatically.",
       "detailEditorMarkdownHint": "Markdown: `###`+Space → H3 heading (type immediately), `-`+Space (list), `>`+Space (quote), `---`+Enter (divider). `### Title` at line start + Space converts the rest to a heading.",
       "detailEditorVideoHint": "Video: add a Video block from the + menu — drag & drop or pick a file (mp4, webm, mov, up to 80MB).",
+      "detailEditorLayoutHint": "Layout: Media + Text (media beside copy), Media Row (two media side by side) — 2 columns on desktop, stacked on mobile.",
       "detailEditorUndoHint": "Undo/redo: Ctrl+Z / Ctrl+Y (Mac: ⌘+Z / ⌘+Shift+Z).",
       "detailSave": "Save story",
       "detailStoryVisibilityLabel": "Story visibility",

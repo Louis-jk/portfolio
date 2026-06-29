@@ -285,6 +285,7 @@
       "detailEditorImagePasteHint": "대시보드·Storybook 스크린샷 등은 에디터에서 Cmd/Ctrl+V로 붙여넣을 수 있습니다 (자동 업로드).",
       "detailEditorMarkdownHint": "마크다운: `###`+Space → H3 제목(바로 입력), `-`+Space(목록), `>`+Space(인용), `---`+Enter(구분선), 빈 줄에 ` ``` `+Enter(코드 블록). ```로 감싼 코드·디렉터리 트리 붙여넣기 시 자동으로 코드 블록으로 변환됩니다.",
       "detailEditorVideoHint": "영상: + 메뉴에서 Video 블록 추가 — 드래그 앤 드롭 또는 파일 선택(mp4, webm, mov, 최대 80MB).",
+      "detailEditorLayoutHint": "레이아웃: Media + Text(미디어+글 2열), Media Row(미디어 2개 한 행) — 데스크톱은 가로 2열, 모바일은 세로로 쌓입니다.",
       "detailEditorUndoHint": "되돌리기/다시 실행: Ctrl+Z / Ctrl+Y (Mac: ⌘+Z / ⌘+Shift+Z).",
       "detailSave": "스토리 저장",
       "detailStoryVisibilityLabel": "스토리 공개",

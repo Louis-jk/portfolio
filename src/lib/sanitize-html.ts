@@ -2,7 +2,7 @@ import DOMPurify from 'dompurify';
 import {
   decodeEscapedStoryHtml,
   normalizeStoryInlineCodeInHtml,
-} from '@/lib/project-detail-page/story-inline-code-html';
+} from '@/entities/project-detail-page/lib/story-inline-code-html';
 
 const STORY_INLINE_CODE_CLASS = 'story-inline-code';
 

@@ -1,11 +1,11 @@
-import { getProjectById } from '@/modules/projects/server';
+import { getProjectById } from '@/entities/projects/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { ADMIN_ROUTES } from '@/constants/admin-routes';
-import type { ProjectLocale } from '@/modules/projects';
+import type { ProjectLocale } from '@/entities/projects';
 import { ProjectEditForm } from '@/features/admin';
-import { ProjectStoryAdminLinks } from '@/features/admin/projects/components/shared/ProjectStoryAdminLinks';
+import { ProjectStoryAdminLinks } from '@/features/projects/admin';
 import { ADMIN_EDIT_SURFACE_CLASS } from '@/constants/admin-layout';
 
 export default async function ProjectEditPage({

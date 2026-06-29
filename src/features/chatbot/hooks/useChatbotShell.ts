@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useLayoutBreakpoints } from '@/hooks/useLayoutBreakpoints';
 import type { ChatbotData } from '@/types/chatbot';
-import type { ProjectView } from '@/modules/projects';
+import type { ProjectView } from '@/entities/projects';
 import type { ChatMessage } from '@/stores/chatbot-store';
 import { normalizeProjectLinkForLocale } from '@/features/chatbot/components/chatbot-project-links';
 
